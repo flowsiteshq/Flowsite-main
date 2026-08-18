@@ -1,0 +1,22 @@
+{
+  "query": "SELECT businessType, COUNT(*) as count FROM wizard_submissions WHERE email IS NOT NULL AND email != '' GROUP BY businessType ORDER BY count DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT businessType, COUNT(*) as count FROM wizard_submissions WHERE email IS NOT NULL AND email != '' GROUP BY businessType ORDER BY count DESC;",
+  "rows": [
+    {
+      "businessType": "martial_arts",
+      "count": "100"
+    },
+    {
+      "businessType": "restaurant",
+      "count": "96"
+    },
+    {
+      "businessType": "fitness",
+      "count": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "businessType\tcount\nmartial_arts\t100\nrestaurant\t96\nfitness\t2\n",
+  "stderr": "",
+  "execution_time_ms": 273
+}

@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, business_name, client_email, access_token, portal_url FROM client_projects WHERE business_name LIKE '%Stylist%' OR client_email LIKE '%stylist%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, business_name, client_email, access_token, portal_url FROM client_projects WHERE business_name LIKE '%Stylist%' OR client_email LIKE '%stylist%' LIMIT 5;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'business_name' in 'where clause'"
+  ]
+}

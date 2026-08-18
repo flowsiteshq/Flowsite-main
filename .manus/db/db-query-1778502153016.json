@@ -1,0 +1,1798 @@
+{
+  "query": "SELECT businessName, websiteUrl FROM opportunity_pool ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT businessName, websiteUrl FROM opportunity_pool ORDER BY id;",
+  "rows": [
+    {
+      "businessName": "MyDojo Martial Arts",
+      "websiteUrl": "https://mydojoma.com"
+    },
+    {
+      "businessName": "Yaeger Self Defense of America",
+      "websiteUrl": "https://yaegerssda.com"
+    },
+    {
+      "businessName": "Zolamind Counseling",
+      "websiteUrl": "https://zolamindcounseling.com"
+    },
+    {
+      "businessName": "PolicyPilot",
+      "websiteUrl": "https://policypilot.life"
+    },
+    {
+      "businessName": "DojoFlow",
+      "websiteUrl": "https://dojo-flow.ai"
+    },
+    {
+      "businessName": "HomeUp Services",
+      "websiteUrl": "https://tryhomeupservices.com"
+    },
+    {
+      "businessName": "BlueTide Financial",
+      "websiteUrl": "https://bluetidefinancial.com"
+    },
+    {
+      "businessName": "Don Bar Bakery",
+      "websiteUrl": "https://donbarbakery.com"
+    },
+    {
+      "businessName": "GrapheneX by Construction X",
+      "websiteUrl": "https://graphenex.net"
+    },
+    {
+      "businessName": "Green Bahamas Life",
+      "websiteUrl": "https://greenbahamas.life"
+    },
+    {
+      "businessName": "Aladdin Kebab Grill",
+      "websiteUrl": "https://aladdinkebob.com"
+    },
+    {
+      "businessName": "Stitched with Love",
+      "websiteUrl": "https://stitchedshop.store"
+    },
+    {
+      "businessName": "ASLS Foundation",
+      "websiteUrl": "https://aslsfoundation.org"
+    },
+    {
+      "businessName": "Stylist Factory",
+      "websiteUrl": "https://stylistfactory.com"
+    },
+    {
+      "businessName": "Hach Ki Cafe",
+      "websiteUrl": "https://hachkicafe.com"
+    },
+    {
+      "businessName": "Texas Karate Institute",
+      "websiteUrl": "https://texaskarateinstitute.com/"
+    },
+    {
+      "businessName": "Houston Karate Academy",
+      "websiteUrl": "https://houstonkarate.com/"
+    },
+    {
+      "businessName": "Semper Fortis Jiu Jitsu",
+      "websiteUrl": "http://www.texasbjj.com/"
+    },
+    {
+      "businessName": "Houston Karate and Self Defense Center",
+      "websiteUrl": "https://www.houstonkarate.org/"
+    },
+    {
+      "businessName": "Bushido Martial Arts",
+      "websiteUrl": "https://www.bushidomartialarts.net/"
+    },
+    {
+      "businessName": "Hill Country Karate",
+      "websiteUrl": "https://www.hckarate.com/"
+    },
+    {
+      "businessName": "Corpus Christi Downtown Karate",
+      "websiteUrl": "https://ccdk.weebly.com/"
+    },
+    {
+      "businessName": "Academy of Classical Karate",
+      "websiteUrl": "https://www.planodojo.com/"
+    },
+    {
+      "businessName": "Arlington Kicks",
+      "websiteUrl": "https://arlingtonkicks.com/"
+    },
+    {
+      "businessName": "Martial Arts of Waco",
+      "websiteUrl": "https://martialartswaco.com/"
+    },
+    {
+      "businessName": "United Martial Arts Katy",
+      "websiteUrl": "https://unitedmakaty.com/"
+    },
+    {
+      "businessName": "Midtown MMA Houston",
+      "websiteUrl": "https://www.midtown-mma-houston.com/"
+    },
+    {
+      "businessName": "Six Blades Jiu-Jitsu Fort Worth",
+      "websiteUrl": "https://jiujitsufortworth.com/"
+    },
+    {
+      "businessName": "DFW Combat Co.",
+      "websiteUrl": "https://www.dfwcombat.com/"
+    },
+    {
+      "businessName": "144 Academy",
+      "websiteUrl": "https://144academy.com/"
+    },
+    {
+      "businessName": "Austin Karate Academy",
+      "websiteUrl": "https://austinkarateacademy.com/"
+    },
+    {
+      "businessName": "MU DO MARTIAL ARTS",
+      "websiteUrl": "https://mudomartialarts.com/"
+    },
+    {
+      "businessName": "Saldivar Martial Arts",
+      "websiteUrl": "https://saldivarmartialarts.com/"
+    },
+    {
+      "businessName": "Henderson's Martial Arts",
+      "websiteUrl": "https://hendersonsata.com/"
+    },
+    {
+      "businessName": "Championship Martial Arts El Paso",
+      "websiteUrl": "https://championshipmartialartselpaso.com/"
+    },
+    {
+      "businessName": "John Wai Martial Arts Academy",
+      "websiteUrl": "https://johnwaimartialarts.com/"
+    },
+    {
+      "businessName": "Athlas Training Team",
+      "websiteUrl": "https://attftl.com/best-martial-arts-school-in-florida/"
+    },
+    {
+      "businessName": "Martial Arts University",
+      "websiteUrl": "https://772kick.com/"
+    },
+    {
+      "businessName": "Victory Martial Arts",
+      "websiteUrl": "https://www.victoryma.com/school/clermont-florida/"
+    },
+    {
+      "businessName": "Tiger-Rock Martial Arts Academy",
+      "websiteUrl": "https://tigerrockmartialarts.com/SpringHill"
+    },
+    {
+      "businessName": "Florida Karate Academy",
+      "websiteUrl": "https://floridakarateacademy.com/"
+    },
+    {
+      "businessName": "Grappling Mastery",
+      "websiteUrl": "https://grapplingmastery.com/"
+    },
+    {
+      "businessName": "Bram Frank Online",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Danha Kai Samurai Dojo / EP System Self Defense",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Jacksonville Brazilian Jiu-Jitsu",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Pérez Silalai Martial Arts",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "USK Karate Academy Coral Springs",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Yesha Ministries Taekwondo",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Kids Love Martial Arts Jupiter FL",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Dueling Dragons Martial Arts",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Judokickbox JKB",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Medina Martial Arts Training Center",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Orlando BJJ and Muay Thai, USA",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "10th Planet Jiu Jitsu Orange Park",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "California School of Martial Arts",
+      "websiteUrl": "https://calsma.com/"
+    },
+    {
+      "businessName": "Premier Martial Arts Folsom",
+      "websiteUrl": "https://premiermartialarts.com/geo/united-states/california/"
+    },
+    {
+      "businessName": "Inosanto Academy of Martial Arts",
+      "websiteUrl": "https://inosanto.com/"
+    },
+    {
+      "businessName": "One Martial Arts San Francisco",
+      "websiteUrl": "https://onemartialarts.com/"
+    },
+    {
+      "businessName": "Combatives Academy",
+      "websiteUrl": "https://www.combativesacademy.com/"
+    },
+    {
+      "businessName": "California Karate Academy Vista",
+      "websiteUrl": "https://ourkarateacademy.com/"
+    },
+    {
+      "businessName": "NRK Karate",
+      "websiteUrl": "https://www.nrkkarate.com/"
+    },
+    {
+      "businessName": "Jun Chong Martial Arts Academy",
+      "websiteUrl": "https://junchongmartialarts.com/"
+    },
+    {
+      "businessName": "U.S. Taekwondo Academy - Lakewood",
+      "websiteUrl": "https://jgparksmartialarts.com/"
+    },
+    {
+      "businessName": "Villa's Taekwondo",
+      "websiteUrl": "https://villastaekwondo.com/"
+    },
+    {
+      "businessName": "Sky Family Taekwondo",
+      "websiteUrl": "https://skyfamilytkd.com/"
+    },
+    {
+      "businessName": "Atos Jiu-Jitsu HQ",
+      "websiteUrl": "https://atosjiujitsuhq.com/"
+    },
+    {
+      "businessName": "Northern California Karate Academy",
+      "websiteUrl": "https://www.norcalkarateacademy.com/"
+    },
+    {
+      "businessName": "Silicon Valley Karate",
+      "websiteUrl": "https://www.svkarate.com/"
+    },
+    {
+      "businessName": "Tracy's Karate & Mixed Martial Arts Studios",
+      "websiteUrl": "http://www.tracyskaratestudios.com/"
+    },
+    {
+      "businessName": "Benicia Shotokan Karate Academy",
+      "websiteUrl": "http://www.shotokankarate.net/"
+    },
+    {
+      "businessName": "San Diego Brazilian Jiu-Jitsu",
+      "websiteUrl": "https://sdbjj.com/"
+    },
+    {
+      "businessName": "Krav Maga Institute",
+      "websiteUrl": "https://kravmagainstitutenyc.com/"
+    },
+    {
+      "businessName": "Five Points Academy",
+      "websiteUrl": "https://www.academyfivepoints.com/"
+    },
+    {
+      "businessName": "Manhattan Shaolin Kungfu & Qigong",
+      "websiteUrl": "https://www.shaolinnewyork.com/"
+    },
+    {
+      "businessName": "Dachengdao Kung-Fu",
+      "websiteUrl": "https://dachengdaokungfu.com/"
+    },
+    {
+      "businessName": "USA Shaolin Temple",
+      "websiteUrl": "https://usashaolintemple.com/"
+    },
+    {
+      "businessName": "Anderson's Martial Arts Academy",
+      "websiteUrl": "https://www.andersonsmartialarts.com/"
+    },
+    {
+      "businessName": "Genshinkan Aikido of Manhattan",
+      "websiteUrl": "https://www.genaikido.com/"
+    },
+    {
+      "businessName": "Pak Mei Martial Arts Association",
+      "websiteUrl": "http://www.pakmeinyc.net/"
+    },
+    {
+      "businessName": "Unity Jiu Jitsu School",
+      "websiteUrl": "https://unityjiujitsu.com/"
+    },
+    {
+      "businessName": "Brooklyn Wing Tsun",
+      "websiteUrl": "https://brooklynkungfu.com/"
+    },
+    {
+      "businessName": "Hwang Karate Studio",
+      "websiteUrl": "https://soobahk1.wixsite.com/website"
+    },
+    {
+      "businessName": "Cruz Mixed Martial Arts",
+      "websiteUrl": "https://cruzmma.com/"
+    },
+    {
+      "businessName": "Martinez Martial Arts and Family Fitness",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Lee Gar Lun Ving Tsun",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Duncan Martial Arts",
+      "websiteUrl": "https://www.duncanmartialarts.com/"
+    },
+    {
+      "businessName": "Blue Life Karate & Kickboxing Centers",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Al Bender's Kung Fu Academy",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Team Jucao Newark Brazilian Jiu Jitsu",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Budo Quest Martial Arts",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Union UTA Martial Arts",
+      "websiteUrl": "https://www.unionuta.com/"
+    },
+    {
+      "businessName": "CrossFit Austin",
+      "websiteUrl": "https://crossfitaustin.com/"
+    },
+    {
+      "businessName": "Vintage CrossFit",
+      "websiteUrl": "https://www.vintagecrossfit.com/"
+    },
+    {
+      "businessName": "Studio Yoga",
+      "websiteUrl": "https://www.studioyogabcs.com/"
+    },
+    {
+      "businessName": "Black Swan Yoga",
+      "websiteUrl": "https://www.blackswanyoga.com/"
+    },
+    {
+      "businessName": "Charge Fitness",
+      "websiteUrl": "https://charge.fitness/"
+    },
+    {
+      "businessName": "CrossFit Katy",
+      "websiteUrl": "https://www.crossfitkaty.com/"
+    },
+    {
+      "businessName": "Oak + Lotus Yoga",
+      "websiteUrl": "https://www.oakandlotusyoga.com/"
+    },
+    {
+      "businessName": "Method Pilates",
+      "websiteUrl": "https://www.methodpilates.com/"
+    },
+    {
+      "businessName": "HEAT Bootcamp",
+      "websiteUrl": "https://heatbootcamp.com/"
+    },
+    {
+      "businessName": "Angry Bee CrossFit",
+      "websiteUrl": "https://www.angrybeeplano.com/"
+    },
+    {
+      "businessName": "Studio Satya",
+      "websiteUrl": "https://www.studiosatya.com/"
+    },
+    {
+      "businessName": "Timberline Fitness",
+      "websiteUrl": "https://timberlinefitness.com/"
+    },
+    {
+      "businessName": "Pure Pilates Austin",
+      "websiteUrl": "https://www.purepilatesaustin.com/"
+    },
+    {
+      "businessName": "Jungle Studio Fitness",
+      "websiteUrl": "https://junglestudiofitness.com/"
+    },
+    {
+      "businessName": "CrossFit Live Oak",
+      "websiteUrl": "https://www.crossfitliveoak.com/"
+    },
+    {
+      "businessName": "FIT180",
+      "websiteUrl": "https://fit180.com/"
+    },
+    {
+      "businessName": "Soul Tribes Yoga + Meditation",
+      "websiteUrl": "https://soultribeshtx.com/"
+    },
+    {
+      "businessName": "D-Town CrossFit",
+      "websiteUrl": "https://dtowncrossfit.com/"
+    },
+    {
+      "businessName": "The Core Lab Pilates",
+      "websiteUrl": "https://www.thecorelabpilates.com/"
+    },
+    {
+      "businessName": "Fit Body Boot Camp Richardson",
+      "websiteUrl": "https://fitbodybootcamp.com/locations/richardson-tx/"
+    },
+    {
+      "businessName": "CrossFit Winter Park",
+      "websiteUrl": "https://www.crossfitwinterpark.com/"
+    },
+    {
+      "businessName": "BODYBAR Pilates - Orlando SODO",
+      "websiteUrl": "https://bodybarpilates.com/studios/orlando-sodo/"
+    },
+    {
+      "businessName": "AHANA Yoga Studio",
+      "websiteUrl": "https://www.ahanayoga.com/"
+    },
+    {
+      "businessName": "CrossFit Fort Lauderdale",
+      "websiteUrl": "https://www.crossfitfortlauderdale.com/"
+    },
+    {
+      "businessName": "Club Pilates SODO",
+      "websiteUrl": "https://www.clubpilates.com/"
+    },
+    {
+      "businessName": "HILI Fitness",
+      "websiteUrl": "https://hili.fitness/"
+    },
+    {
+      "businessName": "Kodawari Studios",
+      "websiteUrl": "https://www.kodawaristudios.com/"
+    },
+    {
+      "businessName": "Pure Skill Fitness",
+      "websiteUrl": "https://pureskillfitness.com/"
+    },
+    {
+      "businessName": "Core Fitness Miami",
+      "websiteUrl": "https://corefitnessmiami.com/"
+    },
+    {
+      "businessName": "CrossFit Orlando",
+      "websiteUrl": "https://crossfitorlando.com/"
+    },
+    {
+      "businessName": "CrossFit Yellow Falcon",
+      "websiteUrl": "https://www.crossfityellowfalcon.com/"
+    },
+    {
+      "businessName": "Symmetry Fitness & Performance",
+      "websiteUrl": "https://www.mysymmetryfitness.com/"
+    },
+    {
+      "businessName": "Elevate Yoga Center",
+      "websiteUrl": "https://www.elevateyogacenter.com/"
+    },
+    {
+      "businessName": "CrossFit Hyde Park",
+      "websiteUrl": "https://www.crossfithydepark.com/"
+    },
+    {
+      "businessName": "YogaMix Orlando",
+      "websiteUrl": "https://www.yogamixorlando.com/"
+    },
+    {
+      "businessName": "Solace Pilates and Yoga",
+      "websiteUrl": "https://solaceorlando.com/"
+    },
+    {
+      "businessName": "SoFit Personal Training Orlando",
+      "websiteUrl": "https://joinsofit.com/"
+    },
+    {
+      "businessName": "Miami Pilates Studio",
+      "websiteUrl": "https://www.miamipilates.co/"
+    },
+    {
+      "businessName": "Red Skies Yoga",
+      "websiteUrl": "https://redskiesyoga.com/"
+    },
+    {
+      "businessName": "Sheppard Method Pilates",
+      "websiteUrl": "https://sheppardmethodpilates.com/"
+    },
+    {
+      "businessName": "Malibu Colony Pilates",
+      "websiteUrl": "https://malibucolonypilates.com/"
+    },
+    {
+      "businessName": "Pilates Body Fusion",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "The Body Process",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Thermal Horizons Yoga and Wellness Center",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Lagree Vibes",
+      "websiteUrl": "https://lagreevibes.com/"
+    },
+    {
+      "businessName": "HYPE Fitness",
+      "websiteUrl": "http://www.hypefitness.com/"
+    },
+    {
+      "businessName": "Oblix Studio",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "TruFusion West Hollywood",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Motivate - Sunset",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Bünda",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Goodwin Studios",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Studio Elevate",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "LIFT Society - Studio City",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "U Plus Fit",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Studio 45",
+      "websiteUrl": "https://www.studio45.com/"
+    },
+    {
+      "businessName": "RowdyBox",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Studio 3 Fitness",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Seattle Strength & Performance",
+      "websiteUrl": "https://www.seattlesp.com/"
+    },
+    {
+      "businessName": "FLX",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Southpaw Boxing Club",
+      "websiteUrl": "https://www.southpawboxingclub.com/"
+    },
+    {
+      "businessName": "Pilger's Old Skool Boxing & Fitness Academy",
+      "websiteUrl": "https://www.osfsfa.com/"
+    },
+    {
+      "businessName": "Troy Kickboxing Outfit",
+      "websiteUrl": "https://www.troykickboxingoutfit.com/"
+    },
+    {
+      "businessName": "Phantom Kickboxing and Fitness",
+      "websiteUrl": "https://phantomkickboxing.com/"
+    },
+    {
+      "businessName": "Chicago Muay Thai Kickboxing Club",
+      "websiteUrl": "https://www.chicagokickboxingclub.com/"
+    },
+    {
+      "businessName": "Headbangers Kickboxing Academy",
+      "websiteUrl": "https://www.headbangerskba.com/"
+    },
+    {
+      "businessName": "American Top Team of Indianapolis",
+      "websiteUrl": "https://www.attindianapolis.com/"
+    },
+    {
+      "businessName": "Popeye's Boxing Gym, and Fitness Center",
+      "websiteUrl": "https://popeyesboxinggym.com/"
+    },
+    {
+      "businessName": "Legacy Boxing & Fitness",
+      "websiteUrl": "https://www.legacyboxinghq.com/"
+    },
+    {
+      "businessName": "The Michigan Institute of Athletics",
+      "websiteUrl": "https://instituteofathletics.com/"
+    },
+    {
+      "businessName": "KickHouse Park Ridge",
+      "websiteUrl": "https://kickhouseparkridge.com/"
+    },
+    {
+      "businessName": "World Kickboxing Academy",
+      "websiteUrl": "https://www.worldkickboxingacademy.com/"
+    },
+    {
+      "businessName": "Ronin Training Center",
+      "websiteUrl": "https://www.ronintrainingcenter.com/"
+    },
+    {
+      "businessName": "Triumph Boxing",
+      "websiteUrl": "https://www.triumphboxingma.com/"
+    },
+    {
+      "businessName": "Victorious MMA",
+      "websiteUrl": "https://www.victoriousmma.com/"
+    },
+    {
+      "businessName": "Sam Colonna Boxing Gym",
+      "websiteUrl": "https://samcolonnaboxing.com/"
+    },
+    {
+      "businessName": "Unanimous Boxing Gym",
+      "websiteUrl": "https://www.unanimousboxinggym.com/"
+    },
+    {
+      "businessName": "Invicta KickboxingX",
+      "websiteUrl": "https://invictakx.com/"
+    },
+    {
+      "businessName": "Kings Gym",
+      "websiteUrl": "https://kingsgymohio.com/boxing/"
+    },
+    {
+      "businessName": "A-Square Fight Club",
+      "websiteUrl": "https://www.asquarefightclub.com/"
+    },
+    {
+      "businessName": "Divine Dance Studio",
+      "websiteUrl": "https://divinedancestudio.com/"
+    },
+    {
+      "businessName": "Southern Strutt Dance Studio",
+      "websiteUrl": "https://www.southernstruttdance.com/"
+    },
+    {
+      "businessName": "Georgia Academy of Dance & the Performing Arts",
+      "websiteUrl": "https://www.gadance.com/"
+    },
+    {
+      "businessName": "Florida Dance Workshop",
+      "websiteUrl": "https://floridadanceworkshop.com/"
+    },
+    {
+      "businessName": "North Carolina Dance Institute",
+      "websiteUrl": "https://www.ncdanceinstitute.com/"
+    },
+    {
+      "businessName": "South Carolina Dance Company",
+      "websiteUrl": "https://www.southcarolinadancecompany.com/"
+    },
+    {
+      "businessName": "Alabama Dance Academy",
+      "websiteUrl": "https://www.alabamadanceacademy.com/"
+    },
+    {
+      "businessName": "Lexington Dance Factory",
+      "websiteUrl": "https://www.lexingtondancefactory.com/"
+    },
+    {
+      "businessName": "Virginia Dance Center",
+      "websiteUrl": "https://www.vadancecenter.com/"
+    },
+    {
+      "businessName": "Rock City Dance Center",
+      "websiteUrl": "https://www.rcdancecenter.com/littlerock"
+    },
+    {
+      "businessName": "Alban Arts Academy",
+      "websiteUrl": "https://www.albanartscenter.com/alban-arts-academy/"
+    },
+    {
+      "businessName": "Dance Theater of Florida",
+      "websiteUrl": "https://www.dancetheaterofflorida.com/"
+    },
+    {
+      "businessName": "Dance Moves of Charleston",
+      "websiteUrl": "https://dancemovesofcharleston.com/"
+    },
+    {
+      "businessName": "Georgia Dance Conservatory",
+      "websiteUrl": "https://www.georgiadance.com/"
+    },
+    {
+      "businessName": "3D Motion Dance Center",
+      "websiteUrl": "https://www.3dmotiondance.com/"
+    },
+    {
+      "businessName": "Footworks Dance Studio",
+      "websiteUrl": "https://www.footworksdancestudio.com/"
+    },
+    {
+      "businessName": "Dancecdpa",
+      "websiteUrl": "https://www.dancecdpa.com/"
+    },
+    {
+      "businessName": "CC & Co. Dance Complex",
+      "websiteUrl": "https://cccodance.com/"
+    },
+    {
+      "businessName": "CK Dance Theatre",
+      "websiteUrl": "https://www.ckdancetheatre.com/"
+    },
+    {
+      "businessName": "Upstage Dance Centre",
+      "websiteUrl": "https://www.udc.dance/"
+    },
+    {
+      "businessName": "Texas Clinic of Chiropractic",
+      "websiteUrl": "https://texasclinicnb.com/"
+    },
+    {
+      "businessName": "American Chiropractic Clinics",
+      "websiteUrl": "https://www.american-chiropractic.com/"
+    },
+    {
+      "businessName": "KareClinic Chiropractic & Rehab",
+      "websiteUrl": "https://kareclinic.com/"
+    },
+    {
+      "businessName": "Oklahoma Physical Therapy",
+      "websiteUrl": "https://oklahomaphysicaltherapy.com/"
+    },
+    {
+      "businessName": "Oyler Chiropractic Clinic",
+      "websiteUrl": "https://www.oylerchiropracticclinic.com/"
+    },
+    {
+      "businessName": "The Movement Clinic",
+      "websiteUrl": "https://tmcpt.com/"
+    },
+    {
+      "businessName": "Anthony Medical & Chiropractic Center",
+      "websiteUrl": "https://www.anthonychiro.com/"
+    },
+    {
+      "businessName": "Uptown Chiropractic",
+      "websiteUrl": "https://www.uptownchiropractic.com/"
+    },
+    {
+      "businessName": "Therapy Fit Physical Therapy",
+      "websiteUrl": "https://therapyfitpt.com/"
+    },
+    {
+      "businessName": "Shepard Chiropractic Clinic",
+      "websiteUrl": "https://shepardchiropracticclinic.com/"
+    },
+    {
+      "businessName": "Garlett Chiropractic Clinic",
+      "websiteUrl": "https://garlett.com/"
+    },
+    {
+      "businessName": "Ortho Central Physical Therapy",
+      "websiteUrl": "https://www.normanregional.com/locations/ortho-central-physical-therapy/"
+    },
+    {
+      "businessName": "Fair Oaks Chiropractic",
+      "websiteUrl": "https://www.fairoakschirotx.com/"
+    },
+    {
+      "businessName": "Wilson County Chiropractic",
+      "websiteUrl": "https://wilsoncountychiropractic.net"
+    },
+    {
+      "businessName": "Ascent Physical Therapy & Performance",
+      "websiteUrl": "https://ascentphysicaltherapyokc.com/"
+    },
+    {
+      "businessName": "Momentum Physical Therapy",
+      "websiteUrl": "https://wegetyouhealthy.com/locations/floresville-physical-therapy/"
+    },
+    {
+      "businessName": "Premier Rehab Physical Therapy",
+      "websiteUrl": "https://www.premierrehab.org/"
+    },
+    {
+      "businessName": "Team Concept Rehabilitation",
+      "websiteUrl": "https://teamconceptrehab.com/"
+    },
+    {
+      "businessName": "Little Tesoros Therapy Services",
+      "websiteUrl": "https://littletesoros.com/"
+    },
+    {
+      "businessName": "Spero Rehab",
+      "websiteUrl": "https://sperorehab.com/"
+    },
+    {
+      "businessName": "Mosaic Dental Center",
+      "websiteUrl": "https://www.mosaicdentalcenter.com/"
+    },
+    {
+      "businessName": "Advanced Dental Care of Orlando",
+      "websiteUrl": "https://www.adc-fl.com/dentist-office/orlando-fl-32836"
+    },
+    {
+      "businessName": "SoDo Smiles Dentistry",
+      "websiteUrl": "https://www.sodosmilesdentistry.com/"
+    },
+    {
+      "businessName": "Hillcrest Dental",
+      "websiteUrl": "https://www.dentistincollegepark.com/"
+    },
+    {
+      "businessName": "Fine Dentistry Orlando",
+      "websiteUrl": "https://www.finedentistryorlando.com/"
+    },
+    {
+      "businessName": "NuLife Dental",
+      "websiteUrl": "https://mynulifedental.com/"
+    },
+    {
+      "businessName": "Strategic Dental Care",
+      "websiteUrl": "https://www.strategicdentalcare.com/"
+    },
+    {
+      "businessName": "Conway Oaks Dental",
+      "websiteUrl": "https://conwayoaksdental.com/"
+    },
+    {
+      "businessName": "Orlando Family & Cosmetic Dentistry",
+      "websiteUrl": "https://www.orlandofamilycosmeticdentistry.com/"
+    },
+    {
+      "businessName": "Premier Dental Care of East Orlando",
+      "websiteUrl": "https://www.premierdentalorlando.com/"
+    },
+    {
+      "businessName": "Orlando Dental Center",
+      "websiteUrl": "https://www.orlandodentalcenter.com/"
+    },
+    {
+      "businessName": "Dr. Phillips Dentistry",
+      "websiteUrl": "https://dentaldrphillips.com/"
+    },
+    {
+      "businessName": "Orlando Orthodontics",
+      "websiteUrl": "https://orlandoorthodontics.com/"
+    },
+    {
+      "businessName": "Dr. Dann Orthodontics",
+      "websiteUrl": "https://www.orthodrdann.com/"
+    },
+    {
+      "businessName": "Garcia Family Orthodontics",
+      "websiteUrl": "https://www.garciafamilyortho.com/"
+    },
+    {
+      "businessName": "BellaSmiles Orthodontics",
+      "websiteUrl": "https://bellasmilesortho.com/"
+    },
+    {
+      "businessName": "Carlyle Orthodontics",
+      "websiteUrl": "https://www.carlyleortho.com/"
+    },
+    {
+      "businessName": "Feather Touch Dental",
+      "websiteUrl": "https://www.atlantadentistmidtown.com/"
+    },
+    {
+      "businessName": "Henderson Mill Dental Care",
+      "websiteUrl": "https://hendersonmilldentalcare.com/"
+    },
+    {
+      "businessName": "Dentistry For Midtown",
+      "websiteUrl": "https://www.dentistryformidtown.com/"
+    },
+    {
+      "businessName": "Ramez F. Shamieh",
+      "websiteUrl": "https://shamiehlaw.com/"
+    },
+    {
+      "businessName": "Donivan Flowers",
+      "websiteUrl": "http://flowers-law.com"
+    },
+    {
+      "businessName": "Jason Oxner",
+      "websiteUrl": "https://x.com/justiacom"
+    },
+    {
+      "businessName": "Emery Brett Ledger",
+      "websiteUrl": "https://ledgerlaw.com/"
+    },
+    {
+      "businessName": "Jason B. Stephens",
+      "websiteUrl": "https://www.stephenslaw.com/fort-worth/"
+    },
+    {
+      "businessName": "Justin McMinn",
+      "websiteUrl": "https://www.mcminnlaw.com/"
+    },
+    {
+      "businessName": "Randy Sorrels",
+      "websiteUrl": "https://www.sorrelslaw.com/"
+    },
+    {
+      "businessName": "Patrick Daniel",
+      "websiteUrl": "https://patrickdaniellaw.com"
+    },
+    {
+      "businessName": "Aimée  Robert",
+      "websiteUrl": "https://www.robertlawgroup.com/"
+    },
+    {
+      "businessName": "Cory J.H. Crenshaw",
+      "websiteUrl": "http://crenshaw.law/"
+    },
+    {
+      "businessName": "Brian Foley",
+      "websiteUrl": "https://brianfoleylaw.com"
+    },
+    {
+      "businessName": "Cheryl Ann Wulf",
+      "websiteUrl": "https://www.wulf-law.com"
+    },
+    {
+      "businessName": "Ronald Dean Gresham",
+      "websiteUrl": "http://www.greshampc.com"
+    },
+    {
+      "businessName": "James Michael Moore",
+      "websiteUrl": "http://moore-firm.com"
+    },
+    {
+      "businessName": "Christopher Ryan Brasure",
+      "websiteUrl": "https://www.brasurelaw.com/"
+    },
+    {
+      "businessName": "Laura Ramos James",
+      "websiteUrl": "https://www.ramosjames.com"
+    },
+    {
+      "businessName": "Ryan Hamilton Zehl",
+      "websiteUrl": "https://www.zehllaw.com"
+    },
+    {
+      "businessName": "Mark L. Scroggins",
+      "websiteUrl": "https://www.scrogginslawgroup.com/"
+    },
+    {
+      "businessName": "Brett Christiansen",
+      "websiteUrl": "https://www.brett.law"
+    },
+    {
+      "businessName": "Southeast Plumbing & Gas, LLC",
+      "websiteUrl": "https://southeastplbg.com/"
+    },
+    {
+      "businessName": "Hallway Plumbing",
+      "websiteUrl": "https://hallwayplumbing.com/"
+    },
+    {
+      "businessName": "Campbell Plumbing and Mechanical Contractors Southeast, Inc.",
+      "websiteUrl": "https://campbellplumbing-mechanical.com/"
+    },
+    {
+      "businessName": "The A/C Guys",
+      "websiteUrl": "https://www.theacguysinc.net/"
+    },
+    {
+      "businessName": "Penco Electrical Contractors, INC.",
+      "websiteUrl": "https://www.pencoelectric.com/"
+    },
+    {
+      "businessName": "Premier Plumbing of Florida",
+      "websiteUrl": "https://www.mypremierfl.com/"
+    },
+    {
+      "businessName": "Comfort Atlanta Heating & Air",
+      "websiteUrl": "https://www.comfortatlanta.com/"
+    },
+    {
+      "businessName": "Southeast Electric",
+      "websiteUrl": "https://www.southeastelectric.com/"
+    },
+    {
+      "businessName": "Cary Plumbing Co.",
+      "websiteUrl": "https://www.caryplumbing.com/"
+    },
+    {
+      "businessName": "Kalos Services",
+      "websiteUrl": "https://www.kalosflorida.com/"
+    },
+    {
+      "businessName": "Superior Plumbing",
+      "websiteUrl": "https://www.superiorplumbing.com/"
+    },
+    {
+      "businessName": "Georgia Air Contractors",
+      "websiteUrl": "https://www.gaci.biz/"
+    },
+    {
+      "businessName": "Latta Plumbing Services",
+      "websiteUrl": "https://www.lattaplumbing.com/"
+    },
+    {
+      "businessName": "Morris-Jenkins",
+      "websiteUrl": "https://www.morrisjenkins.com/"
+    },
+    {
+      "businessName": "Superior Plumbing & Gas",
+      "websiteUrl": "https://superiorplumbingandgas.com/"
+    },
+    {
+      "businessName": "Tri-City Electrical Contractors, Inc.",
+      "websiteUrl": "https://www.tcelectric.com/"
+    },
+    {
+      "businessName": "Electrical Contractors of Georgia",
+      "websiteUrl": "https://electricalcga.com/"
+    },
+    {
+      "businessName": "Scott's Plumbing Company",
+      "websiteUrl": "https://www.scottsplumbing.net/"
+    },
+    {
+      "businessName": "Killman Heating & Air",
+      "websiteUrl": "https://killmanheatingandair.com/"
+    },
+    {
+      "businessName": "Palmetto Residential Electric",
+      "websiteUrl": "https://palmettoresidentialelectric.com/"
+    },
+    {
+      "businessName": "Southern Botanical",
+      "websiteUrl": "https://southernbotanical.com/"
+    },
+    {
+      "businessName": "Maldonado Landscaping",
+      "websiteUrl": "https://www.mnlsa.com/"
+    },
+    {
+      "businessName": "Clean Scapes",
+      "websiteUrl": "https://cleanscapes.net/"
+    },
+    {
+      "businessName": "Best of Texas Landscapes",
+      "websiteUrl": "https://bestoftexaslandscapes.com/"
+    },
+    {
+      "businessName": "Top Cut Lawn Services",
+      "websiteUrl": "https://topcutlawnservices.com/"
+    },
+    {
+      "businessName": "Florida Lawn Guys",
+      "websiteUrl": "https://floridalawnguys.com/"
+    },
+    {
+      "businessName": "Top Lawn Pros",
+      "websiteUrl": "https://toplawnpros.com/"
+    },
+    {
+      "businessName": "The Lawn Stylist",
+      "websiteUrl": "https://www.yelp.com/biz/the-lawn-stylist-charlotte"
+    },
+    {
+      "businessName": "Murray's Irrigation",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Flores Landscaping",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Ma Outdoor Services",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "A Cut Above Landscaping",
+      "websiteUrl": "https://cutabovelandscapingnc.com/"
+    },
+    {
+      "businessName": "Service Man Lawn Care & Exterior Service",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "JR Lawn, LLC",
+      "websiteUrl": "https://jrlawnllc.com/"
+    },
+    {
+      "businessName": "Mahogany Services",
+      "websiteUrl": "https://mahoganyservices.com/"
+    },
+    {
+      "businessName": "Pro Scape Miami LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Rain Che Kkyardz",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Superior Image Lawn Care & Maintenance",
+      "websiteUrl": "https://www.superiorimagelc.com/"
+    },
+    {
+      "businessName": "Tree Tactic LLC",
+      "websiteUrl": "https://treetactic.com/"
+    },
+    {
+      "businessName": "Midwest Engine Service",
+      "websiteUrl": "https://www.midwestengineservice.com/"
+    },
+    {
+      "businessName": "Scott's Finishing Touch",
+      "websiteUrl": "https://www.scottsfinishing.com/"
+    },
+    {
+      "businessName": "Rock Hill Automotive",
+      "websiteUrl": "https://rockhillautomotive.com/"
+    },
+    {
+      "businessName": "Precision Detailing & Coatings",
+      "websiteUrl": "https://www.precisiondetailingmb.com/"
+    },
+    {
+      "businessName": "Midwest Auto Clinic",
+      "websiteUrl": "https://www.midwestautoclinic.com/"
+    },
+    {
+      "businessName": "Midwest Detailing and Auto Reconditioning",
+      "websiteUrl": "https://midwestdetailmn.com/"
+    },
+    {
+      "businessName": "Maywood Automotive",
+      "websiteUrl": "https://www.maywoodautorepair.com/"
+    },
+    {
+      "businessName": "Mid-Ohio Automotive, LLC",
+      "websiteUrl": "https://www.midohioautomotive.com/"
+    },
+    {
+      "businessName": "Midwest Auto Care & Detailing",
+      "websiteUrl": "https://midwestautodetailing.com/"
+    },
+    {
+      "businessName": "A&D Auto Repair Inc.",
+      "websiteUrl": "https://www.adrepairinc.com/"
+    },
+    {
+      "businessName": "Discount Auto Repair Inc",
+      "websiteUrl": "https://www.discountautorepairin.com/"
+    },
+    {
+      "businessName": "Bill's Auto Tech Inc.",
+      "websiteUrl": "https://www.billsautotech.com/"
+    },
+    {
+      "businessName": "Dallas Auto Repair Inc",
+      "websiteUrl": "https://www.dallasautorepairinc.com/"
+    },
+    {
+      "businessName": "Premier Auto Detailing SC",
+      "websiteUrl": "https://www.premierautodetailingsc.com/"
+    },
+    {
+      "businessName": "Fort Mitchell Garage",
+      "websiteUrl": "https://www.fortmitchellgarage.com/"
+    },
+    {
+      "businessName": "Vink's Auto Detail",
+      "websiteUrl": "https://www.vinksautodetail.com/"
+    },
+    {
+      "businessName": "The Auto Shop",
+      "websiteUrl": "https://www.theautoshopjc.com/"
+    },
+    {
+      "businessName": "The Mechanic",
+      "websiteUrl": "https://www.themechanicnashville.com/"
+    },
+    {
+      "businessName": "Auto Repair Specialists, Inc.",
+      "websiteUrl": "https://www.autorepairspecialistsinc.com/"
+    },
+    {
+      "businessName": "Central Missouri Detailing LLC",
+      "websiteUrl": "https://centralmissouridetailing.com/"
+    },
+    {
+      "businessName": "Delectable Hair Designs Beauty Salon",
+      "websiteUrl": "https://delectablehairdesigns.square.site/"
+    },
+    {
+      "businessName": "Monroe Styles",
+      "websiteUrl": "https://monroestyles.com/"
+    },
+    {
+      "businessName": "GLOW BY SKYE",
+      "websiteUrl": "https://www.glowbyskye.com/"
+    },
+    {
+      "businessName": "Herstylez Hair Studio",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "The Real Barbertologist (Damon)",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Sincerely By: KENDRICK",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Hazel Elaine Grooming Salon",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "NeishaNeishStyles",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Keisha Clay Styles",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Custom Extend, LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Sade Sapphire",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Rebel locs",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "BelleAmore Organic beauty",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Dreadication",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Renee The Hair Pro",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Therapy Beauty Loft Atlanta LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Hair Juku Studios",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Faces by Isis",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Grow House Salon",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Jermaine Carten",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "The Brunch Bus",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Yummy’s Hot Chicken",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Dripped Birria",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "BunSlut",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Soul Good",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Stick Talk Cajun-Hibachi",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Houston Sauce Pit",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Mingo’s Latin Kitchen",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Oh My Gogi!",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Tacos Tierra Caliente",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Abu Omar Halal",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Tasty Arepa",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Cousins Maine Lobster",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "The Turkey Leg Hut",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "The Burger Joint",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Big 6 Bar B Que",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Boombox Taco",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Cinco Vidas Coffee Company",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "El Guajillo",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Hangry Pinoy",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "DJ & Lindsey Real Estate",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Florida Homes Realty & Mortgage LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Kira Sikes Realtor",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "JPAR City & Beach",
+      "websiteUrl": "https://Expert Home Advisors"
+    },
+    {
+      "businessName": "Momentum Realty",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "CrossView Realty",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Lily Tran - Jacksonville, FL Realtor",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Anchored Real Estate Group",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Root Realty",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Jax Listing Sisters - Brooke and Tammy",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Chad and Sandy Real Estate Group",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Shantrece Thomas",
+      "websiteUrl": "https://Real Estate Advisor"
+    },
+    {
+      "businessName": "David Freed Realtor",
+      "websiteUrl": "https://Miami Is Home"
+    },
+    {
+      "businessName": "Ivan and Mike Team",
+      "websiteUrl": "https://Luxury Real Estate Experts / Advisors"
+    },
+    {
+      "businessName": "Miami Realty Solution Group",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Blackbook Properties",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Jose Fuentes Real Estate Broker Fortune Christie's International",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Louis Urbina, PA - Realtor Associate at Avanti Way Realty in Miami, FL",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Chariff Realty Group Commercial Miami Real Estate",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "LG Realty Group Inc. Miami Luxury Real Estate",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "HouseClean LA",
+      "websiteUrl": "https://www.housecleanlosangeles.com/"
+    },
+    {
+      "businessName": "Los Angeles House Cleaners",
+      "websiteUrl": "https://www.losangeleshousecleaners.net/"
+    },
+    {
+      "businessName": "Merry Maids Los Angeles",
+      "websiteUrl": "https://merrymaids.com/home-cleaners-los-angeles-ca"
+    },
+    {
+      "businessName": "Casa Fantastic Cleaning Services",
+      "websiteUrl": "https://www.casafantasticcleaningservicesinc.com/"
+    },
+    {
+      "businessName": "LA Maids",
+      "websiteUrl": "https://www.lamaids.us/"
+    },
+    {
+      "businessName": "MaidPro Los Angeles",
+      "websiteUrl": "https://www.maidpro.com/dtla"
+    },
+    {
+      "businessName": "Tidy Los Angeles",
+      "websiteUrl": "https://www.tidy.com/locations/los-angeles-ca"
+    },
+    {
+      "businessName": "Rocket Maids LA",
+      "websiteUrl": "https://rocketmaidsla.com/"
+    },
+    {
+      "businessName": "NYC House Cleaners",
+      "websiteUrl": "https://nychousecleaners.net/"
+    },
+    {
+      "businessName": "Maid Marines",
+      "websiteUrl": "https://maidmarines.com/"
+    },
+    {
+      "businessName": "NY Home Cleaning Service",
+      "websiteUrl": "https://nyhomecleaningservice.com/"
+    },
+    {
+      "businessName": "The NYC Maid",
+      "websiteUrl": "https://www.thenycmaid.com/"
+    },
+    {
+      "businessName": "White Glove Cleaner",
+      "websiteUrl": "https://whiteglovecleaner.com/"
+    },
+    {
+      "businessName": "Sweep Home Chicago",
+      "websiteUrl": "https://www.sweephome.com/"
+    },
+    {
+      "businessName": "Imagine Maids",
+      "websiteUrl": "https://imaginemaids.com/"
+    },
+    {
+      "businessName": "Sparkly Maid Chicago",
+      "websiteUrl": "https://sparklymaid.com/"
+    },
+    {
+      "businessName": "Sapphire Home Cleaning",
+      "websiteUrl": "https://www.sapphirehomecleaning.com/"
+    },
+    {
+      "businessName": "Molly Maid Chicago",
+      "websiteUrl": "https://www.mollymaid.com/locations/illinois/chicago-gold-coast/"
+    },
+    {
+      "businessName": "Mum's Cleaning Services",
+      "websiteUrl": "https://mumscleaningserviceschicago.com/"
+    },
+    {
+      "businessName": "Pawlished Paws Boutique & Spa",
+      "websiteUrl": "https://www.petgroomingriversideca.com/"
+    },
+    {
+      "businessName": "Paws & Claws Veterinary Hospital",
+      "websiteUrl": "https://www.pcmvet.com/"
+    },
+    {
+      "businessName": "The Dog House Pet Salon",
+      "websiteUrl": "https://www.thedoghouseps.com/"
+    },
+    {
+      "businessName": "PupLuxe Grooming",
+      "websiteUrl": "https://pupluxegrooming.com/"
+    },
+    {
+      "businessName": "Hyde Park Veterinary Clinic",
+      "websiteUrl": "https://www.hydeparkvet.com/"
+    },
+    {
+      "businessName": "Unleashed Spa",
+      "websiteUrl": "https://unleashedspa.com/"
+    },
+    {
+      "businessName": "Inwood Animal Clinic",
+      "websiteUrl": "https://inwoodanimalclinic.com/"
+    },
+    {
+      "businessName": "Oh So Pretty Pet Spa",
+      "websiteUrl": "https://ohsopretty.net/"
+    },
+    {
+      "businessName": "Glades Pike Veterinary Hospital",
+      "websiteUrl": "https://gladespikevet.com/"
+    },
+    {
+      "businessName": "The UpScale Tail Pet Grooming Salon",
+      "websiteUrl": "https://theupscaletail.com/"
+    },
+    {
+      "businessName": "Medical District Veterinary Clinic",
+      "websiteUrl": "https://www.medicaldistrictvet.com/"
+    },
+    {
+      "businessName": "Awesome Paws Pet Salon",
+      "websiteUrl": "https://www.awesomepawspetsalon.com/"
+    },
+    {
+      "businessName": "Broadview Animal & Bird Hospital",
+      "websiteUrl": "https://broadviewpetmedicalcenter.com/"
+    },
+    {
+      "businessName": "Furry Friends – Gentle Pet Grooming",
+      "websiteUrl": "https://furryfriendsgroomer.com/"
+    },
+    {
+      "businessName": "Collier Animal Hospital",
+      "websiteUrl": "https://collierah.com/"
+    },
+    {
+      "businessName": "The Wizard of Paws Pet Salon, LLC",
+      "websiteUrl": "https://thewizardofpaws.com/"
+    },
+    {
+      "businessName": "Salish Veterinary Hospital",
+      "websiteUrl": "https://www.salishvet.com/"
+    },
+    {
+      "businessName": "Pawmper Fluffy",
+      "websiteUrl": "https://pawmperfluffy.com/"
+    },
+    {
+      "businessName": "Wags Pet Spa & Mobile Grooming",
+      "websiteUrl": "https://www.wagstx.com/"
+    },
+    {
+      "businessName": "Washington Heights Veterinary Clinic",
+      "websiteUrl": "https://www.whvetclinic.com/"
+    },
+    {
+      "businessName": "Star Tutoring Centers",
+      "websiteUrl": "https://www.startutoringcenters.com/"
+    },
+    {
+      "businessName": "Sylvan Learning of Dallas & Highland Park",
+      "websiteUrl": "https://www.sylvanlearning.com/locations/us/tx/dallas-tutoring/dallas-highland-park/"
+    },
+    {
+      "businessName": "New York Tutoring Center",
+      "websiteUrl": "https://nytc.info/"
+    },
+    {
+      "businessName": "The City Tutors",
+      "websiteUrl": "https://www.thecitytutors.org/"
+    },
+    {
+      "businessName": "Boston Tutoring Center",
+      "websiteUrl": "https://www.bostontutoringcenter.com/"
+    },
+    {
+      "businessName": "Tutoring Club of The Heights",
+      "websiteUrl": "https://tutoringclub.com/theheightstx/"
+    },
+    {
+      "businessName": "Mathnasium of Santa Monica",
+      "websiteUrl": "https://www.mathnasium.com/math-centers/santamonica"
+    },
+    {
+      "businessName": "Chicago Home Tutor",
+      "websiteUrl": "https://chicagohometutor.com/"
+    },
+    {
+      "businessName": "After School Philly",
+      "websiteUrl": "https://afterschoolphilly.com/"
+    },
+    {
+      "businessName": "Tutor Doctor Phoenix-Scottsdale",
+      "websiteUrl": "https://www.tutordoctor.com/phoenix/"
+    },
+    {
+      "businessName": "LA Tutors 123",
+      "websiteUrl": "https://www.latutors123.com/"
+    },
+    {
+      "businessName": "Prep Academy Tutors of San Antonio",
+      "websiteUrl": "https://prepacademytutors.com/location/sanantonio/"
+    },
+    {
+      "businessName": "Tutoring Chicago",
+      "websiteUrl": "https://www.tutoringchicago.org/"
+    },
+    {
+      "businessName": "YMCA of Metro Chicago",
+      "websiteUrl": "https://www.ymcachicago.org/early-learning-education/school-age-care/"
+    },
+    {
+      "businessName": "Powerful Minds Tutoring",
+      "websiteUrl": "https://powerfulmindstutoring.com/"
+    },
+    {
+      "businessName": "Thrive Tutoring Denver",
+      "websiteUrl": "https://www.thrivetutoringdenver.com/"
+    },
+    {
+      "businessName": "University Tutoring - Seattle",
+      "websiteUrl": "https://universitytutoring.com/"
+    },
+    {
+      "businessName": "Northwest Reading Clinic, Inc.",
+      "websiteUrl": "https://northwestreadingclinic.com/"
+    },
+    {
+      "businessName": "Northstar Tutoring",
+      "websiteUrl": "https://www.northstartutoring.org/"
+    },
+    {
+      "businessName": "YMCA of Metro Atlanta",
+      "websiteUrl": "https://ymcaatlanta.org/learning/afterschool"
+    },
+    {
+      "businessName": "Shepherd Roofing & Renovations",
+      "websiteUrl": "https://www.shepherdroofingrenovations.com/"
+    },
+    {
+      "businessName": "White Rock Roofing",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "United Roofing & General Contractors",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Maze Roofing & Construction",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Arrington Roofing Company, Inc",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Titan Pros Roofing",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Everline Roofing",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Myriad Roofing & Construction LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Swordsmen Roofing & Construction, LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Tice Enterprises, LTD",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Lone Star Roofing & General Contractors, LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "MFI Roofing",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Priority Contracting and Roofing",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Sun Commercial Roofs, Inc.",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "X Roofing & Solar",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Gibraltar Building Accessories Division",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "Texas Premier Roofing LLC",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "SRS Distribution - Dallas Drywall",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "The Warner Company",
+      "websiteUrl": "NULL"
+    },
+    {
+      "businessName": "ABC Supply Co., Inc. #041 Dallas",
+      "websiteUrl": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "businessName\twebsiteUrl\nMyDojo Martial Arts\thttps://mydojoma.com\nYaeger Self Defense of America\thttps://yaegerssda.com\nZolamind Counseling\thttps://zolamindcounseling.com\nPolicyPilot\thttps://policypilot.life\nDojoFlow\thttps://dojo-flow.ai\nHomeUp Services\thttps://tryhomeupservices.com\nBlueTide Financial\thttps://bluetidefinancial.com\nDon Bar Bakery\thttps://donbarbakery.com\nGrapheneX by Construction X\thttps://graphenex.net\nGreen Bahamas Life\thttps://greenbahamas.life\nAladdin Kebab Grill\thttps://aladdinkebob.com\nStitched with Love\thttps://stitchedshop.store\nASLS Foundation\thttps://aslsfoundation.org\nStylist Factory\thttps://stylistfactory.com\nHach Ki Cafe\thttps://hachkicafe.com\nTexas Karate Institute\thttps://texaskarateinstitute.com/\nHouston Karate Academy\thttps://houstonkarate.com/\nSemper Fortis Jiu Jitsu\thttp://www.texasbjj.com/\nHouston Karate and Self Defense Center\thttps://www.houstonkarate.org/\nBushido Martial Arts\thttps://www.bushidomartialarts.net/\nHill Country Karate\thttps://www.hckarate.com/\nCorpus Christi Downtown Karate\thttps://ccdk.weebly.com/\nAcademy of Classical Karate\thttps://www.planodojo.com/\nArlington Kicks\thttps://arlingtonkicks.com/\nMartial Arts of Waco\thttps://martialartswaco.com/\nUnited Martial Arts Katy\thttps://unitedmakaty.com/\nMidtown MMA Houston\thttps://www.midtown-mma-houston.com/\nSix Blades Jiu-Jitsu Fort Worth\thttps://jiujitsufortworth.com/\nDFW Combat Co.\thttps://www.dfwcombat.com/\n144 Academy\thttps://144academy.com/\nAustin Karate Academy\thttps://austinkarateacademy.com/\nMU DO MARTIAL ARTS\thttps://mudomartialarts.com/\nSaldivar Martial Arts\thttps://saldivarmartialarts.com/\nHenderson's Martial Arts\thttps://hendersonsata.com/\nChampionship Martial Arts El Paso\thttps://championshipmartialartselpaso.com/\nJohn Wai Martial Arts Academy\thttps://johnwaimartialarts.com/\nAthlas Training Team\thttps://attftl.com/best-martial-arts-school-in-florida/\nMartial Arts University\thttps://772kick.com/\nVictory Martial Arts\thttps://www.victoryma.com/school/clermont-florida/\nTiger-Rock Martial Arts Academy\thttps://tigerrockmartialarts.com/SpringHill\nFlorida Karate Academy\thttps://floridakarateacademy.com/\nGrappling Mastery\thttps://grapplingmastery.com/\nBram Frank Online\tNULL\nDanha Kai Samurai Dojo / EP System Self Defense\tNULL\nJacksonville Brazilian Jiu-Jitsu\tNULL\nPérez Silalai Martial Arts\tNULL\nUSK Karate Academy Coral Springs\tNULL\nYesha Ministries Taekwondo\tNULL\nKids Love Martial Arts Jupiter FL\tNULL\nDueling Dragons Martial Arts\tNULL\nJudokickbox JKB\tNULL\nMedina Martial Arts Training Center\tNULL\nOrlando BJJ and Muay Thai, USA\tNULL\n10th Planet Jiu Jitsu Orange Park\tNULL\nCalifornia School of Martial Arts\thttps://calsma.com/\nPremier Martial Arts Folsom\thttps://premiermartialarts.com/geo/united-states/california/\nInosanto Academy of Martial Arts\thttps://inosanto.com/\nOne Martial Arts San Francisco\thttps://onemartialarts.com/\nCombatives Academy\thttps://www.combativesacademy.com/\nCalifornia Karate Academy Vista\thttps://ourkarateacademy.com/\nNRK Karate\thttps://www.nrkkarate.com/\nJun Chong Martial Arts Academy\thttps://junchongmartialarts.com/\nU.S. Taekwondo Academy - Lakewood\thttps://jgparksmartialarts.com/\nVilla's Taekwondo\thttps://villastaekwondo.com/\nSky Family Taekwondo\thttps://skyfamilytkd.com/\nAtos Jiu-Jitsu HQ\thttps://atosjiujitsuhq.com/\nNorthern California Karate Academy\thttps://www.norcalkarateacademy.com/\nSilicon Valley Karate\thttps://www.svkarate.com/\nTracy's Karate & Mixed Martial Arts Studios\thttp://www.tracyskaratestudios.com/\nBenicia Shotokan Karate Academy\thttp://www.shotokankarate.net/\nSan Diego Brazilian Jiu-Jitsu\thttps://sdbjj.com/\nKrav Maga Institute\thttps://kravmagainstitutenyc.com/\nFive Points Academy\thttps://www.academyfivepoints.com/\nManhattan Shaolin Kungfu & Qigong\thttps://www.shaolinnewyork.com/\nDachengdao Kung-Fu\thttps://dachengdaokungfu.com/\nUSA Shaolin Temple\thttps://usashaolintemple.com/\nAnderson's Martial Arts Academy\thttps://www.andersonsmartialarts.com/\nGenshinkan Aikido of Manhattan\thttps://www.genaikido.com/\nPak Mei Martial Arts Association\thttp://www.pakmeinyc.net/\nUnity Jiu Jitsu School\thttps://unityjiujitsu.com/\nBrooklyn Wing Tsun\thttps://brooklynkungfu.com/\nHwang Karate Studio\thttps://soobahk1.wixsite.com/website\nCruz Mixed Martial Arts\thttps://cruzmma.com/\nMartinez Martial Arts and Family Fitness\tNULL\nLee Gar Lun Ving Tsun\tNULL\nDuncan Martial Arts\thttps://www.duncanmartialarts.com/\nBlue Life Karate & Kickboxing Centers\tNULL\nAl Bender's Kung Fu Academy\tNULL\nTeam Jucao Newark Brazilian Jiu Jitsu\tNULL\nBudo Quest Martial Arts\tNULL\nUnion UTA Martial Arts\thttps://www.unionuta.com/\nCrossFit Austin\thttps://crossfitaustin.com/\nVintage CrossFit\thttps://www.vintagecrossfit.com/\nStudio Yoga\thttps://www.studioyogabcs.com/\nBlack Swan Yoga\thttps://www.blackswanyoga.com/\nCharge Fitness\thttps://charge.fitness/\nCrossFit Katy\thttps://www.crossfitkaty.com/\nOak + Lotus Yoga\thttps://www.oakandlotusyoga.com/\nMethod Pilates\thttps://www.methodpilates.com/\nHEAT Bootcamp\thttps://heatbootcamp.com/\nAngry Bee CrossFit\thttps://www.angrybeeplano.com/\nStudio Satya\thttps://www.studiosatya.com/\nTimberline Fitness\thttps://timberlinefitness.com/\nPure Pilates Austin\thttps://www.purepilatesaustin.com/\nJungle Studio Fitness\thttps://junglestudiofitness.com/\nCrossFit Live Oak\thttps://www.crossfitliveoak.com/\nFIT180\thttps://fit180.com/\nSoul Tribes Yoga + Meditation\thttps://soultribeshtx.com/\nD-Town CrossFit\thttps://dtowncrossfit.com/\nThe Core Lab Pilates\thttps://www.thecorelabpilates.com/\nFit Body Boot Camp Richardson\thttps://fitbodybootcamp.com/locations/richardson-tx/\nCrossFit Winter Park\thttps://www.crossfitwinterpark.com/\nBODYBAR Pilates - Orlando SODO\thttps://bodybarpilates.com/studios/orlando-sodo/\nAHANA Yoga Studio\thttps://www.ahanayoga.com/\nCrossFit Fort Lauderdale\thttps://www.crossfitfortlauderdale.com/\nClub Pilates SODO\thttps://www.clubpilates.com/\nHILI Fitness\thttps://hili.fitness/\nKodawari Studios\thttps://www.kodawaristudios.com/\nPure Skill Fitness\thttps://pureskillfitness.com/\nCore Fitness Miami\thttps://corefitnessmiami.com/\nCrossFit Orlando\thttps://crossfitorlando.com/\nCrossFit Yellow Falcon\thttps://www.crossfityellowfalcon.com/\nSymmetry Fitness & Performance\thttps://www.mysymmetryfitness.com/\nElevate Yoga Center\thttps://www.elevateyogacenter.com/\nCrossFit Hyde Park\thttps://www.crossfithydepark.com/\nYogaMix Orlando\thttps://www.yogamixorlando.com/\nSolace Pilates and Yoga\thttps://solaceorlando.com/\nSoFit Personal Training Orlando\thttps://joinsofit.com/\nMiami Pilates Studio\thttps://www.miamipilates.co/\nRed Skies Yoga\thttps://redskiesyoga.com/\nSheppard Method Pilates\thttps://sheppardmethodpilates.com/\nMalibu Colony Pilates\thttps://malibucolonypilates.com/\nPilates Body Fusion\tNULL\nThe Body Process\tNULL\nThermal Horizons Yoga and Wellness Center\tNULL\nLagree Vibes\thttps://lagreevibes.com/\nHYPE Fitness\thttp://www.hypefitness.com/\nOblix Studio\tNULL\nTruFusion West Hollywood\tNULL\nMotivate - Sunset\tNULL\nBünda\tNULL\nGoodwin Studios\tNULL\nStudio Elevate\tNULL\nLIFT Society - Studio City\tNULL\nU Plus Fit\tNULL\nStudio 45\thttps://www.studio45.com/\nRowdyBox\tNULL\nStudio 3 Fitness\tNULL\nSeattle Strength & Performance\thttps://www.seattlesp.com/\nFLX\tNULL\nSouthpaw Boxing Club\thttps://www.southpawboxingclub.com/\nPilger's Old Skool Boxing & Fitness Academy\thttps://www.osfsfa.com/\nTroy Kickboxing Outfit\thttps://www.troykickboxingoutfit.com/\nPhantom Kickboxing and Fitness\thttps://phantomkickboxing.com/\nChicago Muay Thai Kickboxing Club\thttps://www.chicagokickboxingclub.com/\nHeadbangers Kickboxing Academy\thttps://www.headbangerskba.com/\nAmerican Top Team of Indianapolis\thttps://www.attindianapolis.com/\nPopeye's Boxing Gym, and Fitness Center\thttps://popeyesboxinggym.com/\nLegacy Boxing & Fitness\thttps://www.legacyboxinghq.com/\nThe Michigan Institute of Athletics\thttps://instituteofathletics.com/\nKickHouse Park Ridge\thttps://kickhouseparkridge.com/\nWorld Kickboxing Academy\thttps://www.worldkickboxingacademy.com/\nRonin Training Center\thttps://www.ronintrainingcenter.com/\nTriumph Boxing\thttps://www.triumphboxingma.com/\nVictorious MMA\thttps://www.victoriousmma.com/\nSam Colonna Boxing Gym\thttps://samcolonnaboxing.com/\nUnanimous Boxing Gym\thttps://www.unanimousboxinggym.com/\nInvicta KickboxingX\thttps://invictakx.com/\nKings Gym\thttps://kingsgymohio.com/boxing/\nA-Square Fight Club\thttps://www.asquarefightclub.com/\nDivine Dance Studio\thttps://divinedancestudio.com/\nSouthern Strutt Dance Studio\thttps://www.southernstruttdance.com/\nGeorgia Academy of Dance & the Performing Arts\thttps://www.gadance.com/\nFlorida Dance Workshop\thttps://floridadanceworkshop.com/\nNorth Carolina Dance Institute\thttps://www.ncdanceinstitute.com/\nSouth Carolina Dance Company\thttps://www.southcarolinadancecompany.com/\nAlabama Dance Academy\thttps://www.alabamadanceacademy.com/\nLexington Dance Factory\thttps://www.lexingtondancefactory.com/\nVirginia Dance Center\thttps://www.vadancecenter.com/\nRock City Dance Center\thttps://www.rcdancecenter.com/littlerock\nAlban Arts Academy\thttps://www.albanartscenter.com/alban-arts-academy/\nDance Theater of Florida\thttps://www.dancetheaterofflorida.com/\nDance Moves of Charleston\thttps://dancemovesofcharleston.com/\nGeorgia Dance Conservatory\thttps://www.georgiadance.com/\n3D Motion Dance Center\thttps://www.3dmotiondance.com/\nFootworks Dance Studio\thttps://www.footworksdancestudio.com/\nDancecdpa\thttps://www.dancecdpa.com/\nCC & Co. Dance Complex\thttps://cccodance.com/\nCK Dance Theatre\thttps://www.ckdancetheatre.com/\nUpstage Dance Centre\thttps://www.udc.dance/\nTexas Clinic of Chiropractic\thttps://texasclinicnb.com/\nAmerican Chiropractic Clinics\thttps://www.american-chiropractic.com/\nKareClinic Chiropractic & Rehab\thttps://kareclinic.com/\nOklahoma Physical Therapy\thttps://oklahomaphysicaltherapy.com/\nOyler Chiropractic Clinic\thttps://www.oylerchiropracticclinic.com/\nThe Movement Clinic\thttps://tmcpt.com/\nAnthony Medical & Chiropractic Center\thttps://www.anthonychiro.com/\nUptown Chiropractic\thttps://www.uptownchiropractic.com/\nTherapy Fit Physical Therapy\thttps://therapyfitpt.com/\nShepard Chiropractic Clinic\thttps://shepardchiropracticclinic.com/\nGarlett Chiropractic Clinic\thttps://garlett.com/\nOrtho Central Physical Therapy\thttps://www.normanregional.com/locations/ortho-central-physical-therapy/\nFair Oaks Chiropractic\thttps://www.fairoakschirotx.com/\nWilson County Chiropractic\thttps://wilsoncountychiropractic.net\nAscent Physical Therapy & Performance\thttps://ascentphysicaltherapyokc.com/\nMomentum Physical Therapy\thttps://wegetyouhealthy.com/locations/floresville-physical-therapy/\nPremier Rehab Physical Therapy\thttps://www.premierrehab.org/\nTeam Concept Rehabilitation\thttps://teamconceptrehab.com/\nLittle Tesoros Therapy Services\thttps://littletesoros.com/\nSpero Rehab\thttps://sperorehab.com/\nMosaic Dental Center\thttps://www.mosaicdentalcenter.com/\nAdvanced Dental Care of Orlando\thttps://www.adc-fl.com/dentist-office/orlando-fl-32836\nSoDo Smiles Dentistry\thttps://www.sodosmilesdentistry.com/\nHillcrest Dental\thttps://www.dentistincollegepark.com/\nFine Dentistry Orlando\thttps://www.finedentistryorlando.com/\nNuLife Dental\thttps://mynulifedental.com/\nStrategic Dental Care\thttps://www.strategicdentalcare.com/\nConway Oaks Dental\thttps://conwayoaksdental.com/\nOrlando Family & Cosmetic Dentistry\thttps://www.orlandofamilycosmeticdentistry.com/\nPremier Dental Care of East Orlando\thttps://www.premierdentalorlando.com/\nOrlando Dental Center\thttps://www.orlandodentalcenter.com/\nDr. Phillips Dentistry\thttps://dentaldrphillips.com/\nOrlando Orthodontics\thttps://orlandoorthodontics.com/\nDr. Dann Orthodontics\thttps://www.orthodrdann.com/\nGarcia Family Orthodontics\thttps://www.garciafamilyortho.com/\nBellaSmiles Orthodontics\thttps://bellasmilesortho.com/\nCarlyle Orthodontics\thttps://www.carlyleortho.com/\nFeather Touch Dental\thttps://www.atlantadentistmidtown.com/\nHenderson Mill Dental Care\thttps://hendersonmilldentalcare.com/\nDentistry For Midtown\thttps://www.dentistryformidtown.com/\nRamez F. Shamieh\thttps://shamiehlaw.com/\nDonivan Flowers\thttp://flowers-law.com\nJason Oxner\thttps://x.com/justiacom\nEmery Brett Ledger\thttps://ledgerlaw.com/\nJason B. Stephens\thttps://www.stephenslaw.com/fort-worth/\nJustin McMinn\thttps://www.mcminnlaw.com/\nRandy Sorrels\thttps://www.sorrelslaw.com/\nPatrick Daniel\thttps://patrickdaniellaw.com\nAimée  Robert\thttps://www.robertlawgroup.com/\nCory J.H. Crenshaw\thttp://crenshaw.law/\nBrian Foley\thttps://brianfoleylaw.com\nCheryl Ann Wulf\thttps://www.wulf-law.com\nRonald Dean Gresham\thttp://www.greshampc.com\nJames Michael Moore\thttp://moore-firm.com\nChristopher Ryan Brasure\thttps://www.brasurelaw.com/\nLaura Ramos James\thttps://www.ramosjames.com\nRyan Hamilton Zehl\thttps://www.zehllaw.com\nMark L. Scroggins\thttps://www.scrogginslawgroup.com/\nBrett Christiansen\thttps://www.brett.law\nSoutheast Plumbing & Gas, LLC\thttps://southeastplbg.com/\nHallway Plumbing\thttps://hallwayplumbing.com/\nCampbell Plumbing and Mechanical Contractors Southeast, Inc.\thttps://campbellplumbing-mechanical.com/\nThe A/C Guys\thttps://www.theacguysinc.net/\nPenco Electrical Contractors, INC.\thttps://www.pencoelectric.com/\nPremier Plumbing of Florida\thttps://www.mypremierfl.com/\nComfort Atlanta Heating & Air\thttps://www.comfortatlanta.com/\nSoutheast Electric\thttps://www.southeastelectric.com/\nCary Plumbing Co.\thttps://www.caryplumbing.com/\nKalos Services\thttps://www.kalosflorida.com/\nSuperior Plumbing\thttps://www.superiorplumbing.com/\nGeorgia Air Contractors\thttps://www.gaci.biz/\nLatta Plumbing Services\thttps://www.lattaplumbing.com/\nMorris-Jenkins\thttps://www.morrisjenkins.com/\nSuperior Plumbing & Gas\thttps://superiorplumbingandgas.com/\nTri-City Electrical Contractors, Inc.\thttps://www.tcelectric.com/\nElectrical Contractors of Georgia\thttps://electricalcga.com/\nScott's Plumbing Company\thttps://www.scottsplumbing.net/\nKillman Heating & Air\thttps://killmanheatingandair.com/\nPalmetto Residential Electric\thttps://palmettoresidentialelectric.com/\nSouthern Botanical\thttps://southernbotanical.com/\nMaldonado Landscaping\thttps://www.mnlsa.com/\nClean Scapes\thttps://cleanscapes.net/\nBest of Texas Landscapes\thttps://bestoftexaslandscapes.com/\nTop Cut Lawn Services\thttps://topcutlawnservices.com/\nFlorida Lawn Guys\thttps://floridalawnguys.com/\nTop Lawn Pros\thttps://toplawnpros.com/\nThe Lawn Stylist\thttps://www.yelp.com/biz/the-lawn-stylist-charlotte\nMurray's Irrigation\tNULL\nFlores Landscaping\tNULL\nMa Outdoor Services\tNULL\nA Cut Above Landscaping\thttps://cutabovelandscapingnc.com/\nService Man Lawn Care & Exterior Service\tNULL\nJR Lawn, LLC\thttps://jrlawnllc.com/\nMahogany Services\thttps://mahoganyservices.com/\nPro Scape Miami LLC\tNULL\nRain Che Kkyardz\tNULL\nSuperior Image Lawn Care & Maintenance\thttps://www.superiorimagelc.com/\nTree Tactic LLC\thttps://treetactic.com/\nMidwest Engine Service\thttps://www.midwestengineservice.com/\nScott's Finishing Touch\thttps://www.scottsfinishing.com/\nRock Hill Automotive\thttps://rockhillautomotive.com/\nPrecision Detailing & Coatings\thttps://www.precisiondetailingmb.com/\nMidwest Auto Clinic\thttps://www.midwestautoclinic.com/\nMidwest Detailing and Auto Reconditioning\thttps://midwestdetailmn.com/\nMaywood Automotive\thttps://www.maywoodautorepair.com/\nMid-Ohio Automotive, LLC\thttps://www.midohioautomotive.com/\nMidwest Auto Care & Detailing\thttps://midwestautodetailing.com/\nA&D Auto Repair Inc.\thttps://www.adrepairinc.com/\nDiscount Auto Repair Inc\thttps://www.discountautorepairin.com/\nBill's Auto Tech Inc.\thttps://www.billsautotech.com/\nDallas Auto Repair Inc\thttps://www.dallasautorepairinc.com/\nPremier Auto Detailing SC\thttps://www.premierautodetailingsc.com/\nFort Mitchell Garage\thttps://www.fortmitchellgarage.com/\nVink's Auto Detail\thttps://www.vinksautodetail.com/\nThe Auto Shop\thttps://www.theautoshopjc.com/\nThe Mechanic\thttps://www.themechanicnashville.com/\nAuto Repair Specialists, Inc.\thttps://www.autorepairspecialistsinc.com/\nCentral Missouri Detailing LLC\thttps://centralmissouridetailing.com/\nDelectable Hair Designs Beauty Salon\thttps://delectablehairdesigns.square.site/\nMonroe Styles\thttps://monroestyles.com/\nGLOW BY SKYE\thttps://www.glowbyskye.com/\nHerstylez Hair Studio\tNULL\nThe Real Barbertologist (Damon)\tNULL\nSincerely By: KENDRICK\tNULL\nHazel Elaine Grooming Salon\tNULL\nNeishaNeishStyles\tNULL\nKeisha Clay Styles\tNULL\nCustom Extend, LLC\tNULL\nSade Sapphire\tNULL\nRebel locs\tNULL\nBelleAmore Organic beauty\tNULL\nDreadication\tNULL\nRenee The Hair Pro\tNULL\nTherapy Beauty Loft Atlanta LLC\tNULL\nHair Juku Studios\tNULL\nFaces by Isis\tNULL\nGrow House Salon\tNULL\nJermaine Carten\tNULL\nThe Brunch Bus\tNULL\nYummy’s Hot Chicken\tNULL\nDripped Birria\tNULL\nBunSlut\tNULL\nSoul Good\tNULL\nStick Talk Cajun-Hibachi\tNULL\nHouston Sauce Pit\tNULL\nMingo’s Latin Kitchen\tNULL\nOh My Gogi!\tNULL\nTacos Tierra Caliente\tNULL\nAbu Omar Halal\tNULL\nTasty Arepa\tNULL\nCousins Maine Lobster\tNULL\nThe Turkey Leg Hut\tNULL\nThe Burger Joint\tNULL\nBig 6 Bar B Que\tNULL\nBoombox Taco\tNULL\nCinco Vidas Coffee Company\tNULL\nEl Guajillo\tNULL\nHangry Pinoy\tNULL\nDJ & Lindsey Real Estate\tNULL\nFlorida Homes Realty & Mortgage LLC\tNULL\nKira Sikes Realtor\tNULL\nJPAR City & Beach\thttps://Expert Home Advisors\nMomentum Realty\tNULL\nCrossView Realty\tNULL\nLily Tran - Jacksonville, FL Realtor\tNULL\nAnchored Real Estate Group\tNULL\nRoot Realty\tNULL\nJax Listing Sisters - Brooke and Tammy\tNULL\nChad and Sandy Real Estate Group\tNULL\nShantrece Thomas\thttps://Real Estate Advisor\nDavid Freed Realtor\thttps://Miami Is Home\nIvan and Mike Team\thttps://Luxury Real Estate Experts / Advisors\nMiami Realty Solution Group\tNULL\nBlackbook Properties\tNULL\nJose Fuentes Real Estate Broker Fortune Christie's International\tNULL\nLouis Urbina, PA - Realtor Associate at Avanti Way Realty in Miami, FL\tNULL\nChariff Realty Group Commercial Miami Real Estate\tNULL\nLG Realty Group Inc. Miami Luxury Real Estate\tNULL\nHouseClean LA\thttps://www.housecleanlosangeles.com/\nLos Angeles House Cleaners\thttps://www.losangeleshousecleaners.net/\nMerry Maids Los Angeles\thttps://merrymaids.com/home-cleaners-los-angeles-ca\nCasa Fantastic Cleaning Services\thttps://www.casafantasticcleaningservicesinc.com/\nLA Maids\thttps://www.lamaids.us/\nMaidPro Los Angeles\thttps://www.maidpro.com/dtla\nTidy Los Angeles\thttps://www.tidy.com/locations/los-angeles-ca\nRocket Maids LA\thttps://rocketmaidsla.com/\nNYC House Cleaners\thttps://nychousecleaners.net/\nMaid Marines\thttps://maidmarines.com/\nNY Home Cleaning Service\thttps://nyhomecleaningservice.com/\nThe NYC Maid\thttps://www.thenycmaid.com/\nWhite Glove Cleaner\thttps://whiteglovecleaner.com/\nSweep Home Chicago\thttps://www.sweephome.com/\nImagine Maids\thttps://imaginemaids.com/\nSparkly Maid Chicago\thttps://sparklymaid.com/\nSapphire Home Cleaning\thttps://www.sapphirehomecleaning.com/\nMolly Maid Chicago\thttps://www.mollymaid.com/locations/illinois/chicago-gold-coast/\nMum's Cleaning Services\thttps://mumscleaningserviceschicago.com/\nPawlished Paws Boutique & Spa\thttps://www.petgroomingriversideca.com/\nPaws & Claws Veterinary Hospital\thttps://www.pcmvet.com/\nThe Dog House Pet Salon\thttps://www.thedoghouseps.com/\nPupLuxe Grooming\thttps://pupluxegrooming.com/\nHyde Park Veterinary Clinic\thttps://www.hydeparkvet.com/\nUnleashed Spa\thttps://unleashedspa.com/\nInwood Animal Clinic\thttps://inwoodanimalclinic.com/\nOh So Pretty Pet Spa\thttps://ohsopretty.net/\nGlades Pike Veterinary Hospital\thttps://gladespikevet.com/\nThe UpScale Tail Pet Grooming Salon\thttps://theupscaletail.com/\nMedical District Veterinary Clinic\thttps://www.medicaldistrictvet.com/\nAwesome Paws Pet Salon\thttps://www.awesomepawspetsalon.com/\nBroadview Animal & Bird Hospital\thttps://broadviewpetmedicalcenter.com/\nFurry Friends – Gentle Pet Grooming\thttps://furryfriendsgroomer.com/\nCollier Animal Hospital\thttps://collierah.com/\nThe Wizard of Paws Pet Salon, LLC\thttps://thewizardofpaws.com/\nSalish Veterinary Hospital\thttps://www.salishvet.com/\nPawmper Fluffy\thttps://pawmperfluffy.com/\nWags Pet Spa & Mobile Grooming\thttps://www.wagstx.com/\nWashington Heights Veterinary Clinic\thttps://www.whvetclinic.com/\nStar Tutoring Centers\thttps://www.startutoringcenters.com/\nSylvan Learning of Dallas & Highland Park\thttps://www.sylvanlearning.com/locations/us/tx/dallas-tutoring/dallas-highland-park/\nNew York Tutoring Center\thttps://nytc.info/\nThe City Tutors\thttps://www.thecitytutors.org/\nBoston Tutoring Center\thttps://www.bostontutoringcenter.com/\nTutoring Club of The Heights\thttps://tutoringclub.com/theheightstx/\nMathnasium of Santa Monica\thttps://www.mathnasium.com/math-centers/santamonica\nChicago Home Tutor\thttps://chicagohometutor.com/\nAfter School Philly\thttps://afterschoolphilly.com/\nTutor Doctor Phoenix-Scottsdale\thttps://www.tutordoctor.com/phoenix/\nLA Tutors 123\thttps://www.latutors123.com/\nPrep Academy Tutors of San Antonio\thttps://prepacademytutors.com/location/sanantonio/\nTutoring Chicago\thttps://www.tutoringchicago.org/\nYMCA of Metro Chicago\thttps://www.ymcachicago.org/early-learning-education/school-age-care/\nPowerful Minds Tutoring\thttps://powerfulmindstutoring.com/\nThrive Tutoring Denver\thttps://www.thrivetutoringdenver.com/\nUniversity Tutoring - Seattle\thttps://universitytutoring.com/\nNorthwest Reading Clinic, Inc.\thttps://northwestreadingclinic.com/\nNorthstar Tutoring\thttps://www.northstartutoring.org/\nYMCA of Metro Atlanta\thttps://ymcaatlanta.org/learning/afterschool\nShepherd Roofing & Renovations\thttps://www.shepherdroofingrenovations.com/\nWhite Rock Roofing\tNULL\nUnited Roofing & General Contractors\tNULL\nMaze Roofing & Construction\tNULL\nArrington Roofing Company, Inc\tNULL\nTitan Pros Roofing\tNULL\nEverline Roofing\tNULL\nMyriad Roofing & Construction LLC\tNULL\nSwordsmen Roofing & Construction, LLC\tNULL\nTice Enterprises, LTD\tNULL\nLone Star Roofing & General Contractors, LLC\tNULL\nMFI Roofing\tNULL\nPriority Contracting and Roofing\tNULL\nSun Commercial Roofs, Inc.\tNULL\nX Roofing & Solar\tNULL\nGibraltar Building Accessories Division\tNULL\nTexas Premier Roofing LLC\tNULL\nSRS Distribution - Dallas Drywall\tNULL\nThe Warner Company\tNULL\nABC Supply Co., Inc. #041 Dallas\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 266
+}

@@ -1,0 +1,8 @@
+{
+  "query": "\nSELECT ci.id, ci.invoiceNumber, ci.clientAccountId, ci.totalAmountCents, ci.status,\n       ca.clientName, ca.businessName, ca.assignedTechnicianId, ca.referredByTechnicianId\nFROM client_invoices ci\nJOIN client_accounts ca ON ca.id = ci.clientAccountId\nWHERE ca.businessName LIKE '%Dojo%' OR ca.businessName LIKE '%dojo%' OR ca.businessName LIKE '%Mydojo%'\nORDER BY ci.id;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT ci.id, ci.invoiceNumber, ci.clientAccountId, ci.totalAmountCents, ci.status,\n       ca.clientName, ca.businessName, ca.assignedTechnicianId, ca.referredByTechnicianId\nFROM client_invoices ci\nJOIN client_accounts ca ON ca.id = ci.clientAccountId\nWHERE ca.businessName LIKE '%Dojo%' OR ca.businessName LIKE '%dojo%' OR ca.businessName LIKE '%Mydojo%'\nORDER BY ci.id;\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 2: Unknown column 'ca.referredbytechnicianid' in 'field list'"
+  ]
+}

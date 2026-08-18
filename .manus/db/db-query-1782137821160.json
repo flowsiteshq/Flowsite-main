@@ -1,0 +1,66 @@
+{
+  "query": "SELECT t.id, t.name, t.email, t.role, t.status, u.role as user_role \nFROM technicians t \nLEFT JOIN users u ON u.id = t.userId \nWHERE t.status = 'active' \nAND t.email NOT IN ('sensei30002003@gmail.com', 'cloverdojo@gmail.com', 'chrismpamugo99@gmail.com')\nORDER BY t.name\nLIMIT 27 OFFSET 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT t.id, t.name, t.email, t.role, t.status, u.role as user_role \nFROM technicians t \nLEFT JOIN users u ON u.id = t.userId \nWHERE t.status = 'active' \nAND t.email NOT IN ('sensei30002003@gmail.com', 'cloverdojo@gmail.com', 'chrismpamugo99@gmail.com')\nORDER BY t.name\nLIMIT 27 OFFSET 20;",
+  "rows": [
+    {
+      "id": "390003",
+      "name": "Mark",
+      "email": "markigbani@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "510003",
+      "name": "Michael Ogbuja",
+      "email": "ogbujamichael01@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "270002",
+      "name": "Noah",
+      "email": "nessybitto@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "270001",
+      "name": "Paul",
+      "email": "dp7449787@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "300001",
+      "name": "Vincent Holmes",
+      "email": "vincent.holmes00@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tstatus\tuser_role\n390003\tMark\tmarkigbani@gmail.com\tsales_rep\tactive\tuser\n60005\tMerrilyn \tmerryfromhome@gmail.com\tsales_rep\tactive\tuser\n510003\tMichael Ogbuja\togbujamichael01@gmail.com\tsales_rep\tactive\tuser\n270002\tNoah\tnessybitto@gmail.com\tsales_rep\tactive\tuser\n270001\tPaul\tdp7449787@gmail.com\tsales_rep\tactive\tuser\n90005\tSamuel\tsamyeshiet13@gmail.com\tsales_rep\tactive\tuser\n300001\tVincent Holmes\tvincent.holmes00@gmail.com\tsales_rep\tactive\tuser\n",
+  "stderr": "",
+  "execution_time_ms": 266
+}

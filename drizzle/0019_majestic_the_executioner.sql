@@ -1,0 +1,1 @@
+ALTER TABLE `technicians` ADD `role` enum('sales_rep','technician','manager','admin') DEFAULT 'sales_rep' NOT NULL;

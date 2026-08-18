@@ -1,0 +1,19 @@
+{
+  "query": "SELECT id, businessName, clientName, clientEmail, status, inviteToken, inviteAccepted FROM client_accounts WHERE businessName LIKE '%Stylist%' OR clientName LIKE '%Stylist%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, clientName, clientEmail, status, inviteToken, inviteAccepted FROM client_accounts WHERE businessName LIKE '%Stylist%' OR clientName LIKE '%Stylist%';",
+  "rows": [
+    {
+      "id": "120001",
+      "businessName": "Stylist Factory",
+      "clientName": "Latisha",
+      "clientEmail": "stylistfactorytx@gmail.com",
+      "status": "active",
+      "inviteToken": "720af48df60125dcc58df60f37e288904bde6bfe4a7f386811ff4247d66d84ba",
+      "inviteAccepted": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tbusinessName\tclientName\tclientEmail\tstatus\tinviteToken\tinviteAccepted\n120001\tStylist Factory\tLatisha\tstylistfactorytx@gmail.com\tactive\t720af48df60125dcc58df60f37e288904bde6bfe4a7f386811ff4247d66d84ba\t0\n",
+  "stderr": "",
+  "execution_time_ms": 270
+}

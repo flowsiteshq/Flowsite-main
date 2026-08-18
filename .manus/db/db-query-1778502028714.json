@@ -1,0 +1,76 @@
+{
+  "query": "SELECT COUNT(*) as total FROM opportunity_pool; SELECT businessType, COUNT(*) as count FROM opportunity_pool GROUP BY businessType ORDER BY count DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total FROM opportunity_pool; SELECT businessType, COUNT(*) as count FROM opportunity_pool GROUP BY businessType ORDER BY count DESC LIMIT 20;",
+  "rows": [
+    {
+      "total": "447"
+    },
+    {
+      "total": "businessType\tcount"
+    },
+    {
+      "total": "Martial Arts School\t36"
+    },
+    {
+      "total": "Roofing Contractor\t20"
+    },
+    {
+      "total": "Home Cleaning Service\t19"
+    },
+    {
+      "total": "Hair Salon\t18"
+    },
+    {
+      "total": "Personal Injury Law Firm\t16"
+    },
+    {
+      "total": "Pilates Studio\t15"
+    },
+    {
+      "total": "Dental Practice\t15"
+    },
+    {
+      "total": "Auto Repair Shop\t13"
+    },
+    {
+      "total": "Martial Arts\t12"
+    },
+    {
+      "total": "Dance Studio\t12"
+    },
+    {
+      "total": "Chiropractic Clinic\t10"
+    },
+    {
+      "total": "Physical Therapy Practice\t10"
+    },
+    {
+      "total": "Pet Grooming Salon\t10"
+    },
+    {
+      "total": "Veterinary Clinic\t9"
+    },
+    {
+      "total": "Real Estate Agency\t8"
+    },
+    {
+      "total": "Tutoring Service\t8"
+    },
+    {
+      "total": "Real Estate Agent\t8"
+    },
+    {
+      "total": "Auto Detailing Service\t7"
+    },
+    {
+      "total": "Yoga Studio\t6"
+    },
+    {
+      "total": "Fitness Studio\t6"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n447\nbusinessType\tcount\nMartial Arts School\t36\nRoofing Contractor\t20\nHome Cleaning Service\t19\nHair Salon\t18\nPersonal Injury Law Firm\t16\nPilates Studio\t15\nDental Practice\t15\nAuto Repair Shop\t13\nMartial Arts\t12\nDance Studio\t12\nChiropractic Clinic\t10\nPhysical Therapy Practice\t10\nPet Grooming Salon\t10\nVeterinary Clinic\t9\nReal Estate Agency\t8\nTutoring Service\t8\nReal Estate Agent\t8\nAuto Detailing Service\t7\nYoga Studio\t6\nFitness Studio\t6\n",
+  "stderr": "",
+  "execution_time_ms": 274
+}

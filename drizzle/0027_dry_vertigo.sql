@@ -1,0 +1,1 @@
+ALTER TABLE `wizard_submissions` ADD `nicheTag` enum('martial_arts','restaurant','fitness','self_defense','health_wellness','salon','hospitality','other');

@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, clientName, clientEmail, businessName, status, currentStage, accessToken \nFROM client_projects \nWHERE businessName LIKE '%Stylist%' OR clientEmail LIKE '%stylist%' OR clientName LIKE '%Latisha%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, clientName, clientEmail, businessName, status, currentStage, accessToken \nFROM client_projects \nWHERE businessName LIKE '%Stylist%' OR clientEmail LIKE '%stylist%' OR clientName LIKE '%Latisha%';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 261
+}

@@ -1,0 +1,9 @@
+{
+  "query": "SELECT cpp.clientEmail, cpp.setupToken, cpp.setupTokenExpiry, CASE WHEN cpp.passwordHash != '' AND cpp.passwordHash NOT LIKE '%placeholder%' THEN 'set' ELSE 'not set' END as passwordStatus FROM client_portal_passwords cpp WHERE cpp.clientEmail LIKE '%stylist%' OR cpp.clientEmail LIKE '%factory%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT cpp.clientEmail, cpp.setupToken, cpp.setupTokenExpiry, CASE WHEN cpp.passwordHash != '' AND cpp.passwordHash NOT LIKE '%placeholder%' THEN 'set' ELSE 'not set' END as passwordStatus FROM client_portal_passwords cpp WHERE cpp.clientEmail LIKE '%stylist%' OR cpp.clientEmail LIKE '%factory%' LIMIT 5;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 273
+}

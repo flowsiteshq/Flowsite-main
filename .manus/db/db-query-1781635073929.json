@@ -1,0 +1,19 @@
+{
+  "query": "SELECT u.id, u.name, u.email, u.role FROM users u WHERE u.email = 'chrismpamugo99@gmail.com';\nSELECT t.id as tech_id, t.name, t.email, t.role, t.status FROM technicians t WHERE t.email = 'chrismpamugo99@gmail.com';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT u.id, u.name, u.email, u.role FROM users u WHERE u.email = 'chrismpamugo99@gmail.com';\nSELECT t.id as tech_id, t.name, t.email, t.role, t.status FROM technicians t WHERE t.email = 'chrismpamugo99@gmail.com';",
+  "rows": [
+    {
+      "id": "28830001",
+      "name": "Christopher Mpamugo",
+      "email": "chrismpamugo99@gmail.com",
+      "role": "user"
+    }
+  ],
+  "messages": [
+    "tech_id\tname\temail\trole\tstatus",
+    "540003\tChris Pamugo\tchrismpamugo99@gmail.com\tadmin\tactive"
+  ],
+  "stdout": "id\tname\temail\trole\n28830001\tChristopher Mpamugo\tchrismpamugo99@gmail.com\tuser\ntech_id\tname\temail\trole\tstatus\n540003\tChris Pamugo\tchrismpamugo99@gmail.com\tadmin\tactive\n",
+  "stderr": "",
+  "execution_time_ms": 1233
+}

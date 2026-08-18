@@ -1,0 +1,19 @@
+{
+  "query": "SELECT COUNT(*) as total FROM wizard_submissions; SELECT status, COUNT(*) as count FROM wizard_submissions GROUP BY status;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total FROM wizard_submissions; SELECT status, COUNT(*) as count FROM wizard_submissions GROUP BY status;",
+  "rows": [
+    {
+      "total": "197"
+    },
+    {
+      "total": "status\tcount"
+    },
+    {
+      "total": "new\t197"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n197\nstatus\tcount\nnew\t197\n",
+  "stderr": "",
+  "execution_time_ms": 319
+}

@@ -1,0 +1,110 @@
+{
+  "query": "\nSELECT t.id, t.name, t.email, t.status, t.userId, t.openId,\n       u.openId as userOpenId, u.email as userEmail\nFROM technicians t\nLEFT JOIN users u ON u.id = t.userId\nWHERE t.userId IS NOT NULL AND (t.openId IS NULL OR t.openId = '');\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT t.id, t.name, t.email, t.status, t.userId, t.openId,\n       u.openId as userOpenId, u.email as userEmail\nFROM technicians t\nLEFT JOIN users u ON u.id = t.userId\nWHERE t.userId IS NOT NULL AND (t.openId IS NULL OR t.openId = '');\n",
+  "rows": [
+    {
+      "id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "status": "active",
+      "userId": "3150019",
+      "openId": "NULL",
+      "userOpenId": "google_107932754434740101177",
+      "userEmail": "chidi.ej@gmail.com"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "status": "active",
+      "userId": "6480031",
+      "openId": "NULL",
+      "userOpenId": "google_109042202319879625312",
+      "userEmail": "godslovealex66@gmail.com"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "status": "active",
+      "userId": "6390008",
+      "openId": "NULL",
+      "userOpenId": "google_110945000403044714179",
+      "userEmail": "jason.mervin2006@gmail.com"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "status": "active",
+      "userId": "6420001",
+      "openId": "NULL",
+      "userOpenId": "google_111436106210624015301",
+      "userEmail": "comfortonwuchekwa365@gmail.com"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "status": "active",
+      "userId": "6480017",
+      "openId": "NULL",
+      "userOpenId": "google_118307692131977591402",
+      "userEmail": "chikezieloyal@gmail.com"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "status": "active",
+      "userId": "6420007",
+      "openId": "NULL",
+      "userOpenId": "google_103720165612885483527",
+      "userEmail": "okoloibechristopher@gmail.com"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "status": "active",
+      "userId": "6390110",
+      "openId": "NULL",
+      "userOpenId": "google_113869578682076167267",
+      "userEmail": "emperorjerry8@gmail.com"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "status": "active",
+      "userId": "6480057",
+      "openId": "NULL",
+      "userOpenId": "google_109392777680787706749",
+      "userEmail": "meetchibuzorfj@gmail.com"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "status": "active",
+      "userId": "6390117",
+      "openId": "NULL",
+      "userOpenId": "google_101014906550143486584",
+      "userEmail": "fataifaith529@gmail.com"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "status": "active",
+      "userId": "4800001",
+      "openId": "NULL",
+      "userOpenId": "google_112276069719812679595",
+      "userEmail": "georgebethel23@gmail.com"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\tstatus\tuserId\topenId\tuserOpenId\tuserEmail\n30001\tJoseph\tchidi.ej@gmail.com\tactive\t3150019\tNULL\tgoogle_107932754434740101177\tchidi.ej@gmail.com\n60001\tGodslove\tgodslovealex66@gmail.com\tactive\t6480031\tNULL\tgoogle_109042202319879625312\tgodslovealex66@gmail.com\n60003\tJason\tjason.mervin2006@gmail.com\tactive\t6390008\tNULL\tgoogle_110945000403044714179\tjason.mervin2006@gmail.com\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tactive\t6420001\tNULL\tgoogle_111436106210624015301\tcomfortonwuchekwa365@gmail.com\n90001\tLoyal\tchikezieloyal@gmail.com\tactive\t6480017\tNULL\tgoogle_118307692131977591402\tchikezieloyal@gmail.com\n90002\tChristopher\tokoloibechristopher@gmail.com\tactive\t6420007\tNULL\tgoogle_103720165612885483527\tokoloibechristopher@gmail.com\n90003\tJerry\temperorjerry8@gmail.com\tactive\t6390110\tNULL\tgoogle_113869578682076167267\temperorjerry8@gmail.com\n90004\tFaith\tmeetchibuzorfj@gmail.com\tactive\t6480057\tNULL\tgoogle_109392777680787706749\tmeetchibuzorfj@gmail.com\n120002\tFatai\tfataifaith529@gmail.com\tactive\t6390117\tNULL\tgoogle_101014906550143486584\tfataifaith529@gmail.com\n150001\tBethel\tgeorgebethel23@gmail.com\tactive\t4800001\tNULL\tgoogle_112276069719812679595\tgeorgebethel23@gmail.com\n",
+  "stderr": "",
+  "execution_time_ms": 272
+}

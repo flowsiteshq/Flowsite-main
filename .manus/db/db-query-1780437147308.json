@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, name, email, role FROM users WHERE id = 25200006 OR email = 'cloverdojo@gmail.com';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, name, email, role FROM users WHERE id = 25200006 OR email = 'cloverdojo@gmail.com';",
+  "rows": [
+    {
+      "id": "25200006",
+      "name": "Clover Dojo",
+      "email": "cloverdojo@gmail.com",
+      "role": "user"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\n25200006\tClover Dojo\tcloverdojo@gmail.com\tuser\n",
+  "stderr": "",
+  "execution_time_ms": 1345
+}

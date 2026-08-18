@@ -1,0 +1,19 @@
+{
+  "query": "SELECT id, name, email, role, status, invitedAt, joinedAt FROM technicians WHERE email LIKE '%ejiogu%' OR name LIKE '%Alwell%' OR name LIKE '%alwell%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, name, email, role, status, invitedAt, joinedAt FROM technicians WHERE email LIKE '%ejiogu%' OR name LIKE '%Alwell%' OR name LIKE '%alwell%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmial.com",
+      "role": "sales_rep",
+      "status": "invited",
+      "invitedAt": "2026-05-09 04:34:20",
+      "joinedAt": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tstatus\tinvitedAt\tjoinedAt\n60007\tAlwell\tejiogualwell52@gmial.com\tsales_rep\tinvited\t2026-05-09 04:34:20\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 262
+}

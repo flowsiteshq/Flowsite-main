@@ -1,0 +1,62 @@
+CREATE TABLE `client_accounts` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`projectId` int,
+	`clientOpenId` varchar(64),
+	`clientName` varchar(255) NOT NULL,
+	`clientEmail` varchar(320) NOT NULL,
+	`clientPhone` varchar(50),
+	`businessName` varchar(255) NOT NULL,
+	`websiteUrl` varchar(500),
+	`stripeCustomerId` varchar(64),
+	`stripeSubscriptionId` varchar(64),
+	`monthlyPriceCents` int NOT NULL,
+	`billingCycle` enum('monthly','annual') NOT NULL DEFAULT 'monthly',
+	`annualDiscountPct` int NOT NULL DEFAULT 15,
+	`earlyPayDiscountPct` int NOT NULL DEFAULT 5,
+	`lateFeePct` int NOT NULL DEFAULT 15,
+	`billingStartDate` varchar(10),
+	`status` enum('active','paused','cancelled','past_due') NOT NULL DEFAULT 'active',
+	`adminNotes` text,
+	`inviteToken` varchar(64),
+	`inviteAccepted` int NOT NULL DEFAULT 0,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `client_accounts_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `client_invoices` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`clientAccountId` int NOT NULL,
+	`stripeInvoiceId` varchar(64),
+	`stripePaymentIntentId` varchar(64),
+	`invoiceNumber` varchar(32) NOT NULL,
+	`periodStart` varchar(10) NOT NULL,
+	`periodEnd` varchar(10) NOT NULL,
+	`dueDate` varchar(10) NOT NULL,
+	`baseAmountCents` int NOT NULL,
+	`discountCents` int NOT NULL DEFAULT 0,
+	`lateFeeCents` int NOT NULL DEFAULT 0,
+	`totalAmountCents` int NOT NULL,
+	`status` enum('draft','open','paid','overdue','void') NOT NULL DEFAULT 'open',
+	`paidAt` timestamp,
+	`discountType` enum('early_pay','annual','none') NOT NULL DEFAULT 'none',
+	`notes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `client_invoices_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `client_media` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`clientAccountId` int NOT NULL,
+	`fileKey` varchar(500) NOT NULL,
+	`fileUrl` varchar(1000) NOT NULL,
+	`fileName` varchar(255) NOT NULL,
+	`mimeType` varchar(100) NOT NULL,
+	`fileSizeBytes` int NOT NULL,
+	`mediaType` enum('photo','video') NOT NULL,
+	`caption` text,
+	`uploadedBy` enum('client','admin') NOT NULL DEFAULT 'client',
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `client_media_id` PRIMARY KEY(`id`)
+);

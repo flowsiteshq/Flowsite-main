@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, technicianId, email, token, expiresAt, usedAt FROM technician_invites WHERE email = 'ezeejoey.ej@gmail.com' ORDER BY id DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, technicianId, email, token, expiresAt, usedAt FROM technician_invites WHERE email = 'ezeejoey.ej@gmail.com' ORDER BY id DESC LIMIT 5;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 575
+}

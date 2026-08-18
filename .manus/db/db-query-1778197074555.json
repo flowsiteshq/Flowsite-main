@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, name, email, role, status, openId, userId FROM technicians WHERE email = 'ezeejoey.ej@gmail.com';\nSELECT id, technicianId, email, token, usedAt, expiresAt FROM technician_invites WHERE email = 'ezeejoey.ej@gmail.com' ORDER BY id DESC LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, name, email, role, status, openId, userId FROM technicians WHERE email = 'ezeejoey.ej@gmail.com';\nSELECT id, technicianId, email, token, usedAt, expiresAt FROM technician_invites WHERE email = 'ezeejoey.ej@gmail.com' ORDER BY id DESC LIMIT 3;",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "role": "team_lead",
+      "status": "active",
+      "openId": "NyQY27ZEf2e5W2qr2ptUcX",
+      "userId": "1"
+    }
+  ],
+  "messages": [
+    "id\ttechnicianId\temail\ttoken\tusedAt\texpiresAt",
+    "1\t1\tezeejoey.ej@gmail.com\tca364bb7-3109-4aa9-9396-f807019b054b\t2026-05-07 23:34:02\t2026-06-06 23:27:47"
+  ],
+  "stdout": "id\tname\temail\trole\tstatus\topenId\tuserId\n1\tJoey\tezeejoey.ej@gmail.com\tteam_lead\tactive\tNyQY27ZEf2e5W2qr2ptUcX\t1\nid\ttechnicianId\temail\ttoken\tusedAt\texpiresAt\n1\t1\tezeejoey.ej@gmail.com\tca364bb7-3109-4aa9-9396-f807019b054b\t2026-05-07 23:34:02\t2026-06-06 23:27:47\n",
+  "stderr": "",
+  "execution_time_ms": 637
+}

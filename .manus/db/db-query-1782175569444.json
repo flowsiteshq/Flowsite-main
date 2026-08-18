@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE client_projects SET githubRepos = '[{\"label\":\"Salon Owner App\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_owner_app\"},{\"label\":\"Customer User App\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_user_app\"},{\"label\":\"Super Admin Panel\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_admin\"},{\"label\":\"Marketing Website\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_website\"}]' WHERE id = 30001;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute UPDATE client_projects SET githubRepos = '[{\"label\":\"Salon Owner App\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_owner_app\"},{\"label\":\"Customer User App\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_user_app\"},{\"label\":\"Super Admin Panel\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_admin\"},{\"label\":\"Marketing Website\",\"url\":\"https://github.com/Team-Webcoir/stylus_factory_website\"}]' WHERE id = 30001;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 266
+}

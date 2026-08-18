@@ -1,0 +1,40 @@
+{
+  "query": "SELECT openId, name, email, role FROM users ORDER BY lastSignedIn DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT openId, name, email, role FROM users ORDER BY lastSignedIn DESC LIMIT 5;",
+  "rows": [
+    {
+      "openId": "NyQY27ZEf2e5W2qr2ptUcX",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin"
+    },
+    {
+      "openId": "google_100571322086518934295",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin"
+    },
+    {
+      "openId": "google_117254120350792515574",
+      "name": "Kingsley Akpan",
+      "email": "engrak51@gmail.com",
+      "role": "user"
+    },
+    {
+      "openId": "google_107932754434740101177",
+      "name": "E'zed Joseph Chidi",
+      "email": "chidi.ej@gmail.com",
+      "role": "user"
+    },
+    {
+      "openId": "gTrkbtdZubp2wnbHpJVQyc",
+      "name": "ezee joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "role": "user"
+    }
+  ],
+  "messages": [],
+  "stdout": "openId\tname\temail\trole\nNyQY27ZEf2e5W2qr2ptUcX\tVincent Holmes\tsensei30002003@gmail.com\tadmin\ngoogle_100571322086518934295\tVincent Holmes\tsensei30002003@gmail.com\tadmin\ngoogle_117254120350792515574\tKingsley Akpan\tengrak51@gmail.com\tuser\ngoogle_107932754434740101177\tE'zed Joseph Chidi\tchidi.ej@gmail.com\tuser\ngTrkbtdZubp2wnbHpJVQyc\tezee joey\tezeejoey.ej@gmail.com\tuser\n",
+  "stderr": "",
+  "execution_time_ms": 260
+}

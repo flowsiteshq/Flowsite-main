@@ -1,0 +1,20 @@
+{
+  "query": "SELECT id, name, openId, status, role FROM technicians WHERE id = 300001;\nSELECT MAX(id) as max_id FROM technicians;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, name, openId, status, role FROM technicians WHERE id = 300001;\nSELECT MAX(id) as max_id FROM technicians;",
+  "rows": [
+    {
+      "id": "300001",
+      "name": "Vincent Holmes",
+      "openId": "google_115162446410752884934",
+      "status": "active",
+      "role": "sales_rep"
+    }
+  ],
+  "messages": [
+    "max_id",
+    "540003"
+  ],
+  "stdout": "id\tname\topenId\tstatus\trole\n300001\tVincent Holmes\tgoogle_115162446410752884934\tactive\tsales_rep\nmax_id\n540003\n",
+  "stderr": "",
+  "execution_time_ms": 272
+}

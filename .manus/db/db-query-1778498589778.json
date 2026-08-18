@@ -1,0 +1,115 @@
+{
+  "query": "SELECT id, businessName, websiteUrl, location, businessType FROM opportunity_pool ORDER BY id LIMIT 1000;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, websiteUrl, location, businessType FROM opportunity_pool ORDER BY id LIMIT 1000;",
+  "rows": [
+    {
+      "id": "1",
+      "businessName": "MyDojo Martial Arts",
+      "websiteUrl": "https://mydojoma.com",
+      "location": "Massachusetts",
+      "businessType": "Martial Arts"
+    },
+    {
+      "id": "2",
+      "businessName": "Yaeger Self Defense of America",
+      "websiteUrl": "https://yaegerssda.com",
+      "location": "United States",
+      "businessType": "Self Defense"
+    },
+    {
+      "id": "3",
+      "businessName": "Zolamind Counseling",
+      "websiteUrl": "https://zolamindcounseling.com",
+      "location": "United States",
+      "businessType": "Health & Wellness"
+    },
+    {
+      "id": "30001",
+      "businessName": "PolicyPilot",
+      "websiteUrl": "https://policypilot.life",
+      "location": "NULL",
+      "businessType": "Insurance Tech"
+    },
+    {
+      "id": "30002",
+      "businessName": "DojoFlow",
+      "websiteUrl": "https://dojo-flow.ai",
+      "location": "NULL",
+      "businessType": "AI SaaS"
+    },
+    {
+      "id": "30003",
+      "businessName": "HomeUp Services",
+      "websiteUrl": "https://tryhomeupservices.com",
+      "location": "NULL",
+      "businessType": "Real Estate Tech"
+    },
+    {
+      "id": "30004",
+      "businessName": "BlueTide Financial",
+      "websiteUrl": "https://bluetidefinancial.com",
+      "location": "NULL",
+      "businessType": "Insurance / Financial Services"
+    },
+    {
+      "id": "30005",
+      "businessName": "Don Bar Bakery",
+      "websiteUrl": "https://donbarbakery.com",
+      "location": "Tomball, TX",
+      "businessType": "Food & Beverage"
+    },
+    {
+      "id": "30006",
+      "businessName": "GrapheneX by Construction X",
+      "websiteUrl": "https://graphenex.net",
+      "location": "NULL",
+      "businessType": "Construction Tech"
+    },
+    {
+      "id": "30007",
+      "businessName": "Green Bahamas Life",
+      "websiteUrl": "https://greenbahamas.life",
+      "location": "Bahamas",
+      "businessType": "Sustainability"
+    },
+    {
+      "id": "30008",
+      "businessName": "Aladdin Kebab Grill",
+      "websiteUrl": "https://aladdinkebob.com",
+      "location": "Tomball, TX",
+      "businessType": "Food & Beverage"
+    },
+    {
+      "id": "30009",
+      "businessName": "Stitched with Love",
+      "websiteUrl": "https://stitchedshop.store",
+      "location": "NULL",
+      "businessType": "E-Commerce"
+    },
+    {
+      "id": "30010",
+      "businessName": "ASLS Foundation",
+      "websiteUrl": "https://aslsfoundation.org",
+      "location": "NULL",
+      "businessType": "Non-Profit"
+    },
+    {
+      "id": "30011",
+      "businessName": "Stylist Factory",
+      "websiteUrl": "https://stylistfactory.com",
+      "location": "NULL",
+      "businessType": "Salon & Beauty"
+    },
+    {
+      "id": "30012",
+      "businessName": "Hach Ki Cafe",
+      "websiteUrl": "https://hachkicafe.com",
+      "location": "NULL",
+      "businessType": "Restaurant"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tbusinessName\twebsiteUrl\tlocation\tbusinessType\n1\tMyDojo Martial Arts\thttps://mydojoma.com\tMassachusetts\tMartial Arts\n2\tYaeger Self Defense of America\thttps://yaegerssda.com\tUnited States\tSelf Defense\n3\tZolamind Counseling\thttps://zolamindcounseling.com\tUnited States\tHealth & Wellness\n30001\tPolicyPilot\thttps://policypilot.life\tNULL\tInsurance Tech\n30002\tDojoFlow\thttps://dojo-flow.ai\tNULL\tAI SaaS\n30003\tHomeUp Services\thttps://tryhomeupservices.com\tNULL\tReal Estate Tech\n30004\tBlueTide Financial\thttps://bluetidefinancial.com\tNULL\tInsurance / Financial Services\n30005\tDon Bar Bakery\thttps://donbarbakery.com\tTomball, TX\tFood & Beverage\n30006\tGrapheneX by Construction X\thttps://graphenex.net\tNULL\tConstruction Tech\n30007\tGreen Bahamas Life\thttps://greenbahamas.life\tBahamas\tSustainability\n30008\tAladdin Kebab Grill\thttps://aladdinkebob.com\tTomball, TX\tFood & Beverage\n30009\tStitched with Love\thttps://stitchedshop.store\tNULL\tE-Commerce\n30010\tASLS Foundation\thttps://aslsfoundation.org\tNULL\tNon-Profit\n30011\tStylist Factory\thttps://stylistfactory.com\tNULL\tSalon & Beauty\n30012\tHach Ki Cafe\thttps://hachkicafe.com\tNULL\tRestaurant\n",
+  "stderr": "",
+  "execution_time_ms": 355
+}

@@ -1,0 +1,1 @@
+ALTER TABLE `client_invoices` ADD `shareToken` varchar(64);

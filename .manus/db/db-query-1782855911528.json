@@ -1,0 +1,21 @@
+{
+  "query": "SELECT id, clientName, businessName, clientEmail, clientPhone, setup_fee, monthlyPrice, packageName, status FROM client_projects WHERE businessName LIKE '%stylist%' OR clientEmail LIKE '%stylist%' OR clientEmail LIKE '%factory%' LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, clientName, businessName, clientEmail, clientPhone, setup_fee, monthlyPrice, packageName, status FROM client_projects WHERE businessName LIKE '%stylist%' OR clientEmail LIKE '%stylist%' OR clientEmail LIKE '%factory%' LIMIT 3;",
+  "rows": [
+    {
+      "id": "30001",
+      "clientName": "Stylist Factory",
+      "businessName": "Stylist Factory",
+      "clientEmail": "stylistfactorytx@gmail.com",
+      "clientPhone": "+18328335383",
+      "setup_fee": "3499.00",
+      "monthlyPrice": "199",
+      "packageName": "NULL",
+      "status": "onboarding"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tclientName\tbusinessName\tclientEmail\tclientPhone\tsetup_fee\tmonthlyPrice\tpackageName\tstatus\n30001\tStylist Factory\tStylist Factory\tstylistfactorytx@gmail.com\t+18328335383\t3499.00\t199\tNULL\tonboarding\n",
+  "stderr": "",
+  "execution_time_ms": 261
+}

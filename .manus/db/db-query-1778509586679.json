@@ -1,0 +1,91 @@
+{
+  "query": "SELECT COUNT(*) as total_leads FROM opportunity_pool; SELECT businessType, COUNT(*) as count FROM opportunity_pool GROUP BY businessType ORDER BY count DESC LIMIT 25;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total_leads FROM opportunity_pool; SELECT businessType, COUNT(*) as count FROM opportunity_pool GROUP BY businessType ORDER BY count DESC LIMIT 25;",
+  "rows": [
+    {
+      "total_leads": "930"
+    },
+    {
+      "total_leads": "businessType\tcount"
+    },
+    {
+      "total_leads": "Martial Arts School\t98"
+    },
+    {
+      "total_leads": "Pilates Studio\t26"
+    },
+    {
+      "total_leads": "Yoga Studio\t25"
+    },
+    {
+      "total_leads": "CrossFit Gym\t21"
+    },
+    {
+      "total_leads": "Orthodontist\t21"
+    },
+    {
+      "total_leads": "Roofing Contractor\t20"
+    },
+    {
+      "total_leads": "Florist/Flower Shop\t20"
+    },
+    {
+      "total_leads": "Home Cleaning Service\t19"
+    },
+    {
+      "total_leads": "Electrical Services\t19"
+    },
+    {
+      "total_leads": "Plumbing Company\t18"
+    },
+    {
+      "total_leads": "Hair Salon\t18"
+    },
+    {
+      "total_leads": "HVAC\t16"
+    },
+    {
+      "total_leads": "Family Law Attorney\t16"
+    },
+    {
+      "total_leads": "Personal Injury Law Firm\t16"
+    },
+    {
+      "total_leads": "Dental Practice\t15"
+    },
+    {
+      "total_leads": "Auto Repair Shop\t13"
+    },
+    {
+      "total_leads": "Acupuncture Clinic\t13"
+    },
+    {
+      "total_leads": "Karate School\t13"
+    },
+    {
+      "total_leads": "Swim School\t12"
+    },
+    {
+      "total_leads": "Martial Arts\t12"
+    },
+    {
+      "total_leads": "Dance Studio\t12"
+    },
+    {
+      "total_leads": "Pet Grooming Salon\t10"
+    },
+    {
+      "total_leads": "Chiropractic Clinic\t10"
+    },
+    {
+      "total_leads": "Physical Therapy Practice\t10"
+    },
+    {
+      "total_leads": "Cheer Gym\t10"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_leads\n930\nbusinessType\tcount\nMartial Arts School\t98\nPilates Studio\t26\nYoga Studio\t25\nCrossFit Gym\t21\nOrthodontist\t21\nRoofing Contractor\t20\nFlorist/Flower Shop\t20\nHome Cleaning Service\t19\nElectrical Services\t19\nPlumbing Company\t18\nHair Salon\t18\nHVAC\t16\nFamily Law Attorney\t16\nPersonal Injury Law Firm\t16\nDental Practice\t15\nAuto Repair Shop\t13\nAcupuncture Clinic\t13\nKarate School\t13\nSwim School\t12\nMartial Arts\t12\nDance Studio\t12\nPet Grooming Salon\t10\nChiropractic Clinic\t10\nPhysical Therapy Practice\t10\nCheer Gym\t10\n",
+  "stderr": "",
+  "execution_time_ms": 270
+}

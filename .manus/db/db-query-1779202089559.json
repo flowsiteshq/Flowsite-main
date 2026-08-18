@@ -1,0 +1,19 @@
+{
+  "query": "SHOW TABLES LIKE '%lead%'; SHOW TABLES LIKE '%prospect%'; SHOW TABLES LIKE '%contact%'; SHOW TABLES LIKE '%wizard%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SHOW TABLES LIKE '%lead%'; SHOW TABLES LIKE '%prospect%'; SHOW TABLES LIKE '%contact%'; SHOW TABLES LIKE '%wizard%';",
+  "rows": [
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%lead%)": "lead_notes"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%lead%)": "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%wizard%)"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%lead%)": "wizard_submissions"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%lead%)\nlead_notes\nTables_in_VvLvZnpjR27EmYwxaK3mTG (%wizard%)\nwizard_submissions\n",
+  "stderr": "",
+  "execution_time_ms": 276
+}

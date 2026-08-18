@@ -1,0 +1,1 @@
+ALTER TABLE `client_invoices` ADD `isRecurring` int DEFAULT 1 NOT NULL;

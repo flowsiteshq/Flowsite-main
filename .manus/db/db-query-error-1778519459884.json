@@ -1,0 +1,8 @@
+{
+  "query": "\nINSERT INTO technicians (name, email, commissionRate, role, status, createdAt)\nVALUES ('Test User', 'sensei30002003@gmail.com', 15, 'sales_rep', 'invited', NOW());\n\nINSERT INTO technician_invites (technicianId, token, email, expiresAt, used)\nSELECT id, 'bc022792-36c5-4c71-b11c-44c2c5f4f8fc', 'sensei30002003@gmail.com', DATE_ADD(NOW(), INTERVAL 7 DAY), 0\nFROM technicians WHERE email = 'sensei30002003@gmail.com' AND status = 'invited' ORDER BY id DESC LIMIT 1;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nINSERT INTO technicians (name, email, commissionRate, role, status, createdAt)\nVALUES ('Test User', 'sensei30002003@gmail.com', 15, 'sales_rep', 'invited', NOW());\n\nINSERT INTO technician_invites (technicianId, token, email, expiresAt, used)\nSELECT id, 'bc022792-36c5-4c71-b11c-44c2c5f4f8fc', 'sensei30002003@gmail.com', DATE_ADD(NOW(), INTERVAL 7 DAY), 0\nFROM technicians WHERE email = 'sensei30002003@gmail.com' AND status = 'invited' ORDER BY id DESC LIMIT 1;\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 5: Unknown column 'used' in 'field list'"
+  ]
+}

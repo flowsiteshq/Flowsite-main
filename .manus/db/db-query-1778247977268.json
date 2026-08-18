@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as total_leads, SUM(CASE WHEN source = 'cold_call' THEN 1 ELSE 0 END) as cold_leads FROM wizard_submissions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total_leads, SUM(CASE WHEN source = 'cold_call' THEN 1 ELSE 0 END) as cold_leads FROM wizard_submissions;",
+  "rows": [
+    {
+      "total_leads": "101",
+      "cold_leads": "101"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_leads\tcold_leads\n101\t101\n",
+  "stderr": "",
+  "execution_time_ms": 558
+}

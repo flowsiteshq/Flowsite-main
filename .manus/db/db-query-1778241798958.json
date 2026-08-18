@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, name, email, role, status, openId FROM technicians WHERE email = 'ezeejoey.ej@gmail.com';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, name, email, role, status, openId FROM technicians WHERE email = 'ezeejoey.ej@gmail.com';",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "role": "team_lead",
+      "status": "active",
+      "openId": "gTrkbtdZubp2wnbHpJVQyc"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tstatus\topenId\n1\tJoey\tezeejoey.ej@gmail.com\tteam_lead\tactive\tgTrkbtdZubp2wnbHpJVQyc\n",
+  "stderr": "",
+  "execution_time_ms": 865
+}

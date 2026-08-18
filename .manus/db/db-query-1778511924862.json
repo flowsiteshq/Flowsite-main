@@ -1,0 +1,136 @@
+{
+  "query": "SELECT id, email, expiresAt, usedAt, createdAt FROM technician_invites ORDER BY id DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, email, expiresAt, usedAt, createdAt FROM technician_invites ORDER BY id DESC LIMIT 20;",
+  "rows": [
+    {
+      "id": "180001",
+      "email": "favken531@gmail.com",
+      "expiresAt": "2026-05-16 06:58:24",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 06:58:24"
+    },
+    {
+      "id": "150001",
+      "email": "georgebethel23@gmail.com",
+      "expiresAt": "2026-05-16 06:18:28",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 06:18:27"
+    },
+    {
+      "id": "120002",
+      "email": "fataifaith529@gmail.com",
+      "expiresAt": "2026-05-16 04:52:16",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:52:16"
+    },
+    {
+      "id": "120001",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "expiresAt": "2026-05-16 04:50:35",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:50:35"
+    },
+    {
+      "id": "90005",
+      "email": "samyeshiet13@gmail.com",
+      "expiresAt": "2026-05-16 04:46:09",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:46:09"
+    },
+    {
+      "id": "90004",
+      "email": "meetchibuzorfj@gmail.com",
+      "expiresAt": "2026-05-16 04:45:28",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:45:28"
+    },
+    {
+      "id": "90003",
+      "email": "emperorjerry8@gmail.com",
+      "expiresAt": "2026-05-16 04:42:27",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:42:26"
+    },
+    {
+      "id": "90002",
+      "email": "okoloibechristopher@gmail.com",
+      "expiresAt": "2026-05-16 04:39:59",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:39:58"
+    },
+    {
+      "id": "90001",
+      "email": "chikezieloyal@gmail.com",
+      "expiresAt": "2026-05-16 04:38:08",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:38:07"
+    },
+    {
+      "id": "60007",
+      "email": "ejiogualwell52@gmial.com",
+      "expiresAt": "2026-05-16 04:34:21",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:34:21"
+    },
+    {
+      "id": "60006",
+      "email": "eugeniaweb73@gmail.com",
+      "expiresAt": "2026-05-16 04:33:37",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:33:36"
+    },
+    {
+      "id": "60005",
+      "email": "merryfromhome@gmail.com",
+      "expiresAt": "2026-05-16 04:29:56",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:29:56"
+    },
+    {
+      "id": "60004",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "expiresAt": "2026-05-16 04:26:36",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:26:36"
+    },
+    {
+      "id": "60003",
+      "email": "jason.mervin2006@gmail.com",
+      "expiresAt": "2026-05-16 04:25:54",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:25:54"
+    },
+    {
+      "id": "60002",
+      "email": "bennygebere@gmail.com",
+      "expiresAt": "2026-05-16 04:23:24",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:23:23"
+    },
+    {
+      "id": "60001",
+      "email": "godslovealex66@gmail.com",
+      "expiresAt": "2026-05-16 04:22:34",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-09 04:22:34"
+    },
+    {
+      "id": "30001",
+      "email": "chidi.ej@gmail.com",
+      "expiresAt": "2026-05-15 19:38:27",
+      "usedAt": "NULL",
+      "createdAt": "2026-05-08 19:38:26"
+    },
+    {
+      "id": "1",
+      "email": "ezeejoey.ej@gmail.com",
+      "expiresAt": "2026-06-06 23:27:47",
+      "usedAt": "2026-05-07 23:34:02",
+      "createdAt": "2026-05-07 23:27:47"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\temail\texpiresAt\tusedAt\tcreatedAt\n180001\tfavken531@gmail.com\t2026-05-16 06:58:24\tNULL\t2026-05-09 06:58:24\n150001\tgeorgebethel23@gmail.com\t2026-05-16 06:18:28\tNULL\t2026-05-09 06:18:27\n120002\tfataifaith529@gmail.com\t2026-05-16 04:52:16\tNULL\t2026-05-09 04:52:16\n120001\tonyinyechichukwunyere1@gmail.com\t2026-05-16 04:50:35\tNULL\t2026-05-09 04:50:35\n90005\tsamyeshiet13@gmail.com\t2026-05-16 04:46:09\tNULL\t2026-05-09 04:46:09\n90004\tmeetchibuzorfj@gmail.com\t2026-05-16 04:45:28\tNULL\t2026-05-09 04:45:28\n90003\temperorjerry8@gmail.com\t2026-05-16 04:42:27\tNULL\t2026-05-09 04:42:26\n90002\tokoloibechristopher@gmail.com\t2026-05-16 04:39:59\tNULL\t2026-05-09 04:39:58\n90001\tchikezieloyal@gmail.com\t2026-05-16 04:38:08\tNULL\t2026-05-09 04:38:07\n60007\tejiogualwell52@gmial.com\t2026-05-16 04:34:21\tNULL\t2026-05-09 04:34:21\n60006\teugeniaweb73@gmail.com\t2026-05-16 04:33:37\tNULL\t2026-05-09 04:33:36\n60005\tmerryfromhome@gmail.com\t2026-05-16 04:29:56\tNULL\t2026-05-09 04:29:56\n60004\tcomfortonwuchekwa365@gmail.com\t2026-05-16 04:26:36\tNULL\t2026-05-09 04:26:36\n60003\tjason.mervin2006@gmail.com\t2026-05-16 04:25:54\tNULL\t2026-05-09 04:25:54\n60002\tbennygebere@gmail.com\t2026-05-16 04:23:24\tNULL\t2026-05-09 04:23:23\n60001\tgodslovealex66@gmail.com\t2026-05-16 04:22:34\tNULL\t2026-05-09 04:22:34\n30001\tchidi.ej@gmail.com\t2026-05-15 19:38:27\tNULL\t2026-05-08 19:38:26\n1\tezeejoey.ej@gmail.com\t2026-06-06 23:27:47\t2026-05-07 23:34:02\t2026-05-07 23:27:47\n",
+  "stderr": "",
+  "execution_time_ms": 274
+}

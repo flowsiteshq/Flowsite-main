@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, businessName, clientEmail, accessToken FROM client_projects WHERE businessName LIKE '%Stylist%' OR clientEmail LIKE '%stylist%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, clientEmail, accessToken FROM client_projects WHERE businessName LIKE '%Stylist%' OR clientEmail LIKE '%stylist%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "30001",
+      "businessName": "Stylist Factory",
+      "clientEmail": "stylistfactorytx@gmail.com",
+      "accessToken": "d3da1d722cce3753420d0616a0161cce9269b6c73444b97b8f0096654e2faaa5"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tbusinessName\tclientEmail\taccessToken\n30001\tStylist Factory\tstylistfactorytx@gmail.com\td3da1d722cce3753420d0616a0161cce9269b6c73444b97b8f0096654e2faaa5\n",
+  "stderr": "",
+  "execution_time_ms": 292
+}

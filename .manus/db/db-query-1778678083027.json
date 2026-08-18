@@ -1,0 +1,222 @@
+{
+  "query": "\nSELECT id, name, email, role, commissionRate, status FROM technicians ORDER BY id;\n\nSHOW TABLES LIKE '%invoice%';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT id, name, email, role, commissionRate, status FROM technicians ORDER BY id;\n\nSHOW TABLES LIKE '%invoice%';\n",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "role": "admin",
+      "commissionRate": "0",
+      "status": "active"
+    },
+    {
+      "id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "role": "team_lead",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "role": "manager",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "60002",
+      "name": "Bethel",
+      "email": "bennygebere@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "inactive"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "120001",
+      "name": "Onyinyechi",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "210001",
+      "name": "Test User",
+      "email": "sensei30002003@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "active"
+    },
+    {
+      "id": "240001",
+      "name": "Doris",
+      "email": "doriswotobo@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "240002",
+      "name": "Ihesie",
+      "email": "isaiahdesigns@outlook.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "240003",
+      "name": "Lynda",
+      "email": "sparkling2all2007@yahoo.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "240004",
+      "name": "Angelika",
+      "email": "angelikaabella7@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "240005",
+      "name": "Ruth",
+      "email": "amarachiruthjiogu@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "270001",
+      "name": "Paul",
+      "email": "dp7449787@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    },
+    {
+      "id": "270002",
+      "name": "Noah",
+      "email": "nessybitto@gmail.com",
+      "role": "sales_rep",
+      "commissionRate": "15",
+      "status": "invited"
+    }
+  ],
+  "messages": [
+    "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%invoice%)",
+    "client_invoices",
+    "invoice_items"
+  ],
+  "stdout": "id\tname\temail\trole\tcommissionRate\tstatus\n1\tJoey\tezeejoey.ej@gmail.com\tadmin\t0\tactive\n30001\tJoseph\tchidi.ej@gmail.com\tteam_lead\t15\tactive\n60001\tGodslove\tgodslovealex66@gmail.com\tmanager\t15\tactive\n60002\tBethel\tbennygebere@gmail.com\tsales_rep\t15\tinactive\n60003\tJason\tjason.mervin2006@gmail.com\tsales_rep\t15\tactive\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tsales_rep\t15\tactive\n60005\tMerrilyn \tmerryfromhome@gmail.com\tsales_rep\t15\tactive\n60006\tEugenia\teugeniaweb73@gmail.com\tsales_rep\t15\tactive\n60007\tAlwell\tejiogualwell52@gmail.com\tsales_rep\t15\tactive\n90001\tLoyal\tchikezieloyal@gmail.com\tsales_rep\t15\tactive\n90002\tChristopher\tokoloibechristopher@gmail.com\tsales_rep\t15\tactive\n90003\tJerry\temperorjerry8@gmail.com\tsales_rep\t15\tactive\n90004\tFaith\tmeetchibuzorfj@gmail.com\tsales_rep\t15\tactive\n90005\tSamuel\tsamyeshiet13@gmail.com\tsales_rep\t15\tactive\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tsales_rep\t15\tinvited\n120002\tFatai\tfataifaith529@gmail.com\tsales_rep\t15\tactive\n150001\tBethel\tgeorgebethel23@gmail.com\tsales_rep\t15\tactive\n180001\tFavour\tfavken531@gmail.com\tsales_rep\t15\tinvited\n210001\tTest User\tsensei30002003@gmail.com\tsales_rep\t15\tactive\n240001\tDoris\tdoriswotobo@gmail.com\tsales_rep\t15\tinvited\n240002\tIhesie\tisaiahdesigns@outlook.com\tsales_rep\t15\tinvited\n240003\tLynda\tsparkling2all2007@yahoo.com\tsales_rep\t15\tinvited\n240004\tAngelika\tangelikaabella7@gmail.com\tsales_rep\t15\tinvited\n240005\tRuth\tamarachiruthjiogu@gmail.com\tsales_rep\t15\tinvited\n270001\tPaul\tdp7449787@gmail.com\tsales_rep\t15\tinvited\n270002\tNoah\tnessybitto@gmail.com\tsales_rep\t15\tinvited\nTables_in_VvLvZnpjR27EmYwxaK3mTG (%invoice%)\nclient_invoices\ninvoice_items\n",
+  "stderr": "",
+  "execution_time_ms": 273
+}

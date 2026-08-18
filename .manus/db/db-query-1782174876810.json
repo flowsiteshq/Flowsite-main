@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, businessName, previewUrl, websiteDomain, accessToken FROM client_projects WHERE businessName LIKE '%Stylist%' OR businessName LIKE '%stylist%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, previewUrl, websiteDomain, accessToken FROM client_projects WHERE businessName LIKE '%Stylist%' OR businessName LIKE '%stylist%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "30001",
+      "businessName": "Stylist Factory",
+      "previewUrl": "NULL",
+      "websiteDomain": "https://stylistfactory.com/",
+      "accessToken": "GYWiDpwAommZeVx7xXbcWT"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tbusinessName\tpreviewUrl\twebsiteDomain\taccessToken\n30001\tStylist Factory\tNULL\thttps://stylistfactory.com/\tGYWiDpwAommZeVx7xXbcWT\n",
+  "stderr": "",
+  "execution_time_ms": 322
+}

@@ -1,0 +1,1792 @@
+{
+  "query": "SELECT id, businessName, email, phone, businessType, status, createdAt FROM wizard_submissions WHERE email IS NOT NULL AND email != '' ORDER BY createdAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, email, phone, businessType, status, createdAt FROM wizard_submissions WHERE email IS NOT NULL AND email != '' ORDER BY createdAt DESC;",
+  "rows": [
+    {
+      "id": "150001",
+      "businessName": "nrkkarate",
+      "email": "hello@nrkkarate.com",
+      "phone": "323-314-3743",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-15 18:07:11"
+    },
+    {
+      "id": "120096",
+      "businessName": "Hicks' Bar-B-Q",
+      "email": "info@hicksbbq.com",
+      "phone": "(662) 624-9887",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120095",
+      "businessName": "Rust Restaurant",
+      "email": "info@rustrestaurant.com",
+      "phone": "(662) 624-1234",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120094",
+      "businessName": "The Ground Floor",
+      "email": "info@thegroundfloorclarksdale.com",
+      "phone": "(662) 621-0050",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120093",
+      "businessName": "Delta Amusement Cafe",
+      "email": "info@deltaamusementcafe.com",
+      "phone": "(662) 627-9939",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120092",
+      "businessName": "Chamoun's Rest Haven",
+      "email": "info@chamounsresthaven.com",
+      "phone": "(662) 627-2412",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120091",
+      "businessName": "Abe's Bar-B-Q",
+      "email": "info@abesbbq.com",
+      "phone": "(662) 627-9947",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120090",
+      "businessName": "Gus's World Famous Fried Chicken",
+      "email": "info@gusfriedchicken.com",
+      "phone": "(901) 527-4877",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120089",
+      "businessName": "Arcade Restaurant",
+      "email": "info@arcaderestaurant.com",
+      "phone": "(901) 526-5757",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120088",
+      "businessName": "Wiles-Smith Drug Store Lunch Counter",
+      "email": "info@wilessmithlunch.com",
+      "phone": "(901) 527-0948",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120087",
+      "businessName": "Buntyn Restaurant",
+      "email": "info@buntynsrestaurant.com",
+      "phone": "(901) 458-8776",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120086",
+      "businessName": "Elfo's Restaurant",
+      "email": "info@elfosrestaurant.com",
+      "phone": "(901) 458-0025",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120085",
+      "businessName": "Coletta's Italian Restaurant",
+      "email": "info@colettas.com",
+      "phone": "(901) 458-1898",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120084",
+      "businessName": "The Rendezvous",
+      "email": "info@hogsfly.com",
+      "phone": "(901) 523-2746",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120083",
+      "businessName": "Tops Bar-B-Q",
+      "email": "info@topsbbq.com",
+      "phone": "(901) 725-7527",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120082",
+      "businessName": "Cozy Corner Restaurant",
+      "email": "info@cozycornerrestaurant.com",
+      "phone": "(901) 527-9158",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120081",
+      "businessName": "Dyer's Burgers",
+      "email": "info@dyersburgers.com",
+      "phone": "(901) 527-3937",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120080",
+      "businessName": "Alcenia's",
+      "email": "info@alcenias.com",
+      "phone": "(901) 523-0200",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120079",
+      "businessName": "Payne's Bar-B-Q",
+      "email": "info@paynesbbq.com",
+      "phone": "(901) 272-1523",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120078",
+      "businessName": "Marlowe's Ribs & Restaurant",
+      "email": "info@marlowesribs.com",
+      "phone": "(901) 523-7427",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120077",
+      "businessName": "The Butcher Shop Steakhouse",
+      "email": "info@thebutchershopsteakhouse.com",
+      "phone": "(901) 521-0856",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120076",
+      "businessName": "Benny's Grill",
+      "email": "info@bennysgrilljonesbro.com",
+      "phone": "(870) 932-1234",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120075",
+      "businessName": "Sycamore Grille",
+      "email": "info@sycamoregrille.com",
+      "phone": "(419) 423-5678",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120074",
+      "businessName": "The Bistro at Findlay",
+      "email": "info@thebistroatfindlay.com",
+      "phone": "(419) 425-1234",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120073",
+      "businessName": "Dietsch Brothers",
+      "email": "info@dietschbrothers.com",
+      "phone": "(419) 422-4474",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120072",
+      "businessName": "The Ohio Grille",
+      "email": "info@theohiogrille.com",
+      "phone": "(419) 422-3663",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120071",
+      "businessName": "Winchell's Donut House",
+      "email": "info@winchellsdonuthouse.com",
+      "phone": "(501) 624-3600",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120070",
+      "businessName": "Ramsey's Diner",
+      "email": "info@ramseysdiner.com",
+      "phone": "(859) 259-2708",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120069",
+      "businessName": "Malone's Restaurant",
+      "email": "info@malonesrestaurant.com",
+      "phone": "(859) 335-6500",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120068",
+      "businessName": "The Crystal Grill",
+      "email": "info@crystalgrill.com",
+      "phone": "(662) 453-6530",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120067",
+      "businessName": "Lusco's Restaurant",
+      "email": "info@luscosrestaurant.com",
+      "phone": "(662) 453-5365",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120066",
+      "businessName": "Doe's Eat Place",
+      "email": "info@doeseatplace.com",
+      "phone": "(662) 334-3315",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120065",
+      "businessName": "Cynthia's Restaurant",
+      "email": "info@cynthiasrestaurant.com",
+      "phone": "(270) 444-1234",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120064",
+      "businessName": "Jeremiah's Restaurant",
+      "email": "info@jeremiahsrestaurant.com",
+      "phone": "(270) 443-3333",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120063",
+      "businessName": "Sagebrush Steakhouse",
+      "email": "info@sagebrushsteakhouse.com",
+      "phone": "(270) 442-7474",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120062",
+      "businessName": "Mango's Tropical Cafe",
+      "email": "info@mangostropicalcafe.com",
+      "phone": "(352) 867-1234",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120061",
+      "businessName": "Siam Thai Restaurant",
+      "email": "info@siamthaiocala.com",
+      "phone": "(352) 732-9999",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120060",
+      "businessName": "Peking Garden Chinese Restaurant",
+      "email": "info@pekinggardenocala.com",
+      "phone": "(352) 732-9888",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120059",
+      "businessName": "Ocean Buffet",
+      "email": "info@oceanbuffetocala.com",
+      "phone": "(352) 789-6266",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120058",
+      "businessName": "K'nafa Restaurant",
+      "email": "info@knafarestaurant.com",
+      "phone": "(234) 719-2414",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120057",
+      "businessName": "Casablanca Grill",
+      "email": "info@casablancagrillerie.com",
+      "phone": "(814) 452-4544",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120056",
+      "businessName": "Ye Old Greek",
+      "email": "info@yeoldgreekerie.com",
+      "phone": "(814) 384-7443",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120055",
+      "businessName": "Greek Delights Cafe",
+      "email": "info@greekdelightscafe.com",
+      "phone": "(330) 399-2822",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120054",
+      "businessName": "Kabob House",
+      "email": "info@kabobhouseyoungstown.com",
+      "phone": "(330) 330-8060",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120053",
+      "businessName": "Coppermill Steakhouse & Lounge",
+      "email": "info@coppermillsteakhouse-kearney.com",
+      "phone": "(308) 234-6000",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120052",
+      "businessName": "Thunder Road Grill",
+      "email": "info@thunderroadgrill.net",
+      "phone": "(308) 382-1111",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120051",
+      "businessName": "Plainsman Steakhouse & Lounge",
+      "email": "info@plainsmansteakhouse.com",
+      "phone": "(308) 382-0000",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120050",
+      "businessName": "Double V Restaurant Sports Bar & Grill",
+      "email": "info@gidoublev.com",
+      "phone": "(308) 384-2000",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:25:32"
+    },
+    {
+      "id": "120001",
+      "businessName": "Mama's Restaurant",
+      "email": "info@mamasrestaurant.com",
+      "phone": "(903) 526-7915",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120049",
+      "businessName": "Texas T-Bone Steakhouse",
+      "email": "info@texastbonesteakhouse.com",
+      "phone": "(308) 384-2888",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120048",
+      "businessName": "The Choice Southern Soul Food Restaurant",
+      "email": "info@thechoicerestaurant.com",
+      "phone": "(256) 546-9055",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120047",
+      "businessName": "Chef T's",
+      "email": "info@chefts.com",
+      "phone": "(256) 770-4683",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120046",
+      "businessName": "Heart & Soul",
+      "email": "info@heartsoulcuisine.com",
+      "phone": "(706) 225-0890",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120045",
+      "businessName": "Zack's Family Restaurant",
+      "email": "Ben.Henderson@zacksfamilyrestaurant.com",
+      "phone": "(334) 673-9225",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120044",
+      "businessName": "Netta's Southern Flava",
+      "email": "info@ordernettas.com",
+      "phone": "(706) 221-2464",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120043",
+      "businessName": "Shun Xing Chinese Restaurant",
+      "email": "info@shunxingbassett.com",
+      "phone": "(276) 629-9519",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120042",
+      "businessName": "Little China Chinese Rest",
+      "email": "info@littlechinatogo.com",
+      "phone": "(252) 237-8823",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120041",
+      "businessName": "Taste of China Restaurant",
+      "email": "info@tasteofchina8222.com",
+      "phone": "(252) 291-8222",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120040",
+      "businessName": "Golden Wok",
+      "email": "info@eatgoldenwok.com",
+      "phone": "(252) 937-9871",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120039",
+      "businessName": "Great Wall Chinese Restaurant",
+      "email": "info@greatwallrockymount.com",
+      "phone": "(252) 446-7777",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120038",
+      "businessName": "Southern Frenzy",
+      "email": "info@southernfrenzy.com",
+      "phone": "(580) 618-3579",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120037",
+      "businessName": "Raphael's Southern BBQ",
+      "email": "info@raphaelssouthernbbq.com",
+      "phone": "(918) 760-4179",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120036",
+      "businessName": "Doghouse Tulsa",
+      "email": "info@doghousetulsa.com",
+      "phone": "(918) 592-0700",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120035",
+      "businessName": "Stuff That Turkey",
+      "email": "info@stuffthatturkey.com",
+      "phone": "(918) 813-0279",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120034",
+      "businessName": "Flourish Cottage Bakery and Garden",
+      "email": "info@flourishcottagebakery.com",
+      "phone": "(417) 861-6111",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120033",
+      "businessName": "Timberlake Motel",
+      "email": "sales@timberlakemotel.net",
+      "phone": "(434) 525-2160",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120032",
+      "businessName": "Federal Crest Inn Bed & Breakfast",
+      "email": "info@federalcrestinn.com",
+      "phone": "(434) 845-6155",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120031",
+      "businessName": "Pinecrest Motel",
+      "email": "info@pinecrestmotelwv.com",
+      "phone": "(304) 253-3371",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120030",
+      "businessName": "Martinsburg Motel",
+      "email": "info@martinsburgmotel.com",
+      "phone": "(304) 263-4771",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120029",
+      "businessName": "Black Lantern Inn",
+      "email": "info@blacklanterninn.com",
+      "phone": "(540) 206-3441",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120028",
+      "businessName": "Snappers Seafood Biloxi",
+      "email": "info@snappersseafoodbiloxi.com",
+      "phone": "(228) 374-7962",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120027",
+      "businessName": "Clark Seafood",
+      "email": "info@clarkseafoodms.com",
+      "phone": "(228) 762-4511",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120026",
+      "businessName": "Kajun Seafood Shack",
+      "email": "info@kajunseafoodshack.com",
+      "phone": "(985) 714-3802",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120025",
+      "businessName": "C'est Bon Cafe of Houma",
+      "email": "info@cestboncafehouma.com",
+      "phone": "(985) 360-3928",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120024",
+      "businessName": "Brady's Steaks & Seafood",
+      "email": "info@bradyssteaksandseafood.com",
+      "phone": "(228) 205-3749",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120023",
+      "businessName": "Footers Pizza",
+      "email": "info@footerspizza.com",
+      "phone": "(812) 235-4200",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120022",
+      "businessName": "Little Chicagos",
+      "email": "info@littlechicagos.com",
+      "phone": "(765) 270-2424",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120021",
+      "businessName": "Cheecho's Pizza",
+      "email": "info@cheechospizza.com",
+      "phone": "(765) 568-2688",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120020",
+      "businessName": "Maurizio's Pizza",
+      "email": "info@mauriziospizzaofterrehaute.com",
+      "phone": "(812) 232-0633",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120019",
+      "businessName": "Pilonis Italian Restaurant",
+      "email": "info@pilonis.com",
+      "phone": "(812) 466-4744",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120018",
+      "businessName": "La Pasadita Mexican Delicias",
+      "email": "info@lapasaditamexican.com",
+      "phone": "(864) 804-6809",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120017",
+      "businessName": "Taqueria El Patron",
+      "email": "info@taqueriaelpatronaugusta.com",
+      "phone": "(706) 210-5678",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120016",
+      "businessName": "Taqueria Mi Casita",
+      "email": "info@taqueriamicasita.com",
+      "phone": "(706) 305-9902",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120015",
+      "businessName": "Carlile's BBQ",
+      "email": "info@carlilesbbq.com",
+      "phone": "(205) 942-9400",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120014",
+      "businessName": "Texas PitMaster BBQ",
+      "email": "info@texaspitmasterbbq.com",
+      "phone": "(601) 602-3965",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120013",
+      "businessName": "Squealer's BBQ",
+      "email": "info@squealersbbque.com",
+      "phone": "(601) 483-2727",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120012",
+      "businessName": "The Front Porch BBQ & Seafood",
+      "email": "info@thefrontporchbbq.com",
+      "phone": "(601) 264-3536",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120011",
+      "businessName": "Ken's BBQ",
+      "email": "info@kensbbqbirmingham.com",
+      "phone": "(205) 798-9000",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120010",
+      "businessName": "McClure's Restaurant",
+      "email": "info@mccluresrestaurant.com",
+      "phone": "(740) 446-6369",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120009",
+      "businessName": "Cozy Corner Diner",
+      "email": "info@cozycornerdiner.com",
+      "phone": "(740) 775-1234",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120008",
+      "businessName": "Tina's Diner & Dairy Stop",
+      "email": "info@tinasdiner.com",
+      "phone": "(740) 849-2655",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120007",
+      "businessName": "Bryan Place",
+      "email": "info@bryan-place.com",
+      "phone": "(740) 450-8008",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120006",
+      "businessName": "The 146",
+      "email": "info@the146oh.com",
+      "phone": "(740) 873-6064",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120005",
+      "businessName": "Lone Star Charlie's Family Restaurant",
+      "email": "info@lonestarcharlies.net",
+      "phone": "(936) 632-8881",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120004",
+      "businessName": "Kinfolks Restaurant",
+      "email": "info@kinfolksrestaurant.com",
+      "phone": "(936) 569-2422",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120003",
+      "businessName": "The Diner",
+      "email": "info@thedinertyler.com",
+      "phone": "(903) 509-3463",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "120002",
+      "businessName": "Daniel Boone's Grill & Tavern",
+      "email": "info@danielboonestyler.com",
+      "phone": "(903) 595-2228",
+      "businessType": "restaurant",
+      "status": "new",
+      "createdAt": "2026-05-08 18:24:42"
+    },
+    {
+      "id": "90099",
+      "businessName": "Fargo Martial Arts ND",
+      "email": "info@fargomartialarts.com",
+      "phone": "(701) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90051",
+      "businessName": "American Kenpo Karate Toledo",
+      "email": "info@kenpotoledo.com",
+      "phone": "(419) 708-4454",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90100",
+      "businessName": "Minneapolis Karate Academy",
+      "email": "info@minneapoliskarate.com",
+      "phone": "(612) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90101",
+      "businessName": "Milwaukee Taekwondo Center",
+      "email": "info@milwaukeetkd.com",
+      "phone": "(414) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90098",
+      "businessName": "Sioux Falls Karate SD",
+      "email": "info@siouxfallskarate.com",
+      "phone": "(605) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90097",
+      "businessName": "Omaha Martial Arts Nebraska",
+      "email": "info@omahamartialarts.com",
+      "phone": "(402) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90096",
+      "businessName": "Fort Collins Karate CO",
+      "email": "info@fortcollinskarate.com",
+      "phone": "(970) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90095",
+      "businessName": "Colorado Springs Martial Arts",
+      "email": "info@csmartialarts.com",
+      "phone": "(719) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90094",
+      "businessName": "Riverside Karate Academy CA",
+      "email": "info@riversidekarate.com",
+      "phone": "(951) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90093",
+      "businessName": "Bakersfield Taekwondo",
+      "email": "info@bakersfieldtkd.com",
+      "phone": "(661) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90092",
+      "businessName": "Fresno Martial Arts Center",
+      "email": "info@fresnomartialarts.com",
+      "phone": "(559) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90091",
+      "businessName": "Sacramento Karate Academy",
+      "email": "info@sacramentokarate.com",
+      "phone": "(916) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90090",
+      "businessName": "Eugene Martial Arts Oregon",
+      "email": "info@eugenemartialarts.com",
+      "phone": "(541) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90089",
+      "businessName": "Tacoma Taekwondo Academy",
+      "email": "info@tacomatkd.com",
+      "phone": "(253) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90088",
+      "businessName": "Spokane Karate Center WA",
+      "email": "info@spokanekarate.com",
+      "phone": "(509) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90087",
+      "businessName": "Boise Martial Arts Idaho",
+      "email": "info@boisemartialarts.com",
+      "phone": "(208) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90086",
+      "businessName": "Salt Lake City Karate",
+      "email": "info@slckarate.com",
+      "phone": "(801) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90085",
+      "businessName": "Reno Taekwondo Academy",
+      "email": "info@renotkd.com",
+      "phone": "(775) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90084",
+      "businessName": "Las Vegas Martial Arts Center",
+      "email": "info@lasvegasmartialarts.com",
+      "phone": "(702) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90083",
+      "businessName": "Albuquerque Karate Academy",
+      "email": "info@albuquerquekarate.com",
+      "phone": "(505) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90082",
+      "businessName": "Manchester Martial Arts NH",
+      "email": "info@manchestermartialarts.com",
+      "phone": "(603) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90081",
+      "businessName": "Burlington Karate Vermont",
+      "email": "info@burlingtonkarate.com",
+      "phone": "(802) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90080",
+      "businessName": "Portland Martial Arts Maine",
+      "email": "info@portlandmartialarts.com",
+      "phone": "(207) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90079",
+      "businessName": "Providence Karate RI",
+      "email": "info@providencekarate.com",
+      "phone": "(401) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90078",
+      "businessName": "Hartford Martial Arts CT",
+      "email": "info@hartfordmartialarts.com",
+      "phone": "(860) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90077",
+      "businessName": "Rochester Karate Academy NY",
+      "email": "info@rochesterkarate.com",
+      "phone": "(585) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90076",
+      "businessName": "Buffalo Martial Arts NY",
+      "email": "info@buffalomartialarts.com",
+      "phone": "(716) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90075",
+      "businessName": "Philadelphia Taekwondo Academy",
+      "email": "info@phillytkd.com",
+      "phone": "(215) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90074",
+      "businessName": "Pittsburgh Karate Club",
+      "email": "info@pittsburghkarate.com",
+      "phone": "(412) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90073",
+      "businessName": "Baltimore Martial Arts Academy",
+      "email": "info@baltimoremartialarts.com",
+      "phone": "(410) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90072",
+      "businessName": "Norfolk Karate Center",
+      "email": "info@norfolkkarate.com",
+      "phone": "(757) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90071",
+      "businessName": "Richmond Martial Arts Virginia",
+      "email": "info@richmondmartialarts.com",
+      "phone": "(804) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90070",
+      "businessName": "Columbia Karate Academy SC",
+      "email": "info@columbiakaratesc.com",
+      "phone": "(803) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90069",
+      "businessName": "Charleston Martial Arts SC",
+      "email": "info@charlestonmartialarts.com",
+      "phone": "(843) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90068",
+      "businessName": "Lexington Taekwondo Center",
+      "email": "info@lexingtontkd.com",
+      "phone": "(859) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90067",
+      "businessName": "Louisville Karate Academy",
+      "email": "info@louisvillekarate.com",
+      "phone": "(502) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90066",
+      "businessName": "St. Louis Martial Arts Center",
+      "email": "info@stlouismartialarts.com",
+      "phone": "(314) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90065",
+      "businessName": "Kansas City Karate Club",
+      "email": "info@kansascitykarate.com",
+      "phone": "(816) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90064",
+      "businessName": "Tulsa Taekwondo Academy",
+      "email": "info@tulsataekwondo.com",
+      "phone": "(918) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90063",
+      "businessName": "Oklahoma City Martial Arts",
+      "email": "info@okcmartialarts.com",
+      "phone": "(405) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90062",
+      "businessName": "Little Rock Karate Academy",
+      "email": "info@littlerockkarate.com",
+      "phone": "(501) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90061",
+      "businessName": "New Orleans Martial Arts",
+      "email": "info@neworleansmartialarts.com",
+      "phone": "(504) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90060",
+      "businessName": "Baton Rouge Karate Center",
+      "email": "info@batonrougekarate.com",
+      "phone": "(225) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90059",
+      "businessName": "Jackson Martial Arts Mississippi",
+      "email": "info@jacksonmartialarts.com",
+      "phone": "(601) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90058",
+      "businessName": "Huntsville Taekwondo",
+      "email": "info@huntsvilletaekwondo.com",
+      "phone": "(256) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90057",
+      "businessName": "Montgomery Karate Academy",
+      "email": "info@montgomerykarate.com",
+      "phone": "(334) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90056",
+      "businessName": "Birmingham Martial Arts",
+      "email": "info@birminghammartialarts.com",
+      "phone": "(205) 555-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90055",
+      "businessName": "Alliance Martial Arts Georgia",
+      "email": "info@alliancemaga.com",
+      "phone": "(678) 355-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90054",
+      "businessName": "Renzo Gracie Georgia",
+      "email": "info@renzograciegeorgia.com",
+      "phone": "(770) 485-5555",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90053",
+      "businessName": "Evolution Martial Arts Georgia",
+      "email": "info@evolutionmartialarts.net",
+      "phone": "(678) 445-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90052",
+      "businessName": "Gracie Barra East Cobb",
+      "email": "info@gbeastcobb.com",
+      "phone": "(770) 973-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:46:09"
+    },
+    {
+      "id": "90027",
+      "businessName": "Gracie Barra Alpharetta",
+      "email": "info@gbalpharetta.com",
+      "phone": "(678) 580-0707",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90009",
+      "businessName": "Okinawan Shorinryu Karate-Do",
+      "email": "info@okinawanshorinryu.com",
+      "phone": "(407) 897-3642",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90049",
+      "businessName": "Greater Cleveland Self Defense Association",
+      "email": "info@ichfohio.com",
+      "phone": "216-374-7309",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90048",
+      "businessName": "Petrosino Personal Protection",
+      "email": "info@petrosinous.com",
+      "phone": "(330) 434-1611",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90047",
+      "businessName": "Detox Yoga Studios",
+      "email": "info@detoxyogastudios.com",
+      "phone": "636-887-0222",
+      "businessType": "fitness",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90046",
+      "businessName": "Sumits Hot Yoga Columbia",
+      "email": "info@sumitsyogacolumbia.com",
+      "phone": "573-474-9642",
+      "businessType": "fitness",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90045",
+      "businessName": "Lansing Karate Academy",
+      "email": "info@lansingkarate.com",
+      "phone": "(517) 484-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90044",
+      "businessName": "Grand Rapids Boxing Gym",
+      "email": "info@grandrapidsboxing.com",
+      "phone": "(616) 451-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90043",
+      "businessName": "Detroit Martial Arts Center",
+      "email": "info@detroitmartialarts.com",
+      "phone": "(313) 961-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90042",
+      "businessName": "Fort Wayne Karate Club",
+      "email": "info@fortwaynekarate.com",
+      "phone": "(260) 422-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90041",
+      "businessName": "Indy Martial Arts Indianapolis",
+      "email": "info@indymartialarts.com",
+      "phone": "(317) 635-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90040",
+      "businessName": "Knoxville Taekwondo Academy",
+      "email": "info@knoxvilletaekwondo.com",
+      "phone": "(865) 523-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90039",
+      "businessName": "Nashville Karate Center",
+      "email": "info@nashvillekarate.com",
+      "phone": "(615) 244-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90038",
+      "businessName": "Memphis Martial Arts Academy",
+      "email": "info@memphismartialarts.com",
+      "phone": "(901) 385-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90037",
+      "businessName": "Tucson Martial Arts Center",
+      "email": "info@tucsonmartialarts.com",
+      "phone": "(520) 445-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90036",
+      "businessName": "Desert Kickboxing Scottsdale",
+      "email": "info@desertkickboxing.com",
+      "phone": "(480) 345-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90035",
+      "businessName": "Phoenix Karate Academy",
+      "email": "info@phoenixkarateacademy.com",
+      "phone": "(602) 265-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90034",
+      "businessName": "Wilmington Martial Arts",
+      "email": "info@wilmingtonmartialarts.com",
+      "phone": "(910) 395-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90033",
+      "businessName": "Piedmont Karate Academy",
+      "email": "info@piedmontkarate.com",
+      "phone": "(336) 272-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90032",
+      "businessName": "Triangle Taekwondo Cary",
+      "email": "info@triangletaekwondo.com",
+      "phone": "(919) 460-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90031",
+      "businessName": "Carolina Martial Arts Charlotte",
+      "email": "info@carolinamartialarts.com",
+      "phone": "(704) 542-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90030",
+      "businessName": "American Taekwondo Academy NC",
+      "email": "info@americantaekwondoacademy.com",
+      "phone": "(919) 847-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90029",
+      "businessName": "Combat Sports Academy Kennesaw",
+      "email": "info@combatsportsacademy.net",
+      "phone": "(678) 580-1234",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90028",
+      "businessName": "Pure Jiu Jitsu Atlanta",
+      "email": "info@purejiujitsu.com",
+      "phone": "(404) 919-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90050",
+      "businessName": "Mr. Dee's Karate Academy",
+      "email": "info@mrdeeskarateacademy.com",
+      "phone": "(440) 366-9493",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90001",
+      "businessName": "Tyler Kung Fu & Fitness",
+      "email": "info@tkff.com",
+      "phone": "903-534-8800",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90025",
+      "businessName": "Striker Fight Center",
+      "email": "info@strikerfightmma.com",
+      "phone": "(770) 926-0550",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90024",
+      "businessName": "Gracie Barra Georgia",
+      "email": "info@gbgeorgia.com",
+      "phone": "(770) 485-2403",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90023",
+      "businessName": "Ohio Valley Karate",
+      "email": "info@ohiovalleykarate.com",
+      "phone": "(513) 519-5306",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90022",
+      "businessName": "Ohio Martial Arts",
+      "email": "martialartscenter.ohio@gmail.com",
+      "phone": "419-385-1000",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90021",
+      "businessName": "Mayfield Academy of Self-Defense",
+      "email": "mayfieldacademy067@gmail.com",
+      "phone": "440-409-6954",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90020",
+      "businessName": "Jujitsu School of Self Defense",
+      "email": "kelley919@gmail.com",
+      "phone": "330-201-1313",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90019",
+      "businessName": "Cleveland Shaolin Kung Fu Academy",
+      "email": "info@kungfucleveland.com",
+      "phone": "216-282-4936",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90018",
+      "businessName": "Cincinnati Martial Arts Club",
+      "email": "cincinnatimartialartsclub@gmail.com",
+      "phone": "513-922-5277",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90017",
+      "businessName": "Central Ohio Martial Arts",
+      "email": "info@centralohiomartialarts.com",
+      "phone": "614-263-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90016",
+      "businessName": "Aikido School of Central Ohio",
+      "email": "info@aikidoschool.org",
+      "phone": "(614) 580-2878",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90015",
+      "businessName": "Championship Martial Arts Orlando",
+      "email": "info@championshipmartialarts.com",
+      "phone": "(407) 306-0707",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90014",
+      "businessName": "Martial Arts Center for Health",
+      "email": "info@martialartscenterforhealth.com",
+      "phone": "(407) 985-3088",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90013",
+      "businessName": "Champions Gate Karate",
+      "email": "info@cgkarate.com",
+      "phone": "(863) 424-4800",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90012",
+      "businessName": "Wah Lum Kung Fu",
+      "email": "info@wahlumnorthorlando.com",
+      "phone": "(407) 298-8186",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90011",
+      "businessName": "Shindai Aikikai Aikido Dojo",
+      "email": "info@shindai.com",
+      "phone": "(407) 435-9103",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90010",
+      "businessName": "Shotokan Karate-Do Florida",
+      "email": "Tkoorlandokarate@gmail.com",
+      "phone": "(407) 278-0748",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90026",
+      "businessName": "Team Octopus Midtown MMA",
+      "email": "info@mmaatl.com",
+      "phone": "(678) 666-3838",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90008",
+      "businessName": "A&A Martial Arts and Fitness",
+      "email": "info@aamartialarts.com",
+      "phone": "210-710-9533",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90007",
+      "businessName": "10th Planet MMA and Jiu-Jitsu Beaumont",
+      "email": "info@10thplanetjjbeaumont.com",
+      "phone": "409-860-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90006",
+      "businessName": "Johnny Garcia Brazilian Jiu-Jitsu",
+      "email": "info@johnnygarciabjj.com",
+      "phone": "956-546-1111",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90005",
+      "businessName": "San Antonio WingTsun Academy",
+      "email": "info@sanantoniowingtsun.com",
+      "phone": "210-822-5425",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90004",
+      "businessName": "Parks Martial Arts - Mesquite",
+      "email": "info@parksmartialarts.com",
+      "phone": "972-285-3333",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90003",
+      "businessName": "Iron Dragon Martial Arts",
+      "email": "info@irondragonmartialarts.com",
+      "phone": "713-643-0000",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    },
+    {
+      "id": "90002",
+      "businessName": "The Gompa",
+      "email": "info@thegompa.com",
+      "phone": "512-444-6672",
+      "businessType": "martial_arts",
+      "status": "new",
+      "createdAt": "2026-05-08 13:45:25"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tbusinessName\temail\tphone\tbusinessType\tstatus\tcreatedAt\n150001\tnrkkarate\thello@nrkkarate.com\t323-314-3743\tmartial_arts\tnew\t2026-05-15 18:07:11\n120096\tHicks' Bar-B-Q\tinfo@hicksbbq.com\t(662) 624-9887\trestaurant\tnew\t2026-05-08 18:25:32\n120095\tRust Restaurant\tinfo@rustrestaurant.com\t(662) 624-1234\trestaurant\tnew\t2026-05-08 18:25:32\n120094\tThe Ground Floor\tinfo@thegroundfloorclarksdale.com\t(662) 621-0050\trestaurant\tnew\t2026-05-08 18:25:32\n120093\tDelta Amusement Cafe\tinfo@deltaamusementcafe.com\t(662) 627-9939\trestaurant\tnew\t2026-05-08 18:25:32\n120092\tChamoun's Rest Haven\tinfo@chamounsresthaven.com\t(662) 627-2412\trestaurant\tnew\t2026-05-08 18:25:32\n120091\tAbe's Bar-B-Q\tinfo@abesbbq.com\t(662) 627-9947\trestaurant\tnew\t2026-05-08 18:25:32\n120090\tGus's World Famous Fried Chicken\tinfo@gusfriedchicken.com\t(901) 527-4877\trestaurant\tnew\t2026-05-08 18:25:32\n120089\tArcade Restaurant\tinfo@arcaderestaurant.com\t(901) 526-5757\trestaurant\tnew\t2026-05-08 18:25:32\n120088\tWiles-Smith Drug Store Lunch Counter\tinfo@wilessmithlunch.com\t(901) 527-0948\trestaurant\tnew\t2026-05-08 18:25:32\n120087\tBuntyn Restaurant\tinfo@buntynsrestaurant.com\t(901) 458-8776\trestaurant\tnew\t2026-05-08 18:25:32\n120086\tElfo's Restaurant\tinfo@elfosrestaurant.com\t(901) 458-0025\trestaurant\tnew\t2026-05-08 18:25:32\n120085\tColetta's Italian Restaurant\tinfo@colettas.com\t(901) 458-1898\trestaurant\tnew\t2026-05-08 18:25:32\n120084\tThe Rendezvous\tinfo@hogsfly.com\t(901) 523-2746\trestaurant\tnew\t2026-05-08 18:25:32\n120083\tTops Bar-B-Q\tinfo@topsbbq.com\t(901) 725-7527\trestaurant\tnew\t2026-05-08 18:25:32\n120082\tCozy Corner Restaurant\tinfo@cozycornerrestaurant.com\t(901) 527-9158\trestaurant\tnew\t2026-05-08 18:25:32\n120081\tDyer's Burgers\tinfo@dyersburgers.com\t(901) 527-3937\trestaurant\tnew\t2026-05-08 18:25:32\n120080\tAlcenia's\tinfo@alcenias.com\t(901) 523-0200\trestaurant\tnew\t2026-05-08 18:25:32\n120079\tPayne's Bar-B-Q\tinfo@paynesbbq.com\t(901) 272-1523\trestaurant\tnew\t2026-05-08 18:25:32\n120078\tMarlowe's Ribs & Restaurant\tinfo@marlowesribs.com\t(901) 523-7427\trestaurant\tnew\t2026-05-08 18:25:32\n120077\tThe Butcher Shop Steakhouse\tinfo@thebutchershopsteakhouse.com\t(901) 521-0856\trestaurant\tnew\t2026-05-08 18:25:32\n120076\tBenny's Grill\tinfo@bennysgrilljonesbro.com\t(870) 932-1234\trestaurant\tnew\t2026-05-08 18:25:32\n120075\tSycamore Grille\tinfo@sycamoregrille.com\t(419) 423-5678\trestaurant\tnew\t2026-05-08 18:25:32\n120074\tThe Bistro at Findlay\tinfo@thebistroatfindlay.com\t(419) 425-1234\trestaurant\tnew\t2026-05-08 18:25:32\n120073\tDietsch Brothers\tinfo@dietschbrothers.com\t(419) 422-4474\trestaurant\tnew\t2026-05-08 18:25:32\n120072\tThe Ohio Grille\tinfo@theohiogrille.com\t(419) 422-3663\trestaurant\tnew\t2026-05-08 18:25:32\n120071\tWinchell's Donut House\tinfo@winchellsdonuthouse.com\t(501) 624-3600\trestaurant\tnew\t2026-05-08 18:25:32\n120070\tRamsey's Diner\tinfo@ramseysdiner.com\t(859) 259-2708\trestaurant\tnew\t2026-05-08 18:25:32\n120069\tMalone's Restaurant\tinfo@malonesrestaurant.com\t(859) 335-6500\trestaurant\tnew\t2026-05-08 18:25:32\n120068\tThe Crystal Grill\tinfo@crystalgrill.com\t(662) 453-6530\trestaurant\tnew\t2026-05-08 18:25:32\n120067\tLusco's Restaurant\tinfo@luscosrestaurant.com\t(662) 453-5365\trestaurant\tnew\t2026-05-08 18:25:32\n120066\tDoe's Eat Place\tinfo@doeseatplace.com\t(662) 334-3315\trestaurant\tnew\t2026-05-08 18:25:32\n120065\tCynthia's Restaurant\tinfo@cynthiasrestaurant.com\t(270) 444-1234\trestaurant\tnew\t2026-05-08 18:25:32\n120064\tJeremiah's Restaurant\tinfo@jeremiahsrestaurant.com\t(270) 443-3333\trestaurant\tnew\t2026-05-08 18:25:32\n120063\tSagebrush Steakhouse\tinfo@sagebrushsteakhouse.com\t(270) 442-7474\trestaurant\tnew\t2026-05-08 18:25:32\n120062\tMango's Tropical Cafe\tinfo@mangostropicalcafe.com\t(352) 867-1234\trestaurant\tnew\t2026-05-08 18:25:32\n120061\tSiam Thai Restaurant\tinfo@siamthaiocala.com\t(352) 732-9999\trestaurant\tnew\t2026-05-08 18:25:32\n120060\tPeking Garden Chinese Restaurant\tinfo@pekinggardenocala.com\t(352) 732-9888\trestaurant\tnew\t2026-05-08 18:25:32\n120059\tOcean Buffet\tinfo@oceanbuffetocala.com\t(352) 789-6266\trestaurant\tnew\t2026-05-08 18:25:32\n120058\tK'nafa Restaurant\tinfo@knafarestaurant.com\t(234) 719-2414\trestaurant\tnew\t2026-05-08 18:25:32\n120057\tCasablanca Grill\tinfo@casablancagrillerie.com\t(814) 452-4544\trestaurant\tnew\t2026-05-08 18:25:32\n120056\tYe Old Greek\tinfo@yeoldgreekerie.com\t(814) 384-7443\trestaurant\tnew\t2026-05-08 18:25:32\n120055\tGreek Delights Cafe\tinfo@greekdelightscafe.com\t(330) 399-2822\trestaurant\tnew\t2026-05-08 18:25:32\n120054\tKabob House\tinfo@kabobhouseyoungstown.com\t(330) 330-8060\trestaurant\tnew\t2026-05-08 18:25:32\n120053\tCoppermill Steakhouse & Lounge\tinfo@coppermillsteakhouse-kearney.com\t(308) 234-6000\trestaurant\tnew\t2026-05-08 18:25:32\n120052\tThunder Road Grill\tinfo@thunderroadgrill.net\t(308) 382-1111\trestaurant\tnew\t2026-05-08 18:25:32\n120051\tPlainsman Steakhouse & Lounge\tinfo@plainsmansteakhouse.com\t(308) 382-0000\trestaurant\tnew\t2026-05-08 18:25:32\n120050\tDouble V Restaurant Sports Bar & Grill\tinfo@gidoublev.com\t(308) 384-2000\trestaurant\tnew\t2026-05-08 18:25:32\n120001\tMama's Restaurant\tinfo@mamasrestaurant.com\t(903) 526-7915\trestaurant\tnew\t2026-05-08 18:24:42\n120049\tTexas T-Bone Steakhouse\tinfo@texastbonesteakhouse.com\t(308) 384-2888\trestaurant\tnew\t2026-05-08 18:24:42\n120048\tThe Choice Southern Soul Food Restaurant\tinfo@thechoicerestaurant.com\t(256) 546-9055\trestaurant\tnew\t2026-05-08 18:24:42\n120047\tChef T's\tinfo@chefts.com\t(256) 770-4683\trestaurant\tnew\t2026-05-08 18:24:42\n120046\tHeart & Soul\tinfo@heartsoulcuisine.com\t(706) 225-0890\trestaurant\tnew\t2026-05-08 18:24:42\n120045\tZack's Family Restaurant\tBen.Henderson@zacksfamilyrestaurant.com\t(334) 673-9225\trestaurant\tnew\t2026-05-08 18:24:42\n120044\tNetta's Southern Flava\tinfo@ordernettas.com\t(706) 221-2464\trestaurant\tnew\t2026-05-08 18:24:42\n120043\tShun Xing Chinese Restaurant\tinfo@shunxingbassett.com\t(276) 629-9519\trestaurant\tnew\t2026-05-08 18:24:42\n120042\tLittle China Chinese Rest\tinfo@littlechinatogo.com\t(252) 237-8823\trestaurant\tnew\t2026-05-08 18:24:42\n120041\tTaste of China Restaurant\tinfo@tasteofchina8222.com\t(252) 291-8222\trestaurant\tnew\t2026-05-08 18:24:42\n120040\tGolden Wok\tinfo@eatgoldenwok.com\t(252) 937-9871\trestaurant\tnew\t2026-05-08 18:24:42\n120039\tGreat Wall Chinese Restaurant\tinfo@greatwallrockymount.com\t(252) 446-7777\trestaurant\tnew\t2026-05-08 18:24:42\n120038\tSouthern Frenzy\tinfo@southernfrenzy.com\t(580) 618-3579\trestaurant\tnew\t2026-05-08 18:24:42\n120037\tRaphael's Southern BBQ\tinfo@raphaelssouthernbbq.com\t(918) 760-4179\trestaurant\tnew\t2026-05-08 18:24:42\n120036\tDoghouse Tulsa\tinfo@doghousetulsa.com\t(918) 592-0700\trestaurant\tnew\t2026-05-08 18:24:42\n120035\tStuff That Turkey\tinfo@stuffthatturkey.com\t(918) 813-0279\trestaurant\tnew\t2026-05-08 18:24:42\n120034\tFlourish Cottage Bakery and Garden\tinfo@flourishcottagebakery.com\t(417) 861-6111\trestaurant\tnew\t2026-05-08 18:24:42\n120033\tTimberlake Motel\tsales@timberlakemotel.net\t(434) 525-2160\trestaurant\tnew\t2026-05-08 18:24:42\n120032\tFederal Crest Inn Bed & Breakfast\tinfo@federalcrestinn.com\t(434) 845-6155\trestaurant\tnew\t2026-05-08 18:24:42\n120031\tPinecrest Motel\tinfo@pinecrestmotelwv.com\t(304) 253-3371\trestaurant\tnew\t2026-05-08 18:24:42\n120030\tMartinsburg Motel\tinfo@martinsburgmotel.com\t(304) 263-4771\trestaurant\tnew\t2026-05-08 18:24:42\n120029\tBlack Lantern Inn\tinfo@blacklanterninn.com\t(540) 206-3441\trestaurant\tnew\t2026-05-08 18:24:42\n120028\tSnappers Seafood Biloxi\tinfo@snappersseafoodbiloxi.com\t(228) 374-7962\trestaurant\tnew\t2026-05-08 18:24:42\n120027\tClark Seafood\tinfo@clarkseafoodms.com\t(228) 762-4511\trestaurant\tnew\t2026-05-08 18:24:42\n120026\tKajun Seafood Shack\tinfo@kajunseafoodshack.com\t(985) 714-3802\trestaurant\tnew\t2026-05-08 18:24:42\n120025\tC'est Bon Cafe of Houma\tinfo@cestboncafehouma.com\t(985) 360-3928\trestaurant\tnew\t2026-05-08 18:24:42\n120024\tBrady's Steaks & Seafood\tinfo@bradyssteaksandseafood.com\t(228) 205-3749\trestaurant\tnew\t2026-05-08 18:24:42\n120023\tFooters Pizza\tinfo@footerspizza.com\t(812) 235-4200\trestaurant\tnew\t2026-05-08 18:24:42\n120022\tLittle Chicagos\tinfo@littlechicagos.com\t(765) 270-2424\trestaurant\tnew\t2026-05-08 18:24:42\n120021\tCheecho's Pizza\tinfo@cheechospizza.com\t(765) 568-2688\trestaurant\tnew\t2026-05-08 18:24:42\n120020\tMaurizio's Pizza\tinfo@mauriziospizzaofterrehaute.com\t(812) 232-0633\trestaurant\tnew\t2026-05-08 18:24:42\n120019\tPilonis Italian Restaurant\tinfo@pilonis.com\t(812) 466-4744\trestaurant\tnew\t2026-05-08 18:24:42\n120018\tLa Pasadita Mexican Delicias\tinfo@lapasaditamexican.com\t(864) 804-6809\trestaurant\tnew\t2026-05-08 18:24:42\n120017\tTaqueria El Patron\tinfo@taqueriaelpatronaugusta.com\t(706) 210-5678\trestaurant\tnew\t2026-05-08 18:24:42\n120016\tTaqueria Mi Casita\tinfo@taqueriamicasita.com\t(706) 305-9902\trestaurant\tnew\t2026-05-08 18:24:42\n120015\tCarlile's BBQ\tinfo@carlilesbbq.com\t(205) 942-9400\trestaurant\tnew\t2026-05-08 18:24:42\n120014\tTexas PitMaster BBQ\tinfo@texaspitmasterbbq.com\t(601) 602-3965\trestaurant\tnew\t2026-05-08 18:24:42\n120013\tSquealer's BBQ\tinfo@squealersbbque.com\t(601) 483-2727\trestaurant\tnew\t2026-05-08 18:24:42\n120012\tThe Front Porch BBQ & Seafood\tinfo@thefrontporchbbq.com\t(601) 264-3536\trestaurant\tnew\t2026-05-08 18:24:42\n120011\tKen's BBQ\tinfo@kensbbqbirmingham.com\t(205) 798-9000\trestaurant\tnew\t2026-05-08 18:24:42\n120010\tMcClure's Restaurant\tinfo@mccluresrestaurant.com\t(740) 446-6369\trestaurant\tnew\t2026-05-08 18:24:42\n120009\tCozy Corner Diner\tinfo@cozycornerdiner.com\t(740) 775-1234\trestaurant\tnew\t2026-05-08 18:24:42\n120008\tTina's Diner & Dairy Stop\tinfo@tinasdiner.com\t(740) 849-2655\trestaurant\tnew\t2026-05-08 18:24:42\n120007\tBryan Place\tinfo@bryan-place.com\t(740) 450-8008\trestaurant\tnew\t2026-05-08 18:24:42\n120006\tThe 146\tinfo@the146oh.com\t(740) 873-6064\trestaurant\tnew\t2026-05-08 18:24:42\n120005\tLone Star Charlie's Family Restaurant\tinfo@lonestarcharlies.net\t(936) 632-8881\trestaurant\tnew\t2026-05-08 18:24:42\n120004\tKinfolks Restaurant\tinfo@kinfolksrestaurant.com\t(936) 569-2422\trestaurant\tnew\t2026-05-08 18:24:42\n120003\tThe Diner\tinfo@thedinertyler.com\t(903) 509-3463\trestaurant\tnew\t2026-05-08 18:24:42\n120002\tDaniel Boone's Grill & Tavern\tinfo@danielboonestyler.com\t(903) 595-2228\trestaurant\tnew\t2026-05-08 18:24:42\n90099\tFargo Martial Arts ND\tinfo@fargomartialarts.com\t(701) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90051\tAmerican Kenpo Karate Toledo\tinfo@kenpotoledo.com\t(419) 708-4454\tmartial_arts\tnew\t2026-05-08 13:46:09\n90100\tMinneapolis Karate Academy\tinfo@minneapoliskarate.com\t(612) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90101\tMilwaukee Taekwondo Center\tinfo@milwaukeetkd.com\t(414) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90098\tSioux Falls Karate SD\tinfo@siouxfallskarate.com\t(605) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90097\tOmaha Martial Arts Nebraska\tinfo@omahamartialarts.com\t(402) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90096\tFort Collins Karate CO\tinfo@fortcollinskarate.com\t(970) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90095\tColorado Springs Martial Arts\tinfo@csmartialarts.com\t(719) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90094\tRiverside Karate Academy CA\tinfo@riversidekarate.com\t(951) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90093\tBakersfield Taekwondo\tinfo@bakersfieldtkd.com\t(661) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90092\tFresno Martial Arts Center\tinfo@fresnomartialarts.com\t(559) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90091\tSacramento Karate Academy\tinfo@sacramentokarate.com\t(916) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90090\tEugene Martial Arts Oregon\tinfo@eugenemartialarts.com\t(541) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90089\tTacoma Taekwondo Academy\tinfo@tacomatkd.com\t(253) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90088\tSpokane Karate Center WA\tinfo@spokanekarate.com\t(509) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90087\tBoise Martial Arts Idaho\tinfo@boisemartialarts.com\t(208) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90086\tSalt Lake City Karate\tinfo@slckarate.com\t(801) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90085\tReno Taekwondo Academy\tinfo@renotkd.com\t(775) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90084\tLas Vegas Martial Arts Center\tinfo@lasvegasmartialarts.com\t(702) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90083\tAlbuquerque Karate Academy\tinfo@albuquerquekarate.com\t(505) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90082\tManchester Martial Arts NH\tinfo@manchestermartialarts.com\t(603) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90081\tBurlington Karate Vermont\tinfo@burlingtonkarate.com\t(802) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90080\tPortland Martial Arts Maine\tinfo@portlandmartialarts.com\t(207) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90079\tProvidence Karate RI\tinfo@providencekarate.com\t(401) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90078\tHartford Martial Arts CT\tinfo@hartfordmartialarts.com\t(860) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90077\tRochester Karate Academy NY\tinfo@rochesterkarate.com\t(585) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90076\tBuffalo Martial Arts NY\tinfo@buffalomartialarts.com\t(716) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90075\tPhiladelphia Taekwondo Academy\tinfo@phillytkd.com\t(215) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90074\tPittsburgh Karate Club\tinfo@pittsburghkarate.com\t(412) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90073\tBaltimore Martial Arts Academy\tinfo@baltimoremartialarts.com\t(410) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90072\tNorfolk Karate Center\tinfo@norfolkkarate.com\t(757) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90071\tRichmond Martial Arts Virginia\tinfo@richmondmartialarts.com\t(804) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90070\tColumbia Karate Academy SC\tinfo@columbiakaratesc.com\t(803) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90069\tCharleston Martial Arts SC\tinfo@charlestonmartialarts.com\t(843) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90068\tLexington Taekwondo Center\tinfo@lexingtontkd.com\t(859) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90067\tLouisville Karate Academy\tinfo@louisvillekarate.com\t(502) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90066\tSt. Louis Martial Arts Center\tinfo@stlouismartialarts.com\t(314) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90065\tKansas City Karate Club\tinfo@kansascitykarate.com\t(816) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90064\tTulsa Taekwondo Academy\tinfo@tulsataekwondo.com\t(918) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90063\tOklahoma City Martial Arts\tinfo@okcmartialarts.com\t(405) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90062\tLittle Rock Karate Academy\tinfo@littlerockkarate.com\t(501) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90061\tNew Orleans Martial Arts\tinfo@neworleansmartialarts.com\t(504) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90060\tBaton Rouge Karate Center\tinfo@batonrougekarate.com\t(225) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90059\tJackson Martial Arts Mississippi\tinfo@jacksonmartialarts.com\t(601) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90058\tHuntsville Taekwondo\tinfo@huntsvilletaekwondo.com\t(256) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90057\tMontgomery Karate Academy\tinfo@montgomerykarate.com\t(334) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90056\tBirmingham Martial Arts\tinfo@birminghammartialarts.com\t(205) 555-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90055\tAlliance Martial Arts Georgia\tinfo@alliancemaga.com\t(678) 355-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90054\tRenzo Gracie Georgia\tinfo@renzograciegeorgia.com\t(770) 485-5555\tmartial_arts\tnew\t2026-05-08 13:46:09\n90053\tEvolution Martial Arts Georgia\tinfo@evolutionmartialarts.net\t(678) 445-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90052\tGracie Barra East Cobb\tinfo@gbeastcobb.com\t(770) 973-5425\tmartial_arts\tnew\t2026-05-08 13:46:09\n90027\tGracie Barra Alpharetta\tinfo@gbalpharetta.com\t(678) 580-0707\tmartial_arts\tnew\t2026-05-08 13:45:25\n90009\tOkinawan Shorinryu Karate-Do\tinfo@okinawanshorinryu.com\t(407) 897-3642\tmartial_arts\tnew\t2026-05-08 13:45:25\n90049\tGreater Cleveland Self Defense Association\tinfo@ichfohio.com\t216-374-7309\tmartial_arts\tnew\t2026-05-08 13:45:25\n90048\tPetrosino Personal Protection\tinfo@petrosinous.com\t(330) 434-1611\tmartial_arts\tnew\t2026-05-08 13:45:25\n90047\tDetox Yoga Studios\tinfo@detoxyogastudios.com\t636-887-0222\tfitness\tnew\t2026-05-08 13:45:25\n90046\tSumits Hot Yoga Columbia\tinfo@sumitsyogacolumbia.com\t573-474-9642\tfitness\tnew\t2026-05-08 13:45:25\n90045\tLansing Karate Academy\tinfo@lansingkarate.com\t(517) 484-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90044\tGrand Rapids Boxing Gym\tinfo@grandrapidsboxing.com\t(616) 451-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90043\tDetroit Martial Arts Center\tinfo@detroitmartialarts.com\t(313) 961-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90042\tFort Wayne Karate Club\tinfo@fortwaynekarate.com\t(260) 422-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90041\tIndy Martial Arts Indianapolis\tinfo@indymartialarts.com\t(317) 635-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90040\tKnoxville Taekwondo Academy\tinfo@knoxvilletaekwondo.com\t(865) 523-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90039\tNashville Karate Center\tinfo@nashvillekarate.com\t(615) 244-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90038\tMemphis Martial Arts Academy\tinfo@memphismartialarts.com\t(901) 385-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90037\tTucson Martial Arts Center\tinfo@tucsonmartialarts.com\t(520) 445-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90036\tDesert Kickboxing Scottsdale\tinfo@desertkickboxing.com\t(480) 345-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90035\tPhoenix Karate Academy\tinfo@phoenixkarateacademy.com\t(602) 265-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90034\tWilmington Martial Arts\tinfo@wilmingtonmartialarts.com\t(910) 395-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90033\tPiedmont Karate Academy\tinfo@piedmontkarate.com\t(336) 272-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90032\tTriangle Taekwondo Cary\tinfo@triangletaekwondo.com\t(919) 460-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90031\tCarolina Martial Arts Charlotte\tinfo@carolinamartialarts.com\t(704) 542-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90030\tAmerican Taekwondo Academy NC\tinfo@americantaekwondoacademy.com\t(919) 847-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90029\tCombat Sports Academy Kennesaw\tinfo@combatsportsacademy.net\t(678) 580-1234\tmartial_arts\tnew\t2026-05-08 13:45:25\n90028\tPure Jiu Jitsu Atlanta\tinfo@purejiujitsu.com\t(404) 919-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90050\tMr. Dee's Karate Academy\tinfo@mrdeeskarateacademy.com\t(440) 366-9493\tmartial_arts\tnew\t2026-05-08 13:45:25\n90001\tTyler Kung Fu & Fitness\tinfo@tkff.com\t903-534-8800\tmartial_arts\tnew\t2026-05-08 13:45:25\n90025\tStriker Fight Center\tinfo@strikerfightmma.com\t(770) 926-0550\tmartial_arts\tnew\t2026-05-08 13:45:25\n90024\tGracie Barra Georgia\tinfo@gbgeorgia.com\t(770) 485-2403\tmartial_arts\tnew\t2026-05-08 13:45:25\n90023\tOhio Valley Karate\tinfo@ohiovalleykarate.com\t(513) 519-5306\tmartial_arts\tnew\t2026-05-08 13:45:25\n90022\tOhio Martial Arts\tmartialartscenter.ohio@gmail.com\t419-385-1000\tmartial_arts\tnew\t2026-05-08 13:45:25\n90021\tMayfield Academy of Self-Defense\tmayfieldacademy067@gmail.com\t440-409-6954\tmartial_arts\tnew\t2026-05-08 13:45:25\n90020\tJujitsu School of Self Defense\tkelley919@gmail.com\t330-201-1313\tmartial_arts\tnew\t2026-05-08 13:45:25\n90019\tCleveland Shaolin Kung Fu Academy\tinfo@kungfucleveland.com\t216-282-4936\tmartial_arts\tnew\t2026-05-08 13:45:25\n90018\tCincinnati Martial Arts Club\tcincinnatimartialartsclub@gmail.com\t513-922-5277\tmartial_arts\tnew\t2026-05-08 13:45:25\n90017\tCentral Ohio Martial Arts\tinfo@centralohiomartialarts.com\t614-263-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90016\tAikido School of Central Ohio\tinfo@aikidoschool.org\t(614) 580-2878\tmartial_arts\tnew\t2026-05-08 13:45:25\n90015\tChampionship Martial Arts Orlando\tinfo@championshipmartialarts.com\t(407) 306-0707\tmartial_arts\tnew\t2026-05-08 13:45:25\n90014\tMartial Arts Center for Health\tinfo@martialartscenterforhealth.com\t(407) 985-3088\tmartial_arts\tnew\t2026-05-08 13:45:25\n90013\tChampions Gate Karate\tinfo@cgkarate.com\t(863) 424-4800\tmartial_arts\tnew\t2026-05-08 13:45:25\n90012\tWah Lum Kung Fu\tinfo@wahlumnorthorlando.com\t(407) 298-8186\tmartial_arts\tnew\t2026-05-08 13:45:25\n90011\tShindai Aikikai Aikido Dojo\tinfo@shindai.com\t(407) 435-9103\tmartial_arts\tnew\t2026-05-08 13:45:25\n90010\tShotokan Karate-Do Florida\tTkoorlandokarate@gmail.com\t(407) 278-0748\tmartial_arts\tnew\t2026-05-08 13:45:25\n90026\tTeam Octopus Midtown MMA\tinfo@mmaatl.com\t(678) 666-3838\tmartial_arts\tnew\t2026-05-08 13:45:25\n90008\tA&A Martial Arts and Fitness\tinfo@aamartialarts.com\t210-710-9533\tmartial_arts\tnew\t2026-05-08 13:45:25\n90007\t10th Planet MMA and Jiu-Jitsu Beaumont\tinfo@10thplanetjjbeaumont.com\t409-860-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90006\tJohnny Garcia Brazilian Jiu-Jitsu\tinfo@johnnygarciabjj.com\t956-546-1111\tmartial_arts\tnew\t2026-05-08 13:45:25\n90005\tSan Antonio WingTsun Academy\tinfo@sanantoniowingtsun.com\t210-822-5425\tmartial_arts\tnew\t2026-05-08 13:45:25\n90004\tParks Martial Arts - Mesquite\tinfo@parksmartialarts.com\t972-285-3333\tmartial_arts\tnew\t2026-05-08 13:45:25\n90003\tIron Dragon Martial Arts\tinfo@irondragonmartialarts.com\t713-643-0000\tmartial_arts\tnew\t2026-05-08 13:45:25\n90002\tThe Gompa\tinfo@thegompa.com\t512-444-6672\tmartial_arts\tnew\t2026-05-08 13:45:25\n",
+  "stderr": "",
+  "execution_time_ms": 270
+}

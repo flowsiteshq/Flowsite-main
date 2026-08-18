@@ -1,0 +1,24 @@
+{
+  "query": "\nSELECT id, clientName, businessName, clientEmail, assignedTechnicianId\nFROM client_accounts\nWHERE businessName LIKE '%Dojo%' OR businessName LIKE '%dojo%' OR businessName LIKE '%Mydojo%' OR businessName LIKE '%mydojo%';\n\nSELECT * FROM technician_commissions LIMIT 5;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT id, clientName, businessName, clientEmail, assignedTechnicianId\nFROM client_accounts\nWHERE businessName LIKE '%Dojo%' OR businessName LIKE '%dojo%' OR businessName LIKE '%Mydojo%' OR businessName LIKE '%mydojo%';\n\nSELECT * FROM technician_commissions LIMIT 5;\n",
+  "rows": [
+    {
+      "id": "30001",
+      "clientName": "Vincent Holmes",
+      "businessName": "Mydojo",
+      "clientEmail": "vincent.holmes00@gmail.com",
+      "assignedTechnicianId": "NULL"
+    },
+    {
+      "id": "60001",
+      "clientName": "Vincent Holmes",
+      "businessName": "Dojo Flow",
+      "clientEmail": "sensei30002003@gmail.com",
+      "assignedTechnicianId": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tclientName\tbusinessName\tclientEmail\tassignedTechnicianId\n30001\tVincent Holmes\tMydojo\tvincent.holmes00@gmail.com\tNULL\n60001\tVincent Holmes\tDojo Flow\tsensei30002003@gmail.com\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 280
+}

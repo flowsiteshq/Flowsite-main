@@ -1,0 +1,22 @@
+{
+  "query": "\nSELECT 'wizard_submissions' as source, COUNT(*) as total FROM wizard_submissions WHERE email IS NOT NULL AND email != ''\nUNION ALL\nSELECT 'opportunity_pool' as source, COUNT(*) as total FROM opportunity_pool\nUNION ALL\nSELECT 'bookings' as source, COUNT(*) as total FROM bookings;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT 'wizard_submissions' as source, COUNT(*) as total FROM wizard_submissions WHERE email IS NOT NULL AND email != ''\nUNION ALL\nSELECT 'opportunity_pool' as source, COUNT(*) as total FROM opportunity_pool\nUNION ALL\nSELECT 'bookings' as source, COUNT(*) as total FROM bookings;\n",
+  "rows": [
+    {
+      "source": "bookings",
+      "total": "1"
+    },
+    {
+      "source": "opportunity_pool",
+      "total": "930"
+    },
+    {
+      "source": "wizard_submissions",
+      "total": "198"
+    }
+  ],
+  "messages": [],
+  "stdout": "source\ttotal\nbookings\t1\nopportunity_pool\t930\nwizard_submissions\t198\n",
+  "stderr": "",
+  "execution_time_ms": 281
+}

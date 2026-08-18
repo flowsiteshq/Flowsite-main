@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO client_invoices (clientAccountId, invoiceNumber, periodStart, periodEnd, dueDate, baseAmountCents, discountCents, lateFeeCents, totalAmountCents, status, discountType, isRecurring, notes, shareToken) VALUES (210001, 'INV-SWL-2026-05', '2026-05-01', '2026-05-31', '2026-06-01', 9900, 0, 0, 9900, 'open', 'none', 1, 'Monthly retainer - May 2026', REPLACE(UUID(), '-', ''));",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute INSERT INTO client_invoices (clientAccountId, invoiceNumber, periodStart, periodEnd, dueDate, baseAmountCents, discountCents, lateFeeCents, totalAmountCents, status, discountType, isRecurring, notes, shareToken) VALUES (210001, 'INV-SWL-2026-05', '2026-05-01', '2026-05-31', '2026-06-01', 9900, 0, 0, 9900, 'open', 'none', 1, 'Monthly retainer - May 2026', REPLACE(UUID(), '-', ''));",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 290
+}

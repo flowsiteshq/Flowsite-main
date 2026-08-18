@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS lead_notes (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  leadId INT NOT NULL,\n  content TEXT NOT NULL,\n  authorName VARCHAR(255) NOT NULL DEFAULT 'Admin',\n  authorOpenId VARCHAR(64),\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  INDEX idx_lead_notes_leadId (leadId)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute CREATE TABLE IF NOT EXISTS lead_notes (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  leadId INT NOT NULL,\n  content TEXT NOT NULL,\n  authorName VARCHAR(255) NOT NULL DEFAULT 'Admin',\n  authorOpenId VARCHAR(64),\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  INDEX idx_lead_notes_leadId (leadId)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 684
+}

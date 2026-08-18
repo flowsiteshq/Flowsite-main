@@ -1,0 +1,34 @@
+{
+  "query": "\n-- Commission for INV-2026-0001 (Mydojo, $199, paid) — 15% = $29.85 = 2985 cents\nINSERT INTO technician_commissions \n  (technicianId, clientAccountId, invoiceId, commissionRate, invoiceAmountCents, commissionAmountCents, netCommissionCents, status, commissionType, paidAt)\nVALUES \n  (300001, 30001, 1, 15, 19900, 2985, 2985, 'pending', 'rep', NULL);\n\n-- Commission for INV-2026-0003 (Dojo Flow, $932, paid) — 15% = $139.80 = 13980 cents\nINSERT INTO technician_commissions \n  (technicianId, clientAccountId, invoiceId, commissionRate, invoiceAmountCents, commissionAmountCents, netCommissionCents, status, commissionType, paidAt)\nVALUES \n  (300001, 60001, 30001, 15, 93200, 13980, 13980, 'pending', 'rep', NULL);\n\n-- Commission for INV-2026-04-006 (Dojo Flow, $932, open) — 15% = $139.80 = 13980 cents\nINSERT INTO technician_commissions \n  (technicianId, clientAccountId, invoiceId, commissionRate, invoiceAmountCents, commissionAmountCents, netCommissionCents, status, commissionType, paidAt)\nVALUES \n  (300001, 60001, 120001, 15, 93200, 13980, 13980, 'pending', 'rep', NULL);\n\n-- Verify\nSELECT tc.id, tc.invoiceId, tc.commissionAmountCents, tc.status, ci.invoiceNumber, ca.businessName\nFROM technician_commissions tc\nJOIN client_invoices ci ON ci.id = tc.invoiceId\nJOIN client_accounts ca ON ca.id = tc.clientAccountId\nWHERE tc.technicianId = 300001;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \n-- Commission for INV-2026-0001 (Mydojo, $199, paid) — 15% = $29.85 = 2985 cents\nINSERT INTO technician_commissions \n  (technicianId, clientAccountId, invoiceId, commissionRate, invoiceAmountCents, commissionAmountCents, netCommissionCents, status, commissionType, paidAt)\nVALUES \n  (300001, 30001, 1, 15, 19900, 2985, 2985, 'pending', 'rep', NULL);\n\n-- Commission for INV-2026-0003 (Dojo Flow, $932, paid) — 15% = $139.80 = 13980 cents\nINSERT INTO technician_commissions \n  (technicianId, clientAccountId, invoiceId, commissionRate, invoiceAmountCents, commissionAmountCents, netCommissionCents, status, commissionType, paidAt)\nVALUES \n  (300001, 60001, 30001, 15, 93200, 13980, 13980, 'pending', 'rep', NULL);\n\n-- Commission for INV-2026-04-006 (Dojo Flow, $932, open) — 15% = $139.80 = 13980 cents\nINSERT INTO technician_commissions \n  (technicianId, clientAccountId, invoiceId, commissionRate, invoiceAmountCents, commissionAmountCents, netCommissionCents, status, commissionType, paidAt)\nVALUES \n  (300001, 60001, 120001, 15, 93200, 13980, 13980, 'pending', 'rep', NULL);\n\n-- Verify\nSELECT tc.id, tc.invoiceId, tc.commissionAmountCents, tc.status, ci.invoiceNumber, ca.businessName\nFROM technician_commissions tc\nJOIN client_invoices ci ON ci.id = tc.invoiceId\nJOIN client_accounts ca ON ca.id = tc.clientAccountId\nWHERE tc.technicianId = 300001;\n",
+  "rows": [
+    {
+      "id": "1",
+      "invoiceId": "1",
+      "commissionAmountCents": "2985",
+      "status": "pending",
+      "invoiceNumber": "INV-2026-0001",
+      "businessName": "Mydojo"
+    },
+    {
+      "id": "2",
+      "invoiceId": "30001",
+      "commissionAmountCents": "13980",
+      "status": "pending",
+      "invoiceNumber": "INV-2026-0003",
+      "businessName": "Dojo Flow"
+    },
+    {
+      "id": "3",
+      "invoiceId": "120001",
+      "commissionAmountCents": "13980",
+      "status": "pending",
+      "invoiceNumber": "INV-2026-04-006",
+      "businessName": "Dojo Flow"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tinvoiceId\tcommissionAmountCents\tstatus\tinvoiceNumber\tbusinessName\n1\t1\t2985\tpending\tINV-2026-0001\tMydojo\n2\t30001\t13980\tpending\tINV-2026-0003\tDojo Flow\n3\t120001\t13980\tpending\tINV-2026-04-006\tDojo Flow\n",
+  "stderr": "",
+  "execution_time_ms": 360
+}

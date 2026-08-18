@@ -1,0 +1,37 @@
+{
+  "query": "SELECT id, clientName, clientEmail, clientOpenId, businessName, setup_fee, monthlyPrice FROM client_projects WHERE businessName LIKE '%Stylist%' OR clientName LIKE '%Vincent%' OR clientEmail LIKE '%sensei%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, clientName, clientEmail, clientOpenId, businessName, setup_fee, monthlyPrice FROM client_projects WHERE businessName LIKE '%Stylist%' OR clientName LIKE '%Vincent%' OR clientEmail LIKE '%sensei%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "2",
+      "clientName": "Vincent Holmes",
+      "clientEmail": "vincent.holmes00@gmail.com",
+      "clientOpenId": "NULL",
+      "businessName": "Mydojo",
+      "setup_fee": "0.00",
+      "monthlyPrice": "199"
+    },
+    {
+      "id": "3",
+      "clientName": "Vincent Holmes",
+      "clientEmail": "sensei30002003@gmail.com",
+      "clientOpenId": "NULL",
+      "businessName": "Dojo Flow",
+      "setup_fee": "0.00",
+      "monthlyPrice": "932"
+    },
+    {
+      "id": "30001",
+      "clientName": "Stylist Factory",
+      "clientEmail": "stylistfactorytx@gmail.com",
+      "clientOpenId": "NULL",
+      "businessName": "Stylist Factory",
+      "setup_fee": "3499.00",
+      "monthlyPrice": "199"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tclientName\tclientEmail\tclientOpenId\tbusinessName\tsetup_fee\tmonthlyPrice\n2\tVincent Holmes\tvincent.holmes00@gmail.com\tNULL\tMydojo\t0.00\t199\n3\tVincent Holmes\tsensei30002003@gmail.com\tNULL\tDojo Flow\t0.00\t932\n30001\tStylist Factory\tstylistfactorytx@gmail.com\tNULL\tStylist Factory\t3499.00\t199\n",
+  "stderr": "",
+  "execution_time_ms": 264
+}

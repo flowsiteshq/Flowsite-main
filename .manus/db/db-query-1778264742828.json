@@ -1,0 +1,22 @@
+{
+  "query": "SELECT COUNT(*) as total, businessType FROM wizard_submissions GROUP BY businessType ORDER BY total DESC",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total, businessType FROM wizard_submissions GROUP BY businessType ORDER BY total DESC",
+  "rows": [
+    {
+      "total": "99",
+      "businessType": "martial_arts"
+    },
+    {
+      "total": "96",
+      "businessType": "restaurant"
+    },
+    {
+      "total": "2",
+      "businessType": "fitness"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\tbusinessType\n99\tmartial_arts\n96\trestaurant\n2\tfitness\n",
+  "stderr": "",
+  "execution_time_ms": 566
+}

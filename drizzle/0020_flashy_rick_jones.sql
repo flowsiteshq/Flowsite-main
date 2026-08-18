@@ -1,0 +1,1 @@
+ALTER TABLE `technicians` MODIFY COLUMN `role` enum('sales_rep','technician','manager','team_lead','admin') NOT NULL DEFAULT 'sales_rep';

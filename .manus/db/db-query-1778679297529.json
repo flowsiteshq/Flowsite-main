@@ -1,0 +1,162 @@
+{
+  "query": "\nCREATE TABLE IF NOT EXISTS bookings_queue (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  prospectName VARCHAR(255) NOT NULL,\n  prospectEmail VARCHAR(255) NOT NULL,\n  prospectPhone VARCHAR(50),\n  businessName VARCHAR(255),\n  businessType VARCHAR(100),\n  source VARCHAR(100) DEFAULT 'marketing',\n  notes TEXT,\n  preferredDate DATE,\n  preferredTime VARCHAR(50),\n  timezone VARCHAR(50) DEFAULT 'America/Chicago',\n  status ENUM('pending', 'claimed', 'confirmed', 'completed', 'cancelled', 'no_show') NOT NULL DEFAULT 'pending',\n  claimedByTechnicianId INT,\n  claimedAt TIMESTAMP NULL,\n  scheduledAt TIMESTAMP NULL,\n  completedAt TIMESTAMP NULL,\n  repNotes TEXT,\n  createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  FOREIGN KEY (claimedByTechnicianId) REFERENCES technicians(id) ON DELETE SET NULL\n);\n\n-- Verify table was created\nDESCRIBE bookings_queue;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nCREATE TABLE IF NOT EXISTS bookings_queue (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  prospectName VARCHAR(255) NOT NULL,\n  prospectEmail VARCHAR(255) NOT NULL,\n  prospectPhone VARCHAR(50),\n  businessName VARCHAR(255),\n  businessType VARCHAR(100),\n  source VARCHAR(100) DEFAULT 'marketing',\n  notes TEXT,\n  preferredDate DATE,\n  preferredTime VARCHAR(50),\n  timezone VARCHAR(50) DEFAULT 'America/Chicago',\n  status ENUM('pending', 'claimed', 'confirmed', 'completed', 'cancelled', 'no_show') NOT NULL DEFAULT 'pending',\n  claimedByTechnicianId INT,\n  claimedAt TIMESTAMP NULL,\n  scheduledAt TIMESTAMP NULL,\n  completedAt TIMESTAMP NULL,\n  repNotes TEXT,\n  createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  FOREIGN KEY (claimedByTechnicianId) REFERENCES technicians(id) ON DELETE SET NULL\n);\n\n-- Verify table was created\nDESCRIBE bookings_queue;\n",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "prospectName",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "prospectEmail",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "prospectPhone",
+      "Type": "varchar(50)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "businessName",
+      "Type": "varchar(255)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "businessType",
+      "Type": "varchar(100)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "source",
+      "Type": "varchar(100)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "marketing",
+      "Extra": ""
+    },
+    {
+      "Field": "notes",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "preferredDate",
+      "Type": "date",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "preferredTime",
+      "Type": "varchar(50)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "timezone",
+      "Type": "varchar(50)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "America/Chicago",
+      "Extra": ""
+    },
+    {
+      "Field": "status",
+      "Type": "enum('pending','claimed','confirmed','completed','cancelled','no_show')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "pending",
+      "Extra": ""
+    },
+    {
+      "Field": "claimedByTechnicianId",
+      "Type": "int",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "claimedAt",
+      "Type": "timestamp",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "scheduledAt",
+      "Type": "timestamp",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "completedAt",
+      "Type": "timestamp",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "repNotes",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint\tNO\tPRI\tNULL\tauto_increment\nprospectName\tvarchar(255)\tNO\t\tNULL\t\nprospectEmail\tvarchar(255)\tNO\t\tNULL\t\nprospectPhone\tvarchar(50)\tYES\t\tNULL\t\nbusinessName\tvarchar(255)\tYES\t\tNULL\t\nbusinessType\tvarchar(100)\tYES\t\tNULL\t\nsource\tvarchar(100)\tYES\t\tmarketing\t\nnotes\ttext\tYES\t\tNULL\t\npreferredDate\tdate\tYES\t\tNULL\t\npreferredTime\tvarchar(50)\tYES\t\tNULL\t\ntimezone\tvarchar(50)\tYES\t\tAmerica/Chicago\t\nstatus\tenum('pending','claimed','confirmed','completed','cancelled','no_show')\tNO\t\tpending\t\nclaimedByTechnicianId\tint\tYES\t\tNULL\t\nclaimedAt\ttimestamp\tYES\t\tNULL\t\nscheduledAt\ttimestamp\tYES\t\tNULL\t\ncompletedAt\ttimestamp\tYES\t\tNULL\t\nrepNotes\ttext\tYES\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\n",
+  "stderr": "",
+  "execution_time_ms": 373
+}

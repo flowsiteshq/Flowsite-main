@@ -1,0 +1,13 @@
+{
+  "query": "\nINSERT INTO technicians (name, email, commissionRate, role, status, invitedAt, createdAt, updatedAt)\nVALUES ('Kamil', 'cloverdojo@gmail.com', 15, 'admin', 'invited', NOW(), NOW(), NOW());\n\nSELECT id FROM technicians WHERE email = 'cloverdojo@gmail.com' LIMIT 1;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nINSERT INTO technicians (name, email, commissionRate, role, status, invitedAt, createdAt, updatedAt)\nVALUES ('Kamil', 'cloverdojo@gmail.com', 15, 'admin', 'invited', NOW(), NOW(), NOW());\n\nSELECT id FROM technicians WHERE email = 'cloverdojo@gmail.com' LIMIT 1;\n",
+  "rows": [
+    {
+      "id": "570002"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\n570002\n",
+  "stderr": "",
+  "execution_time_ms": 373
+}

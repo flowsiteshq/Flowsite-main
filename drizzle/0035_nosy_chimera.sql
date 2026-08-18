@@ -1,0 +1,20 @@
+CREATE TABLE `analyzer_results` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`shareId` varchar(32) NOT NULL,
+	`url` varchar(2048) NOT NULL,
+	`performance` int NOT NULL,
+	`seo` int NOT NULL,
+	`accessibility` int NOT NULL,
+	`bestPractices` int NOT NULL,
+	`mobileScore` int NOT NULL,
+	`loadTime` float NOT NULL,
+	`issuesJson` text,
+	`recommendationsJson` text,
+	`leadName` varchar(255),
+	`leadEmail` varchar(320),
+	`leadPhone` varchar(50),
+	`bookedCall` int NOT NULL DEFAULT 0,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `analyzer_results_id` PRIMARY KEY(`id`),
+	CONSTRAINT `analyzer_results_shareId_unique` UNIQUE(`shareId`)
+);

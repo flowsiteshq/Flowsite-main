@@ -1,0 +1,82 @@
+{
+  "query": "SELECT ca.id, ca.clientName, ca.businessName, ca.assignedTechnicianId, t.name as repName, t.openId as repOpenId, t.status as repStatus\nFROM client_accounts ca\nLEFT JOIN technicians t ON t.id = ca.assignedTechnicianId\nORDER BY ca.id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT ca.id, ca.clientName, ca.businessName, ca.assignedTechnicianId, t.name as repName, t.openId as repOpenId, t.status as repStatus\nFROM client_accounts ca\nLEFT JOIN technicians t ON t.id = ca.assignedTechnicianId\nORDER BY ca.id;",
+  "rows": [
+    {
+      "id": "1",
+      "clientName": "Test Client",
+      "businessName": "Test Business",
+      "assignedTechnicianId": "NULL",
+      "repName": "NULL",
+      "repOpenId": "NULL",
+      "repStatus": "NULL"
+    },
+    {
+      "id": "30001",
+      "clientName": "Vincent Holmes",
+      "businessName": "Mydojo",
+      "assignedTechnicianId": "300001",
+      "repName": "Vincent Holmes",
+      "repOpenId": "google_115162446410752884934",
+      "repStatus": "active"
+    },
+    {
+      "id": "60001",
+      "clientName": "Vincent Holmes",
+      "businessName": "Dojo Flow",
+      "assignedTechnicianId": "300001",
+      "repName": "Vincent Holmes",
+      "repOpenId": "google_115162446410752884934",
+      "repStatus": "active"
+    },
+    {
+      "id": "90001",
+      "clientName": "Aladdin Grill",
+      "businessName": "Aladdin Kebab Grill",
+      "assignedTechnicianId": "NULL",
+      "repName": "NULL",
+      "repOpenId": "NULL",
+      "repStatus": "NULL"
+    },
+    {
+      "id": "120001",
+      "clientName": "Latisha",
+      "businessName": "Stylist Factory",
+      "assignedTechnicianId": "NULL",
+      "repName": "NULL",
+      "repOpenId": "NULL",
+      "repStatus": "NULL"
+    },
+    {
+      "id": "150001",
+      "clientName": "Dfw combat ",
+      "businessName": "Dfw combat Co.",
+      "assignedTechnicianId": "60007",
+      "repName": "Alwell",
+      "repOpenId": "google_103135637569387489852",
+      "repStatus": "active"
+    },
+    {
+      "id": "180001",
+      "clientName": "Aladdin Kebab Grill",
+      "businessName": "Aladdin Kebab Grill",
+      "assignedTechnicianId": "NULL",
+      "repName": "NULL",
+      "repOpenId": "NULL",
+      "repStatus": "NULL"
+    },
+    {
+      "id": "210001",
+      "clientName": "Stitched With Love",
+      "businessName": "Stitched With Love",
+      "assignedTechnicianId": "NULL",
+      "repName": "NULL",
+      "repOpenId": "NULL",
+      "repStatus": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tclientName\tbusinessName\tassignedTechnicianId\trepName\trepOpenId\trepStatus\n1\tTest Client\tTest Business\tNULL\tNULL\tNULL\tNULL\n30001\tVincent Holmes\tMydojo\t300001\tVincent Holmes\tgoogle_115162446410752884934\tactive\n60001\tVincent Holmes\tDojo Flow\t300001\tVincent Holmes\tgoogle_115162446410752884934\tactive\n90001\tAladdin Grill\tAladdin Kebab Grill\tNULL\tNULL\tNULL\tNULL\n120001\tLatisha\tStylist Factory\tNULL\tNULL\tNULL\tNULL\n150001\tDfw combat \tDfw combat Co.\t60007\tAlwell\tgoogle_103135637569387489852\tactive\n180001\tAladdin Kebab Grill\tAladdin Kebab Grill\tNULL\tNULL\tNULL\tNULL\n210001\tStitched With Love\tStitched With Love\tNULL\tNULL\tNULL\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 266
+}

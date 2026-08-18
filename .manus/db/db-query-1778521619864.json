@@ -1,0 +1,54 @@
+{
+  "query": "\nSELECT t.id, t.name, t.email, t.commissionRate, t.role, t.status,\n       ti.token, ti.expiresAt, ti.usedAt\nFROM technicians t\nLEFT JOIN technician_invites ti ON ti.technicianId = t.id\nWHERE t.status IN ('invited', 'active') AND t.id > 120001\nORDER BY t.id, ti.id DESC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT t.id, t.name, t.email, t.commissionRate, t.role, t.status,\n       ti.token, ti.expiresAt, ti.usedAt\nFROM technicians t\nLEFT JOIN technician_invites ti ON ti.technicianId = t.id\nWHERE t.status IN ('invited', 'active') AND t.id > 120001\nORDER BY t.id, ti.id DESC;\n",
+  "rows": [
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "7f99f9f8-77e4-4990-a706-b0fd65b88137",
+      "expiresAt": "2026-05-16 04:52:16",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "a0982bb9-df37-4b96-9da1-270aa3c4684d",
+      "expiresAt": "2026-05-16 06:18:28",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "da5971b5-3df0-4b3c-9011-bdaeb406dc33",
+      "expiresAt": "2026-05-16 06:58:24",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "210001",
+      "name": "Test User",
+      "email": "sensei30002003@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "bc022792-36c5-4c71-b11c-44c2c5f4f8fc",
+      "expiresAt": "2026-05-18 17:11:18",
+      "usedAt": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\tcommissionRate\trole\tstatus\ttoken\texpiresAt\tusedAt\n120002\tFatai\tfataifaith529@gmail.com\t15\tsales_rep\tinvited\t7f99f9f8-77e4-4990-a706-b0fd65b88137\t2026-05-16 04:52:16\tNULL\n150001\tBethel\tgeorgebethel23@gmail.com\t15\tsales_rep\tinvited\ta0982bb9-df37-4b96-9da1-270aa3c4684d\t2026-05-16 06:18:28\tNULL\n180001\tFavour\tfavken531@gmail.com\t15\tsales_rep\tinvited\tda5971b5-3df0-4b3c-9011-bdaeb406dc33\t2026-05-16 06:58:24\tNULL\n210001\tTest User\tsensei30002003@gmail.com\t15\tsales_rep\tinvited\tbc022792-36c5-4c71-b11c-44c2c5f4f8fc\t2026-05-18 17:11:18\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 271
+}

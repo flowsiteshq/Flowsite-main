@@ -1,0 +1,88 @@
+{
+  "query": "\nSELECT id, name, email, role, loginMethod, createdAt, lastSignedIn FROM users ORDER BY createdAt DESC;\nSELECT COUNT(*) as total_technicians, status FROM technicians GROUP BY status;\nSELECT id, name, email, status, role, createdAt FROM technicians ORDER BY createdAt DESC LIMIT 20;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT id, name, email, role, loginMethod, createdAt, lastSignedIn FROM users ORDER BY createdAt DESC;\nSELECT COUNT(*) as total_technicians, status FROM technicians GROUP BY status;\nSELECT id, name, email, status, role, createdAt FROM technicians ORDER BY createdAt DESC LIMIT 20;\n",
+  "rows": [
+    {
+      "id": "4800007",
+      "name": "George Bethel",
+      "email": "bennygebere@gmail.com",
+      "role": "user",
+      "loginMethod": "google",
+      "createdAt": "2026-05-09 06:05:45",
+      "lastSignedIn": "2026-05-09 10:23:43"
+    },
+    {
+      "id": "4800001",
+      "name": "Bethel George",
+      "email": "georgebethel23@gmail.com",
+      "role": "user",
+      "loginMethod": "google",
+      "createdAt": "2026-05-09 06:04:36",
+      "lastSignedIn": "2026-05-09 06:05:23"
+    },
+    {
+      "id": "3150019",
+      "name": "E'zed Joseph Chidi",
+      "email": "chidi.ej@gmail.com",
+      "role": "user",
+      "loginMethod": "google",
+      "createdAt": "2026-05-07 23:37:58",
+      "lastSignedIn": "2026-05-10 15:26:06"
+    },
+    {
+      "id": "3150016",
+      "name": "ezee joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "role": "user",
+      "loginMethod": "google",
+      "createdAt": "2026-05-07 23:35:50",
+      "lastSignedIn": "2026-05-09 23:29:45"
+    },
+    {
+      "id": "2400001",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin",
+      "loginMethod": "email",
+      "createdAt": "2026-05-06 21:37:43",
+      "lastSignedIn": "2026-05-06 21:37:43"
+    },
+    {
+      "id": "1",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin",
+      "loginMethod": "google",
+      "createdAt": "2026-02-07 17:11:01",
+      "lastSignedIn": "2026-05-11 15:00:20"
+    }
+  ],
+  "messages": [
+    "total_technicians\tstatus",
+    "16\tinvited",
+    "1\tactive",
+    "1\tinactive",
+    "id\tname\temail\tstatus\trole\tcreatedAt",
+    "180001\tFavour\tfavken531@gmail.com\tinvited\tsales_rep\t2026-05-09 06:58:24",
+    "150001\tBethel\tgeorgebethel23@gmail.com\tinvited\tsales_rep\t2026-05-09 06:18:27",
+    "120002\tFatai\tfataifaith529@gmail.com\tinvited\tsales_rep\t2026-05-09 04:52:16",
+    "120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tinvited\tsales_rep\t2026-05-09 04:50:35",
+    "90005\tSamuel\tsamyeshiet13@gmail.com\tinvited\tsales_rep\t2026-05-09 04:46:09",
+    "90004\tFaith\tmeetchibuzorfj@gmail.com\tinvited\tsales_rep\t2026-05-09 04:45:28",
+    "90003\tJerry\temperorjerry8@gmail.com\tinvited\tsales_rep\t2026-05-09 04:42:26",
+    "90002\tChristopher\tokoloibechristopher@gmail.com\tinvited\tsales_rep\t2026-05-09 04:39:58",
+    "90001\tLoyal\tchikezieloyal@gmail.com\tinvited\tsales_rep\t2026-05-09 04:38:07",
+    "60007\tAlwell\tejiogualwell52@gmial.com\tinvited\tsales_rep\t2026-05-09 04:34:20",
+    "60006\tEugenia\teugeniaweb73@gmail.com\tinvited\tsales_rep\t2026-05-09 04:33:36",
+    "60005\tMerrilyn \tmerryfromhome@gmail.com\tinvited\tsales_rep\t2026-05-09 04:29:56",
+    "60004\tComfort\tcomfortonwuchekwa365@gmail.com\tinvited\tsales_rep\t2026-05-09 04:26:36",
+    "60003\tJason\tjason.mervin2006@gmail.com\tinvited\tsales_rep\t2026-05-09 04:25:53",
+    "60002\tBethel\tbennygebere@gmail.com\tinactive\tsales_rep\t2026-05-09 04:23:23",
+    "60001\tGodslove\tgodslovealex66@gmail.com\tinvited\tsales_rep\t2026-05-09 04:22:34",
+    "30001\tJoseph\tchidi.ej@gmail.com\tinvited\tsales_rep\t2026-05-08 19:38:26",
+    "1\tJoey\tezeejoey.ej@gmail.com\tactive\tadmin\t2026-05-05 16:18:44"
+  ],
+  "stdout": "id\tname\temail\trole\tloginMethod\tcreatedAt\tlastSignedIn\n4800007\tGeorge Bethel\tbennygebere@gmail.com\tuser\tgoogle\t2026-05-09 06:05:45\t2026-05-09 10:23:43\n4800001\tBethel George\tgeorgebethel23@gmail.com\tuser\tgoogle\t2026-05-09 06:04:36\t2026-05-09 06:05:23\n3150019\tE'zed Joseph Chidi\tchidi.ej@gmail.com\tuser\tgoogle\t2026-05-07 23:37:58\t2026-05-10 15:26:06\n3150016\tezee joey\tezeejoey.ej@gmail.com\tuser\tgoogle\t2026-05-07 23:35:50\t2026-05-09 23:29:45\n2400001\tVincent Holmes\tsensei30002003@gmail.com\tadmin\temail\t2026-05-06 21:37:43\t2026-05-06 21:37:43\n1\tVincent Holmes\tsensei30002003@gmail.com\tadmin\tgoogle\t2026-02-07 17:11:01\t2026-05-11 15:00:20\ntotal_technicians\tstatus\n16\tinvited\n1\tactive\n1\tinactive\nid\tname\temail\tstatus\trole\tcreatedAt\n180001\tFavour\tfavken531@gmail.com\tinvited\tsales_rep\t2026-05-09 06:58:24\n150001\tBethel\tgeorgebethel23@gmail.com\tinvited\tsales_rep\t2026-05-09 06:18:27\n120002\tFatai\tfataifaith529@gmail.com\tinvited\tsales_rep\t2026-05-09 04:52:16\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tinvited\tsales_rep\t2026-05-09 04:50:35\n90005\tSamuel\tsamyeshiet13@gmail.com\tinvited\tsales_rep\t2026-05-09 04:46:09\n90004\tFaith\tmeetchibuzorfj@gmail.com\tinvited\tsales_rep\t2026-05-09 04:45:28\n90003\tJerry\temperorjerry8@gmail.com\tinvited\tsales_rep\t2026-05-09 04:42:26\n90002\tChristopher\tokoloibechristopher@gmail.com\tinvited\tsales_rep\t2026-05-09 04:39:58\n90001\tLoyal\tchikezieloyal@gmail.com\tinvited\tsales_rep\t2026-05-09 04:38:07\n60007\tAlwell\tejiogualwell52@gmial.com\tinvited\tsales_rep\t2026-05-09 04:34:20\n60006\tEugenia\teugeniaweb73@gmail.com\tinvited\tsales_rep\t2026-05-09 04:33:36\n60005\tMerrilyn \tmerryfromhome@gmail.com\tinvited\tsales_rep\t2026-05-09 04:29:56\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tinvited\tsales_rep\t2026-05-09 04:26:36\n60003\tJason\tjason.mervin2006@gmail.com\tinvited\tsales_rep\t2026-05-09 04:25:53\n60002\tBethel\tbennygebere@gmail.com\tinactive\tsales_rep\t2026-05-09 04:23:23\n60001\tGodslove\tgodslovealex66@gmail.com\tinvited\tsales_rep\t2026-05-09 04:22:34\n30001\tJoseph\tchidi.ej@gmail.com\tinvited\tsales_rep\t2026-05-08 19:38:26\n1\tJoey\tezeejoey.ej@gmail.com\tactive\tadmin\t2026-05-05 16:18:44\n",
+  "stderr": "",
+  "execution_time_ms": 273
+}

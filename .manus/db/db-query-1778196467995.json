@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO technician_invites (technicianId, token, email, expiresAt) VALUES (1, 'ca364bb7-3109-4aa9-9396-f807019b054b', 'ezeejoey.ej@gmail.com', DATE_ADD(NOW(), INTERVAL 30 DAY));",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute INSERT INTO technician_invites (technicianId, token, email, expiresAt) VALUES (1, 'ca364bb7-3109-4aa9-9396-f807019b054b', 'ezeejoey.ej@gmail.com', DATE_ADD(NOW(), INTERVAL 30 DAY));",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 585
+}

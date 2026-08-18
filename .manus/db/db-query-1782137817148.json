@@ -1,0 +1,226 @@
+{
+  "query": "SELECT t.id, t.name, t.email, t.role, t.status, u.role as user_role \nFROM technicians t \nLEFT JOIN users u ON u.id = t.userId \nWHERE t.status = 'active' \nAND t.email NOT IN ('sensei30002003@gmail.com', 'cloverdojo@gmail.com', 'chrismpamugo99@gmail.com')\nORDER BY t.name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT t.id, t.name, t.email, t.role, t.status, u.role as user_role \nFROM technicians t \nLEFT JOIN users u ON u.id = t.userId \nWHERE t.status = 'active' \nAND t.email NOT IN ('sensei30002003@gmail.com', 'cloverdojo@gmail.com', 'chrismpamugo99@gmail.com')\nORDER BY t.name;",
+  "rows": [
+    {
+      "id": "330003",
+      "name": "Abraham ",
+      "email": "webtechiewhyte@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "420002",
+      "name": "Chisom",
+      "email": "Chispark146@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "390004",
+      "name": "Ephraim",
+      "email": "ephraimduchis@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "510002",
+      "name": "Eugenia Mark-Igbani",
+      "email": "eugemail73@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "role": "manager",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "390002",
+      "name": "Grace",
+      "email": "asograce1899@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "1",
+      "name": "Joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "role": "admin",
+      "status": "active",
+      "user_role": "admin"
+    },
+    {
+      "id": "330002",
+      "name": "Kingsley",
+      "email": "engrak51@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "480002",
+      "name": "Lynda",
+      "email": "dinasoft14@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "390003",
+      "name": "Mark",
+      "email": "markigbani@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "510003",
+      "name": "Michael Ogbuja",
+      "email": "ogbujamichael01@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "270002",
+      "name": "Noah",
+      "email": "nessybitto@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "270001",
+      "name": "Paul",
+      "email": "dp7449787@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    },
+    {
+      "id": "300001",
+      "name": "Vincent Holmes",
+      "email": "vincent.holmes00@gmail.com",
+      "role": "sales_rep",
+      "status": "active",
+      "user_role": "user"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tstatus\tuser_role\n330003\tAbraham \twebtechiewhyte@gmail.com\tsales_rep\tactive\tuser\n60007\tAlwell\tejiogualwell52@gmail.com\tsales_rep\tactive\tuser\n150001\tBethel\tgeorgebethel23@gmail.com\tsales_rep\tactive\tuser\n420002\tChisom\tChispark146@gmail.com\tsales_rep\tactive\tuser\n90002\tChristopher\tokoloibechristopher@gmail.com\tsales_rep\tactive\tuser\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tsales_rep\tactive\tuser\n390004\tEphraim\tephraimduchis@gmail.com\tsales_rep\tactive\tuser\n60006\tEugenia\teugeniaweb73@gmail.com\tsales_rep\tactive\tuser\n510002\tEugenia Mark-Igbani\teugemail73@gmail.com\tsales_rep\tactive\tuser\n90004\tFaith\tmeetchibuzorfj@gmail.com\tsales_rep\tactive\tuser\n120002\tFatai\tfataifaith529@gmail.com\tsales_rep\tactive\tuser\n180001\tFavour\tfavken531@gmail.com\tsales_rep\tactive\tuser\n60001\tGodslove\tgodslovealex66@gmail.com\tmanager\tactive\tuser\n390002\tGrace\tasograce1899@gmail.com\tsales_rep\tactive\tuser\n60003\tJason\tjason.mervin2006@gmail.com\tsales_rep\tactive\tuser\n90003\tJerry\temperorjerry8@gmail.com\tsales_rep\tactive\tuser\n1\tJoey\tezeejoey.ej@gmail.com\tadmin\tactive\tadmin\n330002\tKingsley\tengrak51@gmail.com\tsales_rep\tactive\tuser\n90001\tLoyal\tchikezieloyal@gmail.com\tsales_rep\tactive\tuser\n480002\tLynda\tdinasoft14@gmail.com\tsales_rep\tactive\tuser\n390003\tMark\tmarkigbani@gmail.com\tsales_rep\tactive\tuser\n60005\tMerrilyn \tmerryfromhome@gmail.com\tsales_rep\tactive\tuser\n510003\tMichael Ogbuja\togbujamichael01@gmail.com\tsales_rep\tactive\tuser\n270002\tNoah\tnessybitto@gmail.com\tsales_rep\tactive\tuser\n270001\tPaul\tdp7449787@gmail.com\tsales_rep\tactive\tuser\n90005\tSamuel\tsamyeshiet13@gmail.com\tsales_rep\tactive\tuser\n300001\tVincent Holmes\tvincent.holmes00@gmail.com\tsales_rep\tactive\tuser\n",
+  "stderr": "",
+  "execution_time_ms": 273
+}

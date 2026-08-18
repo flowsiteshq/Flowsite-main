@@ -1,0 +1,22 @@
+{
+  "query": "SELECT nicheTag, COUNT(*) as count FROM wizard_submissions GROUP BY nicheTag ORDER BY count DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT nicheTag, COUNT(*) as count FROM wizard_submissions GROUP BY nicheTag ORDER BY count DESC;",
+  "rows": [
+    {
+      "nicheTag": "martial_arts",
+      "count": "99"
+    },
+    {
+      "nicheTag": "restaurant",
+      "count": "96"
+    },
+    {
+      "nicheTag": "fitness",
+      "count": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "nicheTag\tcount\nmartial_arts\t99\nrestaurant\t96\nfitness\t2\n",
+  "stderr": "",
+  "execution_time_ms": 576
+}

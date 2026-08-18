@@ -1,0 +1,130 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "admin_sessions"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "analytics_tokens"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "analyzer_results"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "availability"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "blocked_dates"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "booking_answers"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "bookings"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "bookings_queue"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "budget_quotes"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "change_requests"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_accounts"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_invoices"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_media"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_pages"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_portal_passwords"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_portal_sessions"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "client_projects"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "email_auth"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "email_auth_sessions"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "feature_upgrade_requests"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "heatmap_clicks"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "invoice_items"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "lead_notes"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "lesson_steps"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "lessons"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "marketing_optins"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "opportunity_pool"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "page_views"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "partners"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "project_messages"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "questionnaire_questions"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "quiz_questions"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "sms_logs"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "technician_commissions"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "technician_invites"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "technicians"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "user_lesson_progress"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "users"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG": "wizard_submissions"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_VvLvZnpjR27EmYwxaK3mTG\n__drizzle_migrations\nadmin_sessions\nanalytics_tokens\nanalyzer_results\navailability\nblocked_dates\nbooking_answers\nbookings\nbookings_queue\nbudget_quotes\nchange_requests\nclient_accounts\nclient_invoices\nclient_media\nclient_pages\nclient_portal_passwords\nclient_portal_sessions\nclient_projects\nemail_auth\nemail_auth_sessions\nfeature_upgrade_requests\nheatmap_clicks\ninvoice_items\nlead_notes\nlesson_steps\nlessons\nmarketing_optins\nopportunity_pool\npage_views\npartners\nproject_messages\nquestionnaire_questions\nquiz_questions\nsms_logs\ntechnician_commissions\ntechnician_invites\ntechnicians\nuser_lesson_progress\nusers\nwizard_submissions\n",
+  "stderr": "",
+  "execution_time_ms": 260
+}

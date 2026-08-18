@@ -1,0 +1,16 @@
+{
+  "query": "SELECT ea.id, ea.email, ea.userId, u.role FROM email_auth ea JOIN users u ON ea.userId = u.id WHERE ea.email = 'sensei30002003@gmail.com';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT ea.id, ea.email, ea.userId, u.role FROM email_auth ea JOIN users u ON ea.userId = u.id WHERE ea.email = 'sensei30002003@gmail.com';",
+  "rows": [
+    {
+      "id": "1",
+      "email": "sensei30002003@gmail.com",
+      "userId": "2400001",
+      "role": "admin"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\temail\tuserId\trole\n1\tsensei30002003@gmail.com\t2400001\tadmin\n",
+  "stderr": "",
+  "execution_time_ms": 388
+}

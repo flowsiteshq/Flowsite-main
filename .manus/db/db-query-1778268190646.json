@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE wizard_submissions ADD COLUMN nicheTag ENUM('martial_arts', 'restaurant', 'fitness', 'self_defense', 'health_wellness', 'salon', 'hospitality', 'other') NULL AFTER assignedPartnerId;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute ALTER TABLE wizard_submissions ADD COLUMN nicheTag ENUM('martial_arts', 'restaurant', 'fitness', 'self_defense', 'health_wellness', 'salon', 'hospitality', 'other') NULL AFTER assignedPartnerId;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 877
+}

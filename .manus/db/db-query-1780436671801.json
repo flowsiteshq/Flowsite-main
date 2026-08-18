@@ -1,0 +1,9 @@
+{
+  "query": "\nINSERT INTO technician_invites (technicianId, token, email, expiresAt, createdAt)\nVALUES (570002, 'e78a7d9b-ddb2-49bf-a08e-3719e1d1867f', 'cloverdojo@gmail.com', DATE_ADD(NOW(), INTERVAL 7 DAY), NOW());\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nINSERT INTO technician_invites (technicianId, token, email, expiresAt, createdAt)\nVALUES (570002, 'e78a7d9b-ddb2-49bf-a08e-3719e1d1867f', 'cloverdojo@gmail.com', DATE_ADD(NOW(), INTERVAL 7 DAY), NOW());\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 278
+}

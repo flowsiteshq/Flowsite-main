@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE client_projects SET accessToken = 'GYWiDpwAommZeVx7xXbcWT' WHERE id = 30001;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute UPDATE client_projects SET accessToken = 'GYWiDpwAommZeVx7xXbcWT' WHERE id = 30001;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 279
+}

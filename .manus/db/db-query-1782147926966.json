@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, businessName, monthlyPrice, setup_fee, status FROM client_projects WHERE businessName LIKE '%Stylist%' OR businessName LIKE '%stylist%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, monthlyPrice, setup_fee, status FROM client_projects WHERE businessName LIKE '%Stylist%' OR businessName LIKE '%stylist%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "30001",
+      "businessName": "Stylist Factory",
+      "monthlyPrice": "199",
+      "setup_fee": "3499.00",
+      "status": "onboarding"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tbusinessName\tmonthlyPrice\tsetup_fee\tstatus\n30001\tStylist Factory\t199\t3499.00\tonboarding\n",
+  "stderr": "",
+  "execution_time_ms": 331
+}

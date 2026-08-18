@@ -1,0 +1,9 @@
+{
+  "query": "\nCREATE TABLE IF NOT EXISTS client_portal_passwords (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  clientEmail VARCHAR(320) NOT NULL UNIQUE,\n  passwordHash TEXT NOT NULL,\n  setupToken VARCHAR(128),\n  setupTokenExpiry BIGINT,\n  resetToken VARCHAR(128),\n  resetTokenExpiry BIGINT,\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL\n);\n\nCREATE TABLE IF NOT EXISTS client_portal_sessions (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  clientEmail VARCHAR(320) NOT NULL,\n  sessionToken VARCHAR(128) NOT NULL UNIQUE,\n  userAgent TEXT,\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  expiresAt TIMESTAMP NOT NULL\n);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nCREATE TABLE IF NOT EXISTS client_portal_passwords (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  clientEmail VARCHAR(320) NOT NULL UNIQUE,\n  passwordHash TEXT NOT NULL,\n  setupToken VARCHAR(128),\n  setupTokenExpiry BIGINT,\n  resetToken VARCHAR(128),\n  resetTokenExpiry BIGINT,\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL\n);\n\nCREATE TABLE IF NOT EXISTS client_portal_sessions (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  clientEmail VARCHAR(320) NOT NULL,\n  sessionToken VARCHAR(128) NOT NULL UNIQUE,\n  userAgent TEXT,\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  expiresAt TIMESTAMP NOT NULL\n);\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1575
+}

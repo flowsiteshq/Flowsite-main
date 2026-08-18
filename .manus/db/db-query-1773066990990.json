@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, sessionToken, createdAt, expiresAt FROM admin_sessions ORDER BY createdAt DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, sessionToken, createdAt, expiresAt FROM admin_sessions ORDER BY createdAt DESC LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "sessionToken": "bbc8da13ca0a6bfa303757b766695dd66f30fe0ee9b6a85b1ed45d05f4b8b56ca5c41a48e350fcf90d29c39700c27deb",
+      "createdAt": "2026-03-09 14:35:21",
+      "expiresAt": "2026-03-16 14:35:21"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsessionToken\tcreatedAt\texpiresAt\n1\tbbc8da13ca0a6bfa303757b766695dd66f30fe0ee9b6a85b1ed45d05f4b8b56ca5c41a48e350fcf90d29c39700c27deb\t2026-03-09 14:35:21\t2026-03-16 14:35:21\n",
+  "stderr": "",
+  "execution_time_ms": 368
+}

@@ -1,0 +1,15 @@
+{
+  "query": "SELECT ea.email, u.name, u.role FROM email_auth ea JOIN users u ON ea.userId = u.id ORDER BY ea.userId DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT ea.email, u.name, u.role FROM email_auth ea JOIN users u ON ea.userId = u.id ORDER BY ea.userId DESC LIMIT 20;",
+  "rows": [
+    {
+      "email": "sensei30002003@gmail.com",
+      "name": "Vincent Holmes",
+      "role": "admin"
+    }
+  ],
+  "messages": [],
+  "stdout": "email\tname\trole\nsensei30002003@gmail.com\tVincent Holmes\tadmin\n",
+  "stderr": "",
+  "execution_time_ms": 265
+}

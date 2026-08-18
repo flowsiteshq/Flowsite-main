@@ -1,0 +1,208 @@
+{
+  "query": "\nSELECT t.id, t.name, t.email, t.commissionRate, t.role, t.status,\n       ti.token, ti.expiresAt, ti.usedAt\nFROM technicians t\nLEFT JOIN technician_invites ti ON ti.technicianId = t.id\nWHERE t.status IN ('invited', 'active')\nORDER BY t.id, ti.id DESC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT t.id, t.name, t.email, t.commissionRate, t.role, t.status,\n       ti.token, ti.expiresAt, ti.usedAt\nFROM technicians t\nLEFT JOIN technician_invites ti ON ti.technicianId = t.id\nWHERE t.status IN ('invited', 'active')\nORDER BY t.id, ti.id DESC;\n",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "commissionRate": "0",
+      "role": "admin",
+      "status": "active",
+      "token": "ca364bb7-3109-4aa9-9396-f807019b054b",
+      "expiresAt": "2026-06-06 23:27:47",
+      "usedAt": "2026-05-07 23:34:02"
+    },
+    {
+      "id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "291f26bc-871a-42d3-a5ec-5eb6736ab1cb",
+      "expiresAt": "2026-05-15 19:38:27",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "6affa426-802e-4c01-b055-8b0ed815e714",
+      "expiresAt": "2026-05-16 04:22:34",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "6cee5d31-3603-4f7f-9ec1-d8f751175a5c",
+      "expiresAt": "2026-05-16 04:25:54",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "7179ffa1-bcb4-4c65-a4be-be8b6e1eec34",
+      "expiresAt": "2026-05-16 04:26:36",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "254e7c7f-39bb-450e-ac6e-1c566b1a3022",
+      "expiresAt": "2026-05-16 04:29:56",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "d461f1e1-af17-458e-a0af-574de86846fa",
+      "expiresAt": "2026-05-16 04:33:37",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmial.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "ddc7db45-9d24-4eeb-841a-a589db9b6388",
+      "expiresAt": "2026-05-16 04:34:21",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "9dc45323-e6f3-40a6-b91b-9c5890945d5f",
+      "expiresAt": "2026-05-16 04:38:08",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "aca00b09-bc99-400f-9c7f-58ebd4a38859",
+      "expiresAt": "2026-05-16 04:39:59",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "937523a4-1e6c-43ac-a982-d0326ebea189",
+      "expiresAt": "2026-05-16 04:42:27",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "f2da5bc1-4ad1-47f9-a518-de0541d7e78d",
+      "expiresAt": "2026-05-16 04:45:28",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "bc5bee12-c0ac-4c23-a020-41a0643cb266",
+      "expiresAt": "2026-05-16 04:46:09",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "120001",
+      "name": "Onyinyechi",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "75728ff5-5f91-4138-af57-1bfc82d31338",
+      "expiresAt": "2026-05-16 04:50:35",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "7f99f9f8-77e4-4990-a706-b0fd65b88137",
+      "expiresAt": "2026-05-16 04:52:16",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "a0982bb9-df37-4b96-9da1-270aa3c4684d",
+      "expiresAt": "2026-05-16 06:18:28",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "da5971b5-3df0-4b3c-9011-bdaeb406dc33",
+      "expiresAt": "2026-05-16 06:58:24",
+      "usedAt": "NULL"
+    },
+    {
+      "id": "210001",
+      "name": "Test User",
+      "email": "sensei30002003@gmail.com",
+      "commissionRate": "15",
+      "role": "sales_rep",
+      "status": "invited",
+      "token": "bc022792-36c5-4c71-b11c-44c2c5f4f8fc",
+      "expiresAt": "2026-05-18 17:11:18",
+      "usedAt": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\tcommissionRate\trole\tstatus\ttoken\texpiresAt\tusedAt\n1\tJoey\tezeejoey.ej@gmail.com\t0\tadmin\tactive\tca364bb7-3109-4aa9-9396-f807019b054b\t2026-06-06 23:27:47\t2026-05-07 23:34:02\n30001\tJoseph\tchidi.ej@gmail.com\t15\tsales_rep\tinvited\t291f26bc-871a-42d3-a5ec-5eb6736ab1cb\t2026-05-15 19:38:27\tNULL\n60001\tGodslove\tgodslovealex66@gmail.com\t15\tsales_rep\tinvited\t6affa426-802e-4c01-b055-8b0ed815e714\t2026-05-16 04:22:34\tNULL\n60003\tJason\tjason.mervin2006@gmail.com\t15\tsales_rep\tinvited\t6cee5d31-3603-4f7f-9ec1-d8f751175a5c\t2026-05-16 04:25:54\tNULL\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\t15\tsales_rep\tinvited\t7179ffa1-bcb4-4c65-a4be-be8b6e1eec34\t2026-05-16 04:26:36\tNULL\n60005\tMerrilyn \tmerryfromhome@gmail.com\t15\tsales_rep\tinvited\t254e7c7f-39bb-450e-ac6e-1c566b1a3022\t2026-05-16 04:29:56\tNULL\n60006\tEugenia\teugeniaweb73@gmail.com\t15\tsales_rep\tinvited\td461f1e1-af17-458e-a0af-574de86846fa\t2026-05-16 04:33:37\tNULL\n60007\tAlwell\tejiogualwell52@gmial.com\t15\tsales_rep\tinvited\tddc7db45-9d24-4eeb-841a-a589db9b6388\t2026-05-16 04:34:21\tNULL\n90001\tLoyal\tchikezieloyal@gmail.com\t15\tsales_rep\tinvited\t9dc45323-e6f3-40a6-b91b-9c5890945d5f\t2026-05-16 04:38:08\tNULL\n90002\tChristopher\tokoloibechristopher@gmail.com\t15\tsales_rep\tinvited\taca00b09-bc99-400f-9c7f-58ebd4a38859\t2026-05-16 04:39:59\tNULL\n90003\tJerry\temperorjerry8@gmail.com\t15\tsales_rep\tinvited\t937523a4-1e6c-43ac-a982-d0326ebea189\t2026-05-16 04:42:27\tNULL\n90004\tFaith\tmeetchibuzorfj@gmail.com\t15\tsales_rep\tinvited\tf2da5bc1-4ad1-47f9-a518-de0541d7e78d\t2026-05-16 04:45:28\tNULL\n90005\tSamuel\tsamyeshiet13@gmail.com\t15\tsales_rep\tinvited\tbc5bee12-c0ac-4c23-a020-41a0643cb266\t2026-05-16 04:46:09\tNULL\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\t15\tsales_rep\tinvited\t75728ff5-5f91-4138-af57-1bfc82d31338\t2026-05-16 04:50:35\tNULL\n120002\tFatai\tfataifaith529@gmail.com\t15\tsales_rep\tinvited\t7f99f9f8-77e4-4990-a706-b0fd65b88137\t2026-05-16 04:52:16\tNULL\n150001\tBethel\tgeorgebethel23@gmail.com\t15\tsales_rep\tinvited\ta0982bb9-df37-4b96-9da1-270aa3c4684d\t2026-05-16 06:18:28\tNULL\n180001\tFavour\tfavken531@gmail.com\t15\tsales_rep\tinvited\tda5971b5-3df0-4b3c-9011-bdaeb406dc33\t2026-05-16 06:58:24\tNULL\n210001\tTest User\tsensei30002003@gmail.com\t15\tsales_rep\tinvited\tbc022792-36c5-4c71-b11c-44c2c5f4f8fc\t2026-05-18 17:11:18\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 271
+}

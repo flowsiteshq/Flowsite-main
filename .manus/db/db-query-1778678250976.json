@@ -1,0 +1,13 @@
+{
+  "query": "\nSELECT id, name, email, role, status FROM technicians WHERE email LIKE '%vincent%' OR name LIKE '%Vincent%';\n\nSELECT MAX(id) as maxId FROM technicians;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT id, name, email, role, status FROM technicians WHERE email LIKE '%vincent%' OR name LIKE '%Vincent%';\n\nSELECT MAX(id) as maxId FROM technicians;\n",
+  "rows": [
+    {
+      "maxId": "270002"
+    }
+  ],
+  "messages": [],
+  "stdout": "maxId\n270002\n",
+  "stderr": "",
+  "execution_time_ms": 293
+}

@@ -1,0 +1,8 @@
+{
+  "query": "\nSELECT t.id, t.name, t.email, t.commissionRate, t.role, t.status,\n       ti.token, ti.expiresAt, ti.usedAt\nFROM technicians t\nLEFT JOIN technician_invites ti ON ti.technicianId = t.id\n  AND ti.id = (SELECT MAX(id) FROM technician_invites WHERE technicianId = t.id)\nWHERE t.status IN ('invited', 'active')\nORDER BY t.id;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT t.id, t.name, t.email, t.commissionRate, t.role, t.status,\n       ti.token, ti.expiresAt, ti.usedAt\nFROM technicians t\nLEFT JOIN technician_invites ti ON ti.technicianId = t.id\n  AND ti.id = (SELECT MAX(id) FROM technician_invites WHERE technicianId = t.id)\nWHERE t.status IN ('invited', 'active')\nORDER BY t.id;\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1105 (HY000) at line 2: ON condition doesn't support subqueries yet"
+  ]
+}

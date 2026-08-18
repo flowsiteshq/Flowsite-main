@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, businessName, businessType, email, phone, website, timeline, status, createdAt FROM wizard_submissions ORDER BY createdAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, businessName, businessType, email, phone, website, timeline, status, createdAt FROM wizard_submissions ORDER BY createdAt DESC;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 362
+}

@@ -1,0 +1,19 @@
+{
+  "query": "SELECT t.id as tech_id, t.name, t.email, t.role, t.status, t.userId, u.role as user_role FROM technicians t LEFT JOIN users u ON u.id = t.userId WHERE t.name LIKE '%Joseph%' OR t.email LIKE '%joseph%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT t.id as tech_id, t.name, t.email, t.role, t.status, t.userId, u.role as user_role FROM technicians t LEFT JOIN users u ON u.id = t.userId WHERE t.name LIKE '%Joseph%' OR t.email LIKE '%joseph%';",
+  "rows": [
+    {
+      "tech_id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "role": "team_lead",
+      "status": "active",
+      "userId": "3150019",
+      "user_role": "user"
+    }
+  ],
+  "messages": [],
+  "stdout": "tech_id\tname\temail\trole\tstatus\tuserId\tuser_role\n30001\tJoseph\tchidi.ej@gmail.com\tteam_lead\tactive\t3150019\tuser\n",
+  "stderr": "",
+  "execution_time_ms": 300
+}

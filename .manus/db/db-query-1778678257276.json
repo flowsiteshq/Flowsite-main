@@ -1,0 +1,22 @@
+{
+  "query": "\n-- Insert Vincent Holmes as a sales_rep (active, since he's the owner/client)\nINSERT INTO technicians (id, name, email, role, commissionRate, status, joinedAt)\nVALUES (300001, 'Vincent Holmes', 'vincent.holmes00@gmail.com', 'sales_rep', 15, 'active', NOW());\n\n-- Assign both client accounts to Vincent Holmes (technician id 300001)\nUPDATE client_accounts SET assignedTechnicianId = 300001 WHERE id IN (30001, 60001);\n\n-- Verify the update\nSELECT id, clientName, businessName, assignedTechnicianId FROM client_accounts WHERE id IN (30001, 60001);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \n-- Insert Vincent Holmes as a sales_rep (active, since he's the owner/client)\nINSERT INTO technicians (id, name, email, role, commissionRate, status, joinedAt)\nVALUES (300001, 'Vincent Holmes', 'vincent.holmes00@gmail.com', 'sales_rep', 15, 'active', NOW());\n\n-- Assign both client accounts to Vincent Holmes (technician id 300001)\nUPDATE client_accounts SET assignedTechnicianId = 300001 WHERE id IN (30001, 60001);\n\n-- Verify the update\nSELECT id, clientName, businessName, assignedTechnicianId FROM client_accounts WHERE id IN (30001, 60001);\n",
+  "rows": [
+    {
+      "id": "30001",
+      "clientName": "Vincent Holmes",
+      "businessName": "Mydojo",
+      "assignedTechnicianId": "300001"
+    },
+    {
+      "id": "60001",
+      "clientName": "Vincent Holmes",
+      "businessName": "Dojo Flow",
+      "assignedTechnicianId": "300001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tclientName\tbusinessName\tassignedTechnicianId\n30001\tVincent Holmes\tMydojo\t300001\n60001\tVincent Holmes\tDojo Flow\t300001\n",
+  "stderr": "",
+  "execution_time_ms": 304
+}

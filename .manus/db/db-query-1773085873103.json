@@ -1,0 +1,19 @@
+{
+  "query": "SHOW TABLES LIKE '%avail%'; SHOW TABLES LIKE '%block%'; SHOW TABLES LIKE '%schedule%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SHOW TABLES LIKE '%avail%'; SHOW TABLES LIKE '%block%'; SHOW TABLES LIKE '%schedule%';",
+  "rows": [
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%avail%)": "availability"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%avail%)": "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%block%)"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%avail%)": "blocked_dates"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%avail%)\navailability\nTables_in_VvLvZnpjR27EmYwxaK3mTG (%block%)\nblocked_dates\n",
+  "stderr": "",
+  "execution_time_ms": 451
+}

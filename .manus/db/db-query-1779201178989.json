@@ -1,0 +1,780 @@
+{
+  "query": "SELECT t.id, t.name, t.email, t.status, t.invitedAt, ti.email as invite_email, ti.usedAt, ti.expiresAt FROM technicians t LEFT JOIN technician_invites ti ON t.id = ti.technicianId ORDER BY t.invitedAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT t.id, t.name, t.email, t.status, t.invitedAt, ti.email as invite_email, ti.usedAt, ti.expiresAt FROM technicians t LEFT JOIN technician_invites ti ON t.id = ti.technicianId ORDER BY t.invitedAt DESC;",
+  "rows": [
+    {
+      "id": "510003",
+      "name": "Michael Ogbuja",
+      "email": "ogbujamichael01@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-19 14:22:52",
+      "invite_email": "ogbujamichael01@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-26 10:22:52"
+    },
+    {
+      "id": "510002",
+      "name": "Eugenia Mark-Igbani",
+      "email": "eugemail73@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-19 14:15:16",
+      "invite_email": "eugemail73@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-26 14:15:17"
+    },
+    {
+      "id": "480002",
+      "name": "Lynda",
+      "email": "dinasoft14@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-16 17:34:06",
+      "invite_email": "dinasoft14@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-23 17:34:07"
+    },
+    {
+      "id": "450002",
+      "name": "Promise",
+      "email": "promisenelson15@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-14 14:30:15",
+      "invite_email": "promisenelson15@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-21 14:30:15"
+    },
+    {
+      "id": "420002",
+      "name": "Chisom",
+      "email": "Chispark146@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-14 10:29:19",
+      "invite_email": "Chispark146@gmail.com",
+      "usedAt": "2026-05-14 14:33:30",
+      "expiresAt": "2026-05-21 10:29:19"
+    },
+    {
+      "id": "390004",
+      "name": "Ephraim",
+      "email": "ephraimduchis@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-14 10:24:18",
+      "invite_email": "ephraimduchis@gmail.com",
+      "usedAt": "2026-05-18 04:19:39",
+      "expiresAt": "2026-05-21 10:24:18"
+    },
+    {
+      "id": "390003",
+      "name": "Mark",
+      "email": "markigbani@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-14 10:20:23",
+      "invite_email": "markigbani@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-21 10:20:23"
+    },
+    {
+      "id": "390002",
+      "name": "Grace",
+      "email": "asograce1899@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-14 10:18:57",
+      "invite_email": "asograce1899@gmail.com",
+      "usedAt": "2026-05-14 14:12:27",
+      "expiresAt": "2026-05-21 10:18:57"
+    },
+    {
+      "id": "360003",
+      "name": "Francis",
+      "email": "francisphilip1993@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-14 10:14:08",
+      "invite_email": "francisphilip1993@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-21 10:14:09"
+    },
+    {
+      "id": "360002",
+      "name": "Emmanuel ",
+      "email": "emmanuelnyitamen17@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-14 10:12:25",
+      "invite_email": "emmanuelnyitamen17@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-21 10:12:26"
+    },
+    {
+      "id": "330003",
+      "name": "Abraham ",
+      "email": "webtechiewhyte@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-14 10:08:47",
+      "invite_email": "webtechiewhyte@gmail.com",
+      "usedAt": "2026-05-14 10:17:01",
+      "expiresAt": "2026-05-21 10:08:48"
+    },
+    {
+      "id": "330002",
+      "name": "Kingsley",
+      "email": "engrak51@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-14 10:08:01",
+      "invite_email": "engrak51@gmail.com",
+      "usedAt": "2026-05-14 16:10:46",
+      "expiresAt": "2026-05-21 10:08:02"
+    },
+    {
+      "id": "300001",
+      "name": "Vincent Holmes",
+      "email": "vincent.holmes00@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-13 13:17:37",
+      "invite_email": "NULL",
+      "usedAt": "NULL",
+      "expiresAt": "NULL"
+    },
+    {
+      "id": "270002",
+      "name": "Noah",
+      "email": "nessybitto@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-12 14:01:49",
+      "invite_email": "nessybitto@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-19 14:01:49"
+    },
+    {
+      "id": "270002",
+      "name": "Noah",
+      "email": "nessybitto@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-12 14:01:49",
+      "invite_email": "nessybitto@gmail.com",
+      "usedAt": "2026-05-14 22:11:09",
+      "expiresAt": "2026-05-21 10:02:09"
+    },
+    {
+      "id": "270001",
+      "name": "Paul",
+      "email": "dp7449787@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-12 14:00:39",
+      "invite_email": "dp7449787@gmail.com",
+      "usedAt": "2026-05-15 07:48:16",
+      "expiresAt": "2026-05-19 14:00:39"
+    },
+    {
+      "id": "240005",
+      "name": "Ruth",
+      "email": "amarachiruthjiogu@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-11 21:04:36",
+      "invite_email": "amarachiruthjiogu@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 17:04:37"
+    },
+    {
+      "id": "240004",
+      "name": "Angelika",
+      "email": "angelikaabella7@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-11 21:04:35",
+      "invite_email": "angelikaabella7@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 17:04:35"
+    },
+    {
+      "id": "240003",
+      "name": "Lynda",
+      "email": "sparkling2all2007@yahoo.com",
+      "status": "invited",
+      "invitedAt": "2026-05-11 21:04:33",
+      "invite_email": "sparkling2all2007@yahoo.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 17:04:34"
+    },
+    {
+      "id": "240002",
+      "name": "Ihesie",
+      "email": "isaiahdesigns@outlook.com",
+      "status": "invited",
+      "invitedAt": "2026-05-11 21:04:32",
+      "invite_email": "isaiahdesigns@outlook.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 17:04:33"
+    },
+    {
+      "id": "240001",
+      "name": "Doris",
+      "email": "doriswotobo@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-11 21:04:25",
+      "invite_email": "doriswotobo@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 17:04:26"
+    },
+    {
+      "id": "210001",
+      "name": "Test User",
+      "email": "sensei30002003@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-11 17:10:59",
+      "invite_email": "sensei30002003@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 17:11:18"
+    },
+    {
+      "id": "210001",
+      "name": "Test User",
+      "email": "sensei30002003@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-11 17:10:59",
+      "invite_email": "sensei30002003@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:24"
+    },
+    {
+      "id": "210001",
+      "name": "Test User",
+      "email": "sensei30002003@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-11 17:10:59",
+      "invite_email": "sensei30002003@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:47:56"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 06:58:24",
+      "invite_email": "favken531@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 06:58:24"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 06:58:24",
+      "invite_email": "favken531@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:23"
+    },
+    {
+      "id": "180001",
+      "name": "Favour",
+      "email": "favken531@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 06:58:24",
+      "invite_email": "favken531@gmail.com",
+      "usedAt": "2026-05-13 15:37:44",
+      "expiresAt": "2026-05-18 13:47:55"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 06:18:27",
+      "invite_email": "georgebethel23@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:22"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 06:18:27",
+      "invite_email": "georgebethel23@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 06:18:28"
+    },
+    {
+      "id": "150001",
+      "name": "Bethel",
+      "email": "georgebethel23@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 06:18:27",
+      "invite_email": "georgebethel23@gmail.com",
+      "usedAt": "2026-05-11 18:03:19",
+      "expiresAt": "2026-05-18 13:47:54"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:52:16",
+      "invite_email": "fataifaith529@gmail.com",
+      "usedAt": "2026-05-11 18:21:12",
+      "expiresAt": "2026-05-18 13:47:53"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:52:16",
+      "invite_email": "fataifaith529@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:52:16"
+    },
+    {
+      "id": "120002",
+      "name": "Fatai",
+      "email": "fataifaith529@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:52:16",
+      "invite_email": "fataifaith529@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:21"
+    },
+    {
+      "id": "120001",
+      "name": "Onyinyechi",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-09 04:50:35",
+      "invite_email": "onyinyechichukwunyere1@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:47:52"
+    },
+    {
+      "id": "120001",
+      "name": "Onyinyechi",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-09 04:50:35",
+      "invite_email": "onyinyechichukwunyere1@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-19 17:06:54"
+    },
+    {
+      "id": "120001",
+      "name": "Onyinyechi",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-09 04:50:35",
+      "invite_email": "onyinyechichukwunyere1@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:50:35"
+    },
+    {
+      "id": "120001",
+      "name": "Onyinyechi",
+      "email": "onyinyechichukwunyere1@gmail.com",
+      "status": "invited",
+      "invitedAt": "2026-05-09 04:50:35",
+      "invite_email": "onyinyechichukwunyere1@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:20"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:46:09",
+      "invite_email": "samyeshiet13@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:19"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:46:09",
+      "invite_email": "samyeshiet13@gmail.com",
+      "usedAt": "2026-05-11 23:46:34",
+      "expiresAt": "2026-05-18 13:47:51"
+    },
+    {
+      "id": "90005",
+      "name": "Samuel",
+      "email": "samyeshiet13@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:46:09",
+      "invite_email": "samyeshiet13@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:46:09"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:45:28",
+      "invite_email": "meetchibuzorfj@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:45:28"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:45:28",
+      "invite_email": "meetchibuzorfj@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:47:50"
+    },
+    {
+      "id": "90004",
+      "name": "Faith",
+      "email": "meetchibuzorfj@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:45:28",
+      "invite_email": "meetchibuzorfj@gmail.com",
+      "usedAt": "2026-05-11 20:03:34",
+      "expiresAt": "2026-05-18 13:48:18"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:42:26",
+      "invite_email": "emperorjerry8@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:42:27"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:42:26",
+      "invite_email": "emperorjerry8@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:17"
+    },
+    {
+      "id": "90003",
+      "name": "Jerry",
+      "email": "emperorjerry8@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:42:26",
+      "invite_email": "emperorjerry8@gmail.com",
+      "usedAt": "2026-05-11 18:12:39",
+      "expiresAt": "2026-05-18 13:47:50"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:39:58",
+      "invite_email": "okoloibechristopher@gmail.com",
+      "usedAt": "2026-05-11 18:28:26",
+      "expiresAt": "2026-05-18 13:47:49"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:39:58",
+      "invite_email": "okoloibechristopher@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:39:59"
+    },
+    {
+      "id": "90002",
+      "name": "Christopher",
+      "email": "okoloibechristopher@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:39:58",
+      "invite_email": "okoloibechristopher@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:16"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:38:07",
+      "invite_email": "chikezieloyal@gmail.com",
+      "usedAt": "2026-05-11 19:02:12",
+      "expiresAt": "2026-05-18 13:47:48"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:38:07",
+      "invite_email": "chikezieloyal@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:15"
+    },
+    {
+      "id": "90001",
+      "name": "Loyal",
+      "email": "chikezieloyal@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:38:07",
+      "invite_email": "chikezieloyal@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:38:08"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:34:20",
+      "invite_email": "ejiogualwell52@gmail.com",
+      "usedAt": "2026-05-13 01:28:18",
+      "expiresAt": "2026-05-19 17:42:26"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:34:20",
+      "invite_email": "ejiogualwell52@gmial.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:47:47"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:34:20",
+      "invite_email": "ejiogualwell52@gmial.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:34:21"
+    },
+    {
+      "id": "60007",
+      "name": "Alwell",
+      "email": "ejiogualwell52@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:34:20",
+      "invite_email": "ejiogualwell52@gmial.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:15"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:33:36",
+      "invite_email": "eugeniaweb73@gmail.com",
+      "usedAt": "2026-05-12 20:57:28",
+      "expiresAt": "2026-05-18 13:48:14"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:33:36",
+      "invite_email": "eugeniaweb73@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:33:37"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:33:36",
+      "invite_email": "eugeniaweb73@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-19 17:06:45"
+    },
+    {
+      "id": "60006",
+      "name": "Eugenia",
+      "email": "eugeniaweb73@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:33:36",
+      "invite_email": "eugeniaweb73@gmail.com",
+      "usedAt": "2026-05-12 20:19:00",
+      "expiresAt": "2026-05-18 13:47:46"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:29:56",
+      "invite_email": "merryfromhome@gmail.com",
+      "usedAt": "2026-05-12 07:18:49",
+      "expiresAt": "2026-05-18 13:47:45"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:29:56",
+      "invite_email": "merryfromhome@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:13"
+    },
+    {
+      "id": "60005",
+      "name": "Merrilyn ",
+      "email": "merryfromhome@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:29:56",
+      "invite_email": "merryfromhome@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:29:56"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:26:36",
+      "invite_email": "comfortonwuchekwa365@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:12"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:26:36",
+      "invite_email": "comfortonwuchekwa365@gmail.com",
+      "usedAt": "2026-05-11 18:26:14",
+      "expiresAt": "2026-05-18 13:47:44"
+    },
+    {
+      "id": "60004",
+      "name": "Comfort",
+      "email": "comfortonwuchekwa365@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:26:36",
+      "invite_email": "comfortonwuchekwa365@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:26:36"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:25:53",
+      "invite_email": "jason.mervin2006@gmail.com",
+      "usedAt": "2026-05-11 18:00:49",
+      "expiresAt": "2026-05-18 13:48:11"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:25:53",
+      "invite_email": "jason.mervin2006@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:47:43"
+    },
+    {
+      "id": "60003",
+      "name": "Jason",
+      "email": "jason.mervin2006@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:25:53",
+      "invite_email": "jason.mervin2006@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:25:54"
+    },
+    {
+      "id": "60002",
+      "name": "Bethel",
+      "email": "bennygebere@gmail.com",
+      "status": "inactive",
+      "invitedAt": "2026-05-09 04:23:23",
+      "invite_email": "bennygebere@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:23:24"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:22:34",
+      "invite_email": "godslovealex66@gmail.com",
+      "usedAt": "2026-05-12 13:48:38",
+      "expiresAt": "2026-05-18 13:48:10"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:22:34",
+      "invite_email": "godslovealex66@gmail.com",
+      "usedAt": "2026-05-11 19:07:52",
+      "expiresAt": "2026-05-18 13:47:41"
+    },
+    {
+      "id": "60001",
+      "name": "Godslove",
+      "email": "godslovealex66@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-09 04:22:34",
+      "invite_email": "godslovealex66@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-16 04:22:34"
+    },
+    {
+      "id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-08 19:38:26",
+      "invite_email": "chidi.ej@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-18 13:48:08"
+    },
+    {
+      "id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-08 19:38:26",
+      "invite_email": "chidi.ej@gmail.com",
+      "usedAt": "2026-05-11 18:03:01",
+      "expiresAt": "2026-05-18 13:47:38"
+    },
+    {
+      "id": "30001",
+      "name": "Joseph",
+      "email": "chidi.ej@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-08 19:38:26",
+      "invite_email": "chidi.ej@gmail.com",
+      "usedAt": "NULL",
+      "expiresAt": "2026-05-15 19:38:27"
+    },
+    {
+      "id": "1",
+      "name": "Joey",
+      "email": "ezeejoey.ej@gmail.com",
+      "status": "active",
+      "invitedAt": "2026-05-05 16:18:44",
+      "invite_email": "ezeejoey.ej@gmail.com",
+      "usedAt": "2026-05-07 23:34:02",
+      "expiresAt": "2026-06-06 23:27:47"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\tstatus\tinvitedAt\tinvite_email\tusedAt\texpiresAt\n510003\tMichael Ogbuja\togbujamichael01@gmail.com\tinvited\t2026-05-19 14:22:52\togbujamichael01@gmail.com\tNULL\t2026-05-26 10:22:52\n510002\tEugenia Mark-Igbani\teugemail73@gmail.com\tinvited\t2026-05-19 14:15:16\teugemail73@gmail.com\tNULL\t2026-05-26 14:15:17\n480002\tLynda\tdinasoft14@gmail.com\tinvited\t2026-05-16 17:34:06\tdinasoft14@gmail.com\tNULL\t2026-05-23 17:34:07\n450002\tPromise\tpromisenelson15@gmail.com\tinvited\t2026-05-14 14:30:15\tpromisenelson15@gmail.com\tNULL\t2026-05-21 14:30:15\n420002\tChisom\tChispark146@gmail.com\tactive\t2026-05-14 10:29:19\tChispark146@gmail.com\t2026-05-14 14:33:30\t2026-05-21 10:29:19\n390004\tEphraim\tephraimduchis@gmail.com\tactive\t2026-05-14 10:24:18\tephraimduchis@gmail.com\t2026-05-18 04:19:39\t2026-05-21 10:24:18\n390003\tMark\tmarkigbani@gmail.com\tinvited\t2026-05-14 10:20:23\tmarkigbani@gmail.com\tNULL\t2026-05-21 10:20:23\n390002\tGrace\tasograce1899@gmail.com\tactive\t2026-05-14 10:18:57\tasograce1899@gmail.com\t2026-05-14 14:12:27\t2026-05-21 10:18:57\n360003\tFrancis\tfrancisphilip1993@gmail.com\tinvited\t2026-05-14 10:14:08\tfrancisphilip1993@gmail.com\tNULL\t2026-05-21 10:14:09\n360002\tEmmanuel \temmanuelnyitamen17@gmail.com\tinvited\t2026-05-14 10:12:25\temmanuelnyitamen17@gmail.com\tNULL\t2026-05-21 10:12:26\n330003\tAbraham \twebtechiewhyte@gmail.com\tactive\t2026-05-14 10:08:47\twebtechiewhyte@gmail.com\t2026-05-14 10:17:01\t2026-05-21 10:08:48\n330002\tKingsley\tengrak51@gmail.com\tactive\t2026-05-14 10:08:01\tengrak51@gmail.com\t2026-05-14 16:10:46\t2026-05-21 10:08:02\n300001\tVincent Holmes\tvincent.holmes00@gmail.com\tactive\t2026-05-13 13:17:37\tNULL\tNULL\tNULL\n270002\tNoah\tnessybitto@gmail.com\tactive\t2026-05-12 14:01:49\tnessybitto@gmail.com\tNULL\t2026-05-19 14:01:49\n270002\tNoah\tnessybitto@gmail.com\tactive\t2026-05-12 14:01:49\tnessybitto@gmail.com\t2026-05-14 22:11:09\t2026-05-21 10:02:09\n270001\tPaul\tdp7449787@gmail.com\tactive\t2026-05-12 14:00:39\tdp7449787@gmail.com\t2026-05-15 07:48:16\t2026-05-19 14:00:39\n240005\tRuth\tamarachiruthjiogu@gmail.com\tinvited\t2026-05-11 21:04:36\tamarachiruthjiogu@gmail.com\tNULL\t2026-05-18 17:04:37\n240004\tAngelika\tangelikaabella7@gmail.com\tinvited\t2026-05-11 21:04:35\tangelikaabella7@gmail.com\tNULL\t2026-05-18 17:04:35\n240003\tLynda\tsparkling2all2007@yahoo.com\tinvited\t2026-05-11 21:04:33\tsparkling2all2007@yahoo.com\tNULL\t2026-05-18 17:04:34\n240002\tIhesie\tisaiahdesigns@outlook.com\tinvited\t2026-05-11 21:04:32\tisaiahdesigns@outlook.com\tNULL\t2026-05-18 17:04:33\n240001\tDoris\tdoriswotobo@gmail.com\tinvited\t2026-05-11 21:04:25\tdoriswotobo@gmail.com\tNULL\t2026-05-18 17:04:26\n210001\tTest User\tsensei30002003@gmail.com\tactive\t2026-05-11 17:10:59\tsensei30002003@gmail.com\tNULL\t2026-05-18 17:11:18\n210001\tTest User\tsensei30002003@gmail.com\tactive\t2026-05-11 17:10:59\tsensei30002003@gmail.com\tNULL\t2026-05-18 13:48:24\n210001\tTest User\tsensei30002003@gmail.com\tactive\t2026-05-11 17:10:59\tsensei30002003@gmail.com\tNULL\t2026-05-18 13:47:56\n180001\tFavour\tfavken531@gmail.com\tactive\t2026-05-09 06:58:24\tfavken531@gmail.com\tNULL\t2026-05-16 06:58:24\n180001\tFavour\tfavken531@gmail.com\tactive\t2026-05-09 06:58:24\tfavken531@gmail.com\tNULL\t2026-05-18 13:48:23\n180001\tFavour\tfavken531@gmail.com\tactive\t2026-05-09 06:58:24\tfavken531@gmail.com\t2026-05-13 15:37:44\t2026-05-18 13:47:55\n150001\tBethel\tgeorgebethel23@gmail.com\tactive\t2026-05-09 06:18:27\tgeorgebethel23@gmail.com\tNULL\t2026-05-18 13:48:22\n150001\tBethel\tgeorgebethel23@gmail.com\tactive\t2026-05-09 06:18:27\tgeorgebethel23@gmail.com\tNULL\t2026-05-16 06:18:28\n150001\tBethel\tgeorgebethel23@gmail.com\tactive\t2026-05-09 06:18:27\tgeorgebethel23@gmail.com\t2026-05-11 18:03:19\t2026-05-18 13:47:54\n120002\tFatai\tfataifaith529@gmail.com\tactive\t2026-05-09 04:52:16\tfataifaith529@gmail.com\t2026-05-11 18:21:12\t2026-05-18 13:47:53\n120002\tFatai\tfataifaith529@gmail.com\tactive\t2026-05-09 04:52:16\tfataifaith529@gmail.com\tNULL\t2026-05-16 04:52:16\n120002\tFatai\tfataifaith529@gmail.com\tactive\t2026-05-09 04:52:16\tfataifaith529@gmail.com\tNULL\t2026-05-18 13:48:21\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tinvited\t2026-05-09 04:50:35\tonyinyechichukwunyere1@gmail.com\tNULL\t2026-05-18 13:47:52\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tinvited\t2026-05-09 04:50:35\tonyinyechichukwunyere1@gmail.com\tNULL\t2026-05-19 17:06:54\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tinvited\t2026-05-09 04:50:35\tonyinyechichukwunyere1@gmail.com\tNULL\t2026-05-16 04:50:35\n120001\tOnyinyechi\tonyinyechichukwunyere1@gmail.com\tinvited\t2026-05-09 04:50:35\tonyinyechichukwunyere1@gmail.com\tNULL\t2026-05-18 13:48:20\n90005\tSamuel\tsamyeshiet13@gmail.com\tactive\t2026-05-09 04:46:09\tsamyeshiet13@gmail.com\tNULL\t2026-05-18 13:48:19\n90005\tSamuel\tsamyeshiet13@gmail.com\tactive\t2026-05-09 04:46:09\tsamyeshiet13@gmail.com\t2026-05-11 23:46:34\t2026-05-18 13:47:51\n90005\tSamuel\tsamyeshiet13@gmail.com\tactive\t2026-05-09 04:46:09\tsamyeshiet13@gmail.com\tNULL\t2026-05-16 04:46:09\n90004\tFaith\tmeetchibuzorfj@gmail.com\tactive\t2026-05-09 04:45:28\tmeetchibuzorfj@gmail.com\tNULL\t2026-05-16 04:45:28\n90004\tFaith\tmeetchibuzorfj@gmail.com\tactive\t2026-05-09 04:45:28\tmeetchibuzorfj@gmail.com\tNULL\t2026-05-18 13:47:50\n90004\tFaith\tmeetchibuzorfj@gmail.com\tactive\t2026-05-09 04:45:28\tmeetchibuzorfj@gmail.com\t2026-05-11 20:03:34\t2026-05-18 13:48:18\n90003\tJerry\temperorjerry8@gmail.com\tactive\t2026-05-09 04:42:26\temperorjerry8@gmail.com\tNULL\t2026-05-16 04:42:27\n90003\tJerry\temperorjerry8@gmail.com\tactive\t2026-05-09 04:42:26\temperorjerry8@gmail.com\tNULL\t2026-05-18 13:48:17\n90003\tJerry\temperorjerry8@gmail.com\tactive\t2026-05-09 04:42:26\temperorjerry8@gmail.com\t2026-05-11 18:12:39\t2026-05-18 13:47:50\n90002\tChristopher\tokoloibechristopher@gmail.com\tactive\t2026-05-09 04:39:58\tokoloibechristopher@gmail.com\t2026-05-11 18:28:26\t2026-05-18 13:47:49\n90002\tChristopher\tokoloibechristopher@gmail.com\tactive\t2026-05-09 04:39:58\tokoloibechristopher@gmail.com\tNULL\t2026-05-16 04:39:59\n90002\tChristopher\tokoloibechristopher@gmail.com\tactive\t2026-05-09 04:39:58\tokoloibechristopher@gmail.com\tNULL\t2026-05-18 13:48:16\n90001\tLoyal\tchikezieloyal@gmail.com\tactive\t2026-05-09 04:38:07\tchikezieloyal@gmail.com\t2026-05-11 19:02:12\t2026-05-18 13:47:48\n90001\tLoyal\tchikezieloyal@gmail.com\tactive\t2026-05-09 04:38:07\tchikezieloyal@gmail.com\tNULL\t2026-05-18 13:48:15\n90001\tLoyal\tchikezieloyal@gmail.com\tactive\t2026-05-09 04:38:07\tchikezieloyal@gmail.com\tNULL\t2026-05-16 04:38:08\n60007\tAlwell\tejiogualwell52@gmail.com\tactive\t2026-05-09 04:34:20\tejiogualwell52@gmail.com\t2026-05-13 01:28:18\t2026-05-19 17:42:26\n60007\tAlwell\tejiogualwell52@gmail.com\tactive\t2026-05-09 04:34:20\tejiogualwell52@gmial.com\tNULL\t2026-05-18 13:47:47\n60007\tAlwell\tejiogualwell52@gmail.com\tactive\t2026-05-09 04:34:20\tejiogualwell52@gmial.com\tNULL\t2026-05-16 04:34:21\n60007\tAlwell\tejiogualwell52@gmail.com\tactive\t2026-05-09 04:34:20\tejiogualwell52@gmial.com\tNULL\t2026-05-18 13:48:15\n60006\tEugenia\teugeniaweb73@gmail.com\tactive\t2026-05-09 04:33:36\teugeniaweb73@gmail.com\t2026-05-12 20:57:28\t2026-05-18 13:48:14\n60006\tEugenia\teugeniaweb73@gmail.com\tactive\t2026-05-09 04:33:36\teugeniaweb73@gmail.com\tNULL\t2026-05-16 04:33:37\n60006\tEugenia\teugeniaweb73@gmail.com\tactive\t2026-05-09 04:33:36\teugeniaweb73@gmail.com\tNULL\t2026-05-19 17:06:45\n60006\tEugenia\teugeniaweb73@gmail.com\tactive\t2026-05-09 04:33:36\teugeniaweb73@gmail.com\t2026-05-12 20:19:00\t2026-05-18 13:47:46\n60005\tMerrilyn \tmerryfromhome@gmail.com\tactive\t2026-05-09 04:29:56\tmerryfromhome@gmail.com\t2026-05-12 07:18:49\t2026-05-18 13:47:45\n60005\tMerrilyn \tmerryfromhome@gmail.com\tactive\t2026-05-09 04:29:56\tmerryfromhome@gmail.com\tNULL\t2026-05-18 13:48:13\n60005\tMerrilyn \tmerryfromhome@gmail.com\tactive\t2026-05-09 04:29:56\tmerryfromhome@gmail.com\tNULL\t2026-05-16 04:29:56\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tactive\t2026-05-09 04:26:36\tcomfortonwuchekwa365@gmail.com\tNULL\t2026-05-18 13:48:12\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tactive\t2026-05-09 04:26:36\tcomfortonwuchekwa365@gmail.com\t2026-05-11 18:26:14\t2026-05-18 13:47:44\n60004\tComfort\tcomfortonwuchekwa365@gmail.com\tactive\t2026-05-09 04:26:36\tcomfortonwuchekwa365@gmail.com\tNULL\t2026-05-16 04:26:36\n60003\tJason\tjason.mervin2006@gmail.com\tactive\t2026-05-09 04:25:53\tjason.mervin2006@gmail.com\t2026-05-11 18:00:49\t2026-05-18 13:48:11\n60003\tJason\tjason.mervin2006@gmail.com\tactive\t2026-05-09 04:25:53\tjason.mervin2006@gmail.com\tNULL\t2026-05-18 13:47:43\n60003\tJason\tjason.mervin2006@gmail.com\tactive\t2026-05-09 04:25:53\tjason.mervin2006@gmail.com\tNULL\t2026-05-16 04:25:54\n60002\tBethel\tbennygebere@gmail.com\tinactive\t2026-05-09 04:23:23\tbennygebere@gmail.com\tNULL\t2026-05-16 04:23:24\n60001\tGodslove\tgodslovealex66@gmail.com\tactive\t2026-05-09 04:22:34\tgodslovealex66@gmail.com\t2026-05-12 13:48:38\t2026-05-18 13:48:10\n60001\tGodslove\tgodslovealex66@gmail.com\tactive\t2026-05-09 04:22:34\tgodslovealex66@gmail.com\t2026-05-11 19:07:52\t2026-05-18 13:47:41\n60001\tGodslove\tgodslovealex66@gmail.com\tactive\t2026-05-09 04:22:34\tgodslovealex66@gmail.com\tNULL\t2026-05-16 04:22:34\n30001\tJoseph\tchidi.ej@gmail.com\tactive\t2026-05-08 19:38:26\tchidi.ej@gmail.com\tNULL\t2026-05-18 13:48:08\n30001\tJoseph\tchidi.ej@gmail.com\tactive\t2026-05-08 19:38:26\tchidi.ej@gmail.com\t2026-05-11 18:03:01\t2026-05-18 13:47:38\n30001\tJoseph\tchidi.ej@gmail.com\tactive\t2026-05-08 19:38:26\tchidi.ej@gmail.com\tNULL\t2026-05-15 19:38:27\n1\tJoey\tezeejoey.ej@gmail.com\tactive\t2026-05-05 16:18:44\tezeejoey.ej@gmail.com\t2026-05-07 23:34:02\t2026-06-06 23:27:47\n",
+  "stderr": "",
+  "execution_time_ms": 278
+}

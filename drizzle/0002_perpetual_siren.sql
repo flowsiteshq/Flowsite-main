@@ -1,0 +1,2 @@
+ALTER TABLE `wizard_submissions` ADD `status` enum('new','contacted','in_progress','proposal_sent','won','lost') DEFAULT 'new' NOT NULL;--> statement-breakpoint
+ALTER TABLE `wizard_submissions` ADD `statusUpdatedAt` timestamp DEFAULT (now()) NOT NULL;

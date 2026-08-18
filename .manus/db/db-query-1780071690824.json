@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, clientName, clientEmail, businessName, monthlyPriceCents FROM client_accounts WHERE businessName LIKE '%stitch%' OR clientEmail LIKE '%stitch%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, clientName, clientEmail, businessName, monthlyPriceCents FROM client_accounts WHERE businessName LIKE '%stitch%' OR clientEmail LIKE '%stitch%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "210001",
+      "clientName": "Stitched With Love",
+      "clientEmail": "stitchwithris@gmail.com",
+      "businessName": "Stitched With Love",
+      "monthlyPriceCents": "9900"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tclientName\tclientEmail\tbusinessName\tmonthlyPriceCents\n210001\tStitched With Love\tstitchwithris@gmail.com\tStitched With Love\t9900\n",
+  "stderr": "",
+  "execution_time_ms": 260
+}

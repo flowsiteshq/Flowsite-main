@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, invoiceNumber, shareToken FROM client_invoices WHERE clientAccountId = 210001 ORDER BY id DESC LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT id, invoiceNumber, shareToken FROM client_invoices WHERE clientAccountId = 210001 ORDER BY id DESC LIMIT 1;",
+  "rows": [
+    {
+      "id": "210001",
+      "invoiceNumber": "INV-SWL-2026-05",
+      "shareToken": "7ba410755b7a11f188396283a8d82259"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tinvoiceNumber\tshareToken\n210001\tINV-SWL-2026-05\t7ba410755b7a11f188396283a8d82259\n",
+  "stderr": "",
+  "execution_time_ms": 266
+}

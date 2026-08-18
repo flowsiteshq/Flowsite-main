@@ -1,0 +1,8 @@
+{
+  "query": "\nSELECT 'wizard_submissions' as source, COUNT(*) as total FROM wizard_submissions WHERE email IS NOT NULL AND email != ''\nUNION ALL\nSELECT 'opportunity_pool' as source, COUNT(*) as total FROM opportunity_pool WHERE email IS NOT NULL AND email != ''\nUNION ALL\nSELECT 'analyzer_results' as source, COUNT(*) as total FROM analyzer_results WHERE leadEmail IS NOT NULL AND leadEmail != ''\nUNION ALL\nSELECT 'bookings' as source, COUNT(*) as total FROM bookings WHERE email IS NOT NULL AND email != '';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \nSELECT 'wizard_submissions' as source, COUNT(*) as total FROM wizard_submissions WHERE email IS NOT NULL AND email != ''\nUNION ALL\nSELECT 'opportunity_pool' as source, COUNT(*) as total FROM opportunity_pool WHERE email IS NOT NULL AND email != ''\nUNION ALL\nSELECT 'analyzer_results' as source, COUNT(*) as total FROM analyzer_results WHERE leadEmail IS NOT NULL AND leadEmail != ''\nUNION ALL\nSELECT 'bookings' as source, COUNT(*) as total FROM bookings WHERE email IS NOT NULL AND email != '';\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 2: Unknown column 'email' in 'where clause'"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "query": "SELECT u.id, u.name, u.email, u.role, t.role as tech_role, t.status as tech_status FROM users u LEFT JOIN technicians t ON t.userId = u.id WHERE u.role = 'admin' ORDER BY u.name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT u.id, u.name, u.email, u.role, t.role as tech_role, t.status as tech_status FROM users u LEFT JOIN technicians t ON t.userId = u.id WHERE u.role = 'admin' ORDER BY u.name;",
+  "rows": [
+    {
+      "id": "28830001",
+      "name": "Christopher Mpamugo",
+      "email": "chrismpamugo99@gmail.com",
+      "role": "admin",
+      "tech_role": "admin",
+      "tech_status": "active"
+    },
+    {
+      "id": "25200006",
+      "name": "Clover Dojo",
+      "email": "cloverdojo@gmail.com",
+      "role": "admin",
+      "tech_role": "admin",
+      "tech_status": "active"
+    },
+    {
+      "id": "1",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin",
+      "tech_role": "admin",
+      "tech_status": "active"
+    },
+    {
+      "id": "1",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin",
+      "tech_role": "sales_rep",
+      "tech_status": "active"
+    },
+    {
+      "id": "2400001",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin",
+      "tech_role": "NULL",
+      "tech_status": "NULL"
+    },
+    {
+      "id": "6300001",
+      "name": "Vincent Holmes",
+      "email": "sensei30002003@gmail.com",
+      "role": "admin",
+      "tech_role": "NULL",
+      "tech_status": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\ttech_role\ttech_status\n28830001\tChristopher Mpamugo\tchrismpamugo99@gmail.com\tadmin\tadmin\tactive\n25200006\tClover Dojo\tcloverdojo@gmail.com\tadmin\tadmin\tactive\n1\tVincent Holmes\tsensei30002003@gmail.com\tadmin\tadmin\tactive\n1\tVincent Holmes\tsensei30002003@gmail.com\tadmin\tsales_rep\tactive\n2400001\tVincent Holmes\tsensei30002003@gmail.com\tadmin\tNULL\tNULL\n6300001\tVincent Holmes\tsensei30002003@gmail.com\tadmin\tNULL\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 291
+}

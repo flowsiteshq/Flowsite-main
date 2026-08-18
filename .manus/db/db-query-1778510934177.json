@@ -1,0 +1,19 @@
+{
+  "query": "SELECT COUNT(*) as total FROM opportunity_pool; SELECT COUNT(*) as available FROM opportunity_pool WHERE status = 'available';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total FROM opportunity_pool; SELECT COUNT(*) as available FROM opportunity_pool WHERE status = 'available';",
+  "rows": [
+    {
+      "total": "930"
+    },
+    {
+      "total": "available"
+    },
+    {
+      "total": "920"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n930\navailable\n920\n",
+  "stderr": "",
+  "execution_time_ms": 338
+}

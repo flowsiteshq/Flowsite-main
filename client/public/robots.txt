@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block admin and private routes
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://www.flow-sites.com/sitemap.xml

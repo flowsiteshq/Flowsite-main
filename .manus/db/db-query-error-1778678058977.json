@@ -1,0 +1,8 @@
+{
+  "query": "\n-- Check technician record for Vincent Holmes\nSELECT id, name, email, tech_role, commission_rate FROM technicians WHERE name LIKE '%Vincent%' OR name LIKE '%Holmes%';\n\n-- Check client accounts for Dojo Flow and Mydojo\nSELECT id, client_name, business_name, client_email, assigned_technician_id, referred_by_technician_id FROM client_accounts WHERE business_name LIKE '%Dojo%' OR business_name LIKE '%dojo%';\n\n-- Check invoices for Dojo Flow and Mydojo\nSELECT id, invoice_number, client_email, business_name, amount_cents, status, technician_id, created_at FROM invoices WHERE business_name LIKE '%Dojo%' OR business_name LIKE '%dojo%' OR business_name LIKE '%Mydojo%';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute \n-- Check technician record for Vincent Holmes\nSELECT id, name, email, tech_role, commission_rate FROM technicians WHERE name LIKE '%Vincent%' OR name LIKE '%Holmes%';\n\n-- Check client accounts for Dojo Flow and Mydojo\nSELECT id, client_name, business_name, client_email, assigned_technician_id, referred_by_technician_id FROM client_accounts WHERE business_name LIKE '%Dojo%' OR business_name LIKE '%dojo%';\n\n-- Check invoices for Dojo Flow and Mydojo\nSELECT id, invoice_number, client_email, business_name, amount_cents, status, technician_id, created_at FROM invoices WHERE business_name LIKE '%Dojo%' OR business_name LIKE '%dojo%' OR business_name LIKE '%Mydojo%';\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 3: Unknown column 'tech_role' in 'field list'"
+  ]
+}

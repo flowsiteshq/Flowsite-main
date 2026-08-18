@@ -1,0 +1,16 @@
+{
+  "query": "SHOW TABLES LIKE '%invoice%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SHOW TABLES LIKE '%invoice%';",
+  "rows": [
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%invoice%)": "client_invoices"
+    },
+    {
+      "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%invoice%)": "invoice_items"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_VvLvZnpjR27EmYwxaK3mTG (%invoice%)\nclient_invoices\ninvoice_items\n",
+  "stderr": "",
+  "execution_time_ms": 296
+}

@@ -1,0 +1,36 @@
+{
+  "query": "SELECT COUNT(*) as total, COUNT(assignedTechnicianId) as assigned FROM client_accounts;\nSELECT id, name, openId, status, role FROM technicians LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as total, COUNT(assignedTechnicianId) as assigned FROM client_accounts;\nSELECT id, name, openId, status, role FROM technicians LIMIT 20;",
+  "rows": [
+    {
+      "total": "8",
+      "assigned": "3"
+    }
+  ],
+  "messages": [
+    "id\tname\topenId\tstatus\trole",
+    "1\tJoey\tgTrkbtdZubp2wnbHpJVQyc\tactive\tadmin",
+    "30001\tJoseph\tgoogle_107932754434740101177\tactive\tteam_lead",
+    "60001\tGodslove\tgoogle_109042202319879625312\tactive\tmanager",
+    "60002\tBethel\tNULL\tinactive\tsales_rep",
+    "60003\tJason\tgoogle_110945000403044714179\tactive\tsales_rep",
+    "60004\tComfort\tgoogle_111436106210624015301\tactive\tsales_rep",
+    "60005\tMerrilyn \tgoogle_103538796932787342346\tactive\tsales_rep",
+    "60006\tEugenia\tgoogle_115790998583932932388\tactive\tsales_rep",
+    "60007\tAlwell\tgoogle_103135637569387489852\tactive\tsales_rep",
+    "90001\tLoyal\tgoogle_118307692131977591402\tactive\tsales_rep",
+    "90002\tChristopher\tgoogle_103720165612885483527\tactive\tsales_rep",
+    "90003\tJerry\tgoogle_113869578682076167267\tactive\tsales_rep",
+    "90004\tFaith\tgoogle_109392777680787706749\tactive\tsales_rep",
+    "90005\tSamuel\tgoogle_101227913119158920408\tactive\tsales_rep",
+    "120001\tOnyinyechi\tNULL\tinvited\tsales_rep",
+    "120002\tFatai\tgoogle_101014906550143486584\tactive\tsales_rep",
+    "150001\tBethel\tgoogle_112276069719812679595\tactive\tsales_rep",
+    "180001\tFavour\tgoogle_100101477271535379278\tactive\tsales_rep",
+    "210001\tTest User\tgoogle_100571322086518934295\tactive\tsales_rep",
+    "240001\tDoris\tNULL\tinvited\tsales_rep"
+  ],
+  "stdout": "total\tassigned\n8\t3\nid\tname\topenId\tstatus\trole\n1\tJoey\tgTrkbtdZubp2wnbHpJVQyc\tactive\tadmin\n30001\tJoseph\tgoogle_107932754434740101177\tactive\tteam_lead\n60001\tGodslove\tgoogle_109042202319879625312\tactive\tmanager\n60002\tBethel\tNULL\tinactive\tsales_rep\n60003\tJason\tgoogle_110945000403044714179\tactive\tsales_rep\n60004\tComfort\tgoogle_111436106210624015301\tactive\tsales_rep\n60005\tMerrilyn \tgoogle_103538796932787342346\tactive\tsales_rep\n60006\tEugenia\tgoogle_115790998583932932388\tactive\tsales_rep\n60007\tAlwell\tgoogle_103135637569387489852\tactive\tsales_rep\n90001\tLoyal\tgoogle_118307692131977591402\tactive\tsales_rep\n90002\tChristopher\tgoogle_103720165612885483527\tactive\tsales_rep\n90003\tJerry\tgoogle_113869578682076167267\tactive\tsales_rep\n90004\tFaith\tgoogle_109392777680787706749\tactive\tsales_rep\n90005\tSamuel\tgoogle_101227913119158920408\tactive\tsales_rep\n120001\tOnyinyechi\tNULL\tinvited\tsales_rep\n120002\tFatai\tgoogle_101014906550143486584\tactive\tsales_rep\n150001\tBethel\tgoogle_112276069719812679595\tactive\tsales_rep\n180001\tFavour\tgoogle_100101477271535379278\tactive\tsales_rep\n210001\tTest User\tgoogle_100571322086518934295\tactive\tsales_rep\n240001\tDoris\tNULL\tinvited\tsales_rep\n",
+  "stderr": "",
+  "execution_time_ms": 272
+}

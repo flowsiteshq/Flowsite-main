@@ -1,0 +1,25 @@
+{
+  "query": "SELECT COUNT(*) as lesson_count FROM lessons; SELECT COUNT(*) as step_count FROM lesson_steps; SELECT COUNT(*) as question_count FROM quiz_questions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute SELECT COUNT(*) as lesson_count FROM lessons; SELECT COUNT(*) as step_count FROM lesson_steps; SELECT COUNT(*) as question_count FROM quiz_questions;",
+  "rows": [
+    {
+      "lesson_count": "0"
+    },
+    {
+      "lesson_count": "step_count"
+    },
+    {
+      "lesson_count": "0"
+    },
+    {
+      "lesson_count": "question_count"
+    },
+    {
+      "lesson_count": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "lesson_count\n0\nstep_count\n0\nquestion_count\n0\n",
+  "stderr": "",
+  "execution_time_ms": 749
+}

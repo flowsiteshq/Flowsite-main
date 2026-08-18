@@ -1,0 +1,31 @@
+{
+  "query": "DESCRIBE client_invoices; SELECT id, projectId, totalAmount, status, dueDate, description FROM client_invoices WHERE projectId = 30001 LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute DESCRIBE client_invoices; SELECT id, projectId, totalAmount, status, dueDate, description FROM client_invoices WHERE projectId = 30001 LIMIT 10;",
+  "returncode": 1,
+  "logs": [
+    "Field\tType\tNull\tKey\tDefault\tExtra",
+    "id\tint\tNO\tPRI\tNULL\tauto_increment",
+    "clientAccountId\tint\tNO\t\tNULL\t",
+    "stripeInvoiceId\tvarchar(64)\tYES\t\tNULL\t",
+    "stripePaymentIntentId\tvarchar(64)\tYES\t\tNULL\t",
+    "invoiceNumber\tvarchar(32)\tNO\t\tNULL\t",
+    "periodStart\tvarchar(10)\tNO\t\tNULL\t",
+    "periodEnd\tvarchar(10)\tNO\t\tNULL\t",
+    "dueDate\tvarchar(10)\tNO\t\tNULL\t",
+    "baseAmountCents\tint\tNO\t\tNULL\t",
+    "discountCents\tint\tNO\t\t0\t",
+    "lateFeeCents\tint\tNO\t\t0\t",
+    "totalAmountCents\tint\tNO\t\tNULL\t",
+    "status\tenum('draft','open','paid','overdue','void')\tNO\t\topen\t",
+    "paidAt\ttimestamp\tYES\t\tNULL\t",
+    "discountType\tenum('early_pay','annual','none')\tNO\t\tnone\t",
+    "notes\ttext\tYES\t\tNULL\t",
+    "createdAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t",
+    "updatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+    "shareToken\tvarchar(64)\tYES\t\tNULL\t",
+    "isRecurring\tint\tNO\t\t1\t",
+    "invoiceType\tenum('monthly','addon')\tNO\t\tmonthly\t",
+    "addonRequestId\tint\tYES\t\tNULL",
+    "ERROR 1054 (42S22) at line 1: Unknown column 'projectid' in 'where clause'"
+  ]
+}

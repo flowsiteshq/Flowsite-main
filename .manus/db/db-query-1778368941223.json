@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `invoice_items` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `invoiceId` int NOT NULL,\n  `description` varchar(255) NOT NULL,\n  `quantity` int NOT NULL DEFAULT 1,\n  `unitAmountCents` int NOT NULL,\n  `amountCents` int NOT NULL,\n  `sortOrder` int NOT NULL DEFAULT 0,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `invoice_items_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute CREATE TABLE IF NOT EXISTS `invoice_items` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `invoiceId` int NOT NULL,\n  `description` varchar(255) NOT NULL,\n  `quantity` int NOT NULL DEFAULT 1,\n  `unitAmountCents` int NOT NULL,\n  `amountCents` int NOT NULL,\n  `sortOrder` int NOT NULL DEFAULT 0,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `invoice_items_id` PRIMARY KEY(`id`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 718
+}

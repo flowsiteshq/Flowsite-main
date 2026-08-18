@@ -1,0 +1,20 @@
+CREATE TABLE `wizard_submissions` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`businessName` varchar(255) NOT NULL,
+	`businessType` varchar(100) NOT NULL,
+	`businessTypeOther` text,
+	`website` varchar(500),
+	`phone` varchar(50) NOT NULL,
+	`email` varchar(320) NOT NULL,
+	`colorScheme` varchar(100) NOT NULL,
+	`customColors` text,
+	`designStyle` text,
+	`referenceWebsites` text,
+	`primaryGoal` text NOT NULL,
+	`currentChallenges` text,
+	`timeline` varchar(100) NOT NULL,
+	`budget` varchar(100),
+	`additionalNotes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `wizard_submissions_id` PRIMARY KEY(`id`)
+);

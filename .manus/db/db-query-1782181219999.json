@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO client_portal_passwords (clientEmail, passwordHash, createdAt, updatedAt) VALUES ('stylistfactorytx@gmail.com', '$2b$10$P9CJ7TS8vg3K3cx9rhI6sujTGdeP8K7zteuz9YKT5rxp8bzvpGA7.', NOW(), NOW()) ON DUPLICATE KEY UPDATE passwordHash = '$2b$10$P9CJ7TS8vg3K3cx9rhI6sujTGdeP8K7zteuz9YKT5rxp8bzvpGA7.', updatedAt = NOW();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user aYsLc9eZnrL9DEu.b90542e82488 --database VvLvZnpjR27EmYwxaK3mTG --execute INSERT INTO client_portal_passwords (clientEmail, passwordHash, createdAt, updatedAt) VALUES ('stylistfactorytx@gmail.com', '$2b$10$P9CJ7TS8vg3K3cx9rhI6sujTGdeP8K7zteuz9YKT5rxp8bzvpGA7.', NOW(), NOW()) ON DUPLICATE KEY UPDATE passwordHash = '$2b$10$P9CJ7TS8vg3K3cx9rhI6sujTGdeP8K7zteuz9YKT5rxp8bzvpGA7.', updatedAt = NOW();",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 421
+}

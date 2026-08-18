@@ -1,0 +1,1 @@
+ALTER TABLE `email_auth` MODIFY COLUMN `resetTokenExpiry` bigint;

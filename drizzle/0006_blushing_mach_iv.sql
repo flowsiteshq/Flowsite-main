@@ -1,0 +1,21 @@
+CREATE TABLE `budget_quotes` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`prospectName` varchar(255),
+	`prospectEmail` varchar(320),
+	`prospectPhone` varchar(50),
+	`industry` varchar(100) NOT NULL,
+	`basePackage` varchar(50) NOT NULL,
+	`coreAddons` text NOT NULL,
+	`autoAddons` text NOT NULL,
+	`industryAddons` text NOT NULL,
+	`subscriptionTier` varchar(50) NOT NULL,
+	`monthlyPrice` int NOT NULL,
+	`paymentPlan` varchar(10) NOT NULL DEFAULT 'full',
+	`buildCostMin` int NOT NULL,
+	`buildCostMax` int NOT NULL,
+	`status` enum('new','contacted','proposal_sent','won','lost') NOT NULL DEFAULT 'new',
+	`adminNotes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `budget_quotes_id` PRIMARY KEY(`id`)
+);
