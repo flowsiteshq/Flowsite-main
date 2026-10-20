@@ -75,6 +75,52 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      // Mobile startup recovery: never leave visitors with a blank page.
+      (function () {
+        var bootError = "";
+        window.addEventListener("error", function (event) {
+          bootError = event.message || "A website resource could not load";
+        });
+        window.addEventListener("unhandledrejection", function (event) {
+          bootError = (event.reason && event.reason.message) || "An application request failed";
+        });
+        window.setTimeout(function () {
+          var root = document.getElementById("root");
+          if (!root || root.children.length > 0 || root.textContent.trim()) return;
+          var fallback = document.createElement("div");
+          fallback.setAttribute("role", "alert");
+          fallback.style.cssText = "box-sizing:border-box;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;background:#f8faff;color:#0f172a;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;text-align:center";
+          var panel = document.createElement("div");
+          panel.style.cssText = "max-width:420px";
+          var title = document.createElement("h1");
+          title.textContent = "Flow Sites";
+          title.style.cssText = "font-size:30px;margin:0 0 16px";
+          var message = document.createElement("p");
+          message.textContent = "We're having trouble loading this page. Please refresh or contact our team.";
+          message.style.cssText = "font-size:16px;line-height:1.6";
+          var retry = document.createElement("button");
+          retry.textContent = "Reload website";
+          retry.style.cssText = "background:#2563eb;color:white;border:0;border-radius:12px;padding:14px 22px;font-size:16px;margin:12px;cursor:pointer";
+          retry.onclick = function () { window.location.reload(); };
+          var contact = document.createElement("p");
+          contact.style.cssText = "font-size:14px";
+          var link = document.createElement("a");
+          link.href = "mailto:help@flow-sites.com";
+          link.textContent = "help@flow-sites.com";
+          contact.appendChild(link);
+          panel.appendChild(title); panel.appendChild(message); panel.appendChild(retry); panel.appendChild(contact);
+          if (bootError) {
+            var details = document.createElement("small");
+            details.textContent = "Diagnostic: " + bootError.slice(0, 180);
+            details.style.cssText = "display:block;margin-top:20px;color:#64748b;overflow-wrap:anywhere";
+            panel.appendChild(details);
+          }
+          fallback.appendChild(panel);
+          root.appendChild(fallback);
+        }, 10000);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <script
       defer
