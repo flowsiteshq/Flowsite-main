@@ -43,7 +43,12 @@ const trpcClient = trpc.createClient({
       url: "/api/trpc",
       transformer: superjson,
       headers() {
-        const adminToken = localStorage.getItem("admin_session_token");
+        let adminToken: string | null = null;
+        try {
+          adminToken = window.localStorage.getItem("admin_session_token");
+        } catch {
+          // Safari private browsing or restricted storage must not block app startup.
+        }
         return adminToken ? { "x-admin-token": adminToken } : {};
       },
       fetch(input, init) {
