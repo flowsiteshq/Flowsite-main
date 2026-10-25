@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 
-const LOGO_URL = "/flowsites-logo.png";
+const LOGO_URL = "/flowsites-logo-transparent.png";
 
 function GoogleIcon() {
   return (

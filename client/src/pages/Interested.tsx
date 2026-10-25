@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { CheckCircle2, ArrowRight, Zap, Target, BarChart3, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 
-const LOGO_URL = "/flowsites-logo.png";
+const LOGO_URL = "/flowsites-logo-transparent.png";
 
 const benefits = [
   {

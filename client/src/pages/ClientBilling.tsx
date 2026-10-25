@@ -5,12 +5,12 @@ import { getLoginUrl } from "@/const";
 import { toast } from "sonner";
 import {
   LayoutDashboard, BarChart2, Gauge, Search, Users, Image, FileText,
-  BookOpen, CreditCard, Receipt, Globe, Settings, LogIn, Building2,
+  BookOpen, CreditCard, Receipt, Globe, Settings, ArrowLeft, ArrowRight,
   AlertTriangle, Bell, ExternalLink, RefreshCw, Monitor, Smartphone,
   TrendingUp, TrendingDown, Shield, CheckCircle,
   MessageSquare, Upload, Trash2, Eye, DollarSign, ChevronRight,
   ArrowUpRight, Wifi, Lock, HardDrive, Activity, Headphones, BookMarked,
-  Sparkles,
+  Sparkles, EyeOff, Loader2,
 } from "lucide-react";
 import {
   PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area,
@@ -223,6 +223,182 @@ function SnippetBox({ token }: { token: string }) {
   );
 }
 
+function PortalPreview() {
+  return (
+    <div aria-hidden="true" className="relative mx-auto mt-10 hidden w-full max-w-[47rem] select-none lg:block">
+      <div className="absolute -inset-8 rounded-[3rem] bg-blue-500/15 blur-3xl" />
+      <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.96] p-3 shadow-[0_30px_90px_rgba(0,0,0,0.45)]">
+        <div className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
+          <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+          <div className="ml-3 h-5 flex-1 rounded-md bg-white" />
+          <span className="rounded-md bg-blue-50 px-2 py-1 text-[8px] font-bold uppercase tracking-wider text-blue-600">Portal preview</span>
+        </div>
+        <div className="grid grid-cols-[8.5rem_1fr] gap-3 pt-3">
+          <aside className="rounded-2xl bg-[#06152e] p-3 text-white">
+            <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+              <img src="/flowsites-logo-transparent.png" alt="" className="h-6 w-auto" />
+              <span className="text-xs font-bold">FlowSites</span>
+            </div>
+            <div className="mt-4 space-y-1.5 text-[9px] font-medium text-blue-100">
+              {[
+                [LayoutDashboard, "Overview"],
+                [Globe, "Website"],
+                [Users, "Leads"],
+                [CreditCard, "Billing"],
+              ].map(([Icon, label], index) => {
+                const PreviewIcon = Icon as typeof LayoutDashboard;
+                return <div key={String(label)} className={`flex items-center gap-2 rounded-lg px-2 py-2 ${index === 0 ? "bg-blue-500 text-white" : ""}`}><PreviewIcon size={11} />{label as string}</div>;
+              })}
+            </div>
+          </aside>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <div className="flex items-center justify-between">
+              <div><p className="text-[9px] font-semibold text-slate-400">CLIENT PORTAL</p><p className="mt-1 text-sm font-black tracking-tight text-slate-900">Your business, in view.</p></div>
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">FS</div>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {[
+                [Activity, "Website", "Online", "text-emerald-600"],
+                [Users, "Leads", "Managed", "text-blue-600"],
+                [CreditCard, "Billing", "Available", "text-violet-600"],
+              ].map(([Icon, label, value, color]) => {
+                const PreviewIcon = Icon as typeof Activity;
+                return <div key={String(label)} className="rounded-xl border border-slate-100 bg-white p-2.5"><PreviewIcon size={13} className={color as string} /><p className="mt-2 text-[9px] font-semibold text-slate-400">{label as string}</p><p className={`mt-0.5 text-[10px] font-bold ${color as string}`}>{value as string}</p></div>;
+              })}
+            </div>
+            <div className="mt-3 grid grid-cols-[1.25fr_0.75fr] gap-3">
+              <div className="rounded-xl border border-slate-100 bg-white p-3"><p className="text-[9px] font-bold text-slate-700">Website activity</p><div className="mt-5 flex h-12 items-end gap-1"><span className="h-3 flex-1 rounded-t bg-blue-100" /><span className="h-6 flex-1 rounded-t bg-blue-200" /><span className="h-4 flex-1 rounded-t bg-blue-300" /><span className="h-9 flex-1 rounded-t bg-blue-400" /><span className="h-7 flex-1 rounded-t bg-blue-500" /><span className="h-11 flex-1 rounded-t bg-blue-600" /></div></div>
+              <div className="rounded-xl border border-slate-100 bg-white p-3"><p className="text-[9px] font-bold text-slate-700">Quick access</p><div className="mt-3 space-y-2"><span className="block h-2 rounded bg-slate-100" /><span className="block h-2 w-4/5 rounded bg-slate-100" /><span className="block h-2 w-3/5 rounded bg-slate-100" /></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClientPortalSignIn() {
+  const [mode, setMode] = useState<"login" | "create" | "forgot">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [requestSent, setRequestSent] = useState(false);
+
+  const startGoogleSignIn = () => {
+    window.location.href = getLoginUrl("/client-portal");
+  };
+
+  const passwordLogin = trpc.clientPortalAuth.login.useMutation({
+    onSuccess: () => {
+      toast.success("Welcome back. Opening your client portal.");
+      window.location.assign("/client-portal");
+    },
+    onError: () => toast.error("Invalid email or password."),
+  });
+
+  const requestSetup = trpc.clientPortalAuth.requestPasswordSetup.useMutation({
+    onSuccess: () => setRequestSent(true),
+    onError: () => toast.error("We could not process that request. Please try again."),
+  });
+
+  const requestReset = trpc.clientPortalAuth.forgotPassword.useMutation({
+    onSuccess: () => setRequestSent(true),
+    onError: () => toast.error("We could not process that request. Please try again."),
+  });
+
+  const resetAccessForm = (nextMode: "login" | "create" | "forgot") => {
+    setMode(nextMode);
+    setPassword("");
+    setRequestSent(false);
+  };
+
+  const handlePasswordLogin = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!email.trim() || !password) return;
+    passwordLogin.mutate({ email: email.trim().toLowerCase(), password });
+  };
+
+  const handleAccessRequest = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!email.trim()) return;
+    const input = { email: email.trim().toLowerCase(), origin: window.location.origin };
+    if (mode === "create") requestSetup.mutate(input);
+    if (mode === "forgot") requestReset.mutate(input);
+  };
+
+  const isSubmitting = passwordLogin.isPending || requestSetup.isPending || requestReset.isPending;
+
+  return (
+    <div className="min-h-screen bg-[#eef6ff] text-slate-950 lg:grid lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="relative isolate overflow-hidden bg-[#020815] px-6 py-6 text-white sm:px-10 sm:py-8 lg:flex lg:min-h-screen lg:flex-col lg:px-16 lg:py-12 xl:px-20">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_14%,rgba(37,99,235,0.46),transparent_28%),radial-gradient(circle_at_12%_85%,rgba(14,165,233,0.25),transparent_32%)]" />
+        <div className="pointer-events-none absolute -right-32 top-1/4 -z-10 h-[28rem] w-[28rem] rounded-full border border-blue-300/15" />
+        <div className="pointer-events-none absolute -right-10 top-[31%] -z-10 h-[18rem] w-[18rem] rounded-full border border-blue-300/10" />
+        <a href="/" className="inline-flex w-fit items-center gap-2 transition hover:text-blue-200 focus:outline-none focus:ring-4 focus:ring-blue-300/40"><img src="/flowsites-logo-transparent.png" alt="FlowSites" className="h-10 w-auto sm:h-11" /><span className="text-xl font-black tracking-tight">FlowSites</span></a>
+        <div className="mt-10 max-w-2xl lg:mt-auto">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-blue-300">Client portal</p>
+          <h1 className="mt-4 max-w-xl text-4xl font-black leading-[0.93] tracking-[-0.06em] sm:mt-5 sm:text-6xl xl:text-7xl">Your business.<br /><span className="bg-gradient-to-r from-blue-300 to-sky-400 bg-clip-text text-transparent">All in one place.</span></h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-slate-300 sm:mt-6 sm:text-lg">Access your website, client requests, invoices, and account details in one secure FlowSites workspace.</p>
+          <div className="mt-9 hidden max-w-2xl gap-3 sm:grid sm:grid-cols-3">
+            {[
+              [Globe, "Website", "A clear view of your digital presence"],
+              [MessageSquare, "Requests", "Keep project details within reach"],
+              [CreditCard, "Billing", "Review invoices when you need to"],
+            ].map(([Icon, title, copy]) => {
+              const FeatureIcon = Icon as typeof Globe;
+              return <div key={String(title)} className="rounded-2xl border border-white/10 bg-white/[0.07] p-4 backdrop-blur-sm"><span className="flex h-9 w-9 items-center justify-center rounded-xl border border-blue-300/20 bg-blue-400/15 text-blue-200"><FeatureIcon size={17} /></span><p className="mt-4 text-sm font-bold text-white">{title as string}</p><p className="mt-1 text-xs leading-5 text-slate-300">{copy as string}</p></div>;
+            })}
+          </div>
+          <p className="mt-6 text-xs font-semibold tracking-wide text-blue-100 sm:hidden">Website management <span className="mx-1.5 text-blue-400">·</span> Client requests <span className="mx-1.5 text-blue-400">·</span> Billing</p>
+          <PortalPreview />
+        </div>
+        <p className="mt-10 hidden text-xs text-slate-400 lg:mt-auto lg:block">Secure access for FlowSites clients.</p>
+      </section>
+
+      <section className="relative flex min-h-[42rem] items-center justify-center overflow-hidden px-5 py-10 sm:px-10 lg:min-h-screen lg:px-14">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_92%_3%,rgba(37,99,235,0.25),transparent_25%),radial-gradient(circle_at_10%_94%,rgba(125,211,252,0.3),transparent_30%)]" />
+        <a href="/" className="absolute right-6 top-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 sm:right-10 sm:top-10"><ArrowLeft size={16} />Back to website</a>
+        <div className="relative w-full max-w-[31rem] rounded-[2rem] border border-white/80 bg-white/85 p-7 shadow-[0_28px_80px_rgba(30,64,175,0.16)] backdrop-blur-xl sm:p-10">
+          <div className="flex items-center gap-3"><img src="/flowsites-logo-transparent.png" alt="FlowSites" className="h-10 w-auto" /><span className="text-lg font-black tracking-tight text-slate-950">FlowSites</span></div>
+          <p className="mt-10 text-xs font-bold uppercase tracking-[0.28em] text-blue-600">Client portal</p>
+          <h2 className="mt-4 text-4xl font-black leading-none tracking-[-0.055em] text-slate-950 sm:text-5xl">{mode === "login" ? "Welcome back." : mode === "create" ? "Create your access." : "Reset your password."}</h2>
+          <p className="mt-4 max-w-sm text-base leading-7 text-slate-600">{mode === "login" ? "Sign in with your email and password, or use your connected Google account." : mode === "create" ? "Enter the email on your FlowSites project and we’ll send a secure link to create your password." : "Enter your client email and we’ll send a secure password-reset link if an account is available."}</p>
+
+          {mode === "login" ? (
+            <form className="mt-8 space-y-4" onSubmit={handlePasswordLogin}>
+              <div>
+                <label htmlFor="client-portal-email" className="mb-1.5 block text-sm font-bold text-slate-800">Email address</label>
+                <input id="client-portal-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@yourbusiness.com" className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+              </div>
+              <div>
+                <div className="mb-1.5 flex items-center justify-between"><label htmlFor="client-portal-password" className="text-sm font-bold text-slate-800">Password</label><button type="button" onClick={() => resetAccessForm("forgot")} className="text-xs font-bold text-blue-700 hover:text-blue-900 hover:underline">Forgot password?</button></div>
+                <div className="relative"><input id="client-portal-password" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter your password" className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100" /><button type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword((visible) => !visible)} className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-slate-400 transition hover:text-blue-700">{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></div>
+              </div>
+              <button type="submit" disabled={isSubmitting || !email || !password} className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-3 text-sm font-bold text-white shadow-[0_12px_26px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(37,99,235,0.3)] focus:outline-none focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-60">{passwordLogin.isPending ? <><Loader2 size={17} className="animate-spin" />Signing in…</> : <>Sign in to portal<ArrowRight size={17} /></>}</button>
+            </form>
+          ) : requestSent ? (
+            <div className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/80 p-5"><p className="flex items-center gap-2 text-sm font-bold text-emerald-900"><CheckCircle size={17} className="text-emerald-600" />Check your email</p><p className="mt-2 text-sm leading-6 text-emerald-800">If the address is associated with a FlowSites client project, a secure link has been sent. Please use it to {mode === "create" ? "create your password" : "reset your password"}.</p><button type="button" onClick={() => resetAccessForm("login")} className="mt-4 text-sm font-bold text-blue-700 hover:underline">Back to sign in</button></div>
+          ) : (
+            <form className="mt-8 space-y-4" onSubmit={handleAccessRequest}>
+              <div><label htmlFor="client-portal-request-email" className="mb-1.5 block text-sm font-bold text-slate-800">Client email address</label><input id="client-portal-request-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@yourbusiness.com" className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100" /></div>
+              <button type="submit" disabled={isSubmitting || !email} className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-3 text-sm font-bold text-white shadow-[0_12px_26px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(37,99,235,0.3)] focus:outline-none focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-60">{isSubmitting ? <><Loader2 size={17} className="animate-spin" />Sending secure link…</> : <>{mode === "create" ? "Email password setup link" : "Email reset link"}<ArrowRight size={17} /></>}</button>
+              <p className="text-xs leading-5 text-slate-500">For security, access is created only for an email already assigned to a FlowSites client project.</p>
+              <button type="button" onClick={() => resetAccessForm("login")} className="w-full text-sm font-bold text-blue-700 hover:text-blue-900 hover:underline">I already have a password</button>
+            </form>
+          )}
+
+          {mode === "login" && <><div className="mt-6 flex items-center gap-3"><span className="h-px flex-1 bg-slate-200" /><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">or continue with</span><span className="h-px flex-1 bg-slate-200" /></div><button type="button" onClick={startGoogleSignIn} className="mt-5 inline-flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-5 text-sm font-bold text-slate-800 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-200 active:translate-y-0 active:scale-[0.98]"><span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-lg font-black text-[#4285F4] shadow-sm">G</span>Continue with Google<ArrowRight size={17} className="text-blue-600" /></button><p className="mt-6 text-center text-sm leading-6 text-slate-500">New to the portal? <button type="button" onClick={() => resetAccessForm("create")} className="font-bold text-blue-700 underline-offset-4 hover:underline">Create your password access</button>.</p></>}
+
+          <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/70 p-4"><p className="flex items-center gap-2 text-sm font-bold text-slate-800"><Shield size={16} className="text-blue-600" />Your account stays protected</p><p className="mt-1.5 text-xs leading-5 text-slate-600">Use your FlowSites project email and password, or the Google account connected to your client account. Password setup and reset links are time-limited.</p></div>
+          <p className="mt-6 text-center text-sm leading-6 text-slate-500">Need client portal access? <a href="mailto:hello@flow-sites.com?subject=Client%20Portal%20Access" className="font-bold text-blue-700 underline-offset-4 hover:underline">Contact the FlowSites team</a>.</p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export default function ClientBilling() {
   const { user, loading, isAuthenticated } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
@@ -326,22 +502,7 @@ export default function ClientBilling() {
     );
   }
   if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-3xl shadow-2xl shadow-indigo-100 max-w-md w-full text-center p-10 border border-gray-100">
-          <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Building2 className="w-8 h-8 text-white" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Client Portal</h2>
-          <p className="text-gray-500 mb-8">Sign in to access your website dashboard, analytics, invoices, and more.</p>
-          <button
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-lg shadow-indigo-200"
-            onClick={() => { window.location.href = getLoginUrl(); }}>
-            <LogIn className="w-4 h-4 mr-2 inline" /> Sign In
-          </button>
-        </div>
-      </div>
-    );
+    return <ClientPortalSignIn />;
   }
   if (!account) {
     return (

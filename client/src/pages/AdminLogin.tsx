@@ -101,7 +101,7 @@ export default function AdminLogin() {
         {/* Top — Logo */}
         <div className="relative z-10 p-10">
           <img
-            src="/flowsites-logo.png"
+            src="/flowsites-logo-transparent.png"
             alt="FlowSites"
             className="h-9 w-auto object-contain"
           />
@@ -161,7 +161,7 @@ export default function AdminLogin() {
           {/* Mobile logo */}
           <div className="lg:hidden mb-8">
             <img
-              src="/flowsites-logo.png"
+              src="/flowsites-logo-transparent.png"
               alt="FlowSites"
               className="h-8 w-auto object-contain"
             />

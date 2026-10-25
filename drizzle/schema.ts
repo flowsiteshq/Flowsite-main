@@ -518,6 +518,53 @@ export type ClientMedia = typeof clientMedia.$inferSelect;
 export type InsertClientMedia = typeof clientMedia.$inferInsert;
 
 /**
+ * AI Video Studio Orders — production-service orders kept separate from website
+ * packages and billing so video work has its own approval and delivery trail.
+ */
+export const videoOrders = mysqlTable("video_orders", {
+  id: int("id").autoincrement().primaryKey(),
+  orderNumber: varchar("orderNumber", { length: 32 }).notNull().unique(),
+  clientName: varchar("clientName", { length: 255 }).notNull(),
+  businessName: varchar("businessName", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 50 }),
+  packageId: mysqlEnum("packageId", ["social_spark", "business_spotlight", "cinematic_pro"]).notNull(),
+  amountCents: int("amountCents").notNull(),
+  businessDescription: text("businessDescription").notNull(),
+  videoGoal: text("videoGoal"),
+  callToAction: varchar("callToAction", { length: 255 }),
+  requestedAspectRatio: mysqlEnum("requestedAspectRatio", ["landscape", "portrait"]).default("landscape").notNull(),
+  uploadToken: varchar("uploadToken", { length: 96 }).notNull().unique(),
+  stripeCheckoutSessionId: varchar("stripeCheckoutSessionId", { length: 255 }),
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  status: mysqlEnum("status", ["pending_payment", "paid", "in_production", "review", "revision_requested", "delivered", "cancelled"]).default("pending_payment").notNull(),
+  adminNotes: text("adminNotes"),
+  revisionNotes: text("revisionNotes"),
+  previewUrl: varchar("previewUrl", { length: 1000 }),
+  deliveryUrl: varchar("deliveryUrl", { length: 1000 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type VideoOrder = typeof videoOrders.$inferSelect;
+export type InsertVideoOrder = typeof videoOrders.$inferInsert;
+
+/** Brand assets customers upload to guide a Video Studio production. */
+export const videoOrderAssets = mysqlTable("video_order_assets", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull(),
+  fileKey: varchar("fileKey", { length: 500 }).notNull(),
+  fileUrl: varchar("fileUrl", { length: 1000 }).notNull(),
+  fileName: varchar("fileName", { length: 255 }).notNull(),
+  mimeType: varchar("mimeType", { length: 100 }).notNull(),
+  fileSizeBytes: int("fileSizeBytes").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type VideoOrderAsset = typeof videoOrderAssets.$inferSelect;
+export type InsertVideoOrderAsset = typeof videoOrderAssets.$inferInsert;
+
+/**
  * Technicians — sales reps / staff invited by the admin to use the platform
  * They can view their own assigned clients and commission earnings.
  */

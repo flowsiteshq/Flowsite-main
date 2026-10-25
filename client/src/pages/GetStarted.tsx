@@ -167,7 +167,7 @@ export default function GetStarted() {
       <header className="h-16 border-b border-[oklch(0.88_0.005_260)] bg-white flex items-center px-6 justify-between shrink-0">
         <Link href="/">
           <img
-            src="/flowsites-logo.png"
+            src="/flowsites-logo-transparent.png"
             alt="FlowSites"
             className="h-14 w-auto"
           />

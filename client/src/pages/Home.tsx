@@ -1,653 +1,293 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "wouter";
-import { leadCaptureHref } from "@/lib/leadCapture";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "wouter";
 import {
   ArrowRight,
-  Sparkles,
-  Scissors,
-  Dumbbell,
-  Shield,
-  Stethoscope,
-  Brain,
-  Home as HomeIcon,
-  DollarSign,
-  MoreHorizontal,
+  Bot,
+  Check,
+  CheckCircle2,
+  Clock3,
+  ExternalLink,
+  Film,
+  Globe2,
+  Loader2,
+  MessageSquareText,
+  MousePointerClick,
+  Pause,
+  Play,
+  ShieldCheck,
   ShoppingCart,
-  Users,
-  MessageSquare,
-  CalendarCheck,
-  Heart,
-  TrendingUp,
-  ChevronRight,
-  Search,
-  Send,
-  Bell,
-  BarChart3,
-  Settings,
-  Zap,
+  Sparkles,
+  Smartphone,
+  WandSparkles,
 } from "lucide-react";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
+import { leadCaptureHref } from "@/lib/leadCapture";
+import { useSEO } from "@/hooks/useSEO";
 
-// ─── Avatar stack component ───────────────────────────────────────────────────
-const AVATAR_PHOTOS = [
-  "/avatars/avatar1.jpg",
-  "/avatars/avatar2.jpg",
-  "/avatars/avatar3.jpg",
-  "/avatars/avatar4.jpg",
-  "/avatars/avatar5.jpg",
-];
-function AvatarStack() {
-  return (
-    <div className="flex items-center gap-3">
-      <div className="flex -space-x-2">
-        {AVATAR_PHOTOS.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt="Business owner"
-            className="w-9 h-9 rounded-full border-2 border-white object-cover object-top"
-            style={{ zIndex: 5 - i }}
-          />
-        ))}
-      </div>
-      <span className="text-sm text-gray-500">
-        Trusted by <span className="text-gray-900 font-semibold">5,000+</span> businesses
-      </span>
-    </div>
-  );
-}
+const HERO_VISUAL = "/flowsites-cinematic-hero.webp";
+const SERVICE_VISUALS = {
+  websites: "/flowsites-service-websites.webp",
+  automation: "/flowsites-service-automation.webp",
+  video: "/flowsites-service-video.webp",
+} as const;
 
-// ─── Prompt quick actions ─────────────────────────────────────────────────────
-const quickActions = [
-  { icon: Users, label: "Get more leads" },
-  { icon: CalendarCheck, label: "Book more appointments" },
-  { icon: DollarSign, label: "Collect payments" },
-  { icon: Zap, label: "Run a promotion" },
-  { icon: BarChart3, label: "Analyze my business" },
-];
-
-// ─── Industries ───────────────────────────────────────────────────────────────
-const industries = [
-  { icon: Scissors, label: "Hair Salons" },
-  { icon: Scissors, label: "Stitched /\nEmbroidery" },
-  { icon: Dumbbell, label: "Gyms &\nFitness" },
-  { icon: Shield, label: "Martial Arts" },
-  { icon: Stethoscope, label: "Dental\nOffices" },
-  { icon: Brain, label: "Counseling &\nWellness" },
-  { icon: HomeIcon, label: "Home\nServices" },
-  { icon: DollarSign, label: "Financial\nServices" },
-  { icon: ShoppingCart, label: "E-Commerce" },
-  { icon: MoreHorizontal, label: "More\nIndustries" },
-];
-
-// ─── How it works steps ───────────────────────────────────────────────────────
-const steps = [
+const packages = [
   {
-    number: "1",
-    title: "Capture",
-    description: "Get more leads from your website, ads, forms, and every channel.",
-    color: "#818cf8",
+    id: "starter",
+    name: "Starter",
+    price: "$499",
+    description: "A polished foundation for a growing local business.",
+    features: ["1–3-page website", "Mobile optimization", "Contact form", "Basic SEO setup"],
+    popular: false,
   },
   {
-    number: "2",
-    title: "Engage",
-    description: "AI responds instantly, qualifies leads, and keeps them interested.",
-    color: "#60a5fa",
+    id: "growth",
+    name: "Growth",
+    price: "$799",
+    description: "More room to explain your offer and turn visitors into inquiries.",
+    features: ["Up to 5 pages", "Mobile optimization", "Online booking integration", "Lead capture", "Automated email acknowledgment"],
+    popular: true,
   },
   {
-    number: "3",
-    title: "Convert",
-    description: "Book appointments, collect payments, and close more sales.",
-    color: "#4ade80",
+    id: "ai-business",
+    name: "AI Business",
+    price: "$1,499",
+    description: "A streamlined website and practical automation for follow-up.",
+    features: ["Everything in Growth", "AI chatbot configuration", "CRM integration", "Basic customer follow-up automation"],
+    popular: false,
+  },
+] as const;
+
+const projects = [
+  {
+    name: "MyDojo Martial Arts",
+    subtitle: "Website · Booking · Enrollment system",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663031545745/VvLvZnpjR27EmYwxaK3mTG/mydojo-hero_ba21ac04.png",
+    imageClassName: "object-top",
+    alt: "MyDojo Martial Arts website preview",
+    href: "/case-study/mydojo",
   },
   {
-    number: "4",
-    title: "Delight",
-    description: "Deliver amazing service and build customers for life.",
-    color: "#fbbf24",
+    name: "DojoFlow",
+    subtitle: "Product preview · Operations platform",
+    image: "/dojoflow-platform-preview.webp",
+    imageClassName: "object-[center_58%]",
+    alt: "DojoFlow platform preview shown across desktop and mobile devices",
+    href: "/case-study/dojoflow",
   },
   {
-    number: "5",
-    title: "Grow",
-    description: "Automate marketing, get reviews, referrals, and repeat business.",
-    color: "#818cf8",
+    name: "Zolamind Counseling",
+    subtitle: "Website · Booking · CRM integration",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310419663031545745/VvLvZnpjR27EmYwxaK3mTG/zolamind-hero_fbe3d3b0.png",
+    imageClassName: "object-top",
+    alt: "Zolamind Counseling website preview",
+    href: "/case-study/zolamind",
   },
-];
+] as const;
 
-// ─── Dashboard mockup data ────────────────────────────────────────────────────
-const dashboardStats = [
-  { label: "New Leads", value: "32", change: "+28%", positive: true },
-  { label: "Appointments", value: "18", change: "+22%", positive: true },
-  { label: "Revenue", value: "$7,842", change: "+36%", positive: true },
-  { label: "Customers", value: "412", change: "+19%", positive: true },
-];
+const videoStudioPreviews = [
+  { label: "Automotive", src: "/video-studio/automotive-showcase.mp4", poster: "/video-studio/automotive-poster.jpg" },
+  { label: "Restaurant", src: "/video-studio/restaurant-showcase.mp4", poster: "/video-studio/restaurant-poster.jpg" },
+  { label: "Professional services", src: "/video-studio/professional-services-showcase.mp4", poster: "/video-studio/professional-services-poster.jpg" },
+] as const;
 
-const upcomingAppointments = [
-  { time: "9:00 AM", name: "Haircut — Sarah J." },
-  { time: "10:30 AM", name: "Personal Training — Mike" },
-  { time: "12:00 PM", name: "Embroidery Pickup — Anna" },
-  { time: "2:00 PM", name: "Dental Cleaning — John D." },
-  { time: "4:00 PM", name: "Kickboxing Class — Kids" },
-];
+type ReviewForm = {
+  businessName: string;
+  website: string;
+  email: string;
+  phone: string;
+  improvement: string;
+};
 
-const sidebarItems = [
-  { icon: BarChart3, label: "Dashboard", active: true },
-  { icon: Users, label: "Leads" },
-  { icon: MessageSquare, label: "Conversations" },
-  { icon: CalendarCheck, label: "Appointments" },
-  { icon: Heart, label: "Customers" },
-  { icon: DollarSign, label: "Payments" },
-  { icon: TrendingUp, label: "Marketing" },
-  { icon: BarChart3, label: "Reports" },
-  { icon: Sparkles, label: "AI Assistant" },
-  { icon: Settings, label: "Settings" },
-];
+type VideoPreview = (typeof videoStudioPreviews)[number];
 
-// ─── Mini sparkline chart ─────────────────────────────────────────────────────
-function Sparkline() {
-  const points = [1200, 2100, 1800, 3200, 2800, 4100, 5200, 4800, 6100, 7842];
-  const max = Math.max(...points);
-  const min = Math.min(...points);
-  const w = 260, h = 80;
-  const coords = points.map((v, i) => {
-    const x = (i / (points.length - 1)) * w;
-    const y = h - ((v - min) / (max - min)) * h * 0.85 - 5;
-    return `${x},${y}`;
-  });
-  const pathD = `M ${coords.join(" L ")}`;
-  const areaD = `M 0,${h} L ${coords.join(" L ")} L ${w},${h} Z`;
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="overflow-visible">
-      <defs>
-        <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#818cf8" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="#818cf8" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={areaD} fill="url(#sparkGrad)" />
-      <path d={pathD} fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      {points.map((v, i) => {
-        const [x, y] = coords[i].split(",").map(Number);
-        return i === points.length - 1 ? (
-          <circle key={i} cx={x} cy={y} r="4" fill="#818cf8" />
-        ) : null;
-      })}
-    </svg>
-  );
-}
-
-// ─── Animated prompt bar ──────────────────────────────────────────────────────
-const prompts = [
-  "What would you like to accomplish today?",
-  "How can I help grow your business?",
-  "Want to capture more leads automatically?",
-  "Ready to automate your follow-ups?",
-];
-
-function AnimatedPromptBar() {
-  const [, navigate] = useLocation();
-  const [idx, setIdx] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [typing, setTyping] = useState(true);
-  const [userInput, setUserInput] = useState("");
-  const [focused, setFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+function useVideoPlaybackPermission() {
+  const [allowHoverPlayback, setAllowHoverPlayback] = useState(false);
 
   useEffect(() => {
-    if (focused) return;
-    const target = prompts[idx];
-    let i = 0;
-    setDisplayed("");
-    setTyping(true);
-    const interval = setInterval(() => {
-      i++;
-      setDisplayed(target.slice(0, i));
-      if (i >= target.length) {
-        clearInterval(interval);
-        setTyping(false);
-        setTimeout(() => {
-          setIdx(prev => (prev + 1) % prompts.length);
-        }, 2500);
-      }
-    }, 40);
-    return () => clearInterval(interval);
-  }, [idx, focused]);
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopQuery = window.matchMedia("(min-width: 768px)");
+    const update = () => setAllowHoverPlayback(!motionQuery.matches && desktopQuery.matches);
+    update();
+    motionQuery.addEventListener("change", update);
+    desktopQuery.addEventListener("change", update);
+    return () => {
+      motionQuery.removeEventListener("change", update);
+      desktopQuery.removeEventListener("change", update);
+    };
+  }, []);
 
-  const handleSubmit = () => {
-    const q = userInput.trim() || displayed;
-    navigate(leadCaptureHref({ prompt: q }));
+  return allowHoverPlayback;
+}
+
+function VideoPreviewCard({ item, compact = false }: { item: VideoPreview; compact?: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const allowHoverPlayback = useVideoPlaybackPermission();
+
+  const stop = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0;
+    setPlaying(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") handleSubmit();
+  const play = async () => {
+    if (!videoRef.current) return;
+    try {
+      await videoRef.current.play();
+      setPlaying(true);
+    } catch {
+      setPlaying(false);
+    }
+  };
+
+  const toggle = async () => {
+    if (playing) stop();
+    else await play();
   };
 
   return (
-    <div
-      className="relative w-full max-w-2xl mx-auto"
-      style={{
-        background: "#fff",
-        border: focused ? "1px solid #3b82f6" : "1px solid #e2e8f0",
-        borderRadius: "9999px",
-        padding: "14px 20px",
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        transition: "border-color 0.2s",
-        cursor: "text",
-        boxShadow: focused ? "0 0 0 3px rgba(59,130,246,0.12)" : "0 2px 12px rgba(0,0,0,0.06)",
-      }}
-      onClick={() => { setFocused(true); inputRef.current?.focus(); }}
+    <article
+      className={`group relative overflow-hidden bg-slate-950 ${compact ? "rounded-2xl" : "rounded-[1.75rem] border border-white/10 shadow-[0_28px_70px_rgba(0,0,0,0.4)]"}`}
+      onMouseEnter={() => { if (allowHoverPlayback) void play(); }}
+      onMouseLeave={stop}
     >
-      <Sparkles size={18} style={{ color: "#3b82f6", flexShrink: 0 }} />
-      {focused || userInput ? (
-        <input
-          ref={inputRef}
-          type="text"
-          value={userInput}
-          onChange={e => setUserInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => setFocused(true)}
-          onBlur={() => { if (!userInput) setFocused(false); }}
-          placeholder="What would you like to accomplish today?"
-          autoFocus
-          className="flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder-gray-400"
-        />
-      ) : (
-        <span className="flex-1 text-sm text-gray-400 text-left cursor-text">
-          {displayed}
-          {typing && <span className="inline-block w-0.5 h-4 bg-blue-400 ml-0.5 animate-pulse align-middle" />}
-        </span>
-      )}
-      <button
-        onClick={e => { e.stopPropagation(); handleSubmit(); }}
-        className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 hover:scale-105 transition-transform"
-        style={{ background: "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)" }}
-      >
-        <Send size={14} className="text-white" style={{ transform: "translateX(1px)" }} />
-      </button>
-    </div>
+      <video
+        ref={videoRef}
+        src={item.src}
+        poster={item.poster}
+        muted
+        loop
+        playsInline
+        preload={allowHoverPlayback ? "metadata" : "none"}
+        className={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.045] ${compact ? "aspect-[16/10]" : "aspect-video"}`}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,rgba(2,6,23,0.86)_100%)]" />
+      <div className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 ${compact ? "p-3" : "p-5 sm:p-6"}`}>
+        <div>
+          {!compact && <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-200">Original demonstration concept</p>}
+          <p className={`${compact ? "text-xs" : "text-lg"} font-extrabold tracking-tight text-white`}>{item.label}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => void toggle()}
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/15 text-white backdrop-blur transition hover:bg-white hover:text-slate-950 focus:outline-none focus:ring-4 focus:ring-blue-300/50"
+          aria-label={`${playing ? "Pause" : "Play"} ${item.label} video preview`}
+        >
+          {playing ? <Pause size={15} fill="currentColor" /> : <Play size={16} fill="currentColor" className="translate-x-0.5" />}
+        </button>
+      </div>
+    </article>
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+function FreeWebsiteReview() {
+  const [form, setForm] = useState<ReviewForm>({ businessName: "", website: "", email: "", phone: "", improvement: "" });
+  const [submitted, setSubmitted] = useState(false);
+  const submitMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setSubmitted(true);
+      toast.success("Your website review request has been received.");
+    },
+    onError: error => toast.error(error.message || "We could not send your request. Please try again."),
+  });
+
+  const update = (field: keyof ReviewForm, value: string) => setForm(current => ({ ...current, [field]: value }));
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!form.email.trim() && !form.phone.trim()) {
+      toast.error("Enter an email address or phone number so we can reply.");
+      return;
+    }
+    submitMutation.mutate({
+      name: form.businessName,
+      businessName: form.businessName,
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      lookingFor: `Free Website Review — ${form.improvement}${form.website.trim() ? ` | Website: ${form.website.trim()}` : ""}`,
+    });
+  };
+
+  if (submitted) {
+    return <div className="rounded-[1.75rem] border border-blue-300/20 bg-white/10 p-8 text-center text-white backdrop-blur"><CheckCircle2 className="mx-auto h-11 w-11 text-blue-300" /><h3 className="mt-4 text-xl font-extrabold">Review request received</h3><p className="mt-2 text-sm leading-6 text-slate-300">Thank you. A FlowSites team member will review the details you provided and follow up using your preferred contact method.</p></div>;
+  }
+
+  const fieldClass = "mt-1.5 h-11 w-full rounded-xl border border-white/15 bg-white/[0.08] px-3.5 text-sm text-white outline-none placeholder:text-slate-500 transition focus:border-blue-300 focus:bg-white/[0.12] focus:ring-4 focus:ring-blue-400/15";
+  return (
+    <form onSubmit={handleSubmit} className="rounded-[1.75rem] border border-white/12 bg-white/[0.06] p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-7">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="sm:col-span-2"><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-100">Business name</span><input required value={form.businessName} onChange={event => update("businessName", event.target.value)} placeholder="Your business name" className={fieldClass} /></label>
+        <label className="sm:col-span-2"><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-100">Website URL</span><input value={form.website} onChange={event => update("website", event.target.value)} placeholder="https://yourwebsite.com" className={fieldClass} /></label>
+        <label><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-100">Email</span><input type="email" value={form.email} onChange={event => update("email", event.target.value)} placeholder="you@business.com" className={fieldClass} /></label>
+        <label><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-100">Phone</span><input type="tel" value={form.phone} onChange={event => update("phone", event.target.value)} placeholder="(555) 123-4567" className={fieldClass} /></label>
+        <label className="sm:col-span-2"><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-100">What needs the most improvement?</span><select required value={form.improvement} onChange={event => update("improvement", event.target.value)} className={`${fieldClass} appearance-none`}><option value="" className="text-slate-900">Select an option</option><option value="A new website" className="text-slate-900">A new website</option><option value="A redesign" className="text-slate-900">A redesign</option><option value="More leads" className="text-slate-900">More leads</option><option value="Online booking" className="text-slate-900">Online booking</option><option value="Customer follow-up" className="text-slate-900">Customer follow-up</option><option value="Not sure yet" className="text-slate-900">Not sure yet</option></select></label>
+      </div>
+      <button type="submit" disabled={submitMutation.isPending} className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-500 px-5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60">{submitMutation.isPending ? <><Loader2 size={16} className="animate-spin" /> Sending request</> : <>Get my free review <ArrowRight size={16} /></>}</button>
+      <p className="mt-3 text-center text-xs leading-5 text-slate-400">Enter an email address or phone number. We use your details only to respond to your request.</p>
+    </form>
+  );
+}
+
+function EditorialServicePanel({ eyebrow, title, copy, image, href, action, icon: Icon }: { eyebrow: string; title: string; copy: string; image: string; href: string; action: string; icon: typeof Globe2 }) {
+  return (
+    <article className="group relative min-h-[30rem] overflow-hidden rounded-[2rem] bg-slate-950 shadow-2xl shadow-blue-950/20">
+      <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]" />
+      <div className="absolute inset-0 bg-[linear-gradient(125deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.68)_48%,rgba(2,6,23,0.10)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+      <div className="relative flex h-full min-h-[30rem] flex-col justify-end p-7 sm:p-8">
+        <div className="mb-auto flex items-center justify-between"><span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-blue-200 backdrop-blur"><Icon size={20} /></span><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-200">{eyebrow}</p></div>
+        <h3 className="max-w-sm text-3xl font-black leading-[0.94] tracking-[-0.045em] text-white sm:text-4xl">{title}</h3>
+        <p className="mt-4 max-w-sm text-sm leading-6 text-slate-200">{copy}</p>
+        <Link href={href} className="mt-7 inline-flex h-11 w-fit items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-4 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950">{action}<ArrowRight size={16} /></Link>
+      </div>
+    </article>
+  );
+}
+
 export default function Home() {
-  const [, navigate] = useLocation();
-  const [activeIndustry, setActiveIndustry] = useState(0);
+  useSEO({
+    title: "FlowSites | Websites, AI Automation & Cinematic Video",
+    description: "FlowSites builds high-performance websites, intelligent AI automation, and cinematic video production for businesses ready to stand apart.",
+    canonical: "/",
+  });
 
   return (
-    <div style={{ background: "#f8faff", color: "#111", fontFamily: "'Inter', sans-serif", overflowX: "hidden" }}>
-
-      {/* ══════════════════════ HERO SECTION ══════════════════════ */}
-      <section
-        className="relative min-h-screen flex flex-col items-center justify-center text-center pt-24 pb-16 px-4"
-        style={{ overflow: "hidden" }}
-      >
-        {/* Glowing orb background */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(59,130,246,0.12) 0%, rgba(6,182,212,0.06) 50%, transparent 80%)",
-          }}
-        />
-        {/* Outer ring glow */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            width: "700px",
-            height: "700px",
-            borderRadius: "50%",
-            border: "1px solid rgba(59,130,246,0.12)",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -35%)",
-            boxShadow: "0 0 120px 40px rgba(59,130,246,0.06)",
-          }}
-        />
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            width: "480px",
-            height: "480px",
-            borderRadius: "50%",
-            border: "1px solid rgba(6,182,212,0.10)",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -35%)",
-          }}
-        />
-
-        {/* Badge */}
-        <div
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-semibold tracking-widest uppercase"
-          style={{
-            background: "rgba(59,130,246,0.10)",
-            border: "1px solid rgba(59,130,246,0.22)",
-            color: "#3b82f6",
-          }}
-        >
-          AI Operating System
-        </div>
-
-        {/* Headline */}
-        <h1
-          className="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6 max-w-4xl"
-          style={{ letterSpacing: "-0.03em", color: "#0f172a" }}
-        >
-          Run your business.<br />
-          <span style={{ background: "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>AI runs the rest.</span>
-        </h1>
-
-        {/* Subheadline */}
-        <p className="text-base sm:text-lg max-w-xl mb-10 leading-relaxed" style={{ color: "#64748b" }}>
-          From lead to loyal customer. Automate follow-ups, collect payments,
-          book appointments, and grow on autopilot.
-        </p>
-
-        {/* Prompt bar */}
-        <div className="w-full max-w-2xl mb-6">
-          <AnimatedPromptBar />
-        </div>
-
-        {/* Quick action pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {quickActions.map((a, i) => (
-            <button
-              key={i}
-              onClick={() => navigate(leadCaptureHref({ intent: a.label }))}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
-              style={{
-                background: "#fff",
-                border: "1px solid #e2e8f0",
-                color: "#475569",
-              }}
-            >
-              <a.icon size={12} style={{ color: "#3b82f6" }} />
-              {a.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Trust bar */}
-        <AvatarStack />
-      </section>
-
-      {/* ══════════════════════ INDUSTRIES SECTION ══════════════════════ */}
-      <section style={{ background: "#fff", padding: "64px 0", borderTop: "1px solid #f1f5f9" }}>
-        <div className="container">
-          <h2
-            className="text-center text-2xl sm:text-3xl font-bold mb-12"
-            style={{ color: "#0f0f0f", letterSpacing: "-0.02em" }}
-          >
-            One platform for every service business
-          </h2>
-          <div className="flex flex-wrap justify-center gap-8">
-            {industries.map((ind, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveIndustry(i)}
-                className="flex flex-col items-center gap-2 group"
-                style={{ minWidth: "72px" }}
-              >
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all"
-                  style={{
-                    background: activeIndustry === i ? "rgba(59,130,246,0.10)" : "#f8faff",
-                    border: activeIndustry === i ? "1px solid rgba(59,130,246,0.3)" : "1px solid #e2e8f0",
-                  }}
-                >
-                  <ind.icon
-                    size={22}
-                    style={{ color: activeIndustry === i ? "#3b82f6" : "#64748b" }}
-                  />
-                </div>
-                <span
-                  className="text-xs font-medium text-center leading-tight whitespace-pre-line"
-                  style={{ color: activeIndustry === i ? "#3b82f6" : "#64748b" }}
-                >
-                  {ind.label}
-                </span>
-                {activeIndustry === i && (
-                  <div className="w-6 h-0.5 rounded-full" style={{ background: "#3b82f6" }} />
-                )}
-              </button>
-            ))}
+    <div className="overflow-hidden bg-white text-slate-950">
+      <section className="relative isolate overflow-hidden bg-[#020814] pt-28 text-white sm:pt-32">
+        <img src={HERO_VISUAL} alt="" className="absolute inset-0 -z-20 h-full w-full object-cover object-[66%_center]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(2,8,20,0.98)_0%,rgba(2,8,20,0.91)_36%,rgba(2,8,20,0.47)_61%,rgba(2,8,20,0.28)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(2,8,20,0.55)_0%,transparent_36%)]" />
+        <div className="container grid min-h-[43rem] items-center gap-12 py-16 lg:grid-cols-[0.78fr_1.22fr] lg:py-24">
+          <div className="max-w-3xl">
+            <p className="inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-400/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-100 backdrop-blur"><Sparkles size={13} /> Websites · AI automation · cinematic video</p>
+            <h1 className="mt-7 text-5xl font-black leading-[0.91] tracking-[-0.065em] text-white sm:text-6xl lg:text-8xl">Your Vision.<br />Engineered <span className="bg-gradient-to-r from-blue-300 via-blue-400 to-sky-300 bg-clip-text text-transparent">Into Reality.</span></h1>
+            <p className="mt-7 max-w-xl text-base leading-7 text-slate-200 sm:text-lg">High-performance websites. Intelligent AI automation. Cinematic video production. Everything your business needs to stand apart.</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row"><a href="#services" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue-500 px-5 text-sm font-bold text-white shadow-[0_14px_38px_rgba(37,99,235,0.42)] transition hover:bg-blue-400 active:scale-[0.98]">Explore our services <ArrowRight size={16} /></a><Link href="/portfolio" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/[0.07] px-5 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950 active:scale-[0.98]"><Play size={15} /> View our work</Link></div>
+            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold text-blue-50/80"><span className="inline-flex items-center gap-2"><Globe2 size={16} className="text-blue-300" />Websites from $499</span><span className="inline-flex items-center gap-2"><Clock3 size={16} className="text-blue-300" />48-hour qualifying delivery</span><span className="inline-flex items-center gap-2"><Bot size={16} className="text-blue-300" />AI-powered automation</span><span className="inline-flex items-center gap-2"><Film size={16} className="text-blue-300" />Cinematic video production</span></div>
           </div>
+          <div className="hidden lg:block" aria-hidden="true" />
         </div>
       </section>
 
-      {/* ══════════════════════ HOW IT WORKS ══════════════════════ */}
-      <section style={{ background: "#f8faff", padding: "80px 0 96px" }}>
-        <div className="container">
-          <h2
-            className="text-center text-2xl sm:text-3xl font-bold mb-16"
-            style={{ color: "#0f0f0f", letterSpacing: "-0.02em" }}
-          >
-            How Flow Sites works for you
-          </h2>
-          <div className="flex flex-col md:flex-row items-stretch gap-0">
-            {steps.map((step, i) => (
-              <div key={i} className="flex md:flex-col items-start md:items-center flex-1">
-                <div
-                  className="flex flex-col md:items-center text-center p-6 rounded-2xl flex-1 w-full"
-                  style={{
-                    border: "1px solid #e2e8f0",
-                    background: "#fff",
-                  }}
-                >
-                  {/* Icon circle */}
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
-                    style={{ background: `${step.color}18`, border: `1px solid ${step.color}30` }}
-                  >
-                    {i === 0 && <Users size={22} style={{ color: step.color }} />}
-                    {i === 1 && <MessageSquare size={22} style={{ color: step.color }} />}
-                    {i === 2 && <CalendarCheck size={22} style={{ color: step.color }} />}
-                    {i === 3 && <Heart size={22} style={{ color: step.color }} />}
-                    {i === 4 && <TrendingUp size={22} style={{ color: step.color }} />}
-                  </div>
-                  <div className="text-sm font-semibold text-gray-400 mb-1">{step.number}. {step.title}</div>
-                  <p className="text-sm text-gray-500 leading-relaxed">{step.description}</p>
-                  <div className="mt-4 h-0.5 w-8 rounded-full mx-auto" style={{ background: step.color }} />
-                </div>
-                {/* Arrow connector */}
-                {i < steps.length - 1 && (
-                  <div className="hidden md:flex items-center justify-center w-8 shrink-0">
-                    <ChevronRight size={18} style={{ color: "#ccc" }} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="border-b border-slate-200 bg-white py-5"><div className="container flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-3"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-600">Built for business</span><span className="hidden h-1 w-1 rounded-full bg-blue-500 sm:block" /><p className="text-sm font-semibold text-slate-800">Professional websites starting at $499. Qualifying sites delivered in 48 hours.</p></div></section>
 
-      {/* ══════════════════════ DASHBOARD MOCKUP ══════════════════════ */}
-      <section className="homepage-light-preview" style={{ padding: "96px 0" }}>
-        <div className="container">
-          <div
-            className="rounded-3xl overflow-hidden"
-          style={{ boxShadow: "0 40px 90px rgba(37,99,235,0.12)" }}
-          >
-            {/* Dashboard top bar */}
-            <div
-              className="flex items-center justify-between px-6 py-4"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: "#818cf8" }}
-                >
-                  <Sparkles size={14} className="text-white" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-white">Good morning, Alex 👋</div>
-                  <div className="text-xs text-white/40">Here's what's happening with your business today.</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div
-                  className="px-3 py-1.5 rounded-lg text-xs text-white/60 flex items-center gap-1"
-                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
-                >
-                  Today, May 15 ▾
-                </div>
-                <div className="relative">
-                  <Bell size={16} className="text-white/50" />
-                  <div className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-red-500 flex items-center justify-center text-[8px] text-white font-bold">3</div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-xs font-bold text-white">A</div>
-              </div>
-            </div>
+      <section id="services" className="scroll-mt-20 bg-[#f7faff] py-20 sm:py-28"><div className="container"><div className="mx-auto max-w-3xl text-center"><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">One creative technology partner</p><h2 className="mt-4 text-4xl font-black leading-[0.95] tracking-[-0.05em] text-slate-950 sm:text-6xl">Built to look extraordinary. Engineered to work harder.</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600">FlowSites brings the public experience, the customer workflow, and the campaign creative together under one considered system.</p></div><div className="mt-12 grid gap-5 lg:grid-cols-3"><EditorialServicePanel eyebrow="01 · Digital presence" title="Website Design & Development" copy="Custom, conversion-minded websites designed around how your customers decide, book, and buy." image={SERVICE_VISUALS.websites} href="/#packages" action="Explore website packages" icon={Globe2} /><EditorialServicePanel eyebrow="02 · Operational edge" title="AI Business Automation" copy="Practical customer follow-up and business workflows that help your team stay responsive without a generic tech stack." image={SERVICE_VISUALS.automation} href="/ai-services" action="Explore AI services" icon={WandSparkles} /><EditorialServicePanel eyebrow="03 · Creative impact" title="AI Video Production" copy="Cinematic promotional concepts, professionally shaped and finished by the FlowSites production team." image={SERVICE_VISUALS.video} href="/ai-video-studio" action="Explore AI Video Studio" icon={Film} /></div></div></section>
 
-            <div className="flex">
-              {/* Sidebar */}
-              <div
-                className="hidden lg:flex flex-col py-4 px-3 gap-1"
-                style={{ width: "180px", borderRight: "1px solid rgba(255,255,255,0.06)", minHeight: "520px" }}
-              >
-                {sidebarItems.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium cursor-pointer"
-                    style={{
-                      background: i === 0 ? "rgba(129,140,248,0.15)" : "transparent",
-                      color: i === 0 ? "#818cf8" : "rgba(255,255,255,0.45)",
-                    }}
-                  >
-                    <item.icon size={14} />
-                    {item.label}
-                  </div>
-                ))}
-              </div>
+      <section className="relative isolate overflow-hidden bg-[#020815] py-20 text-white sm:py-28"><div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.28),transparent_25%),radial-gradient(circle_at_15%_88%,rgba(14,165,233,0.15),transparent_30%)]" /><div className="container"><div className="grid items-end gap-8 lg:grid-cols-[0.82fr_1.18fr]"><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-300">Cinematic · engaging · built for business</p><h2 className="mt-4 text-4xl font-black leading-[0.93] tracking-[-0.055em] sm:text-6xl">AI Video Studio</h2><p className="mt-5 max-w-xl text-base leading-7 text-slate-300">Professional promotional videos powered by AI creativity and finished by our production team. The gallery uses real, playable FlowSites demonstration clips—not static placeholders.</p><ul className="mt-7 grid gap-3 text-sm text-blue-100 sm:grid-cols-2"><li className="flex items-center gap-2"><Check size={16} className="text-blue-300" />Social media ads</li><li className="flex items-center gap-2"><Check size={16} className="text-blue-300" />Business formats</li><li className="flex items-center gap-2"><Check size={16} className="text-blue-300" />Website promos</li><li className="flex items-center gap-2"><Check size={16} className="text-blue-300" />Landscape or portrait delivery</li></ul><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href="/ai-video-studio#video-order" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue-500 px-5 text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400">Order a video <ArrowRight size={16} /></Link><Link href="/ai-video-studio" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.06] px-5 text-sm font-bold text-white transition hover:bg-white hover:text-slate-950">Explore AI Video Studio <ExternalLink size={15} /></Link></div></div><div className="grid gap-4 md:grid-cols-[1.4fr_0.6fr]"><VideoPreviewCard item={videoStudioPreviews[0]} /><div className="grid gap-4">{videoStudioPreviews.slice(1).map(item => <VideoPreviewCard key={item.label} item={item} compact />)}</div></div></div><p className="mt-6 text-xs leading-5 text-slate-400">Original FlowSites demonstration concepts. Playback is muted; mobile and reduced-motion visitors initiate playback themselves.</p></div></section>
 
-              {/* Main content */}
-              <div className="flex-1 p-6">
-                {/* Stats row */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                  {dashboardStats.map((stat, i) => (
-                    <div
-                      key={i}
-                      className="rounded-xl p-4"
-                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                    >
-                      <div className="text-xs text-white/40 mb-1 uppercase tracking-wide">{stat.label}</div>
-                      <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                      <div className="text-xs" style={{ color: "#4ade80" }}>{stat.change} vs yesterday</div>
-                    </div>
-                  ))}
-                </div>
+      <section id="packages" className="scroll-mt-24 bg-white py-20 sm:py-28"><div className="container"><div className="flex flex-col justify-between gap-6 border-b border-slate-200 pb-10 sm:flex-row sm:items-end"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">Simple pricing. Serious results.</p><h2 className="mt-4 text-4xl font-black leading-[0.94] tracking-[-0.05em] text-slate-950 sm:text-6xl">Website packages built for the next move.</h2><p className="mt-5 text-base leading-7 text-slate-600">Professional websites and automation systems with transparent one-time setup pricing.</p></div><div className="inline-flex rounded-xl border border-slate-200 bg-slate-50 p-1 text-xs font-bold"><span className="rounded-lg bg-blue-600 px-3 py-2 text-white">One-time setup</span><span className="px-3 py-2 text-slate-500">Ongoing tools quoted separately</span></div></div><div className="mt-12 grid items-stretch gap-5 lg:grid-cols-3">{packages.map(pkg => <article key={pkg.name} className={`relative flex min-h-[31rem] flex-col rounded-[1.7rem] border p-7 transition hover:-translate-y-1 hover:shadow-xl ${pkg.popular ? "border-blue-500 bg-[linear-gradient(155deg,#f7fbff_0%,#ffffff_72%)] shadow-[0_20px_55px_rgba(37,99,235,0.14)]" : "border-slate-200 bg-white shadow-sm"}`}>{pkg.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">Most popular</span>}<p className="text-2xl font-black tracking-tight text-slate-950">{pkg.name}</p><p className="mt-3 min-h-11 text-sm leading-5 text-slate-600">{pkg.description}</p><div className="mt-7 flex items-end gap-2"><span className="text-5xl font-black tracking-[-0.06em] text-slate-950">{pkg.price}</span><span className="mb-1 text-sm text-slate-500">one-time setup</span></div><ul className="mt-7 flex-1 space-y-3 border-t border-slate-100 pt-6">{pkg.features.map(feature => <li key={feature} className="flex items-start gap-2.5 text-sm leading-5 text-slate-700"><Check size={16} className="mt-0.5 shrink-0 text-blue-600" strokeWidth={3} />{feature}</li>)}</ul><Link href={leadCaptureHref({ intent: `Start the ${pkg.name} package`, packageId: pkg.id })} className={`mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold transition active:scale-[0.98] ${pkg.popular ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700" : "bg-slate-100 text-slate-900 hover:bg-slate-200"}`}>Get started <ArrowRight size={15} /></Link><p className="mt-3 min-h-8 text-center text-[11px] leading-4 text-slate-500">We confirm scope and any ongoing fees before secure checkout.</p></article>)}</div><p className="mx-auto mt-7 max-w-4xl text-center text-xs leading-5 text-slate-500">Prices shown are one-time setup fees. Domain registration, hosting, paid software, CRM, messaging, maintenance, and AI usage are separate unless the final scope says otherwise. Secure checkout is only presented after the selected package, scope, and ongoing costs are confirmed.</p></div></section>
 
-                {/* Bottom panels */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  {/* Revenue chart */}
-                  <div
-                    className="lg:col-span-1 rounded-xl p-4"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="text-xs font-semibold text-white/60">Revenue Overview</div>
-                      <div className="text-xs text-white/30">Last 7 Days ▾</div>
-                    </div>
-                    <div className="text-xl font-bold text-white mb-0.5">$7,842</div>
-                    <div className="text-xs mb-3" style={{ color: "#4ade80" }}>+36% vs last 7 days</div>
-                    <Sparkline />
-                    <div className="flex justify-between mt-2">
-                      {["May 9","May 10","May 11","May 12","May 13","May 14","May 15"].map(d => (
-                        <span key={d} className="text-[9px] text-white/25">{d.replace("May ","")}</span>
-                      ))}
-                    </div>
-                  </div>
+      <section className="bg-[#f7faff] py-20 sm:py-28"><div className="container"><div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">Real businesses. Real projects.</p><h2 className="mt-4 text-4xl font-black tracking-[-0.05em] text-slate-950 sm:text-5xl">Featured work built around a clear customer journey.</h2></div><Link href="/portfolio" className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:border-blue-300 hover:text-blue-700">View more projects <ArrowRight size={15} /></Link></div><div className="mt-12 grid gap-5 md:grid-cols-3">{projects.map(project => <Link key={project.name} href={project.href} className="group overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-950/10"><div className="aspect-[16/10] overflow-hidden bg-slate-100"><img src={project.image} alt={project.alt} className={`h-full w-full object-cover ${project.imageClassName} transition duration-700 group-hover:scale-105`} /></div><div className="p-6"><h3 className="text-xl font-black tracking-tight text-slate-950">{project.name}</h3><p className="mt-2 text-sm text-slate-500">{project.subtitle}</p><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-blue-600">View project <ArrowRight size={14} /></span></div></Link>)}</div></div></section>
 
-                  {/* Upcoming */}
-                  <div
-                    className="rounded-xl p-4"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="text-xs font-semibold text-white/60">Upcoming Today</div>
-                      <span className="text-xs" style={{ color: "#818cf8" }}>View all</span>
-                    </div>
-                    <div className="flex flex-col gap-2.5">
-                      {upcomingAppointments.map((a, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#3b82f6" }} />
-                          <span className="text-xs text-white/40 w-16 shrink-0">{a.time}</span>
-                          <span className="text-xs text-white/70 truncate">{a.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+      <section className="bg-white py-20 sm:py-24"><div className="container grid gap-5 md:grid-cols-3"><article className="rounded-[1.5rem] border border-slate-200 p-7"><MousePointerClick className="h-6 w-6 text-blue-600" /><h3 className="mt-5 text-xl font-black tracking-tight">Purpose before polish</h3><p className="mt-3 text-sm leading-6 text-slate-600">Every visual decision supports the action your customer needs to take: inquire, book, call, or buy.</p></article><article className="rounded-[1.5rem] border border-slate-200 p-7"><ShieldCheck className="h-6 w-6 text-blue-600" /><h3 className="mt-5 text-xl font-black tracking-tight">Scope before surprise costs</h3><p className="mt-3 text-sm leading-6 text-slate-600">The selected package, delivery inputs, and any ongoing tools are reviewed in writing before payment is requested.</p></article><article className="rounded-[1.5rem] border border-slate-200 p-7"><ShoppingCart className="h-6 w-6 text-blue-600" /><h3 className="mt-5 text-xl font-black tracking-tight">One practical partner</h3><p className="mt-3 text-sm leading-6 text-slate-600">From the public website to production assets and customer workflow, you get an organized path forward.</p></article></div></section>
 
-                  {/* AI Assistant */}
-                  <div
-                    className="rounded-xl p-4"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                  >
-                    <div className="text-xs font-semibold text-white/60 mb-1">AI Assistant (Kai)</div>
-                    <div className="text-xs text-white/40 mb-3">Kai is ready to help you grow.</div>
-                    <div
-                      className="flex items-center gap-2 px-3 py-2.5 rounded-lg mb-3"
-                      style={{ background: "rgba(129,140,248,0.15)", border: "1px solid rgba(129,140,248,0.2)" }}
-                    >
-                      <span className="text-xs text-white/50 flex-1">Ask Kai anything...</span>
-                      <ArrowRight size={12} style={{ color: "#818cf8" }} />
-                    </div>
-                    {["Find leads that didn't book", "Create a summer promotion", "Show me at-risk customers"].map((s, i) => (
-                      <div key={i} className="flex items-center gap-2 py-1.5">
-                        <Sparkles size={10} style={{ color: "#818cf8" }} />
-                        <span className="text-xs text-white/40">{s}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="relative isolate overflow-hidden bg-[#030b1c] py-20 text-white sm:py-28"><div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(37,99,235,0.35),transparent_28%),radial-gradient(circle_at_95%_90%,rgba(14,165,233,0.2),transparent_25%)]" /><div className="container grid items-start gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16"><div className="max-w-xl"><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-300">Get a free website review</p><h2 className="mt-4 text-4xl font-black leading-[0.94] tracking-[-0.05em] sm:text-5xl">See the next opportunity in your current website.</h2><p className="mt-5 text-base leading-7 text-slate-300">Share a few details about your business and website. We’ll review what you send and recommend a practical next step—no obligation.</p><div className="mt-8 space-y-4 text-sm text-slate-200"><p className="flex items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-blue-200"><Globe2 size={17} /></span><span><strong className="text-white">Focused feedback</strong><br />A clear look at your current customer journey.</span></p><p className="flex items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-blue-200"><MessageSquareText size={17} /></span><span><strong className="text-white">Actionable next step</strong><br />Advice based on the business goal you select.</span></p><p className="flex items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-blue-200"><Smartphone size={17} /></span><span><strong className="text-white">Mobile-minded review</strong><br />A quick look at how your site supports visitors on the go.</span></p></div></div><FreeWebsiteReview /></div></section>
 
-      {/* ══════════════════════ BOTTOM CTA ══════════════════════ */}
-      <section className="homepage-light-cta" style={{ padding: "80px 0" }}>
-        <div className="container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-5">
-              <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
-                style={{ background: "rgba(129,140,248,0.15)", border: "1px solid rgba(129,140,248,0.25)" }}
-              >
-                <Sparkles size={28} style={{ color: "#818cf8" }} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-1" style={{ letterSpacing: "-0.02em" }}>
-                  Your business. Supercharged.
-                </h3>
-                <p className="text-sm text-white/50">
-                  Join thousands of business owners saving time,<br className="hidden md:block" />
-                  making more money, and growing faster with Flow Sites.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-              <Link
-                href={leadCaptureHref({ intent: "Start a free trial" })}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white"
-                style={{ background: "#fff", color: "#1e3a8a", boxShadow: "0 4px 24px rgba(0,0,0,0.15)" }}
-              >
-                Start Free Trial <ArrowRight size={16} />
-              </Link>
-              <Link
-                href={leadCaptureHref({ intent: "Book a demo" })}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white"
-                style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.30)" }}
-              >
-                Book a Demo
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <section className="border-t border-slate-200 bg-white py-12"><div className="container"><p className="text-center text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">Delivery terms, in plain language</p><div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[{ title: "48-hour delivery", copy: "Available for qualifying standard sites once payment, scope, and complete materials are received." }, { title: "Revisions", copy: "Revision rounds are limited to the agreed written scope; they are not unlimited." }, { title: "Hosting & domain", copy: "Separate ongoing costs unless specifically included in the final checkout." }, { title: "Third-party tools", copy: "CRM, booking, messaging, payment, and AI subscriptions are billed by their providers unless included." }].map(item => <div key={item.title} className="border-l-2 border-blue-500 pl-4"><h3 className="text-sm font-extrabold text-slate-950">{item.title}</h3><p className="mt-2 text-xs leading-5 text-slate-500">{item.copy}</p></div>)}</div></div></section>
     </div>
   );
 }

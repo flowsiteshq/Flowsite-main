@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
 
-const LOGO_URL = "/flowsites-logo.png";
+const LOGO_URL = "/flowsites-logo-transparent.png";
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

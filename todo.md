@@ -1,7 +1,77 @@
 # FlowSites Project TODO
 
+## Homepage Conversion Update — Productized Services
+- [x] Audit the existing lead-submission and owner-notification flow for reuse by the Free Website Review form
+- [x] Replace the SaaS-focused homepage hero with the 48-hour productized website offer and package-first navigation
+- [x] Build transparent Starter, Growth, and AI Business package cards with one-time setup pricing and ongoing-cost disclosures
+- [x] Replace the five-step flow with the three-step qualifying-package process and clear turnaround terms
+- [x] Move the homepage AI prompt into a dedicated AI Services page while preserving the unified business-needs intake handoff
+- [x] Surface authorized portfolio examples above the platform preview and remove unverified social-proof claims, testimonials, and performance figures
+- [x] Add a Free Website Review form that submits to the existing CRM and triggers the existing administrator notification route
+- [x] Add desktop and mobile project previews in place of the former homepage platform-dashboard visual
+- [x] Add regression coverage that keeps unverified social-proof claims and the former SaaS hero out of the conversion homepage
+- [x] Verify updated navigation behavior across desktop and mobile for Website Packages, AI Services, Portfolio, Contact, and Client Portal routes
+- [x] Verify Home navigation and the Google Login target without initiating an external sign-in
+- [x] Add automated coverage for the Free Website Review flow, including email-or-phone validation and successful reuse of the contact.submit CRM/owner-notification path
+- [x] Save a checkpoint after the completed homepage-conversion validation run
+
+## Homepage Conversion Refinements — Premium Visuals & Delivery Clarity
+- [x] Audit available FlowSites and authorized DojoFlow visual sources; replace the hero and DojoFlow portfolio visual with production-safe screenshots
+- [x] Refine the desktop/mobile project mockup treatment so the website experience is the clear hero focal point
+- [x] Make all homepage package cards equal-height, readable, and consistently spaced across desktop and mobile breakpoints
+- [x] Add a concise FlowSites trust section describing the company, its delivery approach, and practical client reliability
+- [x] Clarify the qualifying 48-hour delivery terms, included revision rounds, hosting, and third-party subscription responsibilities
+- [x] Verify package CTA destination mappings and Free Website Review submission behavior without creating a live checkout session or charge
+- [ ] Align any future live Stripe checkout tiers with the displayed $499 / $799 / $1,499 packages after the agreed recurring fees and checkout terms are confirmed
+- [x] Verify the live Railway production page has no user-visible preview-mode banner; Railway currently serves the prior homepage until this reviewed refinement build is published
+- [x] Capture updated desktop and mobile preview screenshots for user review before any publication
+- [x] Add regression coverage for the updated visual, trust, delivery-clarity, and CTA requirements; run the full validation suite
+- [x] Save a checkpoint for the un-published refinement build after validation
+
+## AI Video Studio Expansion — Premium Production Service
+- [x] Define Video Studio packages, showcase disclosures, and a production workflow that distinguishes original demonstrations from client work
+- [x] Generate and validate three original, clearly labeled cinematic showcase clips for automotive, restaurant, and professional-services concepts
+- [x] Add the Video Studio homepage showcase with accessible muted playback, reduced-motion handling, and mobile-safe lazy loading
+- [x] Build the dedicated `/ai-video-studio` gallery, pricing, package selection, and production-process experience
+- [x] Add video-order and asset schema, storage-backed brand-material uploads, and protected order-management procedures
+- [x] Build an isolated secure video-order checkout flow that creates an order before Stripe payment and never conflates it with website packages
+- [x] Add a protected Video Orders queue in the admin CRM for production, approval, revisions, and delivery tracking
+- [x] Add regression coverage for pricing, source disclosure, reduced-motion behavior, order workflow, payment metadata, and admin access
+- [x] Run the additive Video Studio migration directly after the legacy Drizzle snapshot generator reported a historical collision; complete full validation and capture desktop/mobile previews before publishing
+- [ ] Upload the three generated Video Studio MP4 files through managed File Storage, replace local media references, and save an un-published checkpoint; do not publish or create live payment charges during verification
+- [x] Add homepage-specific Video Studio play controls, hover playback, and reduced-motion handling for all three previews
+- [ ] Save a new unpublished checkpoint for the completed AI Video Studio implementation after managed video-storage references are in place
+
+## Premium Creative Direction Redesign — Approval Build
+- [x] Source or generate production-safe cinematic visual assets for the redesigned hero and three editorial service panels without fabricating client work
+- [x] Rebuild the public homepage presentation around the approved midnight-navy/electric-blue creative direction, oversized editorial type, and the new headline while preserving functional routes and conversion flows
+- [x] Create a dark cinematic AI Video Studio homepage showcase with one featured playable demonstration and supporting examples, preserving reduced-motion and mobile loading safeguards
+- [x] Redesign the pricing and portfolio presentation with stronger hierarchy, a featured Growth package, real project labels, working destinations, and existing pricing/functionality intact
+- [x] Preserve the review form, client portal, AI intake, and live service integrations; add regression coverage for every major CTA destination
+- [x] Capture complete desktop and mobile approval previews and run full validation before any production publish
+- [ ] Save an unpublished checkpoint after the Video Studio MP4s have been moved to managed storage; do not publish until the approval build is accepted
+
+## Client Portal Sign-In Redesign — Premium Access Experience
+- [x] Replace the generic centered Client Portal sign-in card with a premium FlowSites branded access screen based on the approved reference direction
+- [x] Preserve the working Google OAuth flow and return clients to `/client-billing` after successful sign-in
+- [x] Build responsive desktop and mobile layouts with clear product value, accessible controls, and no fabricated client data
+- [x] Add regression coverage, validate the Google sign-in handoff without completing an external login, and capture approval previews before publishing
+
+## Client Portal Password Account Access
+- [x] Audit the existing client email/password, setup, reset, and account-linking flows for safe reuse on the redesigned portal
+- [x] Add an email-and-password sign-in path and a clear account-creation entry point alongside Google OAuth
+- [x] Ensure password sign-in lands in the authorized `/client-portal`, preserves account authorization, and does not expose account existence or credentials
+- [x] Add regression coverage, validate successful and error states without altering live customer accounts, and capture approval previews before publishing
+- [ ] Configure a valid Resend API key and verified sending domain in production, then verify one non-customer password-setup email delivery before publishing
+
+## Transparent FlowSites Logo Update
+- [x] Convert the supplied FS logo to a production-safe transparent PNG without altering the uploaded original
+- [x] Replace the bundled logo asset used throughout public, portal, scheduling, and admin surfaces; remove logo-specific white masks
+- [x] Add regression coverage and verify the transparent mark against light and dark branded surfaces before publishing
+
 ## Current Billing Task
 - [x] Create and verify a $1 live Stripe payment link using the newly supplied Stripe account
+- [x] Grant Angelika Abella (angelikaabella7@gmail.com) FlowSites administrator access
 - [ ] Update the deployed application to use the verified new Flowsites Corp. Stripe account
 - [ ] Retrieve the verified live Stripe credential from the new account and configure a deployable custom secret
 - [x] Fix Google OAuth login initiation returning a missing client_id error

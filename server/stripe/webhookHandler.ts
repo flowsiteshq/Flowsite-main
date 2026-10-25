@@ -27,11 +27,34 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
-      const { invoiceId, shareToken } = session.metadata ?? {};
+      const { invoiceId, shareToken, videoOrderId } = session.metadata ?? {};
 
       console.log(
         `[Webhook] Checkout completed — invoiceId: ${invoiceId}, shareToken: ${shareToken}, paymentStatus: ${session.payment_status}`
       );
+
+      // Video Studio orders are deliberately separate from website invoices.
+      // A production task begins only after Stripe confirms payment.
+      if (videoOrderId && session.payment_status === "paid") {
+        try {
+          const { getDb } = await import("../db");
+          const { videoOrders } = await import("../../drizzle/schema");
+          const { eq } = await import("drizzle-orm");
+          const db = await getDb();
+          if (db) {
+            await db
+              .update(videoOrders)
+              .set({
+                status: "paid",
+                stripePaymentIntentId: session.payment_intent as string ?? null,
+              })
+              .where(eq(videoOrders.id, Number(videoOrderId)));
+            console.log(`[Webhook] Video order ${videoOrderId} marked as paid`);
+          }
+        } catch (videoOrderError) {
+          console.error("[Webhook] Failed to update Video Studio order:", videoOrderError);
+        }
+      }
 
       // Only mark paid if this checkout was for a client invoice (has invoiceId in metadata)
       if (invoiceId && session.payment_status === "paid") {

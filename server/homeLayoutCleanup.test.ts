@@ -13,7 +13,8 @@ describe("homepage layout cleanup", () => {
 
     expect(app).not.toContain("ExitIntentPopup");
     expect(home).not.toContain("<footer");
-    expect(footer).toContain('src="/flowsites-logo.png"');
+    expect(footer).toContain('src="/flowsites-logo-transparent.png"');
     expect(footer).toContain("h-12");
+    expect(footer).not.toContain("bg-white p-1.5 shadow-sm ring-1");
   });
 });

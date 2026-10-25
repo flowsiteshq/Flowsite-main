@@ -281,7 +281,7 @@ export default function BookCall() {
       <nav className="border-b border-white/8 px-6 py-3 flex items-center justify-between shrink-0">
         <Link href="/" className="flex items-center">
           <img
-            src="/flowsites-logo.png"
+            src="/flowsites-logo-transparent.png"
             alt="FlowSites"
             className="h-28 w-auto"
           />

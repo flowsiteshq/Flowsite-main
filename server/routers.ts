@@ -16,6 +16,7 @@ import { learningRouter } from "./routers/learningRouter";
 import { clientPortalAuthRouter } from "./routers/clientPortalAuthRouter";
 import { analyticsRouter } from "./routers/analyticsRouter";
 import { bookingsRouter } from "./routers/bookingsRouter";
+import { videoStudioRouter } from "./routers/videoStudioRouter";
 import type { TrpcContext } from "./_core/context";
 
 /**
@@ -106,6 +107,7 @@ export const appRouter = router({
   analytics: analyticsRouter,
   clientPortal: clientPortalRouter,
   clientBilling: clientBillingRouter,
+  videoStudio: videoStudioRouter,
   technician: technicianRouter,
   partner: partnerRouter,
   emailAuth: emailAuthRouter,
@@ -1389,9 +1391,11 @@ export const appRouter = router({
       .input(z.object({
         name: z.string().min(1).max(100),
         businessName: z.string().min(1).max(200),
-        email: z.string().email(),
-        phone: z.string().min(7).max(20),
+        email: z.string().email().optional().or(z.literal("")),
+        phone: z.string().min(7).max(20).optional().or(z.literal("")),
         lookingFor: z.string().min(1),
+      }).refine((input) => Boolean(input.email || input.phone), {
+        message: "An email address or phone number is required",
       }))
       .mutation(async ({ input }) => {
         // Save to database as a wizard submission / lead
@@ -1400,8 +1404,10 @@ export const appRouter = router({
           businessName: input.businessName,
           businessType: "other",
           website: "",
-          phone: input.phone,
-          email: input.email,
+          phone: input.phone || "Not provided",
+          // The CRM schema requires an email. This non-routable value preserves a
+          // phone-only lead without implying that an email address was supplied.
+          email: input.email || `phone-only-${Date.now()}@lead.flowsites.invalid`,
           colorScheme: "not_specified",
           primaryGoal: input.lookingFor,
           timeline: "flexible",
@@ -1416,7 +1422,7 @@ export const appRouter = router({
           // Send to the team's tracking number so it shows up in 800.com inbox
           await sendSms({
             recipient: ENV.eightHundredSenderNumber,
-            message: `New Contact Form Lead!\n\nName: ${input.name}\nBusiness: ${input.businessName}\nPhone: ${input.phone}\nEmail: ${input.email}\nLooking for: ${input.lookingFor}\n\nLog in to admin to follow up.`,
+            message: `New Contact Form Lead!\n\nName: ${input.name}\nBusiness: ${input.businessName}\nPhone: ${input.phone || "Not provided"}\nEmail: ${input.email || "Not provided"}\nLooking for: ${input.lookingFor}\n\nLog in to admin to follow up.`,
           });
         }
 
@@ -1424,7 +1430,7 @@ export const appRouter = router({
         const { notifyOwner } = await import("./_core/notification");
         await notifyOwner({
           title: `New Contact Form: ${input.businessName}`,
-          content: `${input.name} from ${input.businessName} submitted the contact form.\n\nEmail: ${input.email}\nPhone: ${input.phone}\nLooking for: ${input.lookingFor}`,
+          content: `${input.name} from ${input.businessName} submitted the contact form.\n\nEmail: ${input.email || "Not provided"}\nPhone: ${input.phone || "Not provided"}\nLooking for: ${input.lookingFor}`,
         });
 
         return { success: true, id: submission.id };
@@ -1521,4 +1527,3 @@ export const appRouter = router({
   }),
 });
 export type AppRouter = typeof appRouter;
-

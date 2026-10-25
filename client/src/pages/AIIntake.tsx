@@ -1,7 +1,7 @@
 /**
  * FlowSites — AI Intake Wizard
  * Conversational multi-step intake triggered from the homepage prompt bar.
- * Dark theme, smooth slide transitions, collects project details → submits as lead.
+ * Light, conversational flow that collects project details and submits a CRM lead.
  */
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
@@ -106,7 +106,12 @@ export default function AIIntake() {
     const params = new URLSearchParams(window.location.search);
     const prompt = params.get("q") || "";
     const intent = params.get("intent") || "";
-    const context = [prompt, intent ? `Requested next step: ${intent}` : ""].filter(Boolean).join("\n");
+    const selectedPackage = params.get("package") || "";
+    const context = [
+      prompt,
+      intent ? `Requested next step: ${intent}` : "",
+      selectedPackage ? `Selected package: ${selectedPackage}` : "",
+    ].filter(Boolean).join("\n");
     if (context) setData(d => ({ ...d, initialPrompt: context }));
   }, []);
 

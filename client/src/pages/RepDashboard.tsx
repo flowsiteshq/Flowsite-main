@@ -39,7 +39,7 @@ import {
 import { ColdCallScriptPanel } from "@/components/ColdCallScriptPanel";
 
 // ─── Logo ─────────────────────────────────────────────────────────────────────
-const LOGO_URL = "/flowsites-logo.png";
+const LOGO_URL = "/flowsites-logo-transparent.png";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function fmt$(cents: number) {
@@ -317,7 +317,7 @@ export default function RepDashboard() {
           <div className="flex items-center gap-3">
             <a href="/">
               <img
-                src="/flowsites-logo.png"
+                src="/flowsites-logo-transparent.png"
                 alt="FlowSites"
                 style={{ height: 36 }}
                 onError={(e) => {

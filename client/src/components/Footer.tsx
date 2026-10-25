@@ -36,7 +36,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-10">
           <div className="md:col-span-3">
             <Link href="/" className="mb-5 flex items-center gap-3">
-              <img src="/flowsites-logo.png" alt="FlowSites" className="h-12 w-auto rounded-xl bg-white p-1.5 shadow-sm ring-1 ring-slate-200" />
+              <img src="/flowsites-logo-transparent.png" alt="FlowSites" className="h-12 w-auto object-contain" />
               <span className="text-lg font-bold tracking-tight text-slate-900">FlowSites</span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-slate-500">

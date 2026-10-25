@@ -28,6 +28,7 @@ import AdminSubmissions from "./pages/AdminSubmissions";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminScheduling from "./pages/AdminScheduling";
+import AdminVideoOrders from "./pages/AdminVideoOrders";
 import ClientPortal from "./pages/ClientPortal";
 import ClientBilling from "./pages/ClientBilling";
 import AcceptInvite from "./pages/AcceptInvite";
@@ -59,6 +60,8 @@ import ClientLogin from "./pages/ClientLogin";
 import ClientSetupPassword from "./pages/ClientSetupPassword";
 import ClientResetPassword from "./pages/ClientResetPassword";
 import Interested from "./pages/Interested";
+import AIServices from "./pages/AIServices";
+import AIVideoStudio from "./pages/AIVideoStudio";
 import { leadCaptureHref } from "./lib/leadCapture";
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -83,6 +86,8 @@ function Router() {
         <Route path="/case-study/greenbahamas" component={CaseStudyGreenBahamas} />
         <Route path="/get-started">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Get started" })); return null; }}</Route>
         <Route path="/ai-intake" component={AIIntake} />
+        <Route path="/ai-services" component={AIServices} />
+        <Route path="/ai-video-studio" component={AIVideoStudio} />
         <Route path="/schedule">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Schedule a strategy call" })); return null; }}</Route>
         <Route path="/budget-wizard">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Build a website budget" })); return null; }}</Route>
         <Route path="/portal" component={ClientPortal} />
@@ -100,6 +105,7 @@ function Router() {
         <Route path="/flowsites-admin-secret" component={AdminLogin} />
         <Route path="/flowsites-admin-dashboard" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />
+        <Route path="/flowsites-admin-video-orders" component={AdminVideoOrders} />
         <Route path="/industries/martial-arts" component={MartialArtsPage} />
         <Route path="/industries/gyms-fitness" component={GymsFitnessPage} />
         <Route path="/industries/roofing" component={RoofingPage} />

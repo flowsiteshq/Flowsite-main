@@ -137,6 +137,83 @@ export const clientPortalAuthRouter = router({
   }),
 
   /**
+   * Request a password setup link for an existing client project.
+   * The response is deliberately identical for unknown addresses so the portal
+   * cannot be used to discover which businesses are FlowSites clients.
+   */
+  requestPasswordSetup: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email().toLowerCase(),
+        origin: z.string().url(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { getDb } = await import("../db");
+      const { clientProjects, clientPortalPasswords } = await import("../../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+
+      const [project] = await db
+        .select({ clientEmail: clientProjects.clientEmail, clientName: clientProjects.clientName })
+        .from(clientProjects)
+        .where(eq(clientProjects.clientEmail, input.email))
+        .limit(1);
+
+      // Always acknowledge the request, including for unknown email addresses.
+      if (!project) return { success: true };
+
+      const setupToken = generateToken();
+      const setupTokenExpiry = Date.now() + SETUP_TOKEN_EXPIRY_MS;
+      const [existing] = await db
+        .select({ id: clientPortalPasswords.id })
+        .from(clientPortalPasswords)
+        .where(eq(clientPortalPasswords.clientEmail, input.email))
+        .limit(1);
+
+      if (existing) {
+        await db
+          .update(clientPortalPasswords)
+          .set({ setupToken, setupTokenExpiry })
+          .where(eq(clientPortalPasswords.id, existing.id));
+      } else {
+        // A placeholder hash prevents password login until the emailed setup link is used.
+        await db.insert(clientPortalPasswords).values({
+          clientEmail: input.email,
+          passwordHash: await bcrypt.hash(generateToken(), SALT_ROUNDS),
+          setupToken,
+          setupTokenExpiry,
+        });
+      }
+
+      const setupUrl = `${input.origin}/client-setup?token=${setupToken}`;
+      try {
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: process.env.EMAIL_FROM_ADDRESS ?? "noreply@flowsites.com",
+          to: input.email,
+          subject: "Set up your FlowSites client portal password",
+          html: `
+            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#172033;">
+              <p style="margin:0 0 24px;font-size:20px;font-weight:700;">FlowSites Client Portal</p>
+              <h1 style="font-size:24px;line-height:1.3;">Create your password</h1>
+              <p>Hi ${project.clientName || "there"},</p>
+              <p>Use the secure link below to create a password for your FlowSites client portal. This link expires in 7 days.</p>
+              <p style="margin:32px 0;"><a href="${setupUrl}" style="display:inline-block;padding:14px 24px;border-radius:10px;background:#1769ff;color:#fff;font-weight:700;text-decoration:none;">Create Password</a></p>
+              <p style="font-size:13px;color:#667085;">If you did not request portal access, you can safely ignore this email.</p>
+            </div>`,
+        });
+      } catch (err) {
+        // Keep the public outcome non-enumerating even when email delivery is temporarily unavailable.
+        console.error("[clientPortalAuth] Failed to send password setup email:", err);
+      }
+
+      return { success: true };
+    }),
+
+  /**
    * Admin: send a portal invite email to a client.
    * Creates a setup token and sends an email with a link to set their password.
    */
