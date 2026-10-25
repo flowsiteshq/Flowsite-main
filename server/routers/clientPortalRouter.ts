@@ -55,7 +55,30 @@ export const clientPortalRouter = router({
       .where(eq(clientProjects.clientOpenId, ctx.user.openId))
       .limit(1);
 
-    return project ?? null;
+    if (project) return project;
+
+    // First Google access may not have a saved openId yet. It is safe to
+    // establish that link only for a project with an exact matching client
+    // email and no existing owner; never replace another client's link.
+    const normalizedEmail = ctx.user.email?.trim().toLowerCase();
+    if (!normalizedEmail) return null;
+
+    const [emailMatchedProject] = await db
+      .select()
+      .from(clientProjects)
+      .where(eq(clientProjects.clientEmail, normalizedEmail))
+      .limit(1);
+
+    if (!emailMatchedProject || (emailMatchedProject.clientOpenId && emailMatchedProject.clientOpenId !== ctx.user.openId)) {
+      return null;
+    }
+
+    await db
+      .update(clientProjects)
+      .set({ clientOpenId: ctx.user.openId })
+      .where(eq(clientProjects.id, emailMatchedProject.id));
+
+    return { ...emailMatchedProject, clientOpenId: ctx.user.openId };
   }),
 
   // ─── CLIENT: Get messages for my project ────────────────────────────────────

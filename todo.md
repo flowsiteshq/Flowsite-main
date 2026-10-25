@@ -64,6 +64,11 @@
 - [x] Add regression coverage, validate successful and error states without altering live customer accounts, and capture approval previews before publishing
 - [ ] Configure a valid Resend API key and verified sending domain in production, then verify one non-customer password-setup email delivery before publishing
 
+## Client Portal Account Association Repair
+- [x] Trace why authenticated users reach the "No Account Found" state on `/client-billing` and distinguish an unauthorized client from an unlinked onboarding account
+- [x] Replace the dead-end message with a premium, actionable account-access and onboarding recovery path while preserving client-record authorization
+- [x] Add regression coverage and validate the client portal behavior without changing existing customer roles or billing records
+
 ## Transparent FlowSites Logo Update
 - [x] Convert the supplied FS logo to a production-safe transparent PNG without altering the uploaded original
 - [x] Replace the bundled logo asset used throughout public, portal, scheduling, and admin surfaces; remove logo-specific white masks

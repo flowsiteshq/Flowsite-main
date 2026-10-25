@@ -399,8 +399,44 @@ function ClientPortalSignIn() {
   );
 }
 
+function ClientAccountRecovery({ email, isProjectOnly, businessName, onSwitchAccount }: { email?: string | null; isProjectOnly: boolean; businessName?: string | null; onSwitchAccount: () => Promise<void> }) {
+  const heading = isProjectOnly ? "Your project portal is ready." : "Choose your next step.";
+  const description = isProjectOnly
+    ? <>The signed-in account{email ? <> <span className="font-semibold text-slate-800">{email}</span></> : ""} is connected to {businessName ? <span className="font-semibold text-slate-800">{businessName}</span> : "a FlowSites project"}, but does not have a separate billing workspace yet.</>
+    : <>The signed-in account{email ? <> <span className="font-semibold text-slate-800">{email}</span></> : ""} is not connected to a FlowSites client profile yet. If this is your project email, the project portal may already be ready for you.</>;
+  return (
+    <div className="min-h-screen overflow-hidden bg-[#eef6ff] px-5 py-10 text-slate-950 sm:px-10 lg:flex lg:items-center lg:justify-center">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_88%_8%,rgba(37,99,235,0.18),transparent_28%),radial-gradient(circle_at_12%_92%,rgba(125,211,252,0.24),transparent_30%)]" />
+      <main className="relative grid w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_28px_80px_rgba(30,64,175,0.16)] lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="relative overflow-hidden bg-[#020815] px-8 py-10 text-white sm:px-12 sm:py-14">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(37,99,235,0.5),transparent_32%),radial-gradient(circle_at_15%_88%,rgba(14,165,233,0.2),transparent_32%)]" />
+          <a href="/" className="relative inline-flex items-center gap-2 transition hover:text-blue-200"><img src="/flowsites-logo-transparent.png" alt="FlowSites" className="h-9 w-auto" /><span className="text-lg font-black tracking-tight">FlowSites</span></a>
+          <div className="relative mt-16 max-w-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-blue-300">Client portal access</p>
+            <h1 className="mt-4 text-4xl font-black leading-[0.95] tracking-[-0.055em]">Let’s connect you to the right workspace.</h1>
+            <p className="mt-5 text-base leading-7 text-slate-300">Your project and billing information stay protected. We only show client data after we verify the email connected to your FlowSites account.</p>
+          </div>
+          <div className="relative mt-10 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.07] p-4 text-sm text-blue-100"><Shield className="h-5 w-5 shrink-0 text-blue-300" /><span>Account matching is secure and never replaces an existing client connection.</span></div>
+        </section>
+        <section className="px-8 py-10 sm:px-12 sm:py-14">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700"><CheckCircle size={24} /></span>
+          <p className="mt-8 text-xs font-bold uppercase tracking-[0.28em] text-blue-600">Almost there</p>
+          <h2 className="mt-3 text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-4xl">{heading}</h2>
+          <p className="mt-4 max-w-lg text-base leading-7 text-slate-600">{description}</p>
+          <div className="mt-8 space-y-3">
+            <a href="/client-portal" className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-5 text-sm font-bold text-white shadow-[0_12px_26px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(37,99,235,0.3)]"><span>{isProjectOnly ? "Open my project workspace" : "Open my project portal"}</span><ArrowRight size={17} /></a>
+            <button type="button" onClick={onSwitchAccount} className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-bold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800"><RefreshCw size={16} />Use a different Google account</button>
+            <a href="mailto:hello@flow-sites.com?subject=Client%20Portal%20Access" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-bold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800"><Headphones size={17} />Contact the FlowSites team</a>
+          </div>
+          <p className="mt-6 text-center text-xs leading-5 text-slate-500">If your email has changed, our team can verify and update your authorized client email securely.</p>
+        </section>
+      </main>
+    </div>
+  );
+}
+
 export default function ClientBilling() {
-  const { user, loading, isAuthenticated } = useAuth();
+  const { user, loading, isAuthenticated, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [analyticsRange, setAnalyticsRange] = useState<"7d" | "30d" | "90d">("30d");
   const [mobileView, setMobileView] = useState(false);
@@ -409,6 +445,8 @@ export default function ClientBilling() {
 
   const { data: account, isLoading: accountLoading } =
     trpc.clientBilling.getMyAccount.useQuery(undefined, { enabled: isAuthenticated });
+  const { data: accessStatus, isLoading: accessStatusLoading } =
+    trpc.clientBilling.getMyAccessStatus.useQuery(undefined, { enabled: isAuthenticated && account === null });
   const { data: invoices, isLoading: invoicesLoading } =
     trpc.clientBilling.getMyInvoices.useQuery(undefined, { enabled: isAuthenticated });
   const { data: analyticsData, refetch: refetchPerf } =
@@ -494,7 +532,7 @@ export default function ClientBilling() {
   }
 
   /* ── Loading / auth gates ── */
-  if (loading || accountLoading) {
+  if (loading || accountLoading || accessStatusLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
@@ -506,18 +544,15 @@ export default function ClientBilling() {
   }
   if (!account) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-3xl shadow-2xl shadow-indigo-100 max-w-md w-full text-center p-10 border border-gray-100">
-          <div className="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle className="w-8 h-8 text-amber-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">No Account Found</h2>
-          <p className="text-gray-500 mb-4">
-            Your account has not been set up yet. Contact{" "}
-            <a href="mailto:support@flow-sites.com" className="text-indigo-600 underline">support@flow-sites.com</a>.
-          </p>
-        </div>
-      </div>
+      <ClientAccountRecovery
+        email={user?.email}
+        isProjectOnly={accessStatus?.state === "project_only"}
+        businessName={accessStatus?.businessName}
+        onSwitchAccount={async () => {
+          await logout();
+          window.location.assign("/client-billing");
+        }}
+      />
     );
   }
 

@@ -23,6 +23,47 @@ async function requireAdmin(ctx: { user: { role: string; openId: string } | null
 }
 
 /**
+ * Resolve a client billing account for a signed-in user. Existing links always
+ * win. On first Google sign-in, an otherwise-unlinked account can be claimed
+ * only when its saved client email exactly matches the authenticated email.
+ * Records already claimed by another user are never reassigned here.
+ */
+async function resolveClientAccountForUser(
+  db: any,
+  user: { openId: string; email: string | null }
+) {
+  const { clientAccounts } = await import("../../drizzle/schema");
+  const { eq } = await import("drizzle-orm");
+
+  const [linkedAccount] = await db
+    .select()
+    .from(clientAccounts)
+    .where(eq(clientAccounts.clientOpenId, user.openId))
+    .limit(1);
+  if (linkedAccount) return linkedAccount;
+
+  const normalizedEmail = user.email?.trim().toLowerCase();
+  if (!normalizedEmail) return null;
+
+  const [emailAccount] = await db
+    .select()
+    .from(clientAccounts)
+    .where(eq(clientAccounts.clientEmail, normalizedEmail))
+    .limit(1);
+
+  if (!emailAccount || (emailAccount.clientOpenId && emailAccount.clientOpenId !== user.openId)) {
+    return null;
+  }
+
+  await db
+    .update(clientAccounts)
+    .set({ clientOpenId: user.openId, inviteAccepted: 1 })
+    .where(eq(clientAccounts.id, emailAccount.id));
+
+  return { ...emailAccount, clientOpenId: user.openId, inviteAccepted: 1 };
+}
+
+/**
  * Client Billing & Media Router
  * Handles client accounts, invoices, media uploads, and admin management.
  */
@@ -31,33 +72,56 @@ export const clientBillingRouter = router({
   // ─── CLIENT: Get my account ──────────────────────────────────────────────────
   getMyAccount: protectedProcedure.query(async ({ ctx }) => {
     const { getDb } = await import("../db");
-    const { clientAccounts } = await import("../../drizzle/schema");
+    const db = await getDb();
+    if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+
+    return resolveClientAccountForUser(db, ctx.user);
+  }),
+
+  // ─── CLIENT: Classify access when no billing account is available ─────────────
+  // This lets the UI guide project-only onboarding clients to their workspace
+  // without exposing or reassigning another user's billing record.
+  getMyAccessStatus: protectedProcedure.query(async ({ ctx }) => {
+    const { getDb } = await import("../db");
+    const { clientProjects } = await import("../../drizzle/schema");
     const { eq } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
 
-    const [account] = await db
-      .select()
-      .from(clientAccounts)
-      .where(eq(clientAccounts.clientOpenId, ctx.user.openId))
-      .limit(1);
+    const account = await resolveClientAccountForUser(db, ctx.user);
+    if (account) return { state: "billing" as const, businessName: account.businessName };
 
-    return account ?? null;
+    const [linkedProject] = await db
+      .select({ businessName: clientProjects.businessName })
+      .from(clientProjects)
+      .where(eq(clientProjects.clientOpenId, ctx.user.openId))
+      .limit(1);
+    if (linkedProject) return { state: "project_only" as const, businessName: linkedProject.businessName };
+
+    const normalizedEmail = ctx.user.email?.trim().toLowerCase();
+    if (normalizedEmail) {
+      const [emailProject] = await db
+        .select({ businessName: clientProjects.businessName, clientOpenId: clientProjects.clientOpenId })
+        .from(clientProjects)
+        .where(eq(clientProjects.clientEmail, normalizedEmail))
+        .limit(1);
+      if (emailProject && (!emailProject.clientOpenId || emailProject.clientOpenId === ctx.user.openId)) {
+        return { state: "project_only" as const, businessName: emailProject.businessName };
+      }
+    }
+
+    return { state: "no_client_record" as const, businessName: null };
   }),
 
   // ─── CLIENT: Get my invoices ─────────────────────────────────────────────────
   getMyInvoices: protectedProcedure.query(async ({ ctx }) => {
     const { getDb } = await import("../db");
-    const { clientAccounts, clientInvoices } = await import("../../drizzle/schema");
+    const { clientInvoices } = await import("../../drizzle/schema");
     const { eq, desc } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
 
-    const [account] = await db
-      .select()
-      .from(clientAccounts)
-      .where(eq(clientAccounts.clientOpenId, ctx.user.openId))
-      .limit(1);
+    const account = await resolveClientAccountForUser(db, ctx.user);
 
     if (!account) return [];
 
@@ -71,16 +135,12 @@ export const clientBillingRouter = router({
   // ─── CLIENT: Get my media ────────────────────────────────────────────────────
   getMyMedia: protectedProcedure.query(async ({ ctx }) => {
     const { getDb } = await import("../db");
-    const { clientAccounts, clientMedia } = await import("../../drizzle/schema");
+    const { clientMedia } = await import("../../drizzle/schema");
     const { eq, desc } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
 
-    const [account] = await db
-      .select()
-      .from(clientAccounts)
-      .where(eq(clientAccounts.clientOpenId, ctx.user.openId))
-      .limit(1);
+    const account = await resolveClientAccountForUser(db, ctx.user);
 
     if (!account) return [];
 

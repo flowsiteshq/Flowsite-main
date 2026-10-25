@@ -48,4 +48,25 @@ describe("client portal sign-in experience", () => {
     expect(portal).toContain("Back to website");
     expect(portal).toContain("Contact the FlowSites team");
   });
+
+  it("replaces an unlinked account dead end with secure recovery actions", () => {
+    const portal = source("client/src/pages/ClientBilling.tsx");
+    const billingRouter = source("server/routers/clientBillingRouter.ts");
+    const projectRouter = source("server/routers/clientPortalRouter.ts");
+
+    expect(portal).toContain("function ClientAccountRecovery");
+    expect(portal).toContain("Open my project portal");
+    expect(portal).toContain("Use a different Google account");
+    expect(portal).not.toContain("No Account Found");
+    expect(portal).toContain("getMyAccessStatus.useQuery");
+    expect(portal).toContain("Your project portal is ready.");
+    expect(portal).toContain("Open my project workspace");
+    expect(billingRouter).toContain("resolveClientAccountForUser");
+    expect(billingRouter).toContain("getMyAccessStatus: protectedProcedure");
+    expect(billingRouter).toContain('state: "project_only" as const');
+    expect(billingRouter).toContain('state: "no_client_record" as const');
+    expect(billingRouter).toContain("Existing links always");
+    expect(projectRouter).toContain("First Google access may not have a saved openId yet");
+    expect(projectRouter).toContain("never replace another client's link");
+  });
 });
