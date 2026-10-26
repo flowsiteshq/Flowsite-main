@@ -85,6 +85,7 @@ import {
   PlusSquare,
   Minus,
   Clapperboard,
+  KeyRound,
 } from "lucide-react";
 
 const STATUS_CONFIG = {
@@ -815,6 +816,15 @@ export default function AdminDashboard() {
         </nav>
         {/* Sidebar Footer */}
         <div className={`px-3 py-4 border-t ${isDark ? "border-white/8" : "border-gray-100"}`}>
+          {verifiedTechRole === "admin" && (
+            <Link
+              href="/flowsites-admin-integrations"
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 transition-all text-sm font-medium ${isDark ? "text-white/50 hover:text-white hover:bg-white/6" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+            >
+              <KeyRound size={16} className={isDark ? "text-white/40" : "text-gray-400"} />
+              Cue integration
+            </Link>
+          )}
           <Link
             href="/flowsites-admin-video-orders"
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 transition-all text-sm font-medium ${isDark ? "text-white/50 hover:text-white hover:bg-white/6" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}

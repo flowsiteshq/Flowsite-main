@@ -74,6 +74,12 @@
 - [x] Add a discreet footer-only Admin access link for FlowSites staff and verify its destination
 - [x] Open the desktop and mobile public navigation directly, verify the mobile menu no longer exposes staff login, and confirm the footer Admin access destination before publishing
 
+## Cue AI Read-Only Lead Access
+- [ ] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential
+- [ ] Add a protected read-only lead integration endpoint with pagination, audit metadata, and no create, update, delete, billing, or configuration capability
+- [ ] Store the Cue credential only as a one-way hash, document Cue custom-API setup, and provide a revoke/rotate path
+- [ ] Validate least-privilege behavior and lead response filtering before issuing a production credential or enabling Cue access
+
 ## Transparent FlowSites Logo Update
 - [x] Convert the supplied FS logo to a production-safe transparent PNG without altering the uploaded original
 - [x] Replace the bundled logo asset used throughout public, portal, scheduling, and admin surfaces; remove logo-specific white masks

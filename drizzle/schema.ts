@@ -85,6 +85,39 @@ export type LeadNote = typeof leadNotes.$inferSelect;
 export type InsertLeadNote = typeof leadNotes.$inferInsert;
 
 /**
+ * Dedicated service credentials for the Cue AI assistant. The raw credential
+ * is never stored; only a SHA-256 hash is persisted for verification.
+ */
+export const cueIntegrationKeys = mysqlTable("cue_integration_keys", {
+  id: int("id").autoincrement().primaryKey(),
+  label: varchar("label", { length: 80 }).notNull(),
+  keyPrefix: varchar("keyPrefix", { length: 32 }).notNull(),
+  tokenHash: varchar("tokenHash", { length: 64 }).notNull().unique(),
+  scope: varchar("scope", { length: 64 }).notNull().default("leads:read"),
+  createdByOpenId: varchar("createdByOpenId", { length: 64 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  lastUsedAt: timestamp("lastUsedAt"),
+  expiresAt: timestamp("expiresAt"),
+  revokedAt: timestamp("revokedAt"),
+});
+
+export type CueIntegrationKey = typeof cueIntegrationKeys.$inferSelect;
+export type InsertCueIntegrationKey = typeof cueIntegrationKeys.$inferInsert;
+
+/** Read-only access trail for Cue's lead queries; no lead payload is logged. */
+export const cueIntegrationAuditLogs = mysqlTable("cue_integration_audit_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  keyId: int("keyId").notNull(),
+  eventType: varchar("eventType", { length: 64 }).notNull(),
+  resultCount: int("resultCount").default(0).notNull(),
+  requestId: varchar("requestId", { length: 64 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CueIntegrationAuditLog = typeof cueIntegrationAuditLogs.$inferSelect;
+export type InsertCueIntegrationAuditLog = typeof cueIntegrationAuditLogs.$inferInsert;
+
+/**
  * Admin sessions table for secret admin authentication
  * Uses a simple password-based session system separate from OAuth
  */
