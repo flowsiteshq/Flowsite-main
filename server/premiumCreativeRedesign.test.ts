@@ -47,7 +47,7 @@ describe("premium creative direction homepage", () => {
     expect(navbar).not.toContain('href={getGoogleLoginUrl("/client-portal")}');
     expect(navbar).not.toContain("function getGoogleLoginUrl");
     expect(navbar).not.toContain("Log in");
-    expect(footer).toContain('href="/admin-login"');
+    expect(footer).toContain('href="/flowsites-admin-secret"');
     expect(footer).toContain("Admin access");
     expect(footer).not.toContain('href="/flowsites-admin-dashboard"');
   });

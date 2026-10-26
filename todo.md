@@ -72,7 +72,9 @@
 ## Staff Access Navigation Clarification
 - [x] Remove the public-facing staff login action from the primary website navigation while preserving the customer-facing client portal entry point
 - [x] Add a discreet footer-only Admin access link for FlowSites staff and verify its destination
-- [x] Open the desktop and mobile public navigation directly, verify the mobile menu no longer exposes staff login, and confirm the footer Admin access destination before publishing
+- [ ] Repair the footer Admin access route and provide a backwards-compatible `/admin-login` path so FlowSites staff never receive a 404
+- [ ] Re-run the focused staff route tests after the route and full-screen path updates
+- [ ] Verify the repaired staff entry route on both the Railway deployment and the custom domain after publishing
 
 ## Cue AI Read-Only Lead Access
 - [x] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential

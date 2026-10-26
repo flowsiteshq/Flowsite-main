@@ -68,7 +68,7 @@ export default function Footer() {
             <Link href="/terms-of-service" className="text-xs text-slate-400 transition-colors hover:text-blue-600">Terms of Service</Link>
             <Link href="/refund-policy" className="text-xs text-slate-400 transition-colors hover:text-blue-600">Refund Policy</Link>
             <Link href="/client-billing" className="text-xs text-slate-400 transition-colors hover:text-blue-600">Client Portal</Link>
-            <Link href="/admin-login" className="text-xs text-slate-400 transition-colors hover:text-blue-600">Admin access</Link>
+            <Link href="/flowsites-admin-secret" className="text-xs text-slate-400 transition-colors hover:text-blue-600">Admin access</Link>
             <p className="text-xs text-slate-400">Built with <span className="text-blue-600">precision</span></p>
           </div>
         </div>

@@ -103,6 +103,7 @@ function Router() {
         <Route path="/accept-tech-invite" component={AcceptTechInvite} />
         <Route path="/invoice/:shareToken" component={PublicInvoice} />
         <Route path="/admin/submissions" component={AdminSubmissions} />
+        <Route path="/admin-login" component={AdminLogin} />
         <Route path="/flowsites-admin-secret" component={AdminLogin} />
         <Route path="/flowsites-admin-dashboard" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />

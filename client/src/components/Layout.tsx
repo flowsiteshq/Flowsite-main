@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 // Routes where the navbar and footer should be hidden for a focused experience
-const FULL_SCREEN_ROUTES = ["/get-started", "/budget-wizard", "/portal", "/schedule", "/ai-intake", "/client-billing", "/rep-dashboard"];
+const FULL_SCREEN_ROUTES = ["/get-started", "/budget-wizard", "/portal", "/schedule", "/ai-intake", "/client-billing", "/rep-dashboard", "/admin-login"];
 // Prefixes for full-screen routes (admin panel)
 const FULL_SCREEN_PREFIXES = ["/flowsites-admin", "/admin/", "/invoice/", "/accept-invite"];
 
