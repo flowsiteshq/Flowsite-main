@@ -75,10 +75,11 @@
 - [x] Open the desktop and mobile public navigation directly, verify the mobile menu no longer exposes staff login, and confirm the footer Admin access destination before publishing
 
 ## Cue AI Read-Only Lead Access
-- [ ] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential
-- [ ] Add a protected read-only lead integration endpoint with pagination, audit metadata, and no create, update, delete, billing, or configuration capability
-- [ ] Store the Cue credential only as a one-way hash, document Cue custom-API setup, and provide a revoke/rotate path
-- [ ] Validate least-privilege behavior and lead response filtering before issuing a production credential or enabling Cue access
+- [x] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential
+- [x] Add a protected read-only lead integration endpoint with pagination, audit metadata, and no create, update, delete, billing, or configuration capability
+- [x] Store the Cue credential only as a one-way hash, document Cue custom-API setup, and provide a revoke/rotate path
+- [x] Validate least-privilege behavior and lead response filtering; the live endpoint rejects all requests without a dedicated Cue key
+- [ ] As a FlowSites administrator, create the first Cue key at `/flowsites-admin-integrations` and save it only in Cue's Custom API connection
 
 ## Transparent FlowSites Logo Update
 - [x] Convert the supplied FS logo to a production-safe transparent PNG without altering the uploaded original
