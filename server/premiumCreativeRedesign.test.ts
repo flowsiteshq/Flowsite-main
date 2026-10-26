@@ -34,6 +34,7 @@ describe("premium creative direction homepage", () => {
   it("preserves direct destinations for the three public service pillars", () => {
     const home = source("client/src/pages/Home.tsx");
     const navbar = source("client/src/components/Navbar.tsx");
+    const footer = source("client/src/components/Footer.tsx");
 
     expect(home).toContain('href="/#packages" action="Explore website packages"');
     expect(home).toContain('href="/ai-services" action="Explore AI services"');
@@ -43,7 +44,11 @@ describe("premium creative direction homepage", () => {
     expect(home).toContain('leadCaptureHref({ intent: `Start the ${pkg.name} package`, packageId: pkg.id })');
     expect(home).toContain("trpc.contact.submit.useMutation");
     expect(navbar).toContain('href="/client-billing"');
-    expect(navbar).toContain('href={getGoogleLoginUrl("/client-portal")}');
-    expect(navbar).toContain("function getGoogleLoginUrl");
+    expect(navbar).not.toContain('href={getGoogleLoginUrl("/client-portal")}');
+    expect(navbar).not.toContain("function getGoogleLoginUrl");
+    expect(navbar).not.toContain("Log in");
+    expect(footer).toContain('href="/admin-login"');
+    expect(footer).toContain("Admin access");
+    expect(footer).not.toContain('href="/flowsites-admin-dashboard"');
   });
 });

@@ -69,6 +69,11 @@
 - [x] Replace the dead-end message with a premium, actionable account-access and onboarding recovery path while preserving client-record authorization
 - [x] Add regression coverage and validate the client portal behavior without changing existing customer roles or billing records
 
+## Staff Access Navigation Clarification
+- [x] Remove the public-facing staff login action from the primary website navigation while preserving the customer-facing client portal entry point
+- [x] Add a discreet footer-only Admin access link for FlowSites staff and verify its destination
+- [x] Open the desktop and mobile public navigation directly, verify the mobile menu no longer exposes staff login, and confirm the footer Admin access destination before publishing
+
 ## Transparent FlowSites Logo Update
 - [x] Convert the supplied FS logo to a production-safe transparent PNG without altering the uploaded original
 - [x] Replace the bundled logo asset used throughout public, portal, scheduling, and admin surfaces; remove logo-specific white masks
