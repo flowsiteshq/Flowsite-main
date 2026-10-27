@@ -30,6 +30,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminScheduling from "./pages/AdminScheduling";
 import AdminVideoOrders from "./pages/AdminVideoOrders";
 import AdminCueIntegration from "./pages/AdminCueIntegration";
+import AdminCueTelephone from "./pages/AdminCueTelephone";
 import AdminFreeWebsiteRequests from "./pages/AdminFreeWebsiteRequests";
 import ClientPortal from "./pages/ClientPortal";
 import ClientBilling from "./pages/ClientBilling";
@@ -112,6 +113,7 @@ function Router() {
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />
         <Route path="/flowsites-admin-video-orders" component={AdminVideoOrders} />
         <Route path="/flowsites-admin-integrations" component={AdminCueIntegration} />
+        <Route path="/flowsites-admin-cue-telephone" component={AdminCueTelephone} />
         <Route path="/flowsites-admin-free-website" component={AdminFreeWebsiteRequests} />
         <Route path="/industries/martial-arts" component={MartialArtsPage} />
         <Route path="/industries/gyms-fitness" component={GymsFitnessPage} />

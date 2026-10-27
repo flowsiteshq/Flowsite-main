@@ -107,6 +107,16 @@
 - [x] Replace those public phone-number displays and links with +1 888-933-3010 without changing customer-specific contact records
 - [x] Add regression coverage and verify public desktop/mobile contact affordances before release
 
+## Cue AI Telephone Integration — Safe Foundation
+- [ ] Complete a read-only 800.com account audit for (888) 933-3010; document its forwarding destination, business hours, voicemail, recordings, routing rules, and any verified SIP capability without saving any account change
+- [x] Record the verified integration decision tree: direct SIP only if 800.com demonstrates compatible SIP trunking; otherwise test a separate approved receiving number before any forwarding change
+- [x] Create a separate, revocable server-side ElevenLabs voice-integration credential model and a provider-attributed call-event ledger; do not alter the existing read-only Cue lead key
+- [x] Implement narrow authenticated endpoints for agent-collected phone leads and call summaries, with validated allowlisted fields, idempotency, and no autonomous messaging, checkout, or outbound calls
+- [x] Implement a route-level raw webhook endpoint using ElevenLabs’ current documented HMAC signature verifier; reject unsigned or invalid webhook events and deduplicate valid retries
+- [x] Create a staff-only Cue telephone readiness page and operational runbook with the current safety boundaries, human-escalation prerequisites, and rollback plan
+- [ ] Add a non-deceptive website Talk to Cue entry point only when a verified ElevenLabs web widget or calling handoff is configured; otherwise show the live business phone number without claiming active AI availability
+- [x] Add unit and integration coverage for the safe foundation and confirm an unconfigured webhook returns a no-write `503`; complete staging/test-number checks before requesting routing approval or any paid provider purchase
+
 ## Cue AI Read-Only Lead Access
 - [x] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential
 - [x] Add a protected read-only lead integration endpoint with pagination, audit metadata, and no create, update, delete, billing, or configuration capability

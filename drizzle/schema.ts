@@ -31,6 +31,8 @@ export type InsertUser = typeof users.$inferInsert;
 export const wizardSubmissions = mysqlTable("wizard_submissions", {
   id: int("id").autoincrement().primaryKey(),
   businessName: varchar("businessName", { length: 255 }).notNull(),
+  /** Optional contact name collected during a verified phone conversation. */
+  contactName: varchar("contactName", { length: 255 }),
   businessType: varchar("businessType", { length: 100 }).notNull(),
   businessTypeOther: text("businessTypeOther"),
   website: varchar("website", { length: 500 }),
@@ -48,7 +50,7 @@ export const wizardSubmissions = mysqlTable("wizard_submissions", {
   status: mysqlEnum("status", ["new", "contacted", "in_progress", "proposal_sent", "won", "lost"]).default("new").notNull(),
   statusUpdatedAt: timestamp("statusUpdatedAt").defaultNow().notNull(),
   /** Lead source — how this lead found us */
-  source: mysqlEnum("source", ["website", "cold_call", "referral", "social", "partner", "other"]),
+  source: mysqlEnum("source", ["website", "cold_call", "referral", "social", "partner", "ai_voice", "other"]),
   /** Admin notes — call outcomes, context, next steps */
   adminNotes: text("adminNotes"),
   /** Follow-up date — surfaces overdue follow-ups at top of Leads tab */
@@ -157,6 +159,49 @@ export const cueIntegrationAuditLogs = mysqlTable("cue_integration_audit_logs", 
 
 export type CueIntegrationAuditLog = typeof cueIntegrationAuditLogs.$inferSelect;
 export type InsertCueIntegrationAuditLog = typeof cueIntegrationAuditLogs.$inferInsert;
+
+/**
+ * Dedicated, revocable service credentials for a future ElevenLabs phone
+ * agent. These keys are separate from Cue's read-only lead credential and are
+ * limited to the narrow phone-lead write scope.
+ */
+export const voiceIntegrationKeys = mysqlTable("voice_integration_keys", {
+  id: int("id").autoincrement().primaryKey(),
+  label: varchar("label", { length: 80 }).notNull(),
+  keyPrefix: varchar("keyPrefix", { length: 32 }).notNull(),
+  tokenHash: varchar("tokenHash", { length: 64 }).notNull().unique(),
+  scope: varchar("scope", { length: 64 }).notNull().default("phone_leads:write"),
+  createdByOpenId: varchar("createdByOpenId", { length: 64 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  lastUsedAt: timestamp("lastUsedAt"),
+  expiresAt: timestamp("expiresAt"),
+  revokedAt: timestamp("revokedAt"),
+});
+
+export type VoiceIntegrationKey = typeof voiceIntegrationKeys.$inferSelect;
+export type InsertVoiceIntegrationKey = typeof voiceIntegrationKeys.$inferInsert;
+
+/**
+ * Provider-attributed call events. Raw transcripts and recordings are not
+ * persisted; only a limited summary is stored after signature verification.
+ * providerEventId is unique so webhook retries remain idempotent.
+ */
+export const voiceCallEvents = mysqlTable("voice_call_events", {
+  id: int("id").autoincrement().primaryKey(),
+  provider: varchar("provider", { length: 64 }).notNull(),
+  providerEventId: varchar("providerEventId", { length: 255 }).notNull().unique(),
+  providerCallId: varchar("providerCallId", { length: 191 }).notNull(),
+  eventType: varchar("eventType", { length: 80 }).notNull(),
+  leadId: int("leadId"),
+  normalizedPhone: varchar("normalizedPhone", { length: 50 }),
+  summary: text("summary"),
+  source: mysqlEnum("source", ["agent_tool", "signed_webhook"]).notNull(),
+  eventTimestamp: timestamp("eventTimestamp"),
+  receivedAt: timestamp("receivedAt").defaultNow().notNull(),
+});
+
+export type VoiceCallEvent = typeof voiceCallEvents.$inferSelect;
+export type InsertVoiceCallEvent = typeof voiceCallEvents.$inferInsert;
 
 /**
  * Admin sessions table for secret admin authentication
