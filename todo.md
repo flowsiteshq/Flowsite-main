@@ -88,7 +88,12 @@
 - [x] Create and publish a dedicated development branch with a documented rollback point; audit the current FlowSites stack, database, auth, deployment, lead capture, Cue access, and payment/subscription implementation
 - [x] Phase 1: Preserve the premium dark-blue/electric-blue site and existing services while adding approved conversion navigation and a responsive Free Website / Talk to Cue CTA strategy
 - [x] Phase 2: Build `/free-website` with transparent $99/month / 12-month eligibility disclosure, a mobile conversion layout, and a consent-safe preview request form that does not enroll or charge a visitor
-- [ ] Reconcile migration drift and apply the additive Free Website Program table only through the approved staging/production migration runbook before publishing this phase
+- [x] Reconcile migration drift: preserve the legacy Drizzle journal as historical, document its snapshot collision, and introduce an additive feature-migration ledger for new work
+- [x] Compare the connected development database schema against the ledger, apply the missing Free Website Program table, and verify review columns/indexes with read-only metadata queries
+- [x] Build a strict-admin Free Website Preview Requests queue with review status, internal notes, preview URL, and an explicit human-delivery checklist
+- [x] Add a protected request-detail view that preserves consent evidence and offers only staff-controlled status updates; do not send messages or trigger external actions
+- [x] Add queue/API regression coverage and run the complete validation suite
+- [ ] Capture staff-facing desktop/mobile previews with an authenticated administrator session before requesting any production deployment approval
 - [ ] Phase 3: Define and implement only verified Cue capabilities: lead context, qualified handoff, clear AI identity, human escalation, and read-only/least-privilege integration; document unavailable phone, SMS, or webhook dependencies instead of simulating them
 - [ ] Phase 4: Extend CRM lead records, pipeline states, attribution, consent, preview lifecycle, and actual-data reporting without overwriting current customer or lead data
 - [ ] Phase 5: Build a manually reviewable website-preview request workflow and reusable industry templates; do not claim automated generation or publish previews until an end-to-end test succeeds
@@ -96,6 +101,11 @@
 - [ ] Phase 7: Implement consent-aware, event-driven follow-up interfaces and stop conditions without sending real marketing communications during testing
 - [ ] Phase 8: Enhance customer onboarding, AI Receptionist demonstration, attribution/analytics configuration, and protected admin controls using verified integrations only
 - [ ] Run phased end-to-end QA, publish a deployment report with verified vs. blocked integrations, and request approval before live payment changes, ads, or real outbound communications
+
+## FlowSites Contact Number Update
+- [x] Audit all public and client-facing FlowSites phone-number displays and `tel:` links for the retired 281 number
+- [x] Replace those public phone-number displays and links with +1 888-933-3010 without changing customer-specific contact records
+- [x] Add regression coverage and verify public desktop/mobile contact affordances before release
 
 ## Cue AI Read-Only Lead Access
 - [x] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential

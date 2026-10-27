@@ -44,7 +44,7 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex flex-col gap-2">
               <a href="mailto:hello@flow-sites.com" className="flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-blue-600"><Mail size={13} />hello@flow-sites.com</a>
-              <a href="tel:+12815038903" className="flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-blue-600"><Phone size={13} />(281) 503-8903</a>
+              <a href="tel:+18889333010" className="flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-blue-600"><Phone size={13} />(888) 933-3010</a>
             </div>
           </div>
 

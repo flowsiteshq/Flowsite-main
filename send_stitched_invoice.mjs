@@ -68,7 +68,7 @@ try {
           This is a secure Stripe payment link. You can cancel anytime by contacting us.
         </p>
         <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
-        <p style="color: #aaa; font-size: 12px;">FlowSites | flow-sites.com | 281-503-8903</p>
+        <p style="color: #aaa; font-size: 12px;">FlowSites | flow-sites.com | 888-933-3010</p>
       </div>
     `,
   });

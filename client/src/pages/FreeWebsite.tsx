@@ -81,7 +81,7 @@ export default function FreeWebsite() {
             </div>
             <div className="mt-8 rounded-2xl border border-blue-300/20 bg-[#061631] p-5">
               <p className="font-semibold">Need to talk now?</p>
-              <a className="mt-2 inline-flex items-center gap-2 text-blue-300 hover:text-blue-200" href="tel:+12815038903"><Phone size={16} />(281) 503-8903</a>
+              <a className="mt-2 inline-flex items-center gap-2 text-blue-300 hover:text-blue-200" href="tel:+18889333010"><Phone size={16} />(888) 933-3010</a>
             </div>
           </div>
         </div>

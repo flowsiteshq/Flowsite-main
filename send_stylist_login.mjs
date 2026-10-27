@@ -30,7 +30,7 @@ async function sendSms() {
     return false;
   }
 
-  const body = `Hi Stylist Factory! Your FlowSites client portal is ready.\n\nLogin: ${PORTAL_URL}\nEmail: ${RECIPIENT_EMAIL}\nTemp password: ${TEMP_PASSWORD}\n\nPlease change your password after logging in. Questions? Call 281-503-8903.`;
+  const body = `Hi Stylist Factory! Your FlowSites client portal is ready.\n\nLogin: ${PORTAL_URL}\nEmail: ${RECIPIENT_EMAIL}\nTemp password: ${TEMP_PASSWORD}\n\nPlease change your password after logging in. Questions? Call 888-933-3010.`;
 
   const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
   const params = new URLSearchParams({
@@ -73,7 +73,7 @@ async function sendEmail() {
         <p style="margin: 8px 0; color: #ffffff;"><strong>Email:</strong> ${RECIPIENT_EMAIL}</p>
         <p style="margin: 8px 0; color: #ffffff;"><strong>Temporary Password:</strong> <code style="background:#2a2a2a; padding: 2px 8px; border-radius: 4px;">${TEMP_PASSWORD}</code></p>
       </div>
-      <p style="color: #999999; font-size: 14px;">Please change your password after your first login. Questions? Reply to this email or call <strong style="color: #ffffff;">281-503-8903</strong>.</p>
+      <p style="color: #999999; font-size: 14px;">Please change your password after your first login. Questions? Reply to this email or call <strong style="color: #ffffff;">888-933-3010</strong>.</p>
       <div style="text-align: center; margin-top: 32px;">
         <a href="${PORTAL_URL}" style="background: #e53e3e; color: #ffffff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; display: inline-block;">Access Your Portal</a>
       </div>

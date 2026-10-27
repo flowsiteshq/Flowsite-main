@@ -846,6 +846,15 @@ export default function AdminDashboard() {
               Cue integration
             </Link>
           )}
+          {verifiedTechRole === "admin" && (
+            <Link
+              href="/flowsites-admin-free-website"
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 transition-all text-sm font-medium ${isDark ? "text-white/50 hover:text-white hover:bg-white/6" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+            >
+              <ClipboardList size={16} className={isDark ? "text-white/40" : "text-gray-400"} />
+              Free Website requests
+            </Link>
+          )}
           <Link
             href="/flowsites-admin-video-orders"
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 transition-all text-sm font-medium ${isDark ? "text-white/50 hover:text-white hover:bg-white/6" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}

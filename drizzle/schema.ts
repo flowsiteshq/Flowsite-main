@@ -91,6 +91,14 @@ export const freeWebsitePreviewRequests = mysqlTable("free_website_preview_reque
   marketingConsentAt: timestamp("marketingConsentAt"),
   consentDisclosureVersion: varchar("consentDisclosureVersion", { length: 64 }),
   status: mysqlEnum("status", ["new", "under_review", "qualified", "preview_requested", "preview_ready", "preview_delivered", "closed"]).default("new").notNull(),
+  /** Internal-only staff handoff and qualification notes. Never exposed to the prospect or Cue. */
+  internalNotes: text("internalNotes"),
+  /** Staff-entered review preview link. Publishing and delivery remain human actions. */
+  previewUrl: varchar("previewUrl", { length: 1000 }),
+  /** Staff checklist flag; it never sends a communication or releases a preview by itself. */
+  deliveryChecklistComplete: int("deliveryChecklistComplete").default(0).notNull(),
+  /** First time an administrator reviewed or changed the request. */
+  reviewedAt: timestamp("reviewedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

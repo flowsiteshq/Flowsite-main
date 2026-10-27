@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Phone, X } from "lucide-react";
 
-const PHONE = "281-503-8903";
+const PHONE_DISPLAY = "(888) 933-3010";
+const PHONE_LINK = "+18889333010";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -46,7 +47,7 @@ export default function Navbar() {
         </div>
 
         <div className="ml-auto hidden items-center gap-2.5 lg:flex">
-          <a href={`tel:${PHONE}`} className="flex items-center gap-1.5 px-1 text-sm font-medium text-slate-500 transition hover:text-slate-950"><Phone size={13} />{PHONE}</a>
+          <a href={`tel:${PHONE_LINK}`} className="flex items-center gap-1.5 px-1 text-sm font-medium text-slate-500 transition hover:text-slate-950"><Phone size={13} />{PHONE_DISPLAY}</a>
           <Link href="/client-billing" className="inline-flex h-10 items-center rounded-xl border border-slate-200 px-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-950">Client portal</Link>
           <Link href="/free-website" className="inline-flex h-10 items-center rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 active:scale-[0.98]">Get your free website</Link>
         </div>

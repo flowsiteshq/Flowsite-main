@@ -39,7 +39,7 @@ async function sendSms() {
     return false;
   }
 
-  const body = `Hi ${CLIENT_NAME}! This is a friendly reminder from FlowSites.\n\nYou have a pending balance:\n• Build fee balance: ${BUILD_BALANCE} (${INVOICE_NUMBER})\n• Monthly hosting: ${MONTHLY_CHARGE}/mo\n\nYou can make a payment anytime at:\n${PORTAL_URL}\n\nQuestions? Call 281-503-8903.`;
+  const body = `Hi ${CLIENT_NAME}! This is a friendly reminder from FlowSites.\n\nYou have a pending balance:\n• Build fee balance: ${BUILD_BALANCE} (${INVOICE_NUMBER})\n• Monthly hosting: ${MONTHLY_CHARGE}/mo\n\nYou can make a payment anytime at:\n${PORTAL_URL}\n\nQuestions? Call 888-933-3010.`;
 
   const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
   const params = new URLSearchParams({
@@ -110,7 +110,7 @@ async function sendEmail() {
       </div>
 
       <p style="color: #666; font-size: 13px; margin-top: 28px;">
-        If you have any questions or need to discuss a payment plan, please don't hesitate to reach out. Reply to this email or call us at <strong style="color: #ffffff;">281-503-8903</strong>.
+        If you have any questions or need to discuss a payment plan, please don't hesitate to reach out. Reply to this email or call us at <strong style="color: #ffffff;">888-933-3010</strong>.
       </p>
 
       <p style="color: #555; font-size: 12px; text-align: center; margin-top: 32px; border-top: 1px solid #222; padding-top: 20px;">FlowSites | Premium Web Agency | flow-sites.com</p>
