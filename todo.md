@@ -108,7 +108,7 @@
 - [x] Add regression coverage and verify public desktop/mobile contact affordances before release
 
 ## Cue AI Telephone Integration — Safe Foundation
-- [ ] Complete a read-only 800.com account audit for (888) 933-3010; document its forwarding destination, business hours, voicemail, recordings, routing rules, and any verified SIP capability without saving any account change
+- [x] Complete a read-only 800.com account audit for (888) 933-3010; document verified routing, recordings, transcription, greetings, SMS, AI-plan, and SIP findings without saving any account change (business-hour and voicemail enablement require a separate explicit confirmation)
 - [x] Record the verified integration decision tree: direct SIP only if 800.com demonstrates compatible SIP trunking; otherwise test a separate approved receiving number before any forwarding change
 - [x] Create a separate, revocable server-side ElevenLabs voice-integration credential model and a provider-attributed call-event ledger; do not alter the existing read-only Cue lead key
 - [x] Implement narrow authenticated endpoints for agent-collected phone leads and call summaries, with validated allowlisted fields, idempotency, and no autonomous messaging, checkout, or outbound calls

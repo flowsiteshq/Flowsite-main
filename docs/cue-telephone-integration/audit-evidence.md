@@ -6,8 +6,11 @@ The public FlowSites number is **+1 888-933-3010**. This audit does not port, ca
 
 ## 800.com account audit status
 
-- On 2026-10-27, both the sandbox browser and the connected browser reached the 800.com sign-in screen at `https://app.800.com/`; neither session had an active 800.com login.
-- The account-specific forwarding destination, business hours, voicemail, recording setting, call-routing rules, and any SIP capability are therefore **not yet verified**. They must be read from the signed-in 800.com dashboard before selecting an architecture.
+- On 2026-10-27, a read-only signed-in audit verified that **+1 888-933-3010** is labeled **Flowsites**, active, and uses its own number settings rather than a call flow. No account setting was saved during the audit.
+- The current route is **Standard Forwarding** to one existing U.S. forwarding destination. The destination itself is intentionally not written to source control. No extensions are enabled, and no welcome greeting or whisper notice is configured.
+- Call recording and call transcription appear enabled for the number. 800 Intelligence (800.com’s own AI call companion) is not enabled. The current account cannot configure 800.com AI Agents without an upgrade; the displayed offer was $99/month billed annually, plus taxes and usage fees. No plan upgrade or purchase was initiated.
+- SMS is **unverified**. There are no missed-call text-backs, keyword responses, business-hours auto replies, or general auto replies. Placeholder notification fields were visible but do not confirm that any voicemail or SMS notification recipient is configured.
+- The number settings expose Standard, Simultaneous, Sequential, Geo, Voicemail, and In-App-Calling routing. No compatible SIP trunk setting was shown in this account’s number UI. The active business hours and voicemail enablement were not conclusively visible in the read-only review and remain to be confirmed before any test plan.
 - 800.com’s public forwarding documentation says a number can forward to one or multiple destinations using Standard, Simultaneous, Sequential, Geo, or Voicemail routing; it also exposes forwarding hours, caller-ID choice, and ring time. The documentation describes forwarding numbers, but does not by itself establish SIP capability for this FlowSites account.
 
 ## Verified ElevenLabs options
@@ -20,8 +23,8 @@ The public FlowSites number is **+1 888-933-3010**. This audit does not port, ca
 
 ## Decision tree before changing live routing
 
-1. If the signed-in 800.com account demonstrates a documented, supported SIP trunk option compatible with ElevenLabs, use a staged SIP test path.
-2. If it only supports forwarding to standard telephone numbers, use a separate approved receiving number connected to ElevenLabs for a closed test. Do not alter +1 888-933-3010 until that test has passed.
+1. The current number UI did not demonstrate a compatible SIP trunk. Do **not** treat this account as SIP-ready based on the public documentation alone.
+2. Use a separate approved receiving number connected to ElevenLabs for a closed test. Do not alter +1 888-933-3010 until that test has passed and the active business-hour/voicemail behavior is confirmed.
 3. If neither is available, retain existing routing and obtain a provider-supported integration path. Do not improvise a SIP configuration.
 
 ## Sources
