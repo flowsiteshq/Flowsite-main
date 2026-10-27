@@ -18,6 +18,7 @@ import { analyticsRouter } from "./routers/analyticsRouter";
 import { bookingsRouter } from "./routers/bookingsRouter";
 import { videoStudioRouter } from "./routers/videoStudioRouter";
 import { cueIntegrationRouter } from "./routers/cueIntegrationRouter";
+import { freeWebsiteRouter } from "./routers/freeWebsiteRouter";
 import type { TrpcContext } from "./_core/context";
 
 /**
@@ -110,6 +111,7 @@ export const appRouter = router({
   clientBilling: clientBillingRouter,
   videoStudio: videoStudioRouter,
   cueIntegration: cueIntegrationRouter,
+  freeWebsite: freeWebsiteRouter,
   technician: technicianRouter,
   partner: partnerRouter,
   emailAuth: emailAuthRouter,

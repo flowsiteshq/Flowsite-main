@@ -70,6 +70,35 @@ export type WizardSubmission = typeof wizardSubmissions.$inferSelect;
 export type InsertWizardSubmission = typeof wizardSubmissions.$inferInsert;
 
 /**
+ * Free Website Program preview requests. Each request is linked to the
+ * canonical CRM lead created at the same time, while preserving the offer-
+ * specific details and the consent evidence supplied by the prospect.
+ */
+export const freeWebsitePreviewRequests = mysqlTable("free_website_preview_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  businessName: varchar("businessName", { length: 255 }).notNull(),
+  contactName: varchar("contactName", { length: 255 }).notNull(),
+  industry: varchar("industry", { length: 100 }).notNull(),
+  businessLocation: varchar("businessLocation", { length: 255 }),
+  phone: varchar("phone", { length: 50 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  existingWebsiteUrl: varchar("existingWebsiteUrl", { length: 500 }),
+  desiredWebsiteFeatures: text("desiredWebsiteFeatures"),
+  businessDescription: text("businessDescription"),
+  preferredContactMethod: mysqlEnum("preferredContactMethod", ["phone", "email", "either"]).default("either").notNull(),
+  marketingSmsConsent: int("marketingSmsConsent").default(0).notNull(),
+  marketingConsentAt: timestamp("marketingConsentAt"),
+  consentDisclosureVersion: varchar("consentDisclosureVersion", { length: 64 }),
+  status: mysqlEnum("status", ["new", "under_review", "qualified", "preview_requested", "preview_ready", "preview_delivered", "closed"]).default("new").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type FreeWebsitePreviewRequest = typeof freeWebsitePreviewRequests.$inferSelect;
+export type InsertFreeWebsitePreviewRequest = typeof freeWebsitePreviewRequests.$inferInsert;
+
+/**
  * Lead notes — timestamped activity log for each lead
  */
 export const leadNotes = mysqlTable("lead_notes", {

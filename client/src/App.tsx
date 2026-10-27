@@ -63,6 +63,7 @@ import ClientResetPassword from "./pages/ClientResetPassword";
 import Interested from "./pages/Interested";
 import AIServices from "./pages/AIServices";
 import AIVideoStudio from "./pages/AIVideoStudio";
+import FreeWebsite from "./pages/FreeWebsite";
 import { leadCaptureHref } from "./lib/leadCapture";
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -89,6 +90,7 @@ function Router() {
         <Route path="/ai-intake" component={AIIntake} />
         <Route path="/ai-services" component={AIServices} />
         <Route path="/ai-video-studio" component={AIVideoStudio} />
+        <Route path="/free-website" component={FreeWebsite} />
         <Route path="/schedule">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Schedule a strategy call" })); return null; }}</Route>
         <Route path="/budget-wizard">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Build a website budget" })); return null; }}</Route>
         <Route path="/portal" component={ClientPortal} />
