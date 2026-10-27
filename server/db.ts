@@ -1,4 +1,4 @@
-import { and, asc, eq, gte, inArray, lte } from "drizzle-orm";
+import { and, asc, eq, gte, inArray, isNull, lte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2";
 import {
@@ -118,7 +118,11 @@ export async function getAllWizardSubmissions() {
     throw new Error("Database not available");
   }
 
-  const result = await db.select().from(wizardSubmissions).orderBy(wizardSubmissions.createdAt);
+  const result = await db
+    .select()
+    .from(wizardSubmissions)
+    .where(isNull(wizardSubmissions.removedAt))
+    .orderBy(wizardSubmissions.createdAt);
   return result;
 }
 

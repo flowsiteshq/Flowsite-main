@@ -59,6 +59,10 @@ export const wizardSubmissions = mysqlTable("wizard_submissions", {
   assignedPartnerId: int("assignedPartnerId"),
   /** Niche tag for categorizing leads by industry */
   nicheTag: mysqlEnum("nicheTag", ["martial_arts", "restaurant", "fitness", "self_defense", "health_wellness", "salon", "hospitality", "other"]),
+  /** Set when a converted lead is removed from active CRM customers. */
+  removedAt: timestamp("removedAt"),
+  /** Administrator who removed this converted customer from active CRM access. */
+  removedByOpenId: varchar("removedByOpenId", { length: 64 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -299,6 +303,8 @@ export const clientProjects = mysqlTable("client_projects", {
   clientMessage: text("clientMessage"),
   /** Unique access token for client to claim their project without OAuth */
   accessToken: varchar("accessToken", { length: 64 }),
+  /** Set when an administrator removes this customer from active CRM access. */
+  portalAccessRevokedAt: timestamp("portalAccessRevokedAt"),
   /** Package name (e.g. "Growth", "Conversion") */
   packageName: varchar("packageName", { length: 100 }),
   /** One-time setup / build fee charged upfront */
@@ -436,6 +442,12 @@ export const clientAccounts = mysqlTable("client_accounts", {
   inviteToken: varchar("inviteToken", { length: 64 }),
   /** Whether client has accepted the invite */
   inviteAccepted: int("inviteAccepted").default(0).notNull(),
+  /** Removal from the active CRM. Financial history stays intact. */
+  removedAt: timestamp("removedAt"),
+  /** The administrator who removed the customer from active CRM access. */
+  removedByOpenId: varchar("removedByOpenId", { length: 64 }),
+  /** The time client portal access was revoked as part of customer removal. */
+  portalAccessRevokedAt: timestamp("portalAccessRevokedAt"),
   /** Umami analytics website ID for this client's site (from manus-analytics.com) */
   analyticsWebsiteId: varchar("analyticsWebsiteId", { length: 64 }),
   /** Assigned technician/sales rep ID (FK to technicians table) */
@@ -448,6 +460,26 @@ export const clientAccounts = mysqlTable("client_accounts", {
 
 export type ClientAccount = typeof clientAccounts.$inferSelect;
 export type InsertClientAccount = typeof clientAccounts.$inferInsert;
+
+/**
+ * Append-only record of an administrator removing a customer from active CRM
+ * visibility. This is intentionally separate from invoices and Stripe history.
+ */
+export const customerRemovalAuditLogs = mysqlTable("customer_removal_audit_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  clientAccountId: int("clientAccountId"),
+  leadId: int("leadId"),
+  businessName: varchar("businessName", { length: 255 }).notNull(),
+  clientEmail: varchar("clientEmail", { length: 320 }),
+  removalReason: text("removalReason"),
+  removalMethod: varchar("removalMethod", { length: 64 }).notNull(),
+  performedByOpenId: varchar("performedByOpenId", { length: 64 }),
+  performedByName: varchar("performedByName", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CustomerRemovalAuditLog = typeof customerRemovalAuditLogs.$inferSelect;
+export type InsertCustomerRemovalAuditLog = typeof customerRemovalAuditLogs.$inferInsert;
 
 /**
  * Client Invoices — billing records for each client, one per billing period

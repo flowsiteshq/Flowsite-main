@@ -76,6 +76,14 @@
 - [x] Re-run the focused staff route tests after the route and full-screen path updates
 - [x] Verify the repaired staff entry route on both the Railway deployment and the custom domain after publishing
 
+## Customer Removal Control
+- [x] Add an administrator-only customer removal control that removes a customer from the active CRM and revokes portal access while preserving financial and audit history
+- [x] Require the configured server-side customer deletion code plus a typed business-name confirmation before any removal action
+- [x] Prevent removal when the customer has an active Stripe subscription; require the subscription to be cancelled separately and never delete Stripe financial records
+- [x] Record the acting administrator, target customer, timestamp, reason, and removal method in an immutable audit record
+- [x] Add test coverage for role checks, invalid deletion codes, subscription safeguards, portal revocation, and active CRM filtering before publishing
+- [ ] Publish the focused release and set `CUSTOMER_DELETION_CODE` as a Railway production secret before using the control
+
 ## Cue AI Read-Only Lead Access
 - [x] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential
 - [x] Add a protected read-only lead integration endpoint with pagination, audit metadata, and no create, update, delete, billing, or configuration capability

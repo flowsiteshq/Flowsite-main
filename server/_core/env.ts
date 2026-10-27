@@ -13,6 +13,7 @@ export const ENV = {
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
   adminSecretPassword: process.env.ADMIN_SECRET_PASSWORD ?? "",
+  customerDeletionCode: process.env.CUSTOMER_DELETION_CODE ?? "",
   resendApiKey: process.env.RESEND_API_KEY ?? "",
   emailFromAddress: process.env.EMAIL_FROM_ADDRESS ?? "FlowSites <onboarding@resend.dev>",
   stripeSecretKey: process.env.FLOWSITES_STRIPE_SECRET_KEY ?? process.env.STRIPE_SECRET_KEY ?? "",

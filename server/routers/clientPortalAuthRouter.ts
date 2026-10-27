@@ -38,7 +38,7 @@ export const clientPortalAuthRouter = router({
     if (!token) return null;
     const { getDb } = await import("../db");
     const { clientPortalSessions, clientProjects } = await import("../../drizzle/schema");
-    const { eq } = await import("drizzle-orm");
+    const { and, eq, isNull } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) return null;
 
@@ -61,14 +61,18 @@ export const clientPortalAuthRouter = router({
     const [project] = await db
       .select()
       .from(clientProjects)
-      .where(eq(clientProjects.clientEmail, session.clientEmail))
+      .where(and(eq(clientProjects.clientEmail, session.clientEmail), isNull(clientProjects.portalAccessRevokedAt)))
       .limit(1);
-
+    if (!project) {
+      await db.delete(clientPortalSessions).where(eq(clientPortalSessions.sessionToken, token));
+      clearClientSessionCookie(ctx.res);
+      return null;
+    }
     return {
       clientEmail: session.clientEmail,
-      clientName: project?.clientName ?? null,
-      businessName: project?.businessName ?? null,
-      projectId: project?.id ?? null,
+      clientName: project.clientName,
+      businessName: project.businessName,
+      projectId: project.id,
     };
   }),
 
@@ -84,8 +88,8 @@ export const clientPortalAuthRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const { getDb } = await import("../db");
-      const { clientPortalPasswords, clientPortalSessions } = await import("../../drizzle/schema");
-      const { eq } = await import("drizzle-orm");
+      const { clientPortalPasswords, clientPortalSessions, clientProjects } = await import("../../drizzle/schema");
+      const { and, eq, isNull } = await import("drizzle-orm");
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
 
@@ -103,7 +107,14 @@ export const clientPortalAuthRouter = router({
       if (!valid) {
         throw new TRPCError({ code: "UNAUTHORIZED", message: "Invalid email or password." });
       }
-
+      const [project] = await db
+        .select({ id: clientProjects.id })
+        .from(clientProjects)
+        .where(and(eq(clientProjects.clientEmail, input.email), isNull(clientProjects.portalAccessRevokedAt)))
+        .limit(1);
+      if (!project) {
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Invalid email or password." });
+      }
       // Create session
       const token = generateToken();
       const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
@@ -151,14 +162,14 @@ export const clientPortalAuthRouter = router({
     .mutation(async ({ input }) => {
       const { getDb } = await import("../db");
       const { clientProjects, clientPortalPasswords } = await import("../../drizzle/schema");
-      const { eq } = await import("drizzle-orm");
+      const { and, eq, isNull } = await import("drizzle-orm");
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
 
       const [project] = await db
         .select({ clientEmail: clientProjects.clientEmail, clientName: clientProjects.clientName })
         .from(clientProjects)
-        .where(eq(clientProjects.clientEmail, input.email))
+        .where(and(eq(clientProjects.clientEmail, input.email), isNull(clientProjects.portalAccessRevokedAt)))
         .limit(1);
 
       // Always acknowledge the request, including for unknown email addresses.

@@ -45,14 +45,14 @@ export const clientPortalRouter = router({
   getMyProject: protectedProcedure.query(async ({ ctx }) => {
     const { getDb } = await import("../db");
     const { clientProjects } = await import("../../drizzle/schema");
-    const { eq } = await import("drizzle-orm");
+    const { and, eq, isNull } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) throw new Error("Database not available");
 
     const [project] = await db
       .select()
       .from(clientProjects)
-      .where(eq(clientProjects.clientOpenId, ctx.user.openId))
+      .where(and(eq(clientProjects.clientOpenId, ctx.user.openId), isNull(clientProjects.portalAccessRevokedAt)))
       .limit(1);
 
     if (project) return project;
@@ -66,7 +66,7 @@ export const clientPortalRouter = router({
     const [emailMatchedProject] = await db
       .select()
       .from(clientProjects)
-      .where(eq(clientProjects.clientEmail, normalizedEmail))
+      .where(and(eq(clientProjects.clientEmail, normalizedEmail), isNull(clientProjects.portalAccessRevokedAt)))
       .limit(1);
 
     if (!emailMatchedProject || (emailMatchedProject.clientOpenId && emailMatchedProject.clientOpenId !== ctx.user.openId)) {

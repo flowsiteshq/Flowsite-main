@@ -99,6 +99,13 @@ const STATUS_CONFIG = {
 
 type Status = keyof typeof STATUS_CONFIG;
 
+type CustomerRemovalTarget = {
+  id: string;
+  source: "billing" | "lead";
+  businessName: string;
+  email: string;
+};
+
 const QUOTE_STATUS_CONFIG = {
   new: { label: "New", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
   contacted: { label: "Contacted", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
@@ -181,6 +188,8 @@ export default function AdminDashboard() {
   const [expandedId, setExpandedId] = useState<number | string | null>(null);
   const [expandedQuoteId, setExpandedQuoteId] = useState<number | null>(null);
   const [pagesCustomerAccountId, setPagesCustomerAccountId] = useState<number | null>(null);
+  const [customerRemovalTarget, setCustomerRemovalTarget] = useState<CustomerRemovalTarget | null>(null);
+  const [customerRemovalForm, setCustomerRemovalForm] = useState({ businessNameConfirmation: "", deletionCode: "", reason: "" });
 
   // Multi-select state for leads
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
@@ -441,6 +450,18 @@ export default function AdminDashboard() {
   const accountsQueryMain = trpc.clientBilling.adminListAccounts.useQuery(undefined, {
     retry: false,
     enabled: !!verifyQuery.data?.authenticated,
+  });
+  const removeCustomerMutation = trpc.clientBilling.adminRemoveCustomer.useMutation({
+    onSuccess: (data) => {
+      utils.clientBilling.adminListAccounts.invalidate();
+      utils.admin.getLeads.invalidate();
+      utils.adminProjects.list.invalidate();
+      setCustomerRemovalTarget(null);
+      setCustomerRemovalForm({ businessNameConfirmation: "", deletionCode: "", reason: "" });
+      setExpandedId(null);
+      toast.success(`${data.businessName} was removed from the active CRM and portal access was revoked.`);
+    },
+    onError: (error) => toast.error(error.message),
   });
 
   const techniciansQuery = trpc.technician.adminGetTechnicians.useQuery(undefined, {
@@ -1943,6 +1964,20 @@ export default function AdminDashboard() {
                                 </button>
                               );
                             })()}
+                            <button
+                              onClick={() => {
+                                setCustomerRemovalTarget({
+                                  id: customer.id,
+                                  source: customer.source,
+                                  businessName: customer.businessName,
+                                  email: customer.email,
+                                });
+                                setCustomerRemovalForm({ businessNameConfirmation: "", deletionCode: "", reason: "" });
+                              }}
+                              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all text-xs font-semibold ${isDark ? "bg-red-500/10 border border-red-500/25 text-red-300 hover:bg-red-500/20" : "bg-red-50 border border-red-200 text-red-700 hover:bg-red-100"}`}
+                            >
+                              <Trash2 size={12} /> Remove Customer
+                            </button>
                           </div>
                           {customer.source === "billing" && pagesCustomerAccountId === parseInt(customer.id.replace("acct-", ""), 10) && (
                             <AdminPagesPanel
@@ -1959,6 +1994,121 @@ export default function AdminDashboard() {
               </div>
             )}
           </>
+        )}
+
+        {/* ─── CUSTOMER REMOVAL CONFIRMATION ─────────────────────────────────── */}
+        {customerRemovalTarget && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="customer-removal-title">
+            <button
+              aria-label="Close customer removal dialog"
+              className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm"
+              onClick={() => {
+                if (!removeCustomerMutation.isPending) {
+                  setCustomerRemovalTarget(null);
+                  setCustomerRemovalForm({ businessNameConfirmation: "", deletionCode: "", reason: "" });
+                }
+              }}
+            />
+            <form
+              className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-red-200 bg-white shadow-2xl"
+              onSubmit={(event) => {
+                event.preventDefault();
+                const target = customerRemovalTarget;
+                removeCustomerMutation.mutate({
+                  source: target.source,
+                  accountId: target.source === "billing" ? Number(target.id.replace("acct-", "")) : undefined,
+                  leadId: target.source === "lead" ? Number(target.id.replace("lead-", "")) : undefined,
+                  businessNameConfirmation: customerRemovalForm.businessNameConfirmation,
+                  deletionCode: customerRemovalForm.deletionCode,
+                  reason: customerRemovalForm.reason,
+                });
+              }}
+            >
+              <div className="border-b border-red-100 bg-red-50 px-6 py-5">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-600">
+                    <AlertTriangle size={20} />
+                  </div>
+                  <div>
+                    <h3 id="customer-removal-title" className="text-base font-bold text-slate-950">Remove customer from active CRM</h3>
+                    <p className="mt-1 text-sm leading-5 text-slate-600">This revokes portal access and hides the customer from active CRM lists. It does not delete invoices, payments, or Stripe records.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4 px-6 py-5">
+                <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-5 text-amber-900">
+                  <strong>{customerRemovalTarget.businessName}</strong> will be removed. If they have a live Stripe subscription, cancel it in Stripe first; this control will not cancel subscriptions or erase payment history.
+                </div>
+                <label className="block text-sm font-semibold text-slate-800">
+                  Type the business name exactly: <span className="font-bold text-slate-950">{customerRemovalTarget.businessName}</span>
+                  <input
+                    value={customerRemovalForm.businessNameConfirmation}
+                    onChange={(event) => setCustomerRemovalForm((form) => ({ ...form, businessNameConfirmation: event.target.value }))}
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    placeholder={customerRemovalTarget.businessName}
+                    autoComplete="off"
+                    disabled={removeCustomerMutation.isPending}
+                    required
+                  />
+                </label>
+                <label className="block text-sm font-semibold text-slate-800">
+                  Customer deletion code
+                  <input
+                    value={customerRemovalForm.deletionCode}
+                    onChange={(event) => setCustomerRemovalForm((form) => ({ ...form, deletionCode: event.target.value }))}
+                    type="password"
+                    inputMode="numeric"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    placeholder="Enter deletion code"
+                    autoComplete="one-time-code"
+                    disabled={removeCustomerMutation.isPending}
+                    required
+                  />
+                </label>
+                <label className="block text-sm font-semibold text-slate-800">
+                  Reason for removal
+                  <textarea
+                    value={customerRemovalForm.reason}
+                    onChange={(event) => setCustomerRemovalForm((form) => ({ ...form, reason: event.target.value }))}
+                    className="mt-2 min-h-20 w-full resize-y rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    placeholder="For example: customer account closed at their request"
+                    disabled={removeCustomerMutation.isPending}
+                    minLength={3}
+                    maxLength={2000}
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col-reverse gap-2 border-t border-slate-100 bg-slate-50 px-6 py-4 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCustomerRemovalTarget(null);
+                    setCustomerRemovalForm({ businessNameConfirmation: "", deletionCode: "", reason: "" });
+                  }}
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:opacity-50"
+                  disabled={removeCustomerMutation.isPending}
+                >
+                  Keep customer
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={
+                    removeCustomerMutation.isPending ||
+                    customerRemovalForm.businessNameConfirmation !== customerRemovalTarget.businessName ||
+                    customerRemovalForm.deletionCode.length === 0 ||
+                    customerRemovalForm.reason.trim().length < 3
+                  }
+                >
+                  {removeCustomerMutation.isPending ? <Loader2 size={15} className="animate-spin" /> : <Trash2 size={15} />}
+                  Remove customer
+                </button>
+              </div>
+            </form>
+          </div>
         )}
 
         {/* ─── BUDGET QUOTES TAB ─────────────────────────────────────────────── */}

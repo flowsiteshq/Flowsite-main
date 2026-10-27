@@ -3,6 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import crypto from "crypto";
 import { ENV } from "../_core/env";
+import { isBlockingSubscriptionStatus, isValidCustomerDeletionCode } from "../customerRemoval";
 
 /** Owner always has admin access regardless of the role column in the DB. */
 async function requireAdmin(ctx: { user: { role: string; openId: string } | null }): Promise<void> {
@@ -33,12 +34,11 @@ async function resolveClientAccountForUser(
   user: { openId: string; email: string | null }
 ) {
   const { clientAccounts } = await import("../../drizzle/schema");
-  const { eq } = await import("drizzle-orm");
-
+  const { and, eq, isNull } = await import("drizzle-orm");
   const [linkedAccount] = await db
     .select()
     .from(clientAccounts)
-    .where(eq(clientAccounts.clientOpenId, user.openId))
+    .where(and(eq(clientAccounts.clientOpenId, user.openId), isNull(clientAccounts.removedAt)))
     .limit(1);
   if (linkedAccount) return linkedAccount;
 
@@ -48,7 +48,7 @@ async function resolveClientAccountForUser(
   const [emailAccount] = await db
     .select()
     .from(clientAccounts)
-    .where(eq(clientAccounts.clientEmail, normalizedEmail))
+    .where(and(eq(clientAccounts.clientEmail, normalizedEmail), isNull(clientAccounts.removedAt)))
     .limit(1);
 
   if (!emailAccount || (emailAccount.clientOpenId && emailAccount.clientOpenId !== user.openId)) {
@@ -84,7 +84,7 @@ export const clientBillingRouter = router({
   getMyAccessStatus: protectedProcedure.query(async ({ ctx }) => {
     const { getDb } = await import("../db");
     const { clientProjects } = await import("../../drizzle/schema");
-    const { eq } = await import("drizzle-orm");
+    const { and, eq, isNull } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
 
@@ -94,7 +94,7 @@ export const clientBillingRouter = router({
     const [linkedProject] = await db
       .select({ businessName: clientProjects.businessName })
       .from(clientProjects)
-      .where(eq(clientProjects.clientOpenId, ctx.user.openId))
+      .where(and(eq(clientProjects.clientOpenId, ctx.user.openId), isNull(clientProjects.portalAccessRevokedAt)))
       .limit(1);
     if (linkedProject) return { state: "project_only" as const, businessName: linkedProject.businessName };
 
@@ -103,7 +103,7 @@ export const clientBillingRouter = router({
       const [emailProject] = await db
         .select({ businessName: clientProjects.businessName, clientOpenId: clientProjects.clientOpenId })
         .from(clientProjects)
-        .where(eq(clientProjects.clientEmail, normalizedEmail))
+        .where(and(eq(clientProjects.clientEmail, normalizedEmail), isNull(clientProjects.portalAccessRevokedAt)))
         .limit(1);
       if (emailProject && (!emailProject.clientOpenId || emailProject.clientOpenId === ctx.user.openId)) {
         return { state: "project_only" as const, businessName: emailProject.businessName };
@@ -346,21 +346,164 @@ export const clientBillingRouter = router({
 
   // ─── ADMIN: List all client accounts ─────────────────────────────────────────
   adminListAccounts: protectedProcedure.query(async ({ ctx }) => {
-    requireAdmin(ctx);
+    await requireAdmin(ctx);
     const { getDb } = await import("../db");
     const { clientAccounts } = await import("../../drizzle/schema");
-    const { desc } = await import("drizzle-orm");
+    const { desc, isNull } = await import("drizzle-orm");
     const db = await getDb();
     if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-
-    return await db.select().from(clientAccounts).orderBy(desc(clientAccounts.createdAt));
+    return await db
+      .select()
+      .from(clientAccounts)
+      .where(isNull(clientAccounts.removedAt))
+      .orderBy(desc(clientAccounts.createdAt));
   }),
+
+  // ─── ADMIN: Remove customer from active CRM ──────────────────────────────────
+  // This is intentionally a soft removal: client access is revoked, but invoices,
+  // Stripe IDs, and an audit record are retained for business and legal history.
+  adminRemoveCustomer: protectedProcedure
+    .input(z.object({
+      source: z.enum(["billing", "lead"]),
+      accountId: z.number().int().positive().optional(),
+      leadId: z.number().int().positive().optional(),
+      businessNameConfirmation: z.string().trim().min(1).max(255),
+      deletionCode: z.string().min(1).max(128),
+      reason: z.string().trim().min(3).max(2_000),
+    }).superRefine((value, ctx) => {
+      if (value.source === "billing" && !value.accountId) {
+        ctx.addIssue({ code: "custom", path: ["accountId"], message: "A billing account is required." });
+      }
+      if (value.source === "lead" && !value.leadId) {
+        ctx.addIssue({ code: "custom", path: ["leadId"], message: "A customer lead is required." });
+      }
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await requireAdmin(ctx);
+      if (!isValidCustomerDeletionCode(input.deletionCode)) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "The deletion code is incorrect." });
+      }
+
+      const { getDb } = await import("../db");
+      const {
+        clientAccounts,
+        clientPortalPasswords,
+        clientPortalSessions,
+        clientProjects,
+        customerRemovalAuditLogs,
+        wizardSubmissions,
+      } = await import("../../drizzle/schema");
+      const { and, eq, isNull, or } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+
+      const now = new Date();
+      const performedByOpenId = ctx.user.openId;
+      const performedByName = ctx.user.name ?? "FlowSites administrator";
+
+      if (input.source === "billing") {
+        const [account] = await db
+          .select()
+          .from(clientAccounts)
+          .where(and(eq(clientAccounts.id, input.accountId!), isNull(clientAccounts.removedAt)))
+          .limit(1);
+        if (!account) throw new TRPCError({ code: "NOT_FOUND", message: "Active customer account not found." });
+        if (input.businessNameConfirmation !== account.businessName) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Enter the business name exactly as shown to continue." });
+        }
+
+        // Never cancel or delete Stripe data here. A live subscription must be
+        // cancelled separately in Stripe before account removal can proceed.
+        if (account.stripeSubscriptionId || account.stripeCustomerId) {
+          if (!ENV.stripeSecretKey) {
+            throw new TRPCError({ code: "PRECONDITION_FAILED", message: "Stripe could not be verified. Cancel any subscription first, then try again." });
+          }
+          try {
+            const Stripe = (await import("stripe")).default;
+            const stripe = new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" as any });
+            const subscriptions = account.stripeCustomerId
+              ? (await stripe.subscriptions.list({ customer: account.stripeCustomerId, status: "all", limit: 100 })).data
+              : [await stripe.subscriptions.retrieve(account.stripeSubscriptionId!)];
+            const blocking = subscriptions.find((subscription) => isBlockingSubscriptionStatus(subscription.status));
+            if (blocking) {
+              throw new TRPCError({
+                code: "PRECONDITION_FAILED",
+                message: `Cancel the active Stripe subscription (${blocking.status}) before removing this customer.`,
+              });
+            }
+          } catch (error) {
+            if (error instanceof TRPCError) throw error;
+            throw new TRPCError({ code: "PRECONDITION_FAILED", message: "Stripe subscription status could not be verified. No customer data was removed." });
+          }
+        }
+
+        // Revoke every portal access path associated with the account/project.
+        await db.delete(clientPortalSessions).where(eq(clientPortalSessions.clientEmail, account.clientEmail));
+        await db.delete(clientPortalPasswords).where(eq(clientPortalPasswords.clientEmail, account.clientEmail));
+        await db
+          .update(clientProjects)
+          .set({ clientOpenId: null, accessToken: null, portalAccessRevokedAt: now })
+          .where(or(eq(clientProjects.id, account.projectId ?? -1), eq(clientProjects.clientEmail, account.clientEmail)));
+        await db
+          .update(clientAccounts)
+          .set({
+            status: "cancelled",
+            clientOpenId: null,
+            inviteAccepted: 0,
+            removedAt: now,
+            removedByOpenId: performedByOpenId,
+            portalAccessRevokedAt: now,
+          })
+          .where(eq(clientAccounts.id, account.id));
+        await db.insert(customerRemovalAuditLogs).values({
+          clientAccountId: account.id,
+          businessName: account.businessName,
+          clientEmail: account.clientEmail,
+          removalReason: input.reason,
+          removalMethod: "billing_account_deactivated",
+          performedByOpenId,
+          performedByName,
+        });
+        return { success: true, businessName: account.businessName, removedType: "billing_account" as const };
+      }
+
+      const [lead] = await db
+        .select()
+        .from(wizardSubmissions)
+        .where(and(eq(wizardSubmissions.id, input.leadId!), isNull(wizardSubmissions.removedAt)))
+        .limit(1);
+      if (!lead) throw new TRPCError({ code: "NOT_FOUND", message: "Active customer lead not found." });
+      if (input.businessNameConfirmation !== lead.businessName) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Enter the business name exactly as shown to continue." });
+      }
+
+      await db.delete(clientPortalSessions).where(eq(clientPortalSessions.clientEmail, lead.email));
+      await db.delete(clientPortalPasswords).where(eq(clientPortalPasswords.clientEmail, lead.email));
+      await db
+        .update(clientProjects)
+        .set({ clientOpenId: null, accessToken: null, portalAccessRevokedAt: now })
+        .where(eq(clientProjects.clientEmail, lead.email));
+      await db
+        .update(wizardSubmissions)
+        .set({ removedAt: now, removedByOpenId: performedByOpenId })
+        .where(eq(wizardSubmissions.id, lead.id));
+      await db.insert(customerRemovalAuditLogs).values({
+        leadId: lead.id,
+        businessName: lead.businessName,
+        clientEmail: lead.email,
+        removalReason: input.reason,
+        removalMethod: "converted_lead_removed",
+        performedByOpenId,
+        performedByName,
+      });
+      return { success: true, businessName: lead.businessName, removedType: "lead" as const };
+    }),
 
   // ─── ADMIN: Get single account with invoices and media ────────────────────────
   adminGetAccount: protectedProcedure
     .input(z.object({ accountId: z.number() }))
     .query(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientAccounts, clientInvoices, clientMedia } = await import("../../drizzle/schema");
       const { eq, desc } = await import("drizzle-orm");
@@ -390,7 +533,7 @@ export const clientBillingRouter = router({
       assignedTechnicianId: z.number().int().nullable().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientAccounts, clientInvoices } = await import("../../drizzle/schema");
       const { count } = await import("drizzle-orm");
@@ -468,7 +611,7 @@ export const clientBillingRouter = router({
       assignedTechnicianId: z.number().int().nullable().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientAccounts } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -504,7 +647,7 @@ export const clientBillingRouter = router({
       })).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientAccounts, clientInvoices, invoiceItems } = await import("../../drizzle/schema");
       const { eq, count } = await import("drizzle-orm");
@@ -572,7 +715,7 @@ export const clientBillingRouter = router({
   adminApplyLateFee: protectedProcedure
     .input(z.object({ invoiceId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientInvoices, clientAccounts } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -599,7 +742,7 @@ export const clientBillingRouter = router({
 
   // ─── ADMIN: List all invoices ─────────────────────────────────────────────────
   adminListInvoices: protectedProcedure.query(async ({ ctx }) => {
-    requireAdmin(ctx);
+    await requireAdmin(ctx);
     const { getDb } = await import("../db");
     const { clientInvoices, clientAccounts, technicians, technicianCommissions } = await import("../../drizzle/schema");
     const { eq, desc } = await import("drizzle-orm");
@@ -653,7 +796,7 @@ export const clientBillingRouter = router({
       caption: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientMedia } = await import("../../drizzle/schema");
       const db = await getDb();
@@ -678,7 +821,7 @@ export const clientBillingRouter = router({
   adminDeleteMedia: protectedProcedure
     .input(z.object({ mediaId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientMedia } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -792,7 +935,7 @@ export const clientBillingRouter = router({
   adminAssignToSelf: protectedProcedure
     .input(z.object({ accountId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientAccounts } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -1159,7 +1302,7 @@ export const clientBillingRouter = router({
 
   // ─── ADMIN: Get all upgrade requests ─────────────────────────────────────────
   adminGetUpgradeRequests: protectedProcedure.query(async ({ ctx }) => {
-    requireAdmin(ctx);
+    await requireAdmin(ctx);
     const { getDb } = await import("../db");
     const { featureUpgradeRequests } = await import("../../drizzle/schema");
     const db = await getDb();
@@ -1175,7 +1318,7 @@ export const clientBillingRouter = router({
       adminNotes: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientInvoices } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -1285,7 +1428,7 @@ export const clientBillingRouter = router({
       reason: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientInvoices } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -1312,7 +1455,7 @@ export const clientBillingRouter = router({
       agreedPrice: z.number().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { featureUpgradeRequests } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -1355,7 +1498,7 @@ export const clientBillingRouter = router({
   adminGetPages: protectedProcedure
     .input(z.object({ clientAccountId: z.number() }))
     .query(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientPages } = await import("../../drizzle/schema");
       const { eq, asc } = await import("drizzle-orm");
@@ -1378,7 +1521,7 @@ export const clientBillingRouter = router({
       sortOrder: z.number().default(0),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientPages } = await import("../../drizzle/schema");
       const db = await getDb();
@@ -1407,7 +1550,7 @@ export const clientBillingRouter = router({
       sortOrder: z.number().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientPages } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -1425,7 +1568,7 @@ export const clientBillingRouter = router({
   adminDeletePage: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientPages } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
@@ -1448,7 +1591,7 @@ export const clientBillingRouter = router({
       notes: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      requireAdmin(ctx);
+      await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { budgetQuotes } = await import("../../drizzle/schema");
       const db = await getDb();
