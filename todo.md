@@ -99,6 +99,10 @@
 ## Current Billing Task
 - [x] Create and verify a $1 live Stripe payment link using the newly supplied Stripe account
 - [x] Grant Angelika Abella (angelikaabella7@gmail.com) FlowSites administrator access
+- [x] Add a Google-authenticated administrator password-activation route so an existing Google-only admin can establish their own email/password access without relying on unavailable transactional reset email
+- [x] Add a safe first-time-password link from the admin sign-in page and clear messaging that does not disclose account existence to unauthenticated visitors
+- [x] Add regression coverage for strict Google-admin authorization, password hashing, and rejection of non-admin or email-collision setup attempts
+- [ ] Publish the focused admin password-access repair to Railway and verify the production route before asking Angelika to retry
 - [ ] Update the deployed application to use the verified new Flowsites Corp. Stripe account
 - [ ] Retrieve the verified live Stripe credential from the new account and configure a deployable custom secret
 - [x] Fix Google OAuth login initiation returning a missing client_id error

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
-import { publicProcedure, router } from "../_core/trpc";
+import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import { TRPCError } from "@trpc/server";
 
 const SALT_ROUNDS = 12;
@@ -432,6 +432,74 @@ export const emailAuthRouter = router({
         .where(eq(emailAuth.id, authRow.id));
 
       return { success: true };
+    }),
+
+  /**
+   * Lets a currently Google-authenticated FlowSites administrator establish an
+   * email/password login without relying on transactional reset email.
+   * This is intentionally self-service only: the password is bound to the
+   * authenticated admin's existing user record and can never target another user.
+   */
+  adminSetOwnPassword: adminProcedure
+    .input(
+      z.object({
+        password: z.string().min(8).max(128),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const adminEmail = ctx.user.email?.trim().toLowerCase();
+      if (!adminEmail) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Your administrator account does not have an email address. Contact the FlowSites owner.",
+        });
+      }
+
+      const { getDb } = await import("../db");
+      const { emailAuth } = await import("../../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+
+      const byUser = await db
+        .select({ id: emailAuth.id })
+        .from(emailAuth)
+        .where(eq(emailAuth.userId, ctx.user.id))
+        .limit(1);
+
+      const byEmail = await db
+        .select({ id: emailAuth.id, userId: emailAuth.userId })
+        .from(emailAuth)
+        .where(eq(emailAuth.email, adminEmail))
+        .limit(1);
+
+      if (byEmail[0] && byEmail[0].userId !== ctx.user.id) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "This email is already connected to another password account. Contact the FlowSites owner.",
+        });
+      }
+
+      const passwordHash = await bcrypt.hash(input.password, SALT_ROUNDS);
+      const payload = {
+        email: adminEmail,
+        passwordHash,
+        emailVerified: 1,
+        resetToken: null,
+        resetTokenExpiry: null,
+      };
+
+      if (byUser[0]) {
+        await db.update(emailAuth).set(payload).where(eq(emailAuth.id, byUser[0].id));
+        return { success: true, created: false };
+      }
+
+      await db.insert(emailAuth).values({
+        userId: ctx.user.id,
+        ...payload,
+      });
+
+      return { success: true, created: true };
     }),
 
   /**

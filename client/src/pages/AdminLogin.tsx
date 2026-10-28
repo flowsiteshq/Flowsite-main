@@ -267,6 +267,12 @@ export default function AdminLogin() {
             >
               Forgot password?
             </a>
+            <a
+              href="/flowsites-admin-password-setup"
+              className="text-xs font-semibold text-blue-700 hover:text-blue-800 transition-colors underline underline-offset-2 block"
+            >
+              First-time admin password setup
+            </a>
             <p className="text-[11px] text-gray-400">
               Restricted area. Unauthorized access is prohibited.
             </p>

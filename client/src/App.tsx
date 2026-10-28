@@ -26,6 +26,7 @@ import AIIntake from "./pages/AIIntake";
 import BookCall from "./pages/BookCall";
 import AdminSubmissions from "./pages/AdminSubmissions";
 import AdminLogin from "./pages/AdminLogin";
+import AdminPasswordSetup from "./pages/AdminPasswordSetup";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminScheduling from "./pages/AdminScheduling";
 import AdminVideoOrders from "./pages/AdminVideoOrders";
@@ -104,6 +105,7 @@ function Router() {
         <Route path="/invoice/:shareToken" component={PublicInvoice} />
         <Route path="/admin/submissions" component={AdminSubmissions} />
         <Route path="/admin-login" component={AdminLogin} />
+        <Route path="/flowsites-admin-password-setup" component={AdminPasswordSetup} />
         <Route path="/flowsites-admin-secret" component={AdminLogin} />
         <Route path="/flowsites-admin-dashboard" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />
