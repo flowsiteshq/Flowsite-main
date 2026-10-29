@@ -312,12 +312,14 @@ export const clientBillingRouter = router({
 
       const Stripe = (await import("stripe")).default;
       const stripe = new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" });
-
       const origin = ctx.req.headers.origin as string ?? "https://flow-sites.com";
 
+      const shouldStartSubscription = invoice.invoiceType === "monthly"
+        && invoice.isRecurring === 1
+        && !account.stripeSubscriptionId;
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        mode: "payment",
+        mode: shouldStartSubscription ? "subscription" : "payment",
         customer_email: account.clientEmail,
         line_items: [{
           price_data: {
@@ -327,6 +329,7 @@ export const clientBillingRouter = router({
               name: `FlowSites Invoice ${invoice.invoiceNumber}`,
               description: `${account.businessName} — ${invoice.periodStart} to ${invoice.periodEnd}`,
             },
+            ...(shouldStartSubscription ? { recurring: { interval: "month" as const } } : {}),
           },
           quantity: 1,
         }],
@@ -336,7 +339,9 @@ export const clientBillingRouter = router({
           invoiceId: String(invoice.id),
           clientAccountId: String(account.id),
           invoiceNumber: invoice.invoiceNumber,
+          billingMode: shouldStartSubscription ? "subscription" : "one_time_invoice",
         },
+        ...(shouldStartSubscription ? { subscription_data: { metadata: { invoiceId: String(invoice.id), clientAccountId: String(account.id) } } } : {}),
         success_url: `${origin}/client-billing?payment=success&invoice=${invoice.invoiceNumber}`,
         cancel_url: `${origin}/client-billing`,
       });
@@ -1171,6 +1176,10 @@ export const clientBillingRouter = router({
 
       const Stripe = (await import("stripe")).default;
       const stripe = new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" as any });
+      const shouldStartSubscription = Boolean(account)
+        && invoice.invoiceType === "monthly"
+        && invoice.isRecurring === 1
+        && !account?.stripeSubscriptionId;
 
       // Build Stripe line_items: use individual items if present, otherwise single line
       const stripeLineItems = items.length > 0
@@ -1180,6 +1189,7 @@ export const clientBillingRouter = router({
               currency: "usd",
               unit_amount: item.unitAmountCents,
               product_data: { name: item.description },
+              ...(shouldStartSubscription ? { recurring: { interval: "month" as const } } : {}),
             },
           }))
         : [{
@@ -1191,17 +1201,20 @@ export const clientBillingRouter = router({
                 name: `FlowSites Invoice ${invoice.invoiceNumber}`,
                 description: `${account?.businessName ?? ""} — ${invoice.periodStart} to ${invoice.periodEnd}`,
               },
+              ...(shouldStartSubscription ? { recurring: { interval: "month" as const } } : {}),
             },
           }];
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        mode: "payment",
+        mode: shouldStartSubscription ? "subscription" : "payment",
         line_items: stripeLineItems,
+        ...(shouldStartSubscription ? { subscription_data: { metadata: { invoiceId: String(invoice.id), clientAccountId: String(account!.id) } } } : {}),
         metadata: {
           invoiceId: String(invoice.id),
           invoiceNumber: invoice.invoiceNumber,
           shareToken: input.shareToken,
+          ...(shouldStartSubscription ? { clientAccountId: String(account!.id), billingMode: "subscription" } : { billingMode: "one_time_invoice" }),
         },
         success_url: `${input.origin}/invoice/${input.shareToken}?payment=success`,
         cancel_url: `${input.origin}/invoice/${input.shareToken}?payment=cancelled`,

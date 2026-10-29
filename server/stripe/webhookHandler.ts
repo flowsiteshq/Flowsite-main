@@ -27,7 +27,7 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
-      const { invoiceId, shareToken, videoOrderId } = session.metadata ?? {};
+      const { invoiceId, shareToken, videoOrderId, clientAccountId } = session.metadata ?? {};
 
       console.log(
         `[Webhook] Checkout completed — invoiceId: ${invoiceId}, shareToken: ${shareToken}, paymentStatus: ${session.payment_status}`
@@ -124,6 +124,26 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
           }
         } catch (dbErr) {
           console.error("[Webhook] Failed to update invoice status:", dbErr);
+        }
+      }
+
+      // A monthly portal checkout creates the recurring subscription and must
+      // link it back to the local customer record for future billing checks.
+      if (session.subscription && clientAccountId) {
+        try {
+          const { getDb } = await import("../db");
+          const { clientAccounts } = await import("../../drizzle/schema");
+          const { eq } = await import("drizzle-orm");
+          const db = await getDb();
+          if (db) {
+            await db.update(clientAccounts).set({
+              stripeCustomerId: typeof session.customer === "string" ? session.customer : null,
+              stripeSubscriptionId: typeof session.subscription === "string" ? session.subscription : session.subscription.id,
+            }).where(eq(clientAccounts.id, Number(clientAccountId)));
+            console.log(`[Webhook] Linked recurring Stripe subscription ${String(session.subscription)} to account ${clientAccountId}`);
+          }
+        } catch (subscriptionDbErr) {
+          console.error("[Webhook] Failed to link recurring subscription:", subscriptionDbErr);
         }
       }
       break;

@@ -1007,6 +1007,11 @@ export default function ClientBilling() {
                   </p>
                 </div>
               )}
+              {openInvoices.some((invoice) => invoice.invoiceType === "monthly" && invoice.isRecurring === 1) && (
+                <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-sm text-blue-900">
+                  Standard monthly payments are recurring by default. Paying a monthly invoice here will start recurring Stripe billing when no subscription is already linked. Stripe Checkout will show the amount and terms before approval.
+                </div>
+              )}
               <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
                 {invoicesLoading ? (
                   <div className="p-12 flex justify-center">
@@ -1043,7 +1048,7 @@ export default function ClientBilling() {
                               <button onClick={() => createCheckoutMutation.mutate({ invoiceId: inv.id })}
                                 disabled={createCheckoutMutation.isPending}
                                 className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 ml-auto">
-                                Pay Now <ArrowUpRight size={12} />
+                                {inv.invoiceType === "monthly" && inv.isRecurring === 1 ? "Pay & Start Monthly Billing" : "Pay Now"} <ArrowUpRight size={12} />
                               </button>
                             )}
                             {inv.shareToken && (
