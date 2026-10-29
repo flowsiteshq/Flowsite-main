@@ -1,0 +1,12 @@
+-- Superseded migration note.
+--
+-- Do not execute this early artifact. It predates the human-review fields and
+-- was replaced during the migration-ledger reconciliation.
+--
+-- Canonical additive migration:
+--   database/feature-migrations/2026-10-27-free-website-preview-requests.sql
+--
+-- The canonical entry includes staff-only review notes, preview URL,
+-- delivery-checklist, and review-timestamp fields. It must be applied only
+-- after the legacy Drizzle journal has been treated as historical metadata,
+-- not as an executable deployment plan.

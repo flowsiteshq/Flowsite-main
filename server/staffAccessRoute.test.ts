@@ -17,7 +17,7 @@ describe("FlowSites staff access routing", () => {
   it("continues to serve the earlier staff bookmark without exposing dashboard functionality", () => {
     expect(app).toContain('<Route path="/admin-login" component={AdminLogin} />');
     expect(app).toContain('<Route path="/flowsites-admin-secret" component={AdminLogin} />');
-    expect(app).toContain('<Route path="/flowsites-admin-dashboard" component={AdminDashboard} />');
+    expect(app).toContain('<Route path="/flowsites-admin-dashboard" component={AdminCommandOverview} />');
   });
 
   it("keeps both staff sign-in paths out of the public site shell", () => {

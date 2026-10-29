@@ -117,10 +117,10 @@ export default function Contact() {
                       <div>
                         <p className="text-xs font-semibold text-[oklch(0.55_0.008_260)] uppercase tracking-widest mb-1">Phone / Text</p>
                         <a
-                          href="tel:+12815038903"
+                          href="tel:+18889333010"
                           className="text-[oklch(0.20_0.006_260)] hover:text-[oklch(0.52_0.22_25)] transition-colors font-medium"
                         >
-                          (281) 503-8903
+                          (888) 933-3010
                         </a>
                       </div>
                     </div>

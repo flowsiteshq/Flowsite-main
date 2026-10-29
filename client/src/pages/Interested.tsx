@@ -66,10 +66,10 @@ export default function Interested() {
           </span>
         </Link>
         <a
-          href="tel:+12815038903"
+          href="tel:+18889333010"
           className="text-sm text-white/60 hover:text-white transition-colors"
         >
-          (281) 503-8903
+          (888) 933-3010
         </a>
       </header>
 
@@ -271,8 +271,8 @@ export default function Interested() {
         <p className="text-xs text-white/30">© 2026 FlowSites. All rights reserved.</p>
         <p className="text-xs text-white/30">
           Questions? Call us at{" "}
-          <a href="tel:+12815038903" className="text-white/50 hover:text-white transition-colors">
-            (281) 503-8903
+          <a href="tel:+18889333010" className="text-white/50 hover:text-white transition-colors">
+            (888) 933-3010
           </a>
         </p>
       </footer>

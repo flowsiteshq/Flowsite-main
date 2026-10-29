@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Phone, X } from "lucide-react";
-import { leadCaptureHref } from "@/lib/leadCapture";
 
-const PHONE = "281-503-8903";
+const PHONE_DISPLAY = "(888) 933-3010";
+const PHONE_LINK = "+18889333010";
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/free-website", label: "Free Website" },
   { href: "/#packages", label: "Website Packages" },
   { href: "/ai-services", label: "AI Services" },
   { href: "/ai-video-studio", label: "AI Video Studio" },
@@ -46,9 +47,9 @@ export default function Navbar() {
         </div>
 
         <div className="ml-auto hidden items-center gap-2.5 lg:flex">
-          <a href={`tel:${PHONE}`} className="flex items-center gap-1.5 px-1 text-sm font-medium text-slate-500 transition hover:text-slate-950"><Phone size={13} />{PHONE}</a>
+          <a href={`tel:${PHONE_LINK}`} className="flex items-center gap-1.5 px-1 text-sm font-medium text-slate-500 transition hover:text-slate-950"><Phone size={13} />{PHONE_DISPLAY}</a>
           <Link href="/client-billing" className="inline-flex h-10 items-center rounded-xl border border-slate-200 px-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-950">Client portal</Link>
-          <Link href={leadCaptureHref({ intent: "Start a FlowSites website project" })} className="inline-flex h-10 items-center rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 active:scale-[0.98]">Get started</Link>
+          <Link href="/free-website" className="inline-flex h-10 items-center rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 active:scale-[0.98]">Get your free website</Link>
         </div>
 
         <button onClick={() => setIsMobileOpen(open => !open)} className="ml-auto rounded-lg p-2 text-slate-600 transition hover:bg-slate-50 hover:text-slate-950 lg:hidden" aria-label="Toggle menu">
@@ -62,7 +63,7 @@ export default function Navbar() {
             {navLinks.map(link => <Link key={link.label} href={link.href} className={navLinkClass(link.href)}>{link.label}</Link>)}
             <div className="mt-3 grid grid-cols-1 gap-2 border-t border-slate-100 pt-4">
               <Link href="/client-billing" className="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 text-sm font-semibold text-slate-700">Client portal</Link>
-              <Link href={leadCaptureHref({ intent: "Start a FlowSites website project" })} className="inline-flex h-11 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white shadow-md shadow-blue-600/20">Get started</Link>
+              <Link href="/free-website" className="inline-flex h-11 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white shadow-md shadow-blue-600/20">Get your free website</Link>
             </div>
           </div>
         </div>

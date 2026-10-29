@@ -10,6 +10,7 @@ describe("public conversion flow", () => {
     const home = source("client/src/pages/Home.tsx");
     const aiServices = source("client/src/pages/AIServices.tsx");
     const navbar = source("client/src/components/Navbar.tsx");
+    const freeWebsite = source("client/src/pages/FreeWebsite.tsx");
     const industries = source("client/src/components/IndustryLanding.tsx");
 
     expect(app).toContain('path="/get-started"');
@@ -20,7 +21,9 @@ describe("public conversion flow", () => {
     expect(home).toContain('href="/#packages"');
     expect(aiServices).toContain("leadCaptureHref({ prompt:");
     expect(aiServices).toContain('leadCaptureHref({ intent: "Discuss AI services" })');
-    expect(navbar).toContain('leadCaptureHref({ intent: "Start a FlowSites website project" })');
+    expect(navbar).toContain('href="/free-website"');
+    expect(freeWebsite).toContain("trpc.freeWebsite.submitPreviewRequest.useMutation");
+    expect(freeWebsite).toContain('href="#preview-request"');
     expect(industries).toContain("leadCaptureHref({ intent: `Discuss a ${config.name} website` })");
   });
 

@@ -31,6 +31,8 @@ export type InsertUser = typeof users.$inferInsert;
 export const wizardSubmissions = mysqlTable("wizard_submissions", {
   id: int("id").autoincrement().primaryKey(),
   businessName: varchar("businessName", { length: 255 }).notNull(),
+  /** Optional contact name collected during a verified phone conversation. */
+  contactName: varchar("contactName", { length: 255 }),
   businessType: varchar("businessType", { length: 100 }).notNull(),
   businessTypeOther: text("businessTypeOther"),
   website: varchar("website", { length: 500 }),
@@ -48,7 +50,7 @@ export const wizardSubmissions = mysqlTable("wizard_submissions", {
   status: mysqlEnum("status", ["new", "contacted", "in_progress", "proposal_sent", "won", "lost"]).default("new").notNull(),
   statusUpdatedAt: timestamp("statusUpdatedAt").defaultNow().notNull(),
   /** Lead source — how this lead found us */
-  source: mysqlEnum("source", ["website", "cold_call", "referral", "social", "partner", "other"]),
+  source: mysqlEnum("source", ["website", "cold_call", "referral", "social", "partner", "ai_voice", "other"]),
   /** Admin notes — call outcomes, context, next steps */
   adminNotes: text("adminNotes"),
   /** Follow-up date — surfaces overdue follow-ups at top of Leads tab */
@@ -68,6 +70,43 @@ export const wizardSubmissions = mysqlTable("wizard_submissions", {
 
 export type WizardSubmission = typeof wizardSubmissions.$inferSelect;
 export type InsertWizardSubmission = typeof wizardSubmissions.$inferInsert;
+
+/**
+ * Free Website Program preview requests. Each request is linked to the
+ * canonical CRM lead created at the same time, while preserving the offer-
+ * specific details and the consent evidence supplied by the prospect.
+ */
+export const freeWebsitePreviewRequests = mysqlTable("free_website_preview_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  leadId: int("leadId").notNull(),
+  businessName: varchar("businessName", { length: 255 }).notNull(),
+  contactName: varchar("contactName", { length: 255 }).notNull(),
+  industry: varchar("industry", { length: 100 }).notNull(),
+  businessLocation: varchar("businessLocation", { length: 255 }),
+  phone: varchar("phone", { length: 50 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  existingWebsiteUrl: varchar("existingWebsiteUrl", { length: 500 }),
+  desiredWebsiteFeatures: text("desiredWebsiteFeatures"),
+  businessDescription: text("businessDescription"),
+  preferredContactMethod: mysqlEnum("preferredContactMethod", ["phone", "email", "either"]).default("either").notNull(),
+  marketingSmsConsent: int("marketingSmsConsent").default(0).notNull(),
+  marketingConsentAt: timestamp("marketingConsentAt"),
+  consentDisclosureVersion: varchar("consentDisclosureVersion", { length: 64 }),
+  status: mysqlEnum("status", ["new", "under_review", "qualified", "preview_requested", "preview_ready", "preview_delivered", "closed"]).default("new").notNull(),
+  /** Internal-only staff handoff and qualification notes. Never exposed to the prospect or Cue. */
+  internalNotes: text("internalNotes"),
+  /** Staff-entered review preview link. Publishing and delivery remain human actions. */
+  previewUrl: varchar("previewUrl", { length: 1000 }),
+  /** Staff checklist flag; it never sends a communication or releases a preview by itself. */
+  deliveryChecklistComplete: int("deliveryChecklistComplete").default(0).notNull(),
+  /** First time an administrator reviewed or changed the request. */
+  reviewedAt: timestamp("reviewedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type FreeWebsitePreviewRequest = typeof freeWebsitePreviewRequests.$inferSelect;
+export type InsertFreeWebsitePreviewRequest = typeof freeWebsitePreviewRequests.$inferInsert;
 
 /**
  * Lead notes — timestamped activity log for each lead
@@ -120,6 +159,49 @@ export const cueIntegrationAuditLogs = mysqlTable("cue_integration_audit_logs", 
 
 export type CueIntegrationAuditLog = typeof cueIntegrationAuditLogs.$inferSelect;
 export type InsertCueIntegrationAuditLog = typeof cueIntegrationAuditLogs.$inferInsert;
+
+/**
+ * Dedicated, revocable service credentials for a future ElevenLabs phone
+ * agent. These keys are separate from Cue's read-only lead credential and are
+ * limited to the narrow phone-lead write scope.
+ */
+export const voiceIntegrationKeys = mysqlTable("voice_integration_keys", {
+  id: int("id").autoincrement().primaryKey(),
+  label: varchar("label", { length: 80 }).notNull(),
+  keyPrefix: varchar("keyPrefix", { length: 32 }).notNull(),
+  tokenHash: varchar("tokenHash", { length: 64 }).notNull().unique(),
+  scope: varchar("scope", { length: 64 }).notNull().default("phone_leads:write"),
+  createdByOpenId: varchar("createdByOpenId", { length: 64 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  lastUsedAt: timestamp("lastUsedAt"),
+  expiresAt: timestamp("expiresAt"),
+  revokedAt: timestamp("revokedAt"),
+});
+
+export type VoiceIntegrationKey = typeof voiceIntegrationKeys.$inferSelect;
+export type InsertVoiceIntegrationKey = typeof voiceIntegrationKeys.$inferInsert;
+
+/**
+ * Provider-attributed call events. Raw transcripts and recordings are not
+ * persisted; only a limited summary is stored after signature verification.
+ * providerEventId is unique so webhook retries remain idempotent.
+ */
+export const voiceCallEvents = mysqlTable("voice_call_events", {
+  id: int("id").autoincrement().primaryKey(),
+  provider: varchar("provider", { length: 64 }).notNull(),
+  providerEventId: varchar("providerEventId", { length: 255 }).notNull().unique(),
+  providerCallId: varchar("providerCallId", { length: 191 }).notNull(),
+  eventType: varchar("eventType", { length: 80 }).notNull(),
+  leadId: int("leadId"),
+  normalizedPhone: varchar("normalizedPhone", { length: 50 }),
+  summary: text("summary"),
+  source: mysqlEnum("source", ["agent_tool", "signed_webhook"]).notNull(),
+  eventTimestamp: timestamp("eventTimestamp"),
+  receivedAt: timestamp("receivedAt").defaultNow().notNull(),
+});
+
+export type VoiceCallEvent = typeof voiceCallEvents.$inferSelect;
+export type InsertVoiceCallEvent = typeof voiceCallEvents.$inferInsert;
 
 /**
  * Admin sessions table for secret admin authentication

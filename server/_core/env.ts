@@ -20,6 +20,10 @@ export const ENV = {
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? "",
   eightHundredApiKey: process.env.EIGHT_HUNDRED_API_KEY ?? "",
   eightHundredSenderNumber: process.env.EIGHT_HUNDRED_SENDER_NUMBER ?? "",
+  /** Server-only credential for official ElevenLabs SDK webhook verification. */
+  elevenLabsWebhookSecret: process.env.ELEVENLABS_WEBHOOK_SECRET ?? "",
+  /** Optional: used only by the provider SDK constructor, never sent to the browser. */
+  elevenLabsApiKey: process.env.ELEVENLABS_API_KEY ?? "",
   googleClientId: process.env.GOOGLE_CLIENT_ID ?? "",
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
 };

@@ -522,23 +522,41 @@ export const clientBillingRouter = router({
   // ─── ADMIN: Create client account ────────────────────────────────────────────
   adminCreateAccount: protectedProcedure
     .input(z.object({
-      clientName: z.string(),
+      clientName: z.string().trim().min(1).max(255),
       clientEmail: z.string().email(),
-      clientPhone: z.string().optional(),
-      businessName: z.string(),
-      websiteUrl: z.string().optional(),
-      monthlyPriceCents: z.number(),
-      billingStartDate: z.string().optional(),
-      adminNotes: z.string().optional(),
+      clientPhone: z.string().trim().max(50).optional(),
+      businessName: z.string().trim().min(1).max(255),
+      websiteUrl: z.string().trim().max(500).optional(),
+      monthlyPriceCents: z.number().int().min(100).max(10_000_000),
+      billingStartDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+      adminNotes: z.string().max(10_000).optional(),
       assignedTechnicianId: z.number().int().nullable().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       await requireAdmin(ctx);
       const { getDb } = await import("../db");
       const { clientAccounts, clientInvoices } = await import("../../drizzle/schema");
-      const { count } = await import("drizzle-orm");
+      const { and, count, eq, isNull, or } = await import("drizzle-orm");
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+
+      const [existingAccount] = await db
+        .select({ id: clientAccounts.id })
+        .from(clientAccounts)
+        .where(and(
+          isNull(clientAccounts.removedAt),
+          or(
+            eq(clientAccounts.clientEmail, input.clientEmail),
+            eq(clientAccounts.businessName, input.businessName),
+          ),
+        ))
+        .limit(1);
+      if (existingAccount) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "An active customer record already uses this business name or email.",
+        });
+      }
 
       const inviteToken = crypto.randomBytes(32).toString("hex");
 

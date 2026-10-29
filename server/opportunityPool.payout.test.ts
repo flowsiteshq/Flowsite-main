@@ -8,15 +8,17 @@ import { appRouter } from "./routers";
 
 // ─── Shared mocks ────────────────────────────────────────────────────────────
 
-const mockDb = {
-  select: vi.fn().mockReturnThis(),
-  from: vi.fn().mockReturnThis(),
-  where: vi.fn().mockReturnThis(),
-  limit: vi.fn().mockReturnThis(),
-  update: vi.fn().mockReturnThis(),
-  set: vi.fn().mockReturnThis(),
-  then: undefined as any,
-};
+const { mockDb } = vi.hoisted(() => ({
+  mockDb: {
+    select: vi.fn().mockReturnThis(),
+    from: vi.fn().mockReturnThis(),
+    where: vi.fn().mockReturnThis(),
+    limit: vi.fn().mockReturnThis(),
+    update: vi.fn().mockReturnThis(),
+    set: vi.fn().mockReturnThis(),
+    then: undefined as any,
+  },
+}));
 
 vi.mock("./db", () => ({
   getDb: vi.fn().mockResolvedValue(mockDb),

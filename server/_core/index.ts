@@ -14,6 +14,7 @@ import { invoicePdfHandler } from "../invoicePdfRoute";
 import { eightHundredWebhookHandler, eightHundredWebhookVerify } from "../800comWebhook";
 import { createGoogleAuthRouter } from "../googleAuth";
 import { registerCueIntegrationRoutes } from "../cueIntegrationApi";
+import { elevenLabsPostCallWebhookHandler, registerElevenLabsIntegrationToolRoutes } from "../elevenLabsIntegrationApi";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -43,6 +44,14 @@ async function startServer() {
     "/api/stripe/webhook",
     express.raw({ type: "application/json" }),
     stripeWebhookHandler
+  );
+
+  // ElevenLabs verifies an HMAC over the exact request body. Keep this route
+  // ahead of the general JSON parser so the official SDK receives raw bytes.
+  app.post(
+    "/api/integrations/elevenlabs/webhook",
+    express.raw({ type: "application/json" }),
+    elevenLabsPostCallWebhookHandler
   );
 
   // 800.com inbound SMS webhook — register BEFORE express.json() so body is available
@@ -99,6 +108,8 @@ async function startServer() {
 
   // Cue AI assistant: isolated, read-only lead access via a dedicated service key.
   registerCueIntegrationRoutes(app);
+  // Future Cue phone-agent tools: separate scoped key; no session or Cue key is accepted.
+  registerElevenLabsIntegrationToolRoutes(app);
 
   // tRPC API
   app.use(

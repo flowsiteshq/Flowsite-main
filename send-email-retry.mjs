@@ -77,11 +77,11 @@ function buildEmailHtml(businessName) {
       </div>
       <p class="greeting">If you're interested, just click the button below and fill out a quick form — we'll reach out personally within 24 hours.</p>
       <div class="cta-section"><a href="https://flow-sites.com/interested">Yes, I'm Interested →</a></div>
-      <p class="greeting" style="margin-top:32px;">To your success,<br /><strong>The FlowSites Team</strong><br /><a href="tel:+12815038903" style="color:#e03030;">(281) 503-8903</a> · <a href="https://flow-sites.com" style="color:#e03030;">flow-sites.com</a></p>
+      <p class="greeting" style="margin-top:32px;">To your success,<br /><strong>The FlowSites Team</strong><br /><a href="tel:+18889333010" style="color:#e03030;">(888) 933-3010</a> · <a href="https://flow-sites.com" style="color:#e03030;">flow-sites.com</a></p>
     </div>
     <div class="footer">
       <p>© 2026 FlowSites. All rights reserved.</p>
-      <p><a href="https://flow-sites.com">flow-sites.com</a> · <a href="tel:+12815038903">(281) 503-8903</a></p>
+      <p><a href="https://flow-sites.com">flow-sites.com</a> · <a href="tel:+18889333010">(888) 933-3010</a></p>
       <p style="margin-top:12px;">You're receiving this email because your business was identified as a great fit for our services.<br />To unsubscribe, reply with "unsubscribe."</p>
     </div>
   </div>

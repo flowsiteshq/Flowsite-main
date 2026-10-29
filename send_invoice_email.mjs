@@ -45,7 +45,7 @@ const html = `
       <a href="${invoiceUrl}" class="btn">View Invoice</a>
     </div>
     <div class="footer">
-      FlowSites &bull; flow-sites.com &bull; 281-503-8903
+      FlowSites &bull; flow-sites.com &bull; 888-933-3010
     </div>
   </div>
 </body>
