@@ -62,7 +62,7 @@ describe("Admin 3.0 command center", () => {
 
     expect(page).toContain('+ Add Customer');
     expect(page).toContain('Create local customer');
-    expect(page).toContain('does not create a Stripe customer or subscription');
+    expect(page).toContain('does not create a Stripe subscription or charge a payment method');
     expect(billingRouter).toContain('An active customer record already uses this business name or email.');
     expect(billingRouter).toContain('monthlyPriceCents: z.number().int().min(100)');
   });

@@ -159,6 +159,56 @@ export async function sendWizardConfirmationEmail(data: {
   });
 }
 
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>'"]/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;",
+  })[character] ?? character);
+}
+
+/** Generate the secure invoice email sent when an admin creates a customer account. */
+export function generateInvoiceEmail(data: {
+  businessName: string;
+  contactName: string;
+  invoiceNumber: string;
+  amountCents: number;
+  dueDate: string;
+  invoiceUrl: string;
+  isRecurring: boolean;
+}): string {
+  const amount = `$${(data.amountCents / 100).toFixed(2)}`;
+  const recurringCopy = data.isRecurring
+    ? "This is a monthly recurring invoice. Standard monthly payments will be set up as recurring billing during secure checkout."
+    : "This invoice is a one-time charge.";
+  return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FlowSites invoice ${escapeHtml(data.invoiceNumber)}</title></head>
+<body style="margin:0;background:#f5f8fc;color:#14213f;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:36px 16px;background:#f5f8fc;"><tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;">
+      <tr><td style="padding:28px 32px;background:#0f2747;color:#fff;"><div style="font-size:23px;font-weight:800;letter-spacing:-.04em;">FLOW SITES</div><div style="margin-top:6px;color:#cfe1f7;font-size:13px;">Secure billing and client services</div></td></tr>
+      <tr><td style="padding:34px 32px;"><p style="margin:0 0 8px;font-size:15px;color:#64748b;">Hello ${escapeHtml(data.contactName || "there")},</p><h1 style="margin:0;font-size:28px;letter-spacing:-.03em;color:#14213f;">Your FlowSites invoice is ready</h1><p style="margin:16px 0 0;font-size:15px;line-height:1.65;color:#475569;">An invoice has been created for <strong>${escapeHtml(data.businessName)}</strong>.</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:26px 0;border:1px solid #dbe5f0;border-radius:14px;"><tr><td style="padding:18px 20px;color:#64748b;font-size:13px;">Invoice</td><td align="right" style="padding:18px 20px;font-weight:700;color:#14213f;">${escapeHtml(data.invoiceNumber)}</td></tr><tr><td style="padding:0 20px 18px;color:#64748b;font-size:13px;">Amount due</td><td align="right" style="padding:0 20px 18px;font-size:24px;font-weight:800;color:#1269e8;">${amount}</td></tr><tr><td style="padding:0 20px 18px;color:#64748b;font-size:13px;">Due date</td><td align="right" style="padding:0 20px 18px;font-weight:700;color:#14213f;">${escapeHtml(data.dueDate)}</td></tr></table>
+        <p style="margin:0 0 22px;padding:14px 16px;border-radius:10px;background:#eff6ff;color:#1e3a5f;font-size:13px;line-height:1.55;">${recurringCopy}</p>
+        <a href="${escapeHtml(data.invoiceUrl)}" style="display:inline-block;padding:13px 20px;border-radius:10px;background:#1269e8;color:#fff;text-decoration:none;font-weight:700;font-size:14px;">View and pay invoice</a>
+        <p style="margin:24px 0 0;font-size:12px;line-height:1.6;color:#64748b;">Payments are processed securely by Stripe. The final payment and recurring terms, when applicable, are displayed before approval.</p>
+      </td></tr>
+      <tr><td style="padding:20px 32px;border-top:1px solid #e2e8f0;color:#94a3b8;font-size:12px;">FlowSites · flow-sites.com · This message was sent because a customer account was created for your business.</td></tr>
+    </table>
+  </td></tr></table>
+</body></html>`;
+}
+
+export async function sendInvoiceEmail(data: Parameters<typeof generateInvoiceEmail>[0] & { to: string }): Promise<boolean> {
+  return sendEmail({
+    to: data.to,
+    subject: `FlowSites invoice ${data.invoiceNumber} for ${data.businessName}`,
+    html: generateInvoiceEmail(data),
+  });
+}
+
 function formatTime(time: string): string {
   const [h, m] = time.split(":").map(Number);
   const ampm = h >= 12 ? "PM" : "AM";

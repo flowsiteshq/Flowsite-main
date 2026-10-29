@@ -53,6 +53,26 @@ describe("sendEmail", () => {
   });
 });
 
+describe("generateInvoiceEmail", () => {
+  it("includes the invoice details, secure link, and recurring billing disclosure", async () => {
+    const { generateInvoiceEmail } = await import("./email");
+    const html = generateInvoiceEmail({
+      businessName: "Stylist Factory",
+      contactName: "Latisha",
+      invoiceNumber: "INV-2026-0006",
+      amountCents: 24900,
+      dueDate: "2026-10-01",
+      invoiceUrl: "https://flow-sites.com/invoice/secure-token",
+      isRecurring: true,
+    });
+    expect(html).toContain("Stylist Factory");
+    expect(html).toContain("$249.00");
+    expect(html).toContain("INV-2026-0006");
+    expect(html).toContain("https://flow-sites.com/invoice/secure-token");
+    expect(html).toContain("monthly recurring invoice");
+  });
+});
+
 describe("sendBookingConfirmationEmail", () => {
   beforeEach(() => {
     vi.resetModules();

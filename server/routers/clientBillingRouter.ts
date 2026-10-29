@@ -4,6 +4,7 @@ import { TRPCError } from "@trpc/server";
 import crypto from "crypto";
 import { ENV } from "../_core/env";
 import { isBlockingSubscriptionStatus, isValidCustomerDeletionCode } from "../customerRemoval";
+import { sendInvoiceEmail } from "../email";
 
 /** Owner always has admin access regardless of the role column in the DB. */
 async function requireAdmin(ctx: { user: { role: string; openId: string } | null }): Promise<void> {
@@ -581,6 +582,8 @@ export const clientBillingRouter = router({
 
       const newId = (result as any).insertId as number;
 
+      let createdInvoice: { invoiceNumber: string; shareToken: string; amountCents: number; dueDate: string } | null = null;
+
       // ── Auto-generate first invoice ──────────────────────────────────────────
       try {
         // Invoice covers the month PRIOR to billing start date.
@@ -614,9 +617,25 @@ export const clientBillingRouter = router({
           status: "open",
           shareToken,
         });
+        createdInvoice = { invoiceNumber, shareToken, amountCents: input.monthlyPriceCents, dueDate };
       } catch (invoiceErr) {
         // Non-fatal: account was created, invoice creation failed
         console.error("[adminCreateAccount] Failed to auto-create first invoice:", invoiceErr);
+      }
+
+      if (createdInvoice) {
+        const invoiceUrl = `https://flow-sites.com/invoice/${createdInvoice.shareToken}`;
+        const sent = await sendInvoiceEmail({
+          to: input.clientEmail,
+          businessName: input.businessName,
+          contactName: input.clientName,
+          invoiceNumber: createdInvoice.invoiceNumber,
+          amountCents: createdInvoice.amountCents,
+          dueDate: createdInvoice.dueDate,
+          invoiceUrl,
+          isRecurring: true,
+        });
+        if (!sent) console.warn(`[adminCreateAccount] Invoice email was not sent for account ${newId}`);
       }
 
       return { id: newId, inviteToken };
