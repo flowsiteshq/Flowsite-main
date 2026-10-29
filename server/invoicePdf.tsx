@@ -5,6 +5,7 @@
 import React from "react";
 import {
   Document,
+  Image,
   Page,
   Text,
   View,
@@ -12,6 +13,7 @@ import {
   renderToBuffer,
   Font,
 } from "@react-pdf/renderer";
+import path from "node:path";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 function fmt(cents: number): string {
@@ -50,20 +52,13 @@ const s = StyleSheet.create({
   brandBox: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    minHeight: 42,
   },
-  brandBadge: {
-    width: 28,
-    height: 28,
-    backgroundColor: "#dc2626",
-    borderRadius: 6,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  brandBadgeText: {
-    color: "#ffffff",
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
+  brandLogo: {
+    width: 116,
+    height: 94,
+    objectFit: "contain",
+    objectPosition: "left center",
   },
   brandName: {
     color: "#ffffff",
@@ -384,10 +379,7 @@ function InvoiceDocument({ invoice, account }: InvoicePdfData) {
           {/* Brand */}
           <View>
             <View style={s.brandBox}>
-              <View style={s.brandBadge}>
-                <Text style={s.brandBadgeText}>FS</Text>
-              </View>
-              <Text style={s.brandName}>FlowSites</Text>
+              <Image src={path.resolve(process.cwd(), "client/public/flowsites-logo-transparent.png")} style={s.brandLogo} />
             </View>
             <Text style={s.brandSub}>hello@flow-sites.com · flow-sites.com · (281) 818-9288</Text>
           </View>

@@ -156,10 +156,10 @@ export default function PublicInvoice() {
           {/* Brand */}
           <div className="flex items-center gap-2.5">
             <img
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663031545745/urOWhqfyIrKAoifg.png"
+              src="/flowsites-logo-transparent.png"
               alt="FlowSites"
-              style={{ height: "56px", width: "auto" }}
-              className="object-contain"
+              style={{ height: "48px", width: "auto" }}
+              className="object-contain object-left"
             />
             <span className="text-gray-300 text-sm">·</span>
             <span className="text-gray-500 text-sm">Invoice Portal</span>
@@ -221,10 +221,10 @@ export default function PublicInvoice() {
               <div>
                 <div className="flex items-center gap-2.5 mb-4">
                   <img
-                    src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663031545745/urOWhqfyIrKAoifg.png"
+                    src="/flowsites-logo-transparent.png"
                     alt="FlowSites"
-                    style={{ height: "120px", width: "auto" }}
-                    className="object-contain"
+                    style={{ height: "92px", width: "auto" }}
+                    className="object-contain object-left"
                   />
                 </div>
                 <p className="text-gray-400 text-xs leading-relaxed">
