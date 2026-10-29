@@ -876,6 +876,49 @@ export const clientBillingRouter = router({
       }
     }),
 
+  // ─── ADMIN: Send a saved invoice without creating another invoice ───────────
+  adminSendInvoiceOnly: protectedProcedure
+    .input(z.object({ invoiceId: z.number().int() }))
+    .mutation(async ({ ctx, input }) => {
+      await requireAdmin(ctx);
+      const { getDb } = await import("../db");
+      const { clientAccounts, clientInvoices, invoiceItems, invoiceActivities } = await import("../../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      const [invoice] = await db.select().from(clientInvoices).where(eq(clientInvoices.id, input.invoiceId)).limit(1);
+      if (!invoice) throw new TRPCError({ code: "NOT_FOUND", message: "Invoice not found" });
+      if (["paid", "void"].includes(invoice.status)) throw new TRPCError({ code: "BAD_REQUEST", message: "This invoice cannot be sent." });
+      if (["pending", "sent", "delivered"].includes(invoice.emailDeliveryStatus) && invoice.finalizedAt) {
+        throw new TRPCError({ code: "CONFLICT", message: "This invoice has already been sent. Use retry only after a failed delivery." });
+      }
+      const [account] = await db.select().from(clientAccounts).where(eq(clientAccounts.id, invoice.clientAccountId)).limit(1);
+      if (!account) throw new TRPCError({ code: "NOT_FOUND", message: "Customer account not found" });
+      const invoiceUrl = `https://flow-sites.com/invoice/${invoice.shareToken}`;
+      const subject = `Invoice ${invoice.invoiceNumber} from Flow Sites`;
+      const html = generateInvoiceEmail({
+        businessName: account.businessName,
+        contactName: account.clientName,
+        invoiceNumber: invoice.invoiceNumber,
+        amountCents: invoice.totalAmountCents,
+        dueDate: invoice.dueDate,
+        invoiceUrl,
+        isRecurring: invoice.isRecurring === 1,
+      });
+      try {
+        const result = await sendEmail({ to: account.clientEmail, subject, html });
+        if (!result) throw new Error("Email provider rejected or skipped the message");
+        const now = new Date();
+        await db.update(clientInvoices).set({ status: "open", emailDeliveryStatus: "sent", emailSentAt: now, emailLastError: null, communicationMode: "invoice_only", emailSubject: subject, emailBodyHtml: html, finalizedAt: now, finalizedByOpenId: ctx.user.openId }).where(eq(clientInvoices.id, invoice.id));
+        await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_sent", deliveryStatus: "sent", details: `invoice_only; recipient ${account.clientEmail}`, performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
+        return { success: true, invoiceId: invoice.id, deliveryStatus: "sent" as const };
+      } catch (error) {
+        await db.update(clientInvoices).set({ emailDeliveryStatus: "failed", emailLastError: error instanceof Error ? error.message : "Email delivery failed", communicationMode: "invoice_only", emailSubject: subject, emailBodyHtml: html }).where(eq(clientInvoices.id, invoice.id));
+        await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_failed", deliveryStatus: "failed", details: error instanceof Error ? error.message : "Email delivery failed", performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
+        throw new TRPCError({ code: "BAD_GATEWAY", message: "Invoice email failed. The same invoice remains available for a controlled retry." });
+      }
+    }),
+
   // ─── ADMIN: Apply late fee to invoice ────────────────────────────────────────
   adminApplyLateFee: protectedProcedure
     .input(z.object({ invoiceId: z.number() }))

@@ -4,6 +4,7 @@ import fs from "node:fs";
 const routerSource = fs.readFileSync("server/routers/clientBillingRouter.ts", "utf8");
 const schemaSource = fs.readFileSync("drizzle/schema.ts", "utf8");
 const migrationSource = fs.readFileSync("database/feature-migrations/2026-10-29-draft-invoice-communications.sql", "utf8");
+const billingUiSource = fs.readFileSync("client/src/pages/AdminCommandCenterPages.tsx", "utf8");
 
 describe("draft invoice communications", () => {
   it("does not automatically send an invoice during account creation", () => {
@@ -16,12 +17,16 @@ describe("draft invoice communications", () => {
   it("supports all deliberate communication modes and saves a retryable delivery state", () => {
     expect(routerSource).toContain("adminFinalizeInvoice");
     expect(routerSource).toContain("adminRetryInvoiceEmail");
+    expect(routerSource).toContain("adminSendInvoiceOnly");
     for (const mode of ["invoice_only", "invoice_welcome", "invoice_custom", "invoice_cue"]) {
       expect(routerSource).toContain(`"${mode}"`);
     }
     expect(schemaSource).toContain('"pending", "sent", "delivered", "bounced", "failed"');
     expect(routerSource).toContain("This invoice has already been sent");
     expect(routerSource).toContain("Controlled retry");
+    expect(billingUiSource).toContain("Send invoice");
+    expect(billingUiSource).toContain("Retry send");
+    expect(billingUiSource).toContain("This will not create another invoice");
   });
 
   it("records a customer invoice activity timeline without destructive billing updates", () => {
