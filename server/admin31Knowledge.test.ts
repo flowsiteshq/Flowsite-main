@@ -15,7 +15,7 @@ describe("Admin 3.1 Knowledge Center", () => {
     expect(ledger).toContain("2026-10-29-admin-31-knowledge-center");
   });
 
-  it("registers strict-admin article procedures and the light route", () => {
+  it("keeps the established CRM Knowledge Center as the primary Admin route", () => {
     const router = read("server/routers/adminKnowledgeRouter.ts");
     const app = read("client/src/App.tsx");
     const shell = read("client/src/components/AdminCommandShell.tsx");
@@ -23,7 +23,11 @@ describe("Admin 3.1 Knowledge Center", () => {
     expect(router).toContain("markCueSync");
     expect(router).toContain("getCuePublishedKnowledge");
     expect(app).toContain("/flowsites-admin-knowledge");
+    expect(app).toContain('path="/flowsites-admin-knowledge" component={AdminDashboard}');
+    expect(read("client/src/pages/AdminDashboard.tsx")).toContain('window.location.pathname === "/flowsites-admin-knowledge" ? "knowledgeCenter" : "leads"');
     expect(shell).toContain("Knowledge Center");
+    expect(shell).toContain("bg-white text-gray-900");
+    expect(shell).toContain("border-black bg-black text-white");
   });
 
   it("states the provider truth boundary in the reconciliation UI", () => {

@@ -128,7 +128,8 @@ function Router() {
         <Route path="/flowsites-admin-billing" component={AdminBillingWorkspace} />
         <Route path="/flowsites-admin-leads" component={AdminLeadsWorkspace} />
         <Route path="/flowsites-admin-projects" component={AdminProjectsWorkspace} />
-        <Route path="/flowsites-admin-knowledge" component={AdminKnowledgeCenter} />
+        {/* One Knowledge Center: use the established CRM workspace from the Admin 3 navigation. */}
+        <Route path="/flowsites-admin-knowledge" component={AdminDashboard} />
         <Route path="/flowsites-admin-settings" component={AdminSettingsWorkspace} />
         <Route path="/flowsites-admin-legacy-crm" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />

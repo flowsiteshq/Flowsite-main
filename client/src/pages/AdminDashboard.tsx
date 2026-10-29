@@ -181,7 +181,7 @@ function LeadLocalTime({ phone, isDark, compact = false }: { phone?: string | nu
 
 export default function AdminDashboard() {
   const [, navigate] = useLocation();
-  const [activeTab, setActiveTab] = useState<"leads" | "customers" | "quotes" | "projects" | "changes" | "messages" | "upgrades" | "billing" | "invoices" | "team" | "scripts" | "partners" | "analytics" | "opportunities" | "addons" | "smsInbox" | "knowledgeCenter" | "bookings">("leads");
+  const [activeTab, setActiveTab] = useState<"leads" | "customers" | "quotes" | "projects" | "changes" | "messages" | "upgrades" | "billing" | "invoices" | "team" | "scripts" | "partners" | "analytics" | "opportunities" | "addons" | "smsInbox" | "knowledgeCenter" | "bookings">(() => window.location.pathname === "/flowsites-admin-knowledge" ? "knowledgeCenter" : "leads");
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterNiche, setFilterNiche] = useState<string>("all");
