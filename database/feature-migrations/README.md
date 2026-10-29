@@ -20,6 +20,7 @@ Replaying or rewriting the legacy `drizzle/meta/_journal.json` would be unsafe b
 | --- | --- | --- |
 | `2026-10-27-free-website-preview-requests` | Free Website Program request, human-review, and preview-delivery checklist table | Development migration applied after metadata verification; production pending explicit release approval |
 | `2026-10-29-admin-31-knowledge-center` | Knowledge Center articles with public/internal Cue access, manual sync state, and dedupe-safe staff notifications | Development artifact created; target application and production pending read-only metadata verification and explicit release approval |
+| `2026-10-29-draft-invoice-communications` | Draft invoice review, deliberate Finalize & Send communication modes, delivery state, retry guard, and customer invoice activity timeline | Additive artifact created; apply only after read-only metadata verification; live email automation remains disabled until test-account approval |
 
 ## Safety boundary
 

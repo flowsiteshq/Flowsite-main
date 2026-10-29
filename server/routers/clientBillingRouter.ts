@@ -4,7 +4,8 @@ import { TRPCError } from "@trpc/server";
 import crypto from "crypto";
 import { ENV } from "../_core/env";
 import { isBlockingSubscriptionStatus, isValidCustomerDeletionCode } from "../customerRemoval";
-import { sendInvoiceEmail } from "../email";
+import { generateInvoiceEmail, sendEmail } from "../email";
+import { invokeLLM } from "../_core/llm";
 
 /** Owner always has admin access regardless of the role column in the DB. */
 async function requireAdmin(ctx: { user: { role: string; openId: string } | null }): Promise<void> {
@@ -511,7 +512,7 @@ export const clientBillingRouter = router({
     .query(async ({ ctx, input }) => {
       await requireAdmin(ctx);
       const { getDb } = await import("../db");
-      const { clientAccounts, clientInvoices, clientMedia } = await import("../../drizzle/schema");
+      const { clientAccounts, clientInvoices, clientMedia, invoiceItems } = await import("../../drizzle/schema");
       const { eq, desc } = await import("drizzle-orm");
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
@@ -520,9 +521,11 @@ export const clientBillingRouter = router({
       if (!account) throw new TRPCError({ code: "NOT_FOUND" });
 
       const invoices = await db.select().from(clientInvoices).where(eq(clientInvoices.clientAccountId, input.accountId)).orderBy(desc(clientInvoices.createdAt));
+      const items = invoices.length ? await db.select().from(invoiceItems) : [];
+      const invoicesWithItems = invoices.map(invoice => ({ ...invoice, items: items.filter(item => item.invoiceId === invoice.id) }));
       const media = await db.select().from(clientMedia).where(eq(clientMedia.clientAccountId, input.accountId)).orderBy(desc(clientMedia.createdAt));
 
-      return { account, invoices, media };
+      return { account, invoices: invoicesWithItems, media };
     }),
 
   // ─── ADMIN: Create client account ────────────────────────────────────────────
@@ -582,8 +585,6 @@ export const clientBillingRouter = router({
 
       const newId = (result as any).insertId as number;
 
-      let createdInvoice: { invoiceNumber: string; shareToken: string; amountCents: number; dueDate: string } | null = null;
-
       // ── Auto-generate first invoice ──────────────────────────────────────────
       try {
         // Invoice covers the month PRIOR to billing start date.
@@ -614,28 +615,12 @@ export const clientBillingRouter = router({
           lateFeeCents: 0,
           totalAmountCents: input.monthlyPriceCents,
           discountType: "none",
-          status: "open",
+          status: "draft",
           shareToken,
         });
-        createdInvoice = { invoiceNumber, shareToken, amountCents: input.monthlyPriceCents, dueDate };
       } catch (invoiceErr) {
         // Non-fatal: account was created, invoice creation failed
         console.error("[adminCreateAccount] Failed to auto-create first invoice:", invoiceErr);
-      }
-
-      if (createdInvoice) {
-        const invoiceUrl = `https://flow-sites.com/invoice/${createdInvoice.shareToken}`;
-        const sent = await sendInvoiceEmail({
-          to: input.clientEmail,
-          businessName: input.businessName,
-          contactName: input.clientName,
-          invoiceNumber: createdInvoice.invoiceNumber,
-          amountCents: createdInvoice.amountCents,
-          dueDate: createdInvoice.dueDate,
-          invoiceUrl,
-          isRecurring: true,
-        });
-        if (!sent) console.warn(`[adminCreateAccount] Invoice email was not sent for account ${newId}`);
       }
 
       return { id: newId, inviteToken };
@@ -691,7 +676,7 @@ export const clientBillingRouter = router({
     .mutation(async ({ ctx, input }) => {
       await requireAdmin(ctx);
       const { getDb } = await import("../db");
-      const { clientAccounts, clientInvoices, invoiceItems } = await import("../../drizzle/schema");
+      const { clientAccounts, clientInvoices, invoiceItems, invoiceActivities } = await import("../../drizzle/schema");
       const { eq, count } = await import("drizzle-orm");
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
@@ -731,7 +716,7 @@ export const clientBillingRouter = router({
         totalAmountCents: total,
         discountType: input.discountType,
         notes: input.notes ?? null,
-        status: "open",
+        status: "draft",
         shareToken,
       });
       const invoiceId = (result as any).insertId as number;
@@ -750,7 +735,96 @@ export const clientBillingRouter = router({
         );
       }
 
+      await db.insert(invoiceActivities).values({
+        clientAccountId: input.clientAccountId,
+        invoiceId,
+        activityType: "invoice_draft_created",
+        details: `Draft ${invoiceNumber} created with total ${total} cents.`,
+        performedByOpenId: ctx.user.openId,
+        performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator",
+      });
+
       return { id: invoiceId, invoiceNumber, shareToken };
+    }),
+
+  // ─── ADMIN: Finalize and send an invoice ─────────────────────────────────────
+  adminFinalizeInvoice: protectedProcedure
+    .input(z.object({
+      invoiceId: z.number().int(),
+      communicationMode: z.enum(["invoice_only", "invoice_welcome", "invoice_custom", "invoice_cue"]),
+      subject: z.string().trim().min(1).max(255),
+      bodyHtml: z.string().trim().min(1).max(50_000),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await requireAdmin(ctx);
+      const { getDb } = await import("../db");
+      const { clientAccounts, clientInvoices, invoiceItems, invoiceActivities } = await import("../../drizzle/schema");
+      const { eq, and, inArray } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      const [invoice] = await db.select().from(clientInvoices).where(eq(clientInvoices.id, input.invoiceId)).limit(1);
+      if (!invoice) throw new TRPCError({ code: "NOT_FOUND", message: "Invoice not found" });
+      if (invoice.status === "paid" || invoice.status === "void") throw new TRPCError({ code: "BAD_REQUEST", message: "This invoice cannot be finalized." });
+      if (["pending", "sent", "delivered"].includes(invoice.emailDeliveryStatus) && invoice.finalizedAt) {
+        throw new TRPCError({ code: "CONFLICT", message: "This invoice has already been sent. Use retry only after a failed delivery." });
+      }
+      const [account] = await db.select().from(clientAccounts).where(eq(clientAccounts.id, invoice.clientAccountId)).limit(1);
+      if (!account) throw new TRPCError({ code: "NOT_FOUND", message: "Customer account not found" });
+      const items = await db.select().from(invoiceItems).where(eq(invoiceItems.invoiceId, invoice.id));
+      const itemSummary = items.length ? items.map(item => `${item.description} (${item.quantity} × $${(item.unitAmountCents / 100).toFixed(2)})`).join(", ") : "Monthly FlowSites service";
+      const invoiceUrl = `https://flow-sites.com/invoice/${invoice.shareToken}`;
+      let communicationBody = input.bodyHtml;
+      if (input.communicationMode === "invoice_cue") {
+        const cueResponse = await invokeLLM({
+          messages: [
+            { role: "system", content: "Write a concise, professional FlowSites customer email in plain text. Use only the supplied facts. Do not invent services, prices, dates, or discounts." },
+            { role: "user", content: JSON.stringify({ customer: account.clientName, business: account.businessName, invoice: invoice.invoiceNumber, amount: invoice.totalAmountCents, dueDate: invoice.dueDate, recurring: invoice.isRecurring === 1, services: items.map(item => ({ name: item.description, quantity: item.quantity, unitPriceCents: item.unitAmountCents })) }) },
+          ],
+        });
+        const generated = cueResponse.choices?.[0]?.message?.content;
+        if (typeof generated === "string" && generated.trim()) communicationBody = generated.trim().replace(/\n/g, "<br />");
+      }
+      const html = input.communicationMode === "invoice_only"
+        ? generateInvoiceEmail({ businessName: account.businessName, contactName: account.clientName, invoiceNumber: invoice.invoiceNumber, amountCents: invoice.totalAmountCents, dueDate: invoice.dueDate, invoiceUrl, isRecurring: invoice.isRecurring === 1 })
+        : `<div style="font-family:Arial,sans-serif;color:#14213f;line-height:1.6">${communicationBody}<hr style="border:0;border-top:1px solid #e2e8f0;margin:24px 0"><p>Invoice <strong>${invoice.invoiceNumber}</strong> for <strong>$${(invoice.totalAmountCents / 100).toFixed(2)}</strong>.</p><p><a href="${invoiceUrl}">View and pay invoice</a></p></div>`;
+      try {
+        const result = await sendEmail({ to: account.clientEmail, subject: input.subject, html });
+        if (!result) throw new Error("Email provider rejected or skipped the message");
+        const now = new Date();
+        await db.update(clientInvoices).set({ status: "open", emailDeliveryStatus: "sent", emailSentAt: now, emailLastError: null, communicationMode: input.communicationMode, emailSubject: input.subject, emailBodyHtml: html, finalizedAt: now, finalizedByOpenId: ctx.user.openId }).where(eq(clientInvoices.id, invoice.id));
+        await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_sent", deliveryStatus: "sent", details: `${input.communicationMode}; recipient ${account.clientEmail}; services ${itemSummary}`, performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
+        return { success: true, deliveryStatus: "sent" as const };
+      } catch (error) {
+        await db.update(clientInvoices).set({ emailDeliveryStatus: "failed", emailLastError: error instanceof Error ? error.message : "Email delivery failed", communicationMode: input.communicationMode, emailSubject: input.subject, emailBodyHtml: html }).where(eq(clientInvoices.id, invoice.id));
+        await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_failed", deliveryStatus: "failed", details: error instanceof Error ? error.message : "Email delivery failed", performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
+        throw new TRPCError({ code: "BAD_GATEWAY", message: "Invoice email failed. The draft remains available for a controlled retry." });
+      }
+    }),
+
+  // ─── ADMIN: Retry a failed invoice email without creating another invoice ────
+  adminRetryInvoiceEmail: protectedProcedure
+    .input(z.object({ invoiceId: z.number().int() }))
+    .mutation(async ({ ctx, input }) => {
+      await requireAdmin(ctx);
+      const { getDb } = await import("../db");
+      const { clientAccounts, clientInvoices, invoiceActivities } = await import("../../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      const [invoice] = await db.select().from(clientInvoices).where(eq(clientInvoices.id, input.invoiceId)).limit(1);
+      if (!invoice || invoice.emailDeliveryStatus !== "failed" || !invoice.emailSubject || !invoice.emailBodyHtml) throw new TRPCError({ code: "BAD_REQUEST", message: "Only failed invoice emails with saved content can be retried." });
+      const [account] = await db.select().from(clientAccounts).where(eq(clientAccounts.id, invoice.clientAccountId)).limit(1);
+      if (!account) throw new TRPCError({ code: "NOT_FOUND", message: "Customer account not found" });
+      try {
+        const result = await sendEmail({ to: account.clientEmail, subject: invoice.emailSubject, html: invoice.emailBodyHtml });
+        if (!result) throw new Error("Email provider rejected or skipped the message");
+        await db.update(clientInvoices).set({ emailDeliveryStatus: "sent", emailSentAt: new Date(), emailLastError: null }).where(eq(clientInvoices.id, invoice.id));
+        await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_retried", deliveryStatus: "sent", details: `Controlled retry to ${account.clientEmail}`, performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
+        return { success: true, invoiceId: invoice.id, deliveryStatus: "sent" as const };
+      } catch (error) {
+        await db.update(clientInvoices).set({ emailDeliveryStatus: "failed", emailLastError: error instanceof Error ? error.message : "Email delivery failed" }).where(eq(clientInvoices.id, invoice.id));
+        throw new TRPCError({ code: "BAD_GATEWAY", message: "Retry failed; the same invoice remains available for another controlled retry." });
+      }
     }),
 
   // ─── ADMIN: Apply late fee to invoice ────────────────────────────────────────

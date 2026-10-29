@@ -606,6 +606,16 @@ export const clientInvoices = mysqlTable("client_invoices", {
   addonRequestId: int("addonRequestId"),
   /** Public share token — allows unauthenticated view and payment of this invoice */
   shareToken: varchar("shareToken", { length: 64 }),
+  /** Delivery workflow state for finalized invoice communications */
+  emailDeliveryStatus: mysqlEnum("emailDeliveryStatus", ["pending", "sent", "delivered", "bounced", "failed"]).default("pending").notNull(),
+  emailSentAt: timestamp("emailSentAt"),
+  emailDeliveredAt: timestamp("emailDeliveredAt"),
+  emailLastError: text("emailLastError"),
+  communicationMode: mysqlEnum("communicationMode", ["invoice_only", "invoice_welcome", "invoice_custom", "invoice_cue"]).default("invoice_only").notNull(),
+  emailSubject: varchar("emailSubject", { length: 255 }),
+  emailBodyHtml: text("emailBodyHtml"),
+  finalizedAt: timestamp("finalizedAt"),
+  finalizedByOpenId: varchar("finalizedByOpenId", { length: 64 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -634,6 +644,21 @@ export const invoiceItems = mysqlTable("invoice_items", {
 });
 export type InvoiceItem = typeof invoiceItems.$inferSelect;
 export type InsertInvoiceItem = typeof invoiceItems.$inferInsert;
+
+/** Immutable timeline of invoice and customer communication actions. */
+export const invoiceActivities = mysqlTable("invoice_activities", {
+  id: int("id").autoincrement().primaryKey(),
+  clientAccountId: int("clientAccountId").notNull(),
+  invoiceId: int("invoiceId"),
+  activityType: varchar("activityType", { length: 64 }).notNull(),
+  deliveryStatus: varchar("deliveryStatus", { length: 32 }),
+  details: text("details"),
+  performedByOpenId: varchar("performedByOpenId", { length: 64 }),
+  performedByName: varchar("performedByName", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+export type InvoiceActivity = typeof invoiceActivities.$inferSelect;
+export type InsertInvoiceActivity = typeof invoiceActivities.$inferInsert;
 
 /**
  * Client Media — photos and videos uploaded by clients for their website

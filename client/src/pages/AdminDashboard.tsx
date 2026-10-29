@@ -4392,6 +4392,10 @@ function AdminBillingPanel({ isDark }: { isDark: boolean }) {
   const [selectedAccountId, setSelectedAccountId] = useState<number | null>(null);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
   const [showCreateInvoice, setShowCreateInvoice] = useState(false);
+  const [finalizeInvoiceId, setFinalizeInvoiceId] = useState<number | null>(null);
+  const [communicationMode, setCommunicationMode] = useState<"invoice_only" | "invoice_welcome" | "invoice_custom" | "invoice_cue">("invoice_only");
+  const [emailSubject, setEmailSubject] = useState("Your FlowSites invoice is ready");
+  const [emailBody, setEmailBody] = useState("Hello,\n\nYour FlowSites invoice is ready for review. Please use the secure invoice link to review the services, payment terms, and payment options.");
   const [newAccount, setNewAccount] = useState({
     clientName: "", clientEmail: "", clientPhone: "", businessName: "",
     websiteUrl: "", monthlyPriceCents: 4900, billingStartDate: "", adminNotes: "",
@@ -4465,6 +4469,14 @@ function AdminBillingPanel({ isDark }: { isDark: boolean }) {
 
   const createInvoiceMutation = trpc.clientBilling.adminCreateInvoice.useMutation({
     onSuccess: () => { accountDetailQuery.refetch(); setShowCreateInvoice(false); },
+  });
+  const finalizeInvoiceMutation = trpc.clientBilling.adminFinalizeInvoice.useMutation({
+    onSuccess: () => { accountDetailQuery.refetch(); setFinalizeInvoiceId(null); toast.success("Invoice finalized and email sent."); },
+    onError: (error) => toast.error(error.message),
+  });
+  const retryInvoiceEmailMutation = trpc.clientBilling.adminRetryInvoiceEmail.useMutation({
+    onSuccess: () => { accountDetailQuery.refetch(); toast.success("Invoice email retry sent."); },
+    onError: (error) => toast.error(error.message),
   });
 
   const markPaidMutation = trpc.clientBilling.adminMarkInvoicePaid.useMutation({
@@ -4877,7 +4889,7 @@ function AdminBillingPanel({ isDark }: { isDark: boolean }) {
                       disabled={createInvoiceMutation.isPending || !newInvoice.periodStart || !newInvoice.dueDate}
                       className="flex-1 py-1.5 rounded-lg bg-[oklch(0.5_0.2_25)] hover:bg-[oklch(0.55_0.22_25)] disabled:opacity-40 text-white text-[10px] font-semibold"
                     >
-                      {createInvoiceMutation.isPending ? "Creating…" : `Create Invoice${invoiceLineItems.length > 0 ? ` (${invoiceLineItems.length} item${invoiceLineItems.length > 1 ? "s" : ""})` : ""}`}
+                      {createInvoiceMutation.isPending ? "Saving…" : `Save Draft${invoiceLineItems.length > 0 ? ` (${invoiceLineItems.length} item${invoiceLineItems.length > 1 ? "s" : ""})` : ""}`}
                     </button>
                     <button
                       onClick={() => { setShowCreateInvoice(false); setInvoiceLineItems([]); }}
@@ -4905,6 +4917,14 @@ function AdminBillingPanel({ isDark }: { isDark: boolean }) {
                       <div className="text-right flex items-center gap-2">
                         <p className={`text-xs font-bold ${isDark ? "text-white" : "text-gray-900"}`}>{formatCents(inv.totalAmountCents)}</p>
                         <div className="flex gap-1">
+                          {inv.status === "draft" && (
+                            <button
+                              onClick={() => { setFinalizeInvoiceId(inv.id); setCommunicationMode("invoice_only"); setEmailSubject(`FlowSites invoice ${inv.invoiceNumber} is ready`); setEmailBody(`Hello ${detail.account.clientName},\n\nYour FlowSites invoice ${inv.invoiceNumber} is ready for review. Please use the secure invoice link to review and pay.\n\nThank you,\nFlowSites`); }}
+                              className="text-[9px] px-2 py-1 rounded bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30"
+                            >Finalize &amp; Send</button>
+                          )}
+                          {inv.emailDeliveryStatus !== "pending" && <span className={`text-[9px] px-2 py-1 rounded border ${inv.emailDeliveryStatus === "failed" || inv.emailDeliveryStatus === "bounced" ? "bg-red-500/10 text-red-400 border-red-500/20" : "bg-blue-500/10 text-blue-400 border-blue-500/20"}`}>Email {inv.emailDeliveryStatus}</span>}
+                          {inv.emailDeliveryStatus === "failed" && <button onClick={() => retryInvoiceEmailMutation.mutate({ invoiceId: inv.id })} disabled={retryInvoiceEmailMutation.isPending} className="text-[9px] px-2 py-1 rounded bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 border border-orange-500/30">Retry Email</button>}
                           {/* View Invoice — opens the public invoice page */}
                           {inv.shareToken && (
                             <a
@@ -4960,6 +4980,32 @@ function AdminBillingPanel({ isDark }: { isDark: boolean }) {
                 </div>
               )}
             </div>
+
+            {finalizeInvoiceId !== null && (() => {
+              const draft = detail.invoices.find(invoice => invoice.id === finalizeInvoiceId);
+              if (!draft) return null;
+              return (
+                <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4">
+                  <div className={`w-full max-w-2xl rounded-2xl border p-5 shadow-2xl ${isDark ? "bg-[#15151c] border-white/10 text-white" : "bg-white border-gray-200 text-gray-900"}`}>
+                    <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] uppercase tracking-wider text-blue-500 font-bold">Final review</p><h3 className="text-lg font-bold">Finalize &amp; Send {draft.invoiceNumber}</h3></div><button onClick={() => setFinalizeInvoiceId(null)} className="text-sm opacity-60">Close</button></div>
+                    <div className={`mt-4 grid grid-cols-2 gap-3 rounded-xl border p-3 text-xs ${isDark ? "border-white/10 bg-white/5" : "border-gray-200 bg-gray-50"}`}>
+                      <p><span className="block opacity-50">Customer</span><strong>{detail.account.businessName}</strong> · {detail.account.clientName}</p>
+                      <p><span className="block opacity-50">Recipient</span><strong>{detail.account.clientEmail}</strong></p>
+                      <p><span className="block opacity-50">Services</span>{draft.items.length ? draft.items.map(item => `${item.description} × ${item.quantity} ($${(item.unitAmountCents / 100).toFixed(2)})`).join(", ") : "Monthly FlowSites service"}</p>
+                      <p><span className="block opacity-50">Amount / terms</span><strong>{formatCents(draft.totalAmountCents)}</strong> · Due {fmtDate(draft.dueDate)} · {draft.isRecurring ? "Recurring monthly" : "One-time"}</p>
+                    </div>
+                    <label className="mt-4 block text-[10px] font-bold uppercase tracking-wider opacity-60">Communication option</label>
+                    <select value={communicationMode} onChange={event => setCommunicationMode(event.target.value as typeof communicationMode)} className={`mt-1 w-full rounded-lg border px-3 py-2 text-xs ${isDark ? "bg-white/5 border-white/10" : "bg-white border-gray-300"}`}>
+                      <option value="invoice_only">Invoice Only</option><option value="invoice_welcome">Invoice + Welcome Email</option><option value="invoice_custom">Invoice + Custom Email</option><option value="invoice_cue">Invoice + Cue AI-Generated Email</option>
+                    </select>
+                    <label className="mt-3 block text-[10px] font-bold uppercase tracking-wider opacity-60">Subject</label>
+                    <input value={emailSubject} onChange={event => setEmailSubject(event.target.value)} className={`mt-1 w-full rounded-lg border px-3 py-2 text-xs ${isDark ? "bg-white/5 border-white/10" : "bg-white border-gray-300"}`} />
+                    {communicationMode !== "invoice_only" && <><label className="mt-3 block text-[10px] font-bold uppercase tracking-wider opacity-60">Preview and edit email</label><textarea value={emailBody} onChange={event => setEmailBody(event.target.value)} rows={6} className={`mt-1 w-full rounded-lg border px-3 py-2 text-xs ${isDark ? "bg-white/5 border-white/10" : "bg-white border-gray-300"}`} /></>}
+                    <div className="mt-4 flex justify-end gap-2"><button onClick={() => setFinalizeInvoiceId(null)} className={`rounded-lg px-4 py-2 text-xs ${isDark ? "bg-white/10" : "bg-gray-100"}`}>Keep Draft</button><button disabled={finalizeInvoiceMutation.isPending} onClick={() => finalizeInvoiceMutation.mutate({ invoiceId: draft.id, communicationMode, subject: emailSubject, bodyHtml: emailBody.replace(/\n/g, "<br />") })} className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-50">{finalizeInvoiceMutation.isPending ? "Sending…" : "Confirm & Send"}</button></div>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Media */}
             <div className={`border rounded-xl p-4 ${isDark ? "bg-white/3 border-white/8" : "bg-white border-gray-200 shadow-sm"}`}>
