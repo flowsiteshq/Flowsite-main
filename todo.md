@@ -84,6 +84,18 @@
 - [x] Add test coverage for role checks, invalid deletion codes, subscription safeguards, portal revocation, and active CRM filtering before publishing
 - [ ] Publish the focused release and set `CUSTOMER_DELETION_CODE` as a Railway production secret before using the control
 
+## FlowSites Admin 3.0 — Financial Customer Command Center
+- [ ] Audit the current customer, subscription, invoice, payment, credit, refund, Cue, and lead schemas and reconcile their actual-record availability against the Admin 3.0 financial definitions
+- [ ] Build strict-admin, server-side overview metrics and paginated customer-directory queries using actual records only; flag unavailable or inconsistent billing data instead of fabricating values
+- [ ] Replace the crowded admin overview with exactly the required header, four financial metrics, and one paginated customer table; preserve existing CRM workflows outside the Overview page
+- [ ] Simplify primary navigation to Overview, Customers, Billing, Leads, Cue AI, Projects, and Settings; move less-frequent existing functionality into relevant sections without deleting it
+- [ ] Build a dedicated customer account detail route with Overview, Billing, Services, and Activity tabs and preserve secure existing payment, invoice, subscription, and portal actions
+- [ ] Build dedicated minimalist Billing, Leads, and Cue AI workspaces with server-side filtering, loading, empty, and error states; do not introduce unverified charts or fabricated activity
+- [ ] Add responsive mobile layouts, accessibility coverage, regression tests, and a source-record financial reconciliation report before capturing desktop/mobile approval previews
+- [ ] Keep the Admin 3.0 work isolated from production until the user reviews verified previews and explicitly approves publication
+- [ ] Build a separate Stripe subscription, payment, credit, refund, and allocation synchronization ledger before representing active paid customers, normalized MRR, or net outstanding balances as provider-verified financial truth
+- [ ] Until that ledger exists, label Admin 3.0 values as source-backed local account/invoice records, keep reconciliation disclosures inside the relevant customer and billing views, and never present local configuration as verified provider revenue
+
 ## AI Sales & Marketing Automation — Phased Production Program
 - [x] Create and publish a dedicated development branch with a documented rollback point; audit the current FlowSites stack, database, auth, deployment, lead capture, Cue access, and payment/subscription implementation
 - [x] Phase 1: Preserve the premium dark-blue/electric-blue site and existing services while adding approved conversion navigation and a responsive Free Website / Talk to Cue CTA strategy
@@ -107,6 +119,12 @@
 - [x] Replace those public phone-number displays and links with +1 888-933-3010 without changing customer-specific contact records
 - [x] Add regression coverage and verify public desktop/mobile contact affordances before release
 
+## FlowSites Free Website Launch Ad
+- [x] Refine the supplied 30-second script into an accurate, brand-safe narrated ad with premium on-screen typography and the verified Free Website Program disclosure
+- [x] Produce an original cinematic master ad with fictional, non-client business scenes and a FlowSites end card; do not represent demo visuals as customer work
+- [x] Create and mix a professional narration and instrumental score; verify the final spoken copy, visual claims, contact number, and legal end card
+- [x] Inspect the finished master for playback, duration, audio, readable copy, and mobile-safe framing; deliver it for approval before any social or paid-ad publication
+
 ## Cue AI Telephone Integration — Safe Foundation
 - [x] Complete a read-only 800.com account audit for (888) 933-3010; document verified routing, recordings, transcription, greetings, SMS, AI-plan, and SIP findings without saving any account change (business-hour and voicemail enablement require a separate explicit confirmation)
 - [x] Record the verified integration decision tree: direct SIP only if 800.com demonstrates compatible SIP trunking; otherwise test a separate approved receiving number before any forwarding change
@@ -116,6 +134,15 @@
 - [x] Create a staff-only Cue telephone readiness page and operational runbook with the current safety boundaries, human-escalation prerequisites, and rollback plan
 - [ ] Add a non-deceptive website Talk to Cue entry point only when a verified ElevenLabs web widget or calling handoff is configured; otherwise show the live business phone number without claiming active AI availability
 - [x] Add unit and integration coverage for the safe foundation and confirm an unconfigured webhook returns a no-write `503`; complete staging/test-number checks before requesting routing approval or any paid provider purchase
+- [x] Replace the current forwarding destination for the live FlowSites number (+1 888-933-3010) with the approved ElevenLabs TLS SIP route and publish Cue’s AI-disclosure and lead-intake configuration. The former forwarding destination remains recorded in the 800.com account for rollback.
+- [ ] Complete one controlled inbound telephone call to +1 888-933-3010 and confirm that Cue’s live voice greeting answers. Restore the former 800.com destination immediately if the call does not reach Cue.
+- [x] Provide a live inbound route that ElevenLabs supports: the existing FlowSites number is now imported as a non-live ElevenLabs SIP trunk and assigned to Cue. The 800.com forwarding destination remains unchanged.
+- [ ] Resolve the existing Twilio account suspension through the account owner’s billing/support process before any number can be provisioned; do not create a replacement Twilio account or alter the live 800.com route while this remains unresolved.
+- [x] Evaluate 800.com’s native AI Agent upgrade for direct assignment to the existing FlowSites number. The live account offers Complete at $99/month billed yearly plus taxes and fees, with 500 AI minutes/month and $0.60/minute overage; it is the direct non-Twilio route but requires an account-plan purchase.
+- [ ] If explicitly approved, upgrade the 800.com account to Complete, configure a native Cue agent on the existing FlowSites number, configure its website/document training and human handoff, then verify a live inbound call and restore the prior forwarding destination immediately if it fails.
+- [x] Compare the lower-cost native 800.com option with a direct 800.com-to-ElevenLabs SIP route. The live account offers no lower AI tier; the direct SIP alternative uses the existing ElevenLabs Creator plan at $22/month and avoids the $99/month 800.com upgrade.
+- [ ] Verify 800.com’s SIP destination settings, transport and codec compatibility, and a rollback record before asking for a separate live-forwarding confirmation. Do not send a customer call to Cue until these are documented.
+- [ ] Rotate the pre-existing 800.com SIP credentials that were visible in the legacy settings panel; they are not used by Cue and should not remain valid.
 
 ## Cue AI Read-Only Lead Access
 - [x] Define a dedicated Cue service credential with the single `leads:read` scope; do not reuse a staff, admin, Stripe, or database credential

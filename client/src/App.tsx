@@ -32,6 +32,15 @@ import AdminVideoOrders from "./pages/AdminVideoOrders";
 import AdminCueIntegration from "./pages/AdminCueIntegration";
 import AdminCueTelephone from "./pages/AdminCueTelephone";
 import AdminFreeWebsiteRequests from "./pages/AdminFreeWebsiteRequests";
+import {
+  AdminBillingWorkspace,
+  AdminCommandOverview,
+  AdminCustomerDetailWorkspace,
+  AdminCustomersWorkspace,
+  AdminLeadsWorkspace,
+  AdminProjectsWorkspace,
+  AdminSettingsWorkspace,
+} from "./pages/AdminCommandCenterPages";
 import ClientPortal from "./pages/ClientPortal";
 import ClientBilling from "./pages/ClientBilling";
 import AcceptInvite from "./pages/AcceptInvite";
@@ -109,7 +118,15 @@ function Router() {
         <Route path="/admin/submissions" component={AdminSubmissions} />
         <Route path="/admin-login" component={AdminLogin} />
         <Route path="/flowsites-admin-secret" component={AdminLogin} />
-        <Route path="/flowsites-admin-dashboard" component={AdminDashboard} />
+        <Route path="/flowsites-admin-dashboard" component={AdminCommandOverview} />
+        <Route path="/flowsites-admin-overview" component={AdminCommandOverview} />
+        <Route path="/flowsites-admin-customers/:accountId" component={AdminCustomerDetailWorkspace} />
+        <Route path="/flowsites-admin-customers" component={AdminCustomersWorkspace} />
+        <Route path="/flowsites-admin-billing" component={AdminBillingWorkspace} />
+        <Route path="/flowsites-admin-leads" component={AdminLeadsWorkspace} />
+        <Route path="/flowsites-admin-projects" component={AdminProjectsWorkspace} />
+        <Route path="/flowsites-admin-settings" component={AdminSettingsWorkspace} />
+        <Route path="/flowsites-admin-legacy-crm" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />
         <Route path="/flowsites-admin-video-orders" component={AdminVideoOrders} />
         <Route path="/flowsites-admin-integrations" component={AdminCueIntegration} />
