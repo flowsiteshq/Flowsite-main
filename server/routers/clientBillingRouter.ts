@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import crypto from "crypto";
 import { ENV } from "../_core/env";
 import { isBlockingSubscriptionStatus, isValidCustomerDeletionCode } from "../customerRemoval";
-import { generateInvoiceEmail, sendEmail } from "../email";
+import { generateInvoiceEmail, sendEmail, sendEmailWithResult } from "../email";
 import { invokeLLM } from "../_core/llm";
 
 /** Owner always has admin access regardless of the role column in the DB. */
@@ -837,8 +837,8 @@ export const clientBillingRouter = router({
         ? generateInvoiceEmail({ businessName: account.businessName, contactName: account.clientName, invoiceNumber: invoice.invoiceNumber, amountCents: invoice.totalAmountCents, dueDate: invoice.dueDate, invoiceUrl, isRecurring: invoice.isRecurring === 1 })
         : `<div style="font-family:Arial,sans-serif;color:#14213f;line-height:1.6">${communicationBody}<hr style="border:0;border-top:1px solid #e2e8f0;margin:24px 0"><p>Invoice <strong>${invoice.invoiceNumber}</strong> for <strong>$${(invoice.totalAmountCents / 100).toFixed(2)}</strong>.</p><p><a href="${invoiceUrl}">View and pay invoice</a></p></div>`;
       try {
-        const result = await sendEmail({ to: account.clientEmail, subject: input.subject, html });
-        if (!result) throw new Error("Email provider rejected or skipped the message");
+        const result = await sendEmailWithResult({ to: account.clientEmail, subject: input.subject, html });
+        if (!result.ok) throw new Error(result.error);
         const now = new Date();
         await db.update(clientInvoices).set({ status: "open", emailDeliveryStatus: "sent", emailSentAt: now, emailLastError: null, communicationMode: input.communicationMode, emailSubject: input.subject, emailBodyHtml: html, finalizedAt: now, finalizedByOpenId: ctx.user.openId }).where(eq(clientInvoices.id, invoice.id));
         await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_sent", deliveryStatus: "sent", details: `${input.communicationMode}; recipient ${account.clientEmail}; services ${itemSummary}`, performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
@@ -865,8 +865,8 @@ export const clientBillingRouter = router({
       const [account] = await db.select().from(clientAccounts).where(eq(clientAccounts.id, invoice.clientAccountId)).limit(1);
       if (!account) throw new TRPCError({ code: "NOT_FOUND", message: "Customer account not found" });
       try {
-        const result = await sendEmail({ to: account.clientEmail, subject: invoice.emailSubject, html: invoice.emailBodyHtml });
-        if (!result) throw new Error("Email provider rejected or skipped the message");
+        const result = await sendEmailWithResult({ to: account.clientEmail, subject: invoice.emailSubject, html: invoice.emailBodyHtml });
+        if (!result.ok) throw new Error(result.error);
         await db.update(clientInvoices).set({ emailDeliveryStatus: "sent", emailSentAt: new Date(), emailLastError: null }).where(eq(clientInvoices.id, invoice.id));
         await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_retried", deliveryStatus: "sent", details: `Controlled retry to ${account.clientEmail}`, performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });
         return { success: true, invoiceId: invoice.id, deliveryStatus: "sent" as const };
@@ -906,8 +906,8 @@ export const clientBillingRouter = router({
         isRecurring: invoice.isRecurring === 1,
       });
       try {
-        const result = await sendEmail({ to: account.clientEmail, subject, html });
-        if (!result) throw new Error("Email provider rejected or skipped the message");
+        const result = await sendEmailWithResult({ to: account.clientEmail, subject, html });
+        if (!result.ok) throw new Error(result.error);
         const now = new Date();
         await db.update(clientInvoices).set({ status: "open", emailDeliveryStatus: "sent", emailSentAt: now, emailLastError: null, communicationMode: "invoice_only", emailSubject: subject, emailBodyHtml: html, finalizedAt: now, finalizedByOpenId: ctx.user.openId }).where(eq(clientInvoices.id, invoice.id));
         await db.insert(invoiceActivities).values({ clientAccountId: account.id, invoiceId: invoice.id, activityType: "invoice_email_sent", deliveryStatus: "sent", details: `invoice_only; recipient ${account.clientEmail}`, performedByOpenId: ctx.user.openId, performedByName: ctx.user.name ?? ctx.user.email ?? "Administrator" });

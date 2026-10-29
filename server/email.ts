@@ -13,13 +13,31 @@ interface SendEmailParams {
   html: string;
 }
 
+export type EmailSendResult =
+  | { ok: true }
+  | { ok: false; error: string };
+
 /**
  * Send an email using Resend
  */
 export async function sendEmail({ to, subject, html }: SendEmailParams): Promise<boolean> {
+  const result = await sendEmailWithResult({ to, subject, html });
+  return result.ok;
+}
+
+/**
+ * Send an email and preserve the provider's actionable error for audit and retry UI.
+ */
+export async function sendEmailWithResult({ to, subject, html }: SendEmailParams): Promise<EmailSendResult> {
   if (!ENV.resendApiKey) {
-    console.warn("[Email] RESEND_API_KEY not configured — skipping email");
-    return false;
+    const error = "RESEND_API_KEY is not configured";
+    console.warn(`[Email] ${error}`);
+    return { ok: false, error };
+  }
+  if (ENV.isProduction && ENV.emailFromAddress.includes("onboarding@resend.dev")) {
+    const error = "Production email sender is still onboarding@resend.dev; configure a verified FlowSites sender address";
+    console.error(`[Email] ${error}`);
+    return { ok: false, error };
   }
   try {
     const { error } = await getResend().emails.send({
@@ -30,12 +48,13 @@ export async function sendEmail({ to, subject, html }: SendEmailParams): Promise
     });
     if (error) {
       console.error("[Email] Failed to send email:", error);
-      return false;
+      const providerError = [error.name, error.message].filter(Boolean).join(": ") || "Resend rejected the message";
+      return { ok: false, error: providerError };
     }
-    return true;
+    return { ok: true };
   } catch (error) {
     console.error("[Email] Error sending email:", error);
-    return false;
+    return { ok: false, error: error instanceof Error ? error.message : "Email provider request failed" };
   }
 }
 
