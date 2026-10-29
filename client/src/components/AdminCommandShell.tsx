@@ -6,6 +6,7 @@ import { getLoginUrl } from "@/const";
 import {
   Bot,
   Bell,
+  BookOpen,
   BriefcaseBusiness,
   ChevronRight,
   CircleDollarSign,
@@ -26,6 +27,7 @@ const navigation = [
   { label: "Leads", href: "/flowsites-admin-leads", icon: BriefcaseBusiness },
   { label: "Cue AI", href: "/flowsites-admin-cue-telephone", icon: Bot },
   { label: "Projects", href: "/flowsites-admin-projects", icon: FolderKanban },
+  { label: "Knowledge Center", href: "/flowsites-admin-knowledge", icon: BookOpen },
   { label: "Settings", href: "/flowsites-admin-settings", icon: Settings },
 ] as const;
 

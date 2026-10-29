@@ -124,6 +124,67 @@ export const adminCommandCenterRouter = router({
     };
   }),
 
+  /**
+   * Reconciliation report for administrative review. This deliberately reports
+   * discrepancies between local configuration and local invoice records without
+   * rewriting accounts or claiming Stripe/provider truth.
+   */
+  financialReconciliation: publicProcedure.query(async ({ ctx }) => {
+    await assertStrictAdminAccess(ctx);
+    const db = await getDb();
+    if (!db) throw new Error("Database unavailable");
+    const rows = await db
+      .select({
+        accountId: clientAccounts.id,
+        businessName: clientAccounts.businessName,
+        monthlyPriceCents: clientAccounts.monthlyPriceCents,
+        billingCycle: clientAccounts.billingCycle,
+        status: clientAccounts.status,
+        stripeSubscriptionId: clientAccounts.stripeSubscriptionId,
+        stripeCustomerId: clientAccounts.stripeCustomerId,
+        planName: clientProjects.packageName,
+        invoiceCount: sql<number>`count(${clientInvoices.id})`,
+        recurringInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.isRecurring} = 1 and ${clientInvoices.status} <> 'void' then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+        unpaidInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+        paidInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} = 'paid' then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+      })
+      .from(clientAccounts)
+      .leftJoin(clientInvoices, eq(clientInvoices.clientAccountId, clientAccounts.id))
+      .leftJoin(clientProjects, eq(clientAccounts.projectId, clientProjects.id))
+      .where(isNull(clientAccounts.removedAt))
+      .groupBy(clientAccounts.id, clientAccounts.businessName, clientAccounts.monthlyPriceCents, clientAccounts.billingCycle, clientAccounts.status, clientAccounts.stripeSubscriptionId, clientAccounts.stripeCustomerId, clientProjects.packageName);
+
+    const byBusiness = new Map<string, number>();
+    for (const row of rows) byBusiness.set(row.businessName.toLowerCase(), (byBusiness.get(row.businessName.toLowerCase()) ?? 0) + 1);
+    return rows.map(row => {
+      const monthly = toNumber(row.monthlyPriceCents);
+      const recurring = toNumber(row.recurringInvoiceCents);
+      const hasSubscription = Boolean(row.stripeSubscriptionId);
+      const accountType = hasSubscription && toNumber(row.invoiceCount) > 0 ? "both" : hasSubscription ? "monthly_subscription" : toNumber(row.invoiceCount) > 0 ? "one_time_or_invoice_only" : "unclassified";
+      const flags: string[] = [];
+      if (!row.planName) flags.push("plan_not_recorded");
+      if (row.status === "active" && !hasSubscription) flags.push("active_without_stripe_subscription");
+      if (row.status === "cancelled" && monthly > 0) flags.push("cancelled_with_configured_monthly_amount");
+      if (row.billingCycle === "monthly" && recurring > 0 && recurring !== monthly) flags.push("recurring_invoice_total_differs_from_configured_monthly");
+      if ((byBusiness.get(row.businessName.toLowerCase()) ?? 0) > 1) flags.push("duplicate_business_name_requires_review");
+      return {
+        accountId: row.accountId,
+        businessName: row.businessName,
+        planName: row.planName,
+        status: row.status,
+        accountType,
+        configuredMonthlyCents: monthly,
+        recurringInvoiceCents: recurring,
+        unpaidInvoiceCents: toNumber(row.unpaidInvoiceCents),
+        paidInvoiceCents: toNumber(row.paidInvoiceCents),
+        invoiceCount: toNumber(row.invoiceCount),
+        stripeSubscriptionVerified: hasSubscription,
+        stripeCustomerLinked: Boolean(row.stripeCustomerId),
+        flags,
+      };
+    });
+  }),
+
   globalSearch: publicProcedure
     .input(z.object({ query: z.string().trim().min(2).max(80) }))
     .query(async ({ ctx, input }) => {

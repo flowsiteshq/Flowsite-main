@@ -76,6 +76,7 @@ import Interested from "./pages/Interested";
 import AIServices from "./pages/AIServices";
 import AIVideoStudio from "./pages/AIVideoStudio";
 import FreeWebsite from "./pages/FreeWebsite";
+import AdminKnowledgeCenter from "./pages/AdminKnowledgeCenter";
 import { leadCaptureHref } from "./lib/leadCapture";
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -127,6 +128,7 @@ function Router() {
         <Route path="/flowsites-admin-billing" component={AdminBillingWorkspace} />
         <Route path="/flowsites-admin-leads" component={AdminLeadsWorkspace} />
         <Route path="/flowsites-admin-projects" component={AdminProjectsWorkspace} />
+        <Route path="/flowsites-admin-knowledge" component={AdminKnowledgeCenter} />
         <Route path="/flowsites-admin-settings" component={AdminSettingsWorkspace} />
         <Route path="/flowsites-admin-legacy-crm" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />

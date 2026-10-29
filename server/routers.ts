@@ -21,6 +21,7 @@ import { cueIntegrationRouter } from "./routers/cueIntegrationRouter";
 import { freeWebsiteRouter } from "./routers/freeWebsiteRouter";
 import { voiceIntegrationRouter } from "./routers/voiceIntegrationRouter";
 import { adminCommandCenterRouter } from "./routers/adminCommandCenterRouter";
+import { adminKnowledgeRouter } from "./routers/adminKnowledgeRouter";
 import type { TrpcContext } from "./_core/context";
 
 /**
@@ -116,6 +117,7 @@ export const appRouter = router({
   voiceIntegration: voiceIntegrationRouter,
   freeWebsite: freeWebsiteRouter,
   adminCommandCenter: adminCommandCenterRouter,
+  adminKnowledge: adminKnowledgeRouter,
   technician: technicianRouter,
   partner: partnerRouter,
   emailAuth: emailAuthRouter,
