@@ -84,13 +84,18 @@ export const adminCommandCenterRouter = router({
       .select({
         paidInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} = 'paid' then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
         grossOpenInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+        verifiedOutstandingInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') and (${clientInvoices.stripeInvoiceId} is not null or ${clientInvoices.stripePaymentIntentId} is not null) then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+        unreconciledOpenInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') and ${clientInvoices.stripeInvoiceId} is null and ${clientInvoices.stripePaymentIntentId} is null then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
         openInvoiceCount: sql<number>`sum(case when ${clientInvoices.status} in ('open', 'overdue') then 1 else 0 end)`,
       })
       .from(clientInvoices);
 
-    const overdueInvoiceCondition = or(
-      eq(clientInvoices.status, "overdue"),
-      and(eq(clientInvoices.status, "open"), lt(clientInvoices.dueDate, today)),
+    const overdueInvoiceCondition = and(
+      or(
+        eq(clientInvoices.status, "overdue"),
+        and(eq(clientInvoices.status, "open"), lt(clientInvoices.dueDate, today)),
+      ),
+      or(sql`${clientInvoices.stripeInvoiceId} is not null`, sql`${clientInvoices.stripePaymentIntentId} is not null`),
     );
     const [overdueSummary] = await db
       .select({ overdueAccounts: sql<number>`count(distinct ${clientInvoices.clientAccountId})` })
@@ -109,6 +114,8 @@ export const adminCommandCenterRouter = router({
         mrrVerification: "requires_subscription_sync" as const,
         unlinkedActiveSubscriptionCount: missingSubscriptions,
         grossOpenInvoiceCents: toNumber(invoiceSummary?.grossOpenInvoiceCents),
+        verifiedOutstandingInvoiceCents: toNumber(invoiceSummary?.verifiedOutstandingInvoiceCents),
+        unreconciledOpenInvoiceCents: toNumber(invoiceSummary?.unreconciledOpenInvoiceCents),
         openInvoiceCount: toNumber(invoiceSummary?.openInvoiceCount),
         paidInvoiceCents: toNumber(invoiceSummary?.paidInvoiceCents),
         overdueAccounts: toNumber(overdueSummary?.overdueAccounts),
@@ -117,8 +124,10 @@ export const adminCommandCenterRouter = router({
       disclosures: {
         activeCustomers: "Count of active local CRM accounts. Active paid-service verification requires subscription synchronization.",
         monthlyRevenue: "Configured monthly amount on active local accounts. It is not provider-verified MRR and annual billing is not normalized.",
-        grossOpenInvoices: "Gross face value of open and overdue local invoices. Credits, refunds, partial payments, and write-offs are not modeled.",
-        overdueAccounts: "Unique active-CRM customers with a local invoice marked overdue or an open invoice whose recorded due date has passed.",
+        grossOpenInvoices: "Gross face value of open and overdue local invoices, shown for audit only. It is not a confirmed collectible balance. Credits, refunds, partial payments, and write-offs are not modeled.",
+        verifiedOutstandingInvoices: "Open and overdue invoices with a local Stripe invoice or payment-intent reference. Provider status is not inferred when the reference is missing.",
+        unreconciledOpenInvoices: "Open and overdue local invoices without a Stripe invoice or payment-intent reference. These require reconciliation and are excluded from verified outstanding balance.",
+        overdueAccounts: "Unique active-CRM customers with a linked local invoice marked overdue or past its due date.",
         paid: "Sum of local invoices marked paid. This is not a cash reconciliation or refund-adjusted total.",
       },
     };
@@ -248,8 +257,9 @@ export const adminCommandCenterRouter = router({
         .from(clientAccounts)
         .where(and(...conditions));
 
-      const outstandingBalanceCents = sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') then ${clientInvoices.totalAmountCents} else 0 end), 0)`;
-      const overdueInvoiceCount = sql<number>`sum(case when ${clientInvoices.status} = 'overdue' or (${clientInvoices.status} = 'open' and ${clientInvoices.dueDate} < ${today}) then 1 else 0 end)`;
+      const outstandingBalanceCents = sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') and (${clientInvoices.stripeInvoiceId} is not null or ${clientInvoices.stripePaymentIntentId} is not null) then ${clientInvoices.totalAmountCents} else 0 end), 0)`;
+      const unreconciledBalanceCents = sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') and ${clientInvoices.stripeInvoiceId} is null and ${clientInvoices.stripePaymentIntentId} is null then ${clientInvoices.totalAmountCents} else 0 end), 0)`;
+      const overdueInvoiceCount = sql<number>`sum(case when (${clientInvoices.status} = 'overdue' or (${clientInvoices.status} = 'open' and ${clientInvoices.dueDate} < ${today})) and (${clientInvoices.stripeInvoiceId} is not null or ${clientInvoices.stripePaymentIntentId} is not null) then 1 else 0 end)`;
       const attentionRank = sql<number>`case when sum(case when ${clientInvoices.status} = 'overdue' or (${clientInvoices.status} = 'open' and ${clientInvoices.dueDate} < ${today}) then 1 else 0 end) > 0 then 0 when ${clientAccounts.status} = 'past_due' then 1 when ${clientAccounts.status} = 'active' then 2 else 3 end`;
       const ordering = input.sort === "name"
         ? (input.direction === "asc" ? asc(clientAccounts.businessName) : desc(clientAccounts.businessName))
@@ -278,6 +288,7 @@ export const adminCommandCenterRouter = router({
           hasStripeSubscription: sql<number>`case when ${clientAccounts.stripeSubscriptionId} is null then 0 else 1 end`,
           hasStripeCustomer: sql<number>`case when ${clientAccounts.stripeCustomerId} is null then 0 else 1 end`,
           outstandingBalanceCents,
+          unreconciledBalanceCents,
           overdueInvoiceCount,
         })
         .from(clientAccounts)
@@ -313,7 +324,9 @@ export const adminCommandCenterRouter = router({
           hasStripeSubscription: row.hasStripeSubscription === 1,
           hasStripeCustomer: row.hasStripeCustomer === 1,
           outstandingBalanceCents: toNumber(row.outstandingBalanceCents),
+          unreconciledBalanceCents: toNumber(row.unreconciledBalanceCents),
           overdueInvoiceCount: toNumber(row.overdueInvoiceCount),
+          reconciliationState: toNumber(row.unreconciledBalanceCents) > 0 ? "unreconciled" as const : "reconciled" as const,
           displayStatus: toNumber(row.overdueInvoiceCount) > 0 ? "past_due" as const : row.status,
         })),
         nextCursor: hasMore ? encodeOffset(offset + rows.length) : null,
@@ -351,10 +364,11 @@ export const adminCommandCenterRouter = router({
         .limit(1);
       if (!account) throw new Error("Customer not found.");
 
-      const [invoiceSummary] = await db
-        .select({
-          paidInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} = 'paid' then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
-          outstandingInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+        const [invoiceSummary] = await db
+      .select({
+        paidInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} = 'paid' then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+          outstandingInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') and (${clientInvoices.stripeInvoiceId} is not null or ${clientInvoices.stripePaymentIntentId} is not null) then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
+          unreconciledInvoiceCents: sql<number>`coalesce(sum(case when ${clientInvoices.status} in ('open', 'overdue') and ${clientInvoices.stripeInvoiceId} is null and ${clientInvoices.stripePaymentIntentId} is null then ${clientInvoices.totalAmountCents} else 0 end), 0)`,
           invoiceCount: sql<number>`count(*)`,
         })
         .from(clientInvoices)
@@ -365,13 +379,14 @@ export const adminCommandCenterRouter = router({
         invoiceSummary: {
           paidInvoiceCents: toNumber(invoiceSummary?.paidInvoiceCents),
           outstandingInvoiceCents: toNumber(invoiceSummary?.outstandingInvoiceCents),
+          unreconciledInvoiceCents: toNumber(invoiceSummary?.unreconciledInvoiceCents),
           invoiceCount: toNumber(invoiceSummary?.invoiceCount),
         },
         disclosures: {
           subscription: account.stripeSubscriptionId
             ? "A Stripe subscription ID is linked locally. Live provider status is not synchronized in this workspace."
             : "No Stripe subscription ID is linked to this account locally.",
-          balance: "Outstanding reflects open and overdue local invoices only; it excludes credits, refunds, partial payments, and write-offs.",
+          balance: "Outstanding includes only open and overdue invoices with a local Stripe invoice or payment-intent reference. Unmatched local invoices are shown separately as unreconciled.",
         },
       };
     }),

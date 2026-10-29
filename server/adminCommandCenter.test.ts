@@ -39,7 +39,8 @@ describe("Admin 3.0 command center", () => {
     expect(router).toContain('lt(clientInvoices.dueDate, today)');
     expect(router).toContain("clientInvoices.status} = 'open' and ${clientInvoices.dueDate} < ${today}");
     expect(page).toContain('not verified MRR');
-    expect(page).toContain('Gross local open invoice value');
+    expect(page).toContain('Stripe-linked open invoices only');
+    expect(page).toContain('Unreconciled local invoices');
     expect(page).toContain('local invoice records');
   });
 

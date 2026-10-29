@@ -45,7 +45,9 @@ type CustomerRow = {
   planName: string | null;
   monthlyPriceCents: number;
   outstandingBalanceCents: number;
+  unreconciledBalanceCents: number;
   overdueInvoiceCount: number;
+  reconciliationState: "reconciled" | "unreconciled";
   billingCycle: "monthly" | "annual";
   createdAt: Date;
   hasStripeSubscription: boolean;
@@ -101,7 +103,9 @@ function CustomerCard({ customer }: { customer: CustomerRow }) {
   const initials = customer.businessName.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join("").toUpperCase();
   const isPastDue = customer.displayStatus === "past_due" || customer.overdueInvoiceCount > 0;
   const isCancelled = customer.displayStatus === "cancelled";
-  const indicator = isPastDue
+  const indicator = customer.reconciliationState === "unreconciled"
+    ? { className: "border-amber-900/80 bg-[#463414] text-[#ffd166]", icon: "!", text: "Unreconciled local invoice" }
+    : isPastDue
     ? { className: "border-red-900/80 bg-[#3b171b] text-[#ff4055]", icon: "!", text: `${customer.overdueInvoiceCount} invoice${customer.overdueInvoiceCount === 1 ? "" : "s"} overdue` }
     : isCancelled
       ? { className: "border-white/10 bg-[#303236] text-slate-300", icon: "−", text: "Account cancelled" }
@@ -112,7 +116,7 @@ function CustomerCard({ customer }: { customer: CustomerRow }) {
       <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold text-white">{customer.businessName}</p><p className="mt-1 truncate text-[11px] text-slate-400">{customer.clientEmail}</p></div>
       <div className="flex items-center gap-2"><span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${isPastDue ? "bg-[#6b2630] text-[#ff9aa7]" : isCancelled ? "bg-[#3d3f44] text-slate-200" : "bg-[#1f6d3b] text-[#9af5b1]"}`}>{isPastDue ? "Past Due" : isCancelled ? "Cancelled" : "Active"}</span><button type="button" aria-label={`Actions for ${customer.businessName}`} className="rounded-md p-1 text-slate-400 hover:bg-white/10 hover:text-white"><MoreHorizontal size={17} /></button></div>
     </div>
-    <div className="mt-6 grid grid-cols-2 gap-3"><div><p className="text-[11px] text-slate-400">Monthly Billing</p><p className="mt-1 text-lg font-bold text-white">{formatCents(customer.monthlyPriceCents)} <span className="text-xs font-semibold text-slate-400">/ month</span></p></div><div><p className="text-[11px] text-slate-400">Outstanding Balance</p><p className={`mt-1 text-lg font-bold ${customer.outstandingBalanceCents > 0 ? "text-[#ff4055]" : "text-white"}`}>{formatCents(customer.outstandingBalanceCents)}{customer.outstandingBalanceCents > 0 ? ".00" : ""}</p></div></div>
+    <div className="mt-6 grid grid-cols-2 gap-3"><div><p className="text-[11px] text-slate-400">Monthly Billing</p><p className="mt-1 text-lg font-bold text-white">{formatCents(customer.monthlyPriceCents)} <span className="text-xs font-semibold text-slate-400">/ month</span></p></div><div><p className="text-[11px] text-slate-400">Verified Balance</p><p className={`mt-1 text-lg font-bold ${customer.outstandingBalanceCents > 0 ? "text-[#ff4055]" : "text-white"}`}>{customer.reconciliationState === "unreconciled" && customer.outstandingBalanceCents === 0 ? "—" : `${formatCents(customer.outstandingBalanceCents)}${customer.outstandingBalanceCents > 0 ? ".00" : ""}`}</p></div></div>
     <div className={`mt-4 flex items-center gap-3 rounded-lg border px-3 py-2 text-xs font-semibold ${indicator.className}`}><span className="grid h-5 w-5 place-items-center rounded-full bg-current/15 text-sm font-extrabold">{indicator.icon}</span>{indicator.text}</div>
     <Link href={`/flowsites-admin-customers/${customer.id}`} className="mt-auto flex items-center justify-center gap-2 rounded-lg border border-slate-600 bg-[#20252c] py-2.5 text-xs font-bold text-blue-300 transition hover:border-blue-400 hover:bg-[#29313b]">View Account <ArrowUpRight size={14} /></Link>
   </article>;
@@ -250,7 +254,7 @@ export function AdminCommandOverview() {
       <section className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         <MetricCard href="/flowsites-admin-customers" label="Active customers" value={overview.isLoading ? "—" : String(metrics?.activeCustomers ?? 0)} detail="Active local CRM accounts. Paid-service verification requires subscription sync." />
         <MetricCard href="/flowsites-admin-billing" label="Monthly revenue" value={overview.isLoading ? "—" : formatCents(metrics?.configuredMonthlyRevenueCents ?? 0)} detail="Configured monthly amount on active local accounts; not verified MRR." />
-        <MetricCard href="/flowsites-admin-billing" emphasis label="Outstanding balance" value={overview.isLoading ? "—" : formatCents(metrics?.grossOpenInvoiceCents ?? 0)} detail="Gross local open invoice value. Credits and partial payments are not modeled." />
+        <MetricCard href="/flowsites-admin-billing" emphasis label="Outstanding balance" value={overview.isLoading ? "—" : formatCents(metrics?.verifiedOutstandingInvoiceCents ?? 0)} detail={overview.isLoading ? "—" : `Stripe-linked open invoices only. Unreconciled local invoices: ${formatCents(metrics?.unreconciledOpenInvoiceCents ?? 0)}.`} />
         <MetricCard href="/flowsites-admin-billing?status=overdue" label="Overdue accounts" value={overview.isLoading ? "—" : String(metrics?.overdueAccounts ?? 0)} detail="Unique active-CRM customers with a local invoice marked overdue." />
       </section>
       <div className="mt-6"><CustomerDirectoryTable compact /></div>
