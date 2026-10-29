@@ -19,6 +19,7 @@ Replaying or rewriting the legacy `drizzle/meta/_journal.json` would be unsafe b
 | ID | Scope | State |
 | --- | --- | --- |
 | `2026-10-27-free-website-preview-requests` | Free Website Program request, human-review, and preview-delivery checklist table | Development migration applied after metadata verification; production pending explicit release approval |
+| `2026-10-29-admin-31-knowledge-center` | Knowledge Center articles with public/internal Cue access, manual sync state, and dedupe-safe staff notifications | Development artifact created; target application and production pending read-only metadata verification and explicit release approval |
 
 ## Safety boundary
 

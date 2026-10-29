@@ -1042,6 +1042,45 @@ export const userLessonProgress = mysqlTable("user_lesson_progress", {
 export type UserLessonProgress = typeof userLessonProgress.$inferSelect;
 export type InsertUserLessonProgress = typeof userLessonProgress.$inferInsert;
 
+// ─── Admin 3.1: Knowledge Center articles & operational notifications ───────
+
+/** Curated operational articles with explicit public/internal Cue access. */
+export const knowledgeArticles = mysqlTable("knowledge_articles", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 160 }).notNull().unique(),
+  title: varchar("title", { length: 255 }).notNull(),
+  category: mysqlEnum("category", ["company_information", "services_pricing", "cue_ai_training", "sales_playbooks", "customer_support", "internal_procedures"]).notNull(),
+  content: text("content").notNull(),
+  access: mysqlEnum("access", ["public", "internal"]).notNull().default("internal"),
+  status: mysqlEnum("status", ["draft", "published", "archived"]).notNull().default("draft"),
+  authorOpenId: varchar("authorOpenId", { length: 128 }),
+  authorName: varchar("authorName", { length: 255 }),
+  cueSyncStatus: mysqlEnum("cueSyncStatus", ["not_synced", "pending_manual_sync", "synced", "error"]).notNull().default("not_synced"),
+  cueSyncError: text("cueSyncError"),
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type KnowledgeArticle = typeof knowledgeArticles.$inferSelect;
+export type InsertKnowledgeArticle = typeof knowledgeArticles.$inferInsert;
+
+/** Dedupe-safe actionable alerts for staff; no customer financial records are changed. */
+export const adminNotifications = mysqlTable("admin_notifications", {
+  id: int("id").autoincrement().primaryKey(),
+  type: mysqlEnum("type", ["failed_payment", "overdue_invoice", "new_customer", "website_approval", "cue_escalation", "cancellation_request"]).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  body: text("body").notNull(),
+  href: varchar("href", { length: 500 }).notNull(),
+  entityType: varchar("entityType", { length: 80 }),
+  entityId: int("entityId"),
+  dedupeKey: varchar("dedupeKey", { length: 255 }).notNull().unique(),
+  isRead: int("isRead").notNull().default(0),
+  readAt: timestamp("readAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+export type AdminNotification = typeof adminNotifications.$inferSelect;
+export type InsertAdminNotification = typeof adminNotifications.$inferInsert;
+
 /**
  * Client Portal Passwords — standalone email+password auth for client portal access.
  * Separate from the Manus OAuth flow so clients don't need a Manus account.
