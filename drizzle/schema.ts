@@ -500,6 +500,20 @@ export const clientAccounts = mysqlTable("client_accounts", {
   /** Business name and website */
   businessName: varchar("businessName", { length: 255 }).notNull(),
   websiteUrl: varchar("websiteUrl", { length: 500 }),
+  /** Extended onboarding profile captured by the representative wizard. */
+  industry: varchar("industry", { length: 120 }),
+  customerType: mysqlEnum("customerType", ["individual", "business"]).default("business").notNull(),
+  referralSource: varchar("referralSource", { length: 120 }),
+  preferredCommunicationMethod: mysqlEnum("preferredCommunicationMethod", ["email", "phone", "sms", "either"]).default("email").notNull(),
+  billingAddress: varchar("billingAddress", { length: 255 }),
+  billingCity: varchar("billingCity", { length: 120 }),
+  billingState: varchar("billingState", { length: 80 }),
+  billingZip: varchar("billingZip", { length: 20 }),
+  billingCountry: varchar("billingCountry", { length: 80 }).default("United States"),
+  authorizedContactsJson: text("authorizedContactsJson"),
+  servicesJson: text("servicesJson"),
+  paymentArrangementJson: text("paymentArrangementJson"),
+  communicationPreference: varchar("communicationPreference", { length: 40 }).default("none").notNull(),
   /** Stripe customer ID */
   stripeCustomerId: varchar("stripeCustomerId", { length: 64 }),
   /** Stripe subscription ID (active recurring subscription) */

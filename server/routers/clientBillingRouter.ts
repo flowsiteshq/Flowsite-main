@@ -536,10 +536,24 @@ export const clientBillingRouter = router({
       clientPhone: z.string().trim().max(50).optional(),
       businessName: z.string().trim().min(1).max(255),
       websiteUrl: z.string().trim().max(500).optional(),
-      monthlyPriceCents: z.number().int().min(100).max(10_000_000),
+      monthlyPriceCents: z.number().int().min(0).max(10_000_000),
       billingStartDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
       adminNotes: z.string().max(10_000).optional(),
       assignedTechnicianId: z.number().int().nullable().optional(),
+      assignedPartnerId: z.number().int().nullable().optional(),
+      industry: z.string().max(120).optional(),
+      customerType: z.enum(["individual", "business"]).default("business"),
+      referralSource: z.string().max(120).optional(),
+      preferredCommunicationMethod: z.enum(["email", "phone", "sms", "either"]).default("email"),
+      billingAddress: z.string().max(255).optional(),
+      billingCity: z.string().max(120).optional(),
+      billingState: z.string().max(80).optional(),
+      billingZip: z.string().max(20).optional(),
+      billingCountry: z.string().max(80).optional(),
+      authorizedContacts: z.array(z.object({ name: z.string().max(255), email: z.string().email(), phone: z.string().max(50).optional() })).max(10).default([]),
+      services: z.array(z.object({ name: z.string().min(1).max(255), description: z.string().max(2000).optional(), oneTimeFeeCents: z.number().int().min(0), recurringFeeCents: z.number().int().min(0), billingFrequency: z.enum(["one_time", "weekly", "biweekly", "monthly", "annual"]).default("one_time"), startDate: z.string().optional(), completionDate: z.string().optional(), scope: z.string().max(4000).optional(), projectManagerId: z.number().int().nullable().optional() })).max(50).default([]),
+      paymentArrangement: z.object({ type: z.enum(["none", "one_time", "down_payment", "installment", "recurring"]), projectTotalCents: z.number().int().min(0), downPaymentCents: z.number().int().min(0), remainingBalanceCents: z.number().int().min(0), installmentAmountCents: z.number().int().min(0), installmentFrequency: z.enum(["weekly", "biweekly", "monthly", "custom"]).optional(), installmentCount: z.number().int().min(0).max(120).optional(), balanceDueDate: z.string().optional(), recurringAmountCents: z.number().int().min(0) }).default({ type: "none", projectTotalCents: 0, downPaymentCents: 0, remainingBalanceCents: 0, installmentAmountCents: 0, recurringAmountCents: 0 }),
+      communicationPreference: z.enum(["welcome", "custom", "cue", "none"]).default("none"),
     }))
     .mutation(async ({ ctx, input }) => {
       await requireAdmin(ctx);
@@ -557,6 +571,7 @@ export const clientBillingRouter = router({
           or(
             eq(clientAccounts.clientEmail, input.clientEmail),
             eq(clientAccounts.businessName, input.businessName),
+            ...(input.clientPhone ? [eq(clientAccounts.clientPhone, input.clientPhone)] : []),
           ),
         ))
         .limit(1);
@@ -576,6 +591,19 @@ export const clientBillingRouter = router({
         businessName: input.businessName,
         websiteUrl: input.websiteUrl ?? null,
         monthlyPriceCents: input.monthlyPriceCents,
+        industry: input.industry ?? null,
+        customerType: input.customerType,
+        referralSource: input.referralSource ?? null,
+        preferredCommunicationMethod: input.preferredCommunicationMethod,
+        billingAddress: input.billingAddress ?? null,
+        billingCity: input.billingCity ?? null,
+        billingState: input.billingState ?? null,
+        billingZip: input.billingZip ?? null,
+        billingCountry: input.billingCountry ?? "United States",
+        authorizedContactsJson: JSON.stringify(input.authorizedContacts),
+        servicesJson: JSON.stringify(input.services),
+        paymentArrangementJson: JSON.stringify(input.paymentArrangement),
+        communicationPreference: input.communicationPreference,
         billingStartDate: input.billingStartDate ?? null,
         adminNotes: input.adminNotes ?? null,
         inviteToken,
@@ -585,8 +613,9 @@ export const clientBillingRouter = router({
 
       const newId = (result as any).insertId as number;
 
-      // ── Auto-generate first invoice ──────────────────────────────────────────
-      try {
+      // ── Create a draft invoice only when the representative selected a payment arrangement. ──
+      // Customer creation never sends email, charges a card, or enrolls a subscription.
+      if (input.paymentArrangement.type !== "none") try {
         // Invoice covers the month PRIOR to billing start date.
         // e.g. billing starts May 1 → first invoice covers Apr 1–30, due May 1
         const billingStart = input.billingStartDate
@@ -604,20 +633,40 @@ export const clientBillingRouter = router({
         const invoiceNumber = `INV-${new Date().getFullYear()}-${String(Number(invoiceCount) + 1).padStart(4, "0")}`;
         const shareToken = crypto.randomBytes(32).toString("hex");
 
-        await db.insert(clientInvoices).values({
+        const arrangement = input.paymentArrangement;
+        const invoiceTotal = arrangement.type === "recurring"
+          ? arrangement.recurringAmountCents
+          : arrangement.type === "down_payment" || arrangement.type === "installment"
+            ? arrangement.downPaymentCents
+            : arrangement.type === "one_time" ? arrangement.projectTotalCents : input.monthlyPriceCents;
+        const [invoiceResult] = await db.insert(clientInvoices).values({
           clientAccountId: newId,
           invoiceNumber,
           periodStart,
           periodEnd,
           dueDate,
-          baseAmountCents: input.monthlyPriceCents,
+          baseAmountCents: invoiceTotal,
           discountCents: 0,
           lateFeeCents: 0,
-          totalAmountCents: input.monthlyPriceCents,
+          totalAmountCents: invoiceTotal,
           discountType: "none",
           status: "draft",
           shareToken,
+          isRecurring: arrangement.type === "recurring" ? 1 : 0,
+          invoiceType: arrangement.type === "recurring" ? "monthly" : "addon",
         });
+        const invoiceId = (invoiceResult as any).insertId as number;
+        if (invoiceId && input.services.length) {
+          const { invoiceItems } = await import("../../drizzle/schema");
+          await db.insert(invoiceItems).values(input.services.filter(s => s.oneTimeFeeCents > 0).map((service, index) => ({
+            invoiceId,
+            description: service.name,
+            quantity: 1,
+            unitAmountCents: service.oneTimeFeeCents,
+            amountCents: service.oneTimeFeeCents,
+            sortOrder: index,
+          })));
+        }
       } catch (invoiceErr) {
         // Non-fatal: account was created, invoice creation failed
         console.error("[adminCreateAccount] Failed to auto-create first invoice:", invoiceErr);

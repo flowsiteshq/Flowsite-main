@@ -11,6 +11,7 @@ import { trpc } from "@/lib/trpc";
 import { CORE_ADDONS, AUTO_ADDONS, INDUSTRY_ADDONS, fmt } from "@/lib/addons";
 import KnowledgeCenter from "@/pages/KnowledgeCenter";
 import AddOnPricingTab from "@/components/AddOnPricingTab";
+import { AdminCustomerOnboardingWizard } from "@/components/AdminCustomerOnboardingWizard";
 import { getTZFromPhone, getLocalTimeInfo, type CallStatus } from "@/lib/timezones";
 import { SmsButton, SmsModal } from "@/components/SmsModal";
 import { Link } from "wouter";
@@ -4556,95 +4557,7 @@ function AdminBillingPanel({ isDark }: { isDark: boolean }) {
           ))}
         </div>
 
-        {/* Create Account Form */}
-        {showCreateAccount && (
-          <div className={`border rounded-xl p-4 space-y-2.5 ${isDark ? "bg-white/5 border-white/10" : "bg-gray-50 border-gray-200"}`}>
-            <p className={`text-xs font-semibold mb-1 ${isDark ? "text-white" : "text-gray-900"}`}>New Client Account</p>
-            {[
-              { label: "Business Name *", key: "businessName" as const },
-              { label: "Client Name *", key: "clientName" as const },
-              { label: "Email *", key: "clientEmail" as const },
-              { label: "Phone", key: "clientPhone" as const },
-              { label: "Website URL", key: "websiteUrl" as const },
-            ].map(f => (
-              <input
-                key={f.key}
-                placeholder={f.label}
-                value={newAccount[f.key]}
-                onChange={e => setNewAccount(prev => ({ ...prev, [f.key]: e.target.value }))}
-                className={`w-full rounded-lg px-2.5 py-1.5 text-xs focus:outline-none ${isDark ? "bg-white/5 border border-white/10 text-white focus:border-white/25" : "bg-white border border-gray-300 text-gray-900 focus:border-gray-400"}`}
-              />
-            ))}
-            <div>
-              <label className={`text-[10px] block mb-1 ${isDark ? "text-white/40" : "text-gray-500"}`}>Billing Start Date (MM/DD/YYYY)</label>
-              <input
-                placeholder="e.g. 05/01/2026"
-                value={newAccount.billingStartDate}
-                onChange={e => setNewAccount(prev => ({ ...prev, billingStartDate: e.target.value }))}
-                className={`w-full rounded-lg px-2.5 py-1.5 text-xs focus:outline-none ${isDark ? "bg-white/5 border border-white/10 text-white focus:border-white/25" : "bg-white border border-gray-300 text-gray-900 focus:border-gray-400"}`}
-              />
-              {newAccount.billingStartDate && (
-                <p className={`text-[10px] mt-0.5 ${parseDateMMDDYYYY(newAccount.billingStartDate) ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {parseDateMMDDYYYY(newAccount.billingStartDate) ? `→ ${parseDateMMDDYYYY(newAccount.billingStartDate)}` : 'Invalid format — use MM/DD/YYYY'}
-                </p>
-              )}
-            </div>
-            <div>
-              <label className={`text-[10px] block mb-1 ${isDark ? "text-white/40" : "text-gray-500"}`}>Monthly Price ($)</label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                placeholder="49.00"
-                value={(newAccount.monthlyPriceCents / 100).toFixed(2)}
-                onChange={e => setNewAccount(prev => ({ ...prev, monthlyPriceCents: Math.round(Number(e.target.value) * 100) }))}
-                className={`w-full rounded-lg px-2.5 py-1.5 text-xs focus:outline-none ${isDark ? "bg-white/5 border border-white/10 text-white focus:border-white/25" : "bg-white border border-gray-300 text-gray-900 focus:border-gray-400"}`}
-              />
-              <p className={`text-[10px] mt-0.5 ${isDark ? "text-white/30" : "text-gray-500"}`}>= {formatCents(newAccount.monthlyPriceCents)}/mo</p>
-            </div>
-            {/* Rep assignment */}
-            <div>
-              <label className={`text-[10px] block mb-1 ${isDark ? "text-white/40" : "text-gray-500"}`}>Assign Rep (optional)</label>
-              <select
-                value={(newAccount as any).assignedTechnicianId ?? ""}
-                onChange={e => setNewAccount(prev => ({ ...prev, assignedTechnicianId: e.target.value ? Number(e.target.value) : undefined } as any))}
-                className={`w-full rounded-lg px-2.5 py-1.5 text-xs focus:outline-none ${isDark ? "bg-white/5 border border-white/10 text-white focus:border-white/25" : "bg-white border border-gray-300 text-gray-900"}`}
-              >
-                <option value="">— Unassigned —</option>
-                {(techniciansQuery.data ?? []).filter((t: any) => t.status === "active").map((t: any) => (
-                  <option key={t.id} value={t.id}>{t.name}</option>
-                ))}
-              </select>
-            </div>
-            {/* Partner assignment */}
-            <div>
-              <label className={`text-[10px] block mb-1 ${isDark ? "text-white/40" : "text-gray-500"}`}>Assign Partner (optional)</label>
-              <select
-                value={(newAccount as any).assignedPartnerId ?? ""}
-                onChange={e => setNewAccount(prev => ({ ...prev, assignedPartnerId: e.target.value ? Number(e.target.value) : undefined } as any))}
-                className={`w-full rounded-lg px-2.5 py-1.5 text-xs focus:outline-none ${isDark ? "bg-white/5 border border-white/10 text-white focus:border-white/25" : "bg-white border border-gray-300 text-gray-900"}`}
-              >
-                <option value="">— Unassigned —</option>
-                {(partnersQuery.data ?? []).filter((p: any) => p.status === "active").map((p: any) => (
-                  <option key={p.id} value={p.id}>{p.name}{p.companyName ? ` (${p.companyName})` : ""}</option>
-                ))}
-              </select>
-            </div>
-            {createAccountMutation.error && (
-              <p className="text-red-400 text-[10px] px-1">{createAccountMutation.error.message}</p>
-            )}
-            <div className="flex gap-2 pt-1">
-              <button
-                onClick={handleCreateAccount}
-                disabled={createAccountMutation.isPending || !newAccount.businessName || !newAccount.clientName || !newAccount.clientEmail}
-                className="flex-1 py-1.5 rounded-lg bg-[oklch(0.5_0.2_25)] hover:bg-[oklch(0.55_0.22_25)] disabled:opacity-40 text-white text-xs font-semibold"
-              >
-                {createAccountMutation.isPending ? "Creating…" : "Create"}
-              </button>
-              <button onClick={() => setShowCreateAccount(false)} className={`flex-1 py-1.5 rounded-lg text-xs ${isDark ? "bg-white/5 hover:bg-white/10 text-white/60" : "bg-gray-100 hover:bg-gray-200 text-gray-600"}`}>Cancel</button>
-            </div>
-          </div>
-        )}
+        {showCreateAccount && <AdminCustomerOnboardingWizard isDark={isDark} onClose={() => setShowCreateAccount(false)} onCreated={(accountId) => { accountsQuery.refetch(); setShowCreateAccount(false); if (accountId) setSelectedAccountId(accountId); toast.success("Customer saved. No invoice or email was sent automatically."); }} />}
       </div>
 
       {/* Right: Account detail */}
