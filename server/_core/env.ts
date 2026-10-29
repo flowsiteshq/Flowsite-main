@@ -15,7 +15,7 @@ export const ENV = {
   adminSecretPassword: process.env.ADMIN_SECRET_PASSWORD ?? "",
   customerDeletionCode: process.env.CUSTOMER_DELETION_CODE ?? "",
   resendApiKey: process.env.RESEND_API_KEY ?? "",
-  emailFromAddress: process.env.EMAIL_FROM_ADDRESS ?? "FlowSites <onboarding@resend.dev>",
+  emailFromAddress: process.env.EMAIL_FROM_ADDRESS ?? "FlowSites <billing@flow-sites.com>",
   stripeSecretKey: process.env.FLOWSITES_STRIPE_SECRET_KEY ?? process.env.STRIPE_SECRET_KEY ?? "",
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? "",
   eightHundredApiKey: process.env.EIGHT_HUNDRED_API_KEY ?? "",
