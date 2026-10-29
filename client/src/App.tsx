@@ -76,7 +76,6 @@ import Interested from "./pages/Interested";
 import AIServices from "./pages/AIServices";
 import AIVideoStudio from "./pages/AIVideoStudio";
 import FreeWebsite from "./pages/FreeWebsite";
-import AdminKnowledgeCenter from "./pages/AdminKnowledgeCenter";
 import { leadCaptureHref } from "./lib/leadCapture";
 function Router() {
   // make sure to consider if you need authentication for certain routes
