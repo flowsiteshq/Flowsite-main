@@ -199,6 +199,7 @@ export function generateInvoiceEmail(data: {
   isRecurring: boolean;
 }): string {
   const amount = `$${(data.amountCents / 100).toFixed(2)}`;
+  const logoUrl = "https://flow-sites.com/flowsites-logo-transparent.png";
   const recurringCopy = data.isRecurring
     ? "This is a monthly recurring invoice. Standard monthly payments will be set up as recurring billing during secure checkout."
     : "This invoice is a one-time charge.";
@@ -207,7 +208,8 @@ export function generateInvoiceEmail(data: {
 <body style="margin:0;background:#f5f8fc;color:#14213f;font-family:Arial,Helvetica,sans-serif;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:36px 16px;background:#f5f8fc;"><tr><td align="center">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;">
-      <tr><td style="padding:28px 32px;background:#0f2747;color:#fff;"><div style="font-size:23px;font-weight:800;letter-spacing:-.04em;">FLOW SITES</div><div style="margin-top:6px;color:#cfe1f7;font-size:13px;">Secure billing and client services</div></td></tr>
+      <tr><td style="padding:20px 32px 14px;background:#fff;"><img src="${logoUrl}" width="180" alt="FlowSites" style="display:block;width:180px;max-width:100%;height:auto;border:0;" /></td></tr>
+      <tr><td style="padding:14px 32px 24px;background:#0f2747;color:#fff;"><div style="font-size:13px;font-weight:700;letter-spacing:.02em;">Secure billing and client services</div></td></tr>
       <tr><td style="padding:34px 32px;"><p style="margin:0 0 8px;font-size:15px;color:#64748b;">Hello ${escapeHtml(data.contactName || "there")},</p><h1 style="margin:0;font-size:28px;letter-spacing:-.03em;color:#14213f;">Your FlowSites invoice is ready</h1><p style="margin:16px 0 0;font-size:15px;line-height:1.65;color:#475569;">An invoice has been created for <strong>${escapeHtml(data.businessName)}</strong>.</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:26px 0;border:1px solid #dbe5f0;border-radius:14px;"><tr><td style="padding:18px 20px;color:#64748b;font-size:13px;">Invoice</td><td align="right" style="padding:18px 20px;font-weight:700;color:#14213f;">${escapeHtml(data.invoiceNumber)}</td></tr><tr><td style="padding:0 20px 18px;color:#64748b;font-size:13px;">Amount due</td><td align="right" style="padding:0 20px 18px;font-size:24px;font-weight:800;color:#1269e8;">${amount}</td></tr><tr><td style="padding:0 20px 18px;color:#64748b;font-size:13px;">Due date</td><td align="right" style="padding:0 20px 18px;font-weight:700;color:#14213f;">${escapeHtml(data.dueDate)}</td></tr></table>
         <p style="margin:0 0 22px;padding:14px 16px;border-radius:10px;background:#eff6ff;color:#1e3a5f;font-size:13px;line-height:1.55;">${recurringCopy}</p>

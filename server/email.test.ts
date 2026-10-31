@@ -70,6 +70,8 @@ describe("generateInvoiceEmail", () => {
     expect(html).toContain("INV-2026-0006");
     expect(html).toContain("https://flow-sites.com/invoice/secure-token");
     expect(html).toContain("monthly recurring invoice");
+    expect(html).toContain("https://flow-sites.com/flowsites-logo-transparent.png");
+    expect(html).toContain('alt="FlowSites"');
   });
 });
 
