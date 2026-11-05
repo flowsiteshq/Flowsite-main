@@ -70,4 +70,13 @@ describe("mobile public invoice regressions", () => {
     expect(loadingAndError).toMatch(/Try again|Retry/i);
     expect(loadingAndError).toContain("mailto:hello@flow-sites.com");
   });
+
+  it("keeps storage-dependent analytics off invoice paths and preview runtime out of production", () => {
+    const html = source("client/index.html");
+    expect(html).toContain('window.location.pathname.indexOf("/invoice/") === 0');
+    expect(html.indexOf('window.location.pathname.indexOf("/invoice/")')).toBeLessThan(html.indexOf('analytics.src ='));
+    const vite = source("vite.config.ts");
+    expect(vite).toContain('...vitePluginManusRuntime(), apply: "serve"');
+    expect(vite).toContain('...vitePluginManusDebugCollector(), apply: "serve"');
+  });
 });

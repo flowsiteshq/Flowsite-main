@@ -122,10 +122,20 @@
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <script>
+      // Billing links remain usable in storage-restricted mobile browsers.
+      (function () {
+        if (window.location.pathname.indexOf("/invoice/") === 0) return;
+        var endpoint = "%VITE_ANALYTICS_ENDPOINT%";
+        var websiteId = "%VITE_ANALYTICS_WEBSITE_ID%";
+        if (!/^https?:\/\//.test(endpoint) || !websiteId || websiteId.indexOf("%VITE_") === 0) return;
+        var analytics = document.createElement("script");
+        analytics.defer = true;
+        analytics.src = endpoint.replace(/\/$/, "") + "/umami";
+        analytics.setAttribute("data-website-id", websiteId);
+        document.head.appendChild(analytics);
+      })();
+    </script>
   </body>
 
 </html>
