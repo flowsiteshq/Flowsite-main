@@ -6,6 +6,8 @@ import { ENV } from "../_core/env";
 import { isBlockingSubscriptionStatus, isValidCustomerDeletionCode } from "../customerRemoval";
 import { generateInvoiceEmail, sendEmail, sendEmailWithResult } from "../email";
 import { invokeLLM } from "../_core/llm";
+import { resolvePrepaidBilling, buildPrepaidCheckoutParameters } from "../stripe/prepaidCheckout";
+import { reconcilePrepaidCheckout } from "../stripe/prepaidReconciliation";
 
 /** Owner always has admin access regardless of the role column in the DB. */
 async function requireAdmin(ctx: { user: { role: string; openId: string } | null }): Promise<void> {
@@ -1311,6 +1313,19 @@ export const clientBillingRouter = router({
         .where(eq(clientAccounts.id, invoice.clientAccountId))
         .limit(1);
 
+      if (account && resolvePrepaidBilling(invoice, account) && ["open", "overdue"].includes(invoice.status)) {
+        try {
+          const Stripe = (await import("stripe")).default;
+          const stripe = new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" as any });
+          if (await reconcilePrepaidCheckout(stripe, db, invoice, account)) {
+            const [refreshed] = await db.select().from(clientInvoices).where(eq(clientInvoices.id, invoice.id)).limit(1);
+            Object.assign(invoice, refreshed);
+          }
+        } catch (error) {
+          console.error("[Prepaid invoice] Payment reconciliation pending:", error instanceof Error ? error.message : error);
+        }
+      }
+
       const items = await db
         .select()
         .from(invoiceItems)
@@ -1320,6 +1335,7 @@ export const clientBillingRouter = router({
       return {
         invoice,
         items,
+        prepaidBilling: resolvePrepaidBilling(invoice, account ?? null),
         account: account ? {
           businessName: account.businessName,
           clientName: account.clientName,
@@ -1346,6 +1362,7 @@ export const clientBillingRouter = router({
         .limit(1);
       if (!invoice) throw new TRPCError({ code: "NOT_FOUND", message: "Invoice not found" });
       if (invoice.status === "paid") throw new TRPCError({ code: "BAD_REQUEST", message: "Invoice already paid" });
+      if (!["open", "overdue"].includes(invoice.status)) throw new TRPCError({ code: "BAD_REQUEST", message: "This invoice is not finalized and payable." });
 
       const [account] = await db
         .select()
@@ -1361,6 +1378,29 @@ export const clientBillingRouter = router({
 
       const Stripe = (await import("stripe")).default;
       const stripe = new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" as any });
+      const prepaidBilling = resolvePrepaidBilling(invoice, account ?? null);
+      if (prepaidBilling && account) {
+        try {
+          const parameters = buildPrepaidCheckoutParameters(prepaidBilling, invoice, account, input.origin);
+          const arrangement = JSON.parse(account.paymentArrangementJson!);
+          let previousSessionId = arrangement.prepaidCheckoutSessionId;
+          if (typeof previousSessionId === "string") {
+            const previous = await stripe.checkout.sessions.retrieve(previousSessionId);
+            if (previous.status === "complete") throw new Error("Payment has already been submitted. Refresh the invoice to confirm its status.");
+            if (previous.status === "open" && previous.url && previous.mode === "subscription"
+              && previous.amount_total === prepaidBilling.initialAmountCents
+              && previous.metadata?.recurringAmountCents === String(prepaidBilling.recurringAmountCents)
+              && previous.metadata?.recurringStartDate === prepaidBilling.recurringStartDate) return { checkoutUrl: previous.url };
+          }
+          const session = await stripe.checkout.sessions.create(parameters, {
+            idempotencyKey: `prepaid-invoice-v2-${invoice.id}-${prepaidBilling.recurringStartDate}-${previousSessionId || "first"}`,
+          });
+          await db.update(clientAccounts).set({ paymentArrangementJson: JSON.stringify({ ...arrangement, prepaidCheckoutSessionId: session.id }) }).where(eq(clientAccounts.id, account.id));
+          return { checkoutUrl: session.url };
+        } catch (error) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: error instanceof Error ? error.message : "Prepaid checkout could not be prepared." });
+        }
+      }
       const shouldStartSubscription = Boolean(account)
         && invoice.invoiceType === "monthly"
         && invoice.isRecurring === 1

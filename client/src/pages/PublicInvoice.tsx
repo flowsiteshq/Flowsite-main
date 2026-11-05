@@ -137,7 +137,7 @@ export default function PublicInvoice() {
     );
   }
 
-  const { invoice, account, items = [] } = data;
+  const { invoice, account, items = [], prepaidBilling } = data;
   const isPaid = invoice.status === "paid";
   const isOverdue = invoice.status === "overdue";
   const canPay = invoice.status === "open" || invoice.status === "overdue";
@@ -390,6 +390,20 @@ export default function PublicInvoice() {
             </div>
           </div>
 
+          {prepaidBilling && (
+            <div className="px-8 py-5 border-b border-blue-100 bg-blue-50">
+              <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 mb-2">Initial prepaid period + monthly renewal</p>
+              <p className="text-sm text-gray-800 leading-relaxed">
+                <strong>{fmt(prepaidBilling.initialAmountCents)} once</strong> covers {prepaidBilling.initialMonths} months,
+                from {fmtDate(prepaidBilling.coverageStartDate)} through {fmtDate(prepaidBilling.coverageEndDate)}.
+              </p>
+              <p className="text-sm text-gray-800 leading-relaxed mt-2">
+                After this payment, your saved payment method will be charged <strong>{fmt(prepaidBilling.recurringAmountCents)} each month</strong>
+                {" "}beginning <strong>{fmtDate(prepaidBilling.recurringStartDate)}</strong>. No additional monthly charges during the prepaid period.
+              </p>
+            </div>
+          )}
+
           {/* ── Notes ────────────────────────────────────────────────────────── */}
           {invoice.notes && (
             <div className="px-8 py-5 border-b border-gray-100 bg-gray-50">
@@ -399,6 +413,7 @@ export default function PublicInvoice() {
           )}
 
           {/* ── Billing terms ─────────────────────────────────────────────────── */}
+          {!prepaidBilling && (
           <div className="px-8 py-5 bg-gray-50 border-b border-gray-100">
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Billing Terms</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -422,6 +437,7 @@ export default function PublicInvoice() {
               </div>
             </div>
           </div>
+          )}
 
           {/* ── Pay CTA ───────────────────────────────────────────────────────── */}
           {canPay && (

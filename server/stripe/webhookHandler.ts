@@ -75,16 +75,44 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
               .limit(1);
 
             if (inv && inv.status !== "paid") {
+              let paymentIntentId = typeof session.payment_intent === "string" ? session.payment_intent : null;
+              let paidAt = new Date();
+              const prepaidCheckout = session.metadata?.billingMode === "prepaid_then_monthly";
+              const stripeInvoiceId = typeof session.invoice === "string" ? session.invoice : session.invoice?.id;
+              if (prepaidCheckout) {
+                if (session.amount_total !== inv.totalAmountCents || Number(clientAccountId) !== inv.clientAccountId || !stripeInvoiceId) {
+                  throw new Error("Prepaid checkout does not match the saved invoice.");
+                }
+                const paidInvoice = await stripe.invoices.retrieve(stripeInvoiceId);
+                if (paidInvoice.status !== "paid" || paidInvoice.amount_paid !== inv.totalAmountCents) {
+                  throw new Error("Prepaid Stripe invoice is not settled for the expected amount.");
+                }
+                const payments = await stripe.invoicePayments.list({ invoice: stripeInvoiceId, limit: 10 });
+                const payment = payments.data.find(item => item.status === "paid" && item.amount_paid === inv.totalAmountCents);
+                const intent = payment?.payment?.payment_intent;
+                paymentIntentId = typeof intent === "string" ? intent : intent?.id ?? null;
+                if (paidInvoice.status_transitions.paid_at) paidAt = new Date(paidInvoice.status_transitions.paid_at * 1000);
+              }
               await db
                 .update(clientInvoices)
                 .set({
                   status: "paid",
-                  paidAt: new Date(),
-                  stripePaymentIntentId: session.payment_intent as string ?? null,
+                  paidAt,
+                  stripePaymentIntentId: paymentIntentId,
+                  ...(prepaidCheckout ? { stripeInvoiceId: stripeInvoiceId! } : {}),
                 })
                 .where(eq(clientInvoices.id, invId));
 
               console.log(`[Webhook] Invoice ${invoiceId} marked as paid`);
+              if (prepaidCheckout) {
+                const { invoiceActivities } = await import("../../drizzle/schema");
+                await db.insert(invoiceActivities).values({
+                  clientAccountId: inv.clientAccountId, invoiceId: inv.id,
+                  activityType: "prepaid_invoice_paid",
+                  details: JSON.stringify({ stripeInvoiceId, paymentIntentId, subscriptionId: session.subscription, recurringStartDate: session.metadata?.recurringStartDate }),
+                  performedByName: "Stripe verified checkout",
+                });
+              }
 
               // If this was a setup fee payment, mark it as paid on the project
               if (session.metadata?.paymentType === "setup_fee" && session.metadata?.projectId) {
