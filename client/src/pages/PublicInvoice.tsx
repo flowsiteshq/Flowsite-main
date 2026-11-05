@@ -38,7 +38,7 @@ const STATUS_MAP: Record<string, { label: string; bg: string; text: string; dot:
 // ── Loading / Error states ─────────────────────────────────────────────────────
 function InvoiceShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#f5f5f0] flex flex-col print:bg-white">
+    <div className="min-h-screen bg-[#f5f5f0] text-[#0f172a] flex flex-col print:bg-white">
       {children}
     </div>
   );
@@ -76,7 +76,7 @@ export default function PublicInvoice() {
     }
   }
 
-  const { data, isLoading, error } = trpc.clientBilling.getInvoiceByShareToken.useQuery(
+  const { data, isLoading, error, refetch } = trpc.clientBilling.getInvoiceByShareToken.useQuery(
     { shareToken: shareToken ?? "" },
     { enabled: !!shareToken, retry: false }
   );
@@ -105,8 +105,10 @@ export default function PublicInvoice() {
   if (isLoading) {
     return (
       <InvoiceShell>
-        <div className="flex-1 flex items-center justify-center">
-          <Loader2 className="w-8 h-8 animate-spin text-red-600" />
+        <div role="status" className="flex-1 flex flex-col items-center justify-center gap-4 px-4 py-16">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          <p className="text-base font-semibold">Loading invoice...</p>
+          <p className="text-sm text-gray-500 text-center">Your invoice does not require a login.</p>
         </div>
       </InvoiceShell>
     );
@@ -121,11 +123,12 @@ export default function PublicInvoice() {
             <AlertCircle className="w-8 h-8 text-red-600" />
           </div>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Invoice Not Found</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Unable to load invoice</h1>
             <p className="text-gray-500 max-w-sm">
-              This invoice link is invalid or has expired. Please contact FlowSites for assistance.
+              Please retry. If this invoice still does not load, contact FlowSites for assistance.
             </p>
           </div>
+          <Button onClick={() => void refetch()} className="bg-blue-600 text-white">Retry loading invoice</Button>
           <a
             href="mailto:hello@flow-sites.com"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors"
@@ -152,7 +155,7 @@ export default function PublicInvoice() {
     <InvoiceShell>
       {/* ── Top action bar (hidden on print) ─────────────────────────────────── */}
       <div className="print:hidden bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           {/* Brand */}
           <div className="flex items-center gap-2.5">
             <img
@@ -165,7 +168,7 @@ export default function PublicInvoice() {
             <span className="text-gray-500 text-sm">Invoice Portal</span>
           </div>
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-end gap-2">
             <button
               onClick={() => window.print()}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
@@ -215,15 +218,15 @@ export default function PublicInvoice() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden print:rounded-none print:shadow-none print:border-0">
 
           {/* ── Header band ─────────────────────────────────────────────────── */}
-          <div className="bg-gray-900 px-8 py-7 print:px-8 print:py-6">
-            <div className="flex items-start justify-between gap-6">
+          <div className="bg-[#ffffff] text-[#0f172a] border-b border-gray-100 px-4 sm:px-8 py-6 print:px-8 print:py-6">
+            <div className="flex flex-col sm:flex-row items-start justify-between gap-5">
               {/* Left: company */}
               <div>
                 <div className="flex items-center gap-2.5 mb-4">
                   <img
                     src="/flowsites-logo-transparent.png"
                     alt="FlowSites"
-                    style={{ height: "92px", width: "auto" }}
+                    style={{ height: "72px", width: "auto", maxWidth: "100%" }}
                     className="object-contain object-left"
                   />
                 </div>
@@ -234,15 +237,15 @@ export default function PublicInvoice() {
                 </p>
               </div>
               {/* Right: invoice meta */}
-              <div className="text-right">
+              <div className="min-w-0 w-full sm:w-auto text-left sm:text-right">
                 <p className="text-gray-500 text-xs font-semibold uppercase tracking-widest mb-1">Invoice</p>
-                <p className="text-white text-2xl font-bold tracking-tight mb-3">{invoice.invoiceNumber}</p>
-                <div className="flex items-center gap-2 justify-end flex-wrap">
+                <p className="text-[#0f172a] text-xl sm:text-2xl font-bold tracking-tight mb-3 break-words">{invoice.invoiceNumber}</p>
+                <div className="flex items-center gap-2 justify-start sm:justify-end flex-wrap">
                   <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.text}`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
                     {status.label}
                   </div>
-                  {invoice.isRecurring && (
+                  {invoice.isRecurring !== 0 && (
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-700">
                       <svg className="w-3 h-3" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.65 2.35A8 8 0 1 0 15 8h-2a6 6 0 1 1-1.05-3.4L10 6h5V1l-1.35 1.35z" fill="currentColor"/>
@@ -256,7 +259,7 @@ export default function PublicInvoice() {
           </div>
 
           {/* ── Bill to / dates ──────────────────────────────────────────────── */}
-          <div className="px-8 py-6 grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-gray-100">
+          <div className="px-4 sm:px-8 py-6 grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-gray-100">
             {/* Bill to */}
             <div className="sm:col-span-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Bill To</p>
@@ -264,7 +267,7 @@ export default function PublicInvoice() {
                 <>
                   <p className="font-bold text-gray-900 text-base">{account.businessName}</p>
                   <p className="text-sm text-gray-600 mt-0.5">{account.clientName}</p>
-                  <p className="text-sm text-gray-500">{account.clientEmail}</p>
+                  <p className="text-sm text-gray-500 break-all">{account.clientEmail}</p>
 
                 </>
               ) : (
@@ -295,7 +298,7 @@ export default function PublicInvoice() {
           </div>
 
           {/* ── Line items ───────────────────────────────────────────────────── */}
-          <div className="px-8 py-6 border-b border-gray-100">
+          <div className="px-4 sm:px-8 py-6 border-b border-gray-100">
             {/* Column headers */}
             <div className="grid grid-cols-12 gap-2 mb-3">
               <p className="col-span-7 text-xs font-semibold uppercase tracking-widest text-gray-400">Description</p>
@@ -317,7 +320,7 @@ export default function PublicInvoice() {
                         )}
                       </div>
                       <p className="col-span-2 text-sm text-gray-700 text-center">{item.quantity}</p>
-                      <p className="col-span-3 text-sm font-semibold text-gray-900 text-right">{fmt(item.amountCents)}</p>
+                      <p className="col-span-3 text-sm font-semibold text-gray-900 text-right whitespace-nowrap">{fmt(item.amountCents)}</p>
                     </div>
                   ))}
                 </>
@@ -365,7 +368,7 @@ export default function PublicInvoice() {
           </div>
 
           {/* ── Totals ───────────────────────────────────────────────────────── */}
-          <div className="px-8 py-5 border-b border-gray-100">
+          <div className="px-4 sm:px-8 py-5 border-b border-gray-100">
             <div className="max-w-xs ml-auto space-y-2">
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Subtotal</span>
@@ -391,7 +394,7 @@ export default function PublicInvoice() {
           </div>
 
           {prepaidBilling && (
-            <div className="px-8 py-5 border-b border-blue-100 bg-blue-50">
+            <div className="px-4 sm:px-8 py-5 border-b border-blue-100 bg-blue-50">
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-700 mb-2">Initial prepaid period + monthly renewal</p>
               <p className="text-sm text-gray-800 leading-relaxed">
                 <strong>{fmt(prepaidBilling.initialAmountCents)} once</strong> covers {prepaidBilling.initialMonths} months,
@@ -406,7 +409,7 @@ export default function PublicInvoice() {
 
           {/* ── Notes ────────────────────────────────────────────────────────── */}
           {invoice.notes && (
-            <div className="px-8 py-5 border-b border-gray-100 bg-gray-50">
+            <div className="px-4 sm:px-8 py-5 border-b border-gray-100 bg-gray-50">
               <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Notes</p>
               <p className="text-sm text-gray-700 leading-relaxed">{invoice.notes}</p>
             </div>
@@ -441,11 +444,11 @@ export default function PublicInvoice() {
 
           {/* ── Pay CTA ───────────────────────────────────────────────────────── */}
           {canPay && (
-            <div className="px-8 py-6 print:hidden">
+            <div className="px-4 sm:px-8 py-6 print:hidden">
               <Button
                 onClick={handlePay}
                 disabled={paying}
-                className="w-full h-14 text-base font-bold bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg shadow-red-600/20 transition-all"
+                className="w-full h-14 text-base font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-600/20 transition-all"
               >
                 {paying ? (
                   <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Processing…</>
