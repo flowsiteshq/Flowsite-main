@@ -23,7 +23,8 @@ describe("Admin 3.1 Knowledge Center", () => {
     expect(router).toContain("markCueSync");
     expect(router).toContain("getCuePublishedKnowledge");
     expect(app).toContain("/flowsites-admin-knowledge");
-    expect(app).toContain('path="/flowsites-admin-knowledge" component={AdminDashboard}');
+    expect(app).toContain('path="/flowsites-admin-knowledge" component={AdminKnowledgeWorkspace}');
+    expect(app).toContain('path="/flowsites-admin-legacy-crm" component={AdminDashboard}');
     expect(read("client/src/pages/AdminDashboard.tsx")).toContain('window.location.pathname === "/flowsites-admin-knowledge" ? "knowledgeCenter" : "leads"');
     expect(shell).toContain("Knowledge Center");
     expect(shell).toContain("bg-white text-gray-900");

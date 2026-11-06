@@ -54,10 +54,10 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex items-center justify-center h-64 text-slate-900">
         <div className="text-center space-y-3">
-          <BookOpen className="w-10 h-10 text-white/30 mx-auto animate-pulse" />
-          <p className="text-white/50">Loading lesson...</p>
+          <BookOpen className="w-10 h-10 text-blue-600 mx-auto animate-pulse" />
+          <p className="text-slate-600">Loading lesson...</p>
         </div>
       </div>
     );
@@ -65,11 +65,11 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
 
   if (!data) {
     return (
-      <div className="text-center py-16">
-        <p className="text-white/50">Lesson not found.</p>
+      <div className="text-center py-16 text-slate-900">
+        <p className="text-slate-600">Lesson not found.</p>
         <button
           onClick={onBack}
-          className="mt-4 flex items-center gap-2 mx-auto text-white/60 hover:text-white text-sm transition-colors"
+          className="mt-4 flex items-center gap-2 mx-auto rounded-lg text-slate-600 hover:text-blue-700 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         >
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
@@ -108,7 +108,7 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
       if (questions.length > 0) {
         setViewState("quiz");
       } else {
-        toast.success("Lesson complete! 🎉");
+        toast.success("Lesson complete!");
         onBack();
       }
     }
@@ -159,27 +159,27 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
 
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-6 text-slate-900">
       {/* Header */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-start gap-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm transition-colors px-3 py-1.5 rounded-lg hover:bg-white/10"
+          className="flex shrink-0 items-center gap-1.5 text-slate-600 hover:text-blue-700 text-sm transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         >
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
-        <div className="flex-1 min-w-0">
-          <h1 className="text-xl font-bold text-white truncate">{lesson.title}</h1>
-          <div className="flex items-center gap-3 mt-1 text-sm text-white/50">
+        <div className="flex-1 basis-48 min-w-0">
+          <h1 className="text-xl font-bold text-slate-900 break-words">{lesson.title}</h1>
+          <div className="flex flex-wrap items-center gap-3 mt-1 text-sm text-slate-600">
             <span className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
               {lesson.estimatedMinutes} min
             </span>
-            <span className="px-2 py-0.5 rounded-full border border-white/20 text-xs text-white/60">
+            <span className="px-2 py-0.5 rounded-full border border-slate-200 bg-slate-50 text-xs text-slate-600 break-words">
               {lesson.category}
             </span>
             {quizPassed && (
-              <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-600/20 text-green-400 text-xs font-medium border border-green-600/30">
+              <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-50 text-green-700 text-xs font-medium border border-green-200">
                 <Trophy className="w-3 h-3" /> Passed ({bestScore}%)
               </span>
             )}
@@ -190,13 +190,13 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
       {/* Progress bar */}
       {viewState === "lesson" && totalSteps > 0 && (
         <div className="space-y-1">
-          <div className="flex justify-between text-xs text-white/40">
+          <div className="flex flex-wrap justify-between gap-2 text-xs text-slate-600">
             <span>Step {currentStep + 1} of {totalSteps}</span>
             <span>{progressPct}% complete</span>
           </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[oklch(0.5_0.2_25)] rounded-full transition-all duration-500"
+              className="h-full bg-blue-600 rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
@@ -205,19 +205,19 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
 
       {/* ── LESSON CONTENT ── */}
       {viewState === "lesson" && steps.length > 0 && (
-        <div className="bg-[oklch(0.13_0.01_260)] border border-white/10 rounded-2xl overflow-hidden">
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
           {/* Step nav pills */}
-          <div className="flex gap-1 p-4 border-b border-white/10 overflow-x-auto">
+          <div className="flex gap-1 p-4 border-b border-slate-200 overflow-x-auto">
             {steps.map((step, idx) => (
               <button
                 key={step.id}
                 onClick={() => setCurrentStep(idx)}
-                className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
                   idx === currentStep
-                    ? "bg-[oklch(0.5_0.2_25)] text-white shadow"
+                    ? "bg-blue-600 text-white shadow-sm"
                     : idx < completedStepsCount
-                    ? "bg-green-600/20 text-green-400 border border-green-600/30"
-                    : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"
+                    ? "bg-green-50 text-green-700 border border-green-200"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
                 }`}
               >
                 {idx < completedStepsCount ? (
@@ -231,25 +231,25 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
           </div>
 
           {/* Step content */}
-          <div className="p-6 md:p-8">
-            <h2 className="text-lg font-semibold text-white mb-4">{steps[currentStep].title}</h2>
-            <div className="text-white/80 leading-relaxed whitespace-pre-wrap text-sm">
+          <div className="p-5 sm:p-6 md:p-8">
+            <h2 className="text-lg font-semibold text-slate-900 mb-4 break-words">{steps[currentStep].title}</h2>
+            <div className="text-slate-700 leading-relaxed whitespace-pre-wrap break-words text-sm">
               {steps[currentStep].content}
             </div>
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between p-4 border-t border-white/10 bg-white/3">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4 border-t border-slate-200 bg-slate-50">
             <button
               onClick={handlePrevStep}
               disabled={currentStep === 0}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-sm font-medium transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 hover:text-slate-900 hover:border-slate-400 text-sm font-medium transition-all disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               <ArrowLeft className="w-4 h-4" /> Previous
             </button>
             <button
               onClick={handleNextStep}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[oklch(0.5_0.2_25)] hover:bg-[oklch(0.55_0.22_25)] text-white text-sm font-semibold transition-all shadow-lg shadow-[oklch(0.5_0.2_25_/_25%)]"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               {currentStep < totalSteps - 1 ? (
                 <>Next <ArrowRight className="w-4 h-4" /></>
@@ -266,14 +266,14 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
       {/* ── QUIZ ── */}
       {viewState === "quiz" && (
         <div className="space-y-6">
-          <div className="bg-[oklch(0.13_0.01_260)] border border-white/10 rounded-2xl p-6">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-[oklch(0.5_0.2_25_/_15%)] flex items-center justify-center">
-                <Trophy className="w-5 h-5 text-[oklch(0.65_0.2_25)]" />
+              <div className="w-10 h-10 shrink-0 rounded-full bg-blue-50 flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-blue-700" />
               </div>
-              <div>
-                <h2 className="font-semibold text-lg text-white">Knowledge Check</h2>
-                <p className="text-sm text-white/50">
+              <div className="min-w-0">
+                <h2 className="font-semibold text-lg text-slate-900 break-words">Knowledge Check</h2>
+                <p className="text-sm text-slate-600">
                   {questions.length} questions — score 70% or higher to pass
                 </p>
               </div>
@@ -285,8 +285,8 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
                 const selected = selectedAnswers[q.id];
                 return (
                   <div key={q.id} className="space-y-3">
-                    <p className="font-medium text-white">
-                      <span className="text-white/40 mr-2">{qIdx + 1}.</span>
+                    <p className="font-medium text-slate-900 break-words">
+                      <span className="text-slate-500 mr-2">{qIdx + 1}.</span>
                       {q.question}
                     </p>
                     <div className="grid gap-2">
@@ -294,13 +294,13 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
                         <button
                           key={optIdx}
                           onClick={() => handleSelectAnswer(q.id, optIdx)}
-                          className={`text-left px-4 py-3 rounded-xl border text-sm transition-all ${
+                          className={`text-left px-4 py-3 rounded-xl border text-sm break-words transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
                             selected === optIdx
-                              ? "border-[oklch(0.5_0.2_25)] bg-[oklch(0.5_0.2_25_/_15%)] text-white font-medium"
-                              : "border-white/15 text-white/80 hover:border-white/30 hover:bg-white/5"
+                              ? "border-blue-600 bg-blue-50 text-blue-900 font-medium"
+                              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
                           }`}
                         >
-                          <span className="font-semibold mr-2 text-white/40">
+                          <span className="font-semibold mr-2 text-slate-500">
                             {String.fromCharCode(65 + optIdx)}.
                           </span>
                           {opt}
@@ -312,17 +312,17 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
               })}
             </div>
 
-            <div className="mt-8 flex items-center justify-between">
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
               <button
                 onClick={() => setViewState("lesson")}
-                className="flex items-center gap-1.5 text-white/50 hover:text-white text-sm transition-colors"
+                className="flex items-center gap-1.5 rounded-lg text-slate-600 hover:text-blue-700 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
                 <ArrowLeft className="w-4 h-4" /> Review Lesson
               </button>
               <button
                 onClick={handleSubmitQuiz}
                 disabled={!allAnswered || isSubmitting}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[oklch(0.5_0.2_25)] hover:bg-[oklch(0.55_0.22_25)] text-white text-sm font-semibold transition-all shadow-lg shadow-[oklch(0.5_0.2_25_/_25%)] disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-all shadow-sm disabled:bg-blue-200 disabled:text-slate-600 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
                 {isSubmitting ? "Submitting..." : "Submit Quiz"}
               </button>
@@ -333,24 +333,24 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
 
       {/* ── RESULTS ── */}
       {viewState === "results" && quizResult && (
-        <div className="bg-[oklch(0.13_0.01_260)] border border-white/10 rounded-2xl p-8 text-center space-y-6">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-8 text-center space-y-6 shadow-sm">
           {quizResult.passed ? (
             <div className="space-y-2">
-              <div className="w-20 h-20 rounded-full bg-green-600/20 flex items-center justify-center mx-auto">
-                <Trophy className="w-10 h-10 text-green-400" />
+              <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto">
+                <Trophy className="w-10 h-10 text-green-700" />
               </div>
-              <h2 className="text-2xl font-bold text-green-400">You Passed!</h2>
-              <p className="text-white/60">
+              <h2 className="text-2xl font-bold text-green-700">You Passed!</h2>
+              <p className="text-slate-600">
                 Great work — you scored {quizResult.score}% ({quizResult.correct}/{quizResult.total} correct)
               </p>
             </div>
           ) : (
             <div className="space-y-2">
-              <div className="w-20 h-20 rounded-full bg-red-600/20 flex items-center justify-center mx-auto">
-                <XCircle className="w-10 h-10 text-red-400" />
+              <div className="w-20 h-20 rounded-full bg-red-50 flex items-center justify-center mx-auto">
+                <XCircle className="w-10 h-10 text-red-700" />
               </div>
-              <h2 className="text-2xl font-bold text-white">Not quite</h2>
-              <p className="text-white/60">
+              <h2 className="text-2xl font-bold text-slate-900">Not quite</h2>
+              <p className="text-slate-600">
                 You scored {quizResult.score}% ({quizResult.correct}/{quizResult.total} correct). You need 70% to pass.
               </p>
             </div>
@@ -369,30 +369,30 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
                   key={q.id}
                   className={`p-4 rounded-xl border ${
                     isCorrect
-                      ? "border-green-600/30 bg-green-600/5"
-                      : "border-red-600/30 bg-red-600/5"
+                      ? "border-green-200 bg-green-50"
+                      : "border-red-200 bg-red-50"
                   }`}
                 >
                   <div className="flex items-start gap-2">
                     {isCorrect ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-green-700 mt-0.5 flex-shrink-0" />
                     ) : (
-                      <XCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                      <XCircle className="w-4 h-4 text-red-700 mt-0.5 flex-shrink-0" />
                     )}
-                    <div className="space-y-1 text-sm">
-                      <p className="font-medium text-white">
+                    <div className="min-w-0 space-y-1 text-sm break-words">
+                      <p className="font-medium text-slate-900">
                         {qIdx + 1}. {q.question}
                       </p>
                       {!isCorrect && (
-                        <p className="text-red-400">
+                        <p className="text-red-700">
                           Your answer: {String.fromCharCode(65 + yourAnswer)}. {opts[yourAnswer]}
                         </p>
                       )}
-                      <p className="text-green-400">
+                      <p className="text-green-700">
                         Correct: {String.fromCharCode(65 + correctIdx)}. {opts[correctIdx]}
                       </p>
                       {res?.explanation && (
-                        <p className="text-white/50 italic">{res.explanation}</p>
+                        <p className="text-slate-600 italic">{res.explanation}</p>
                       )}
                     </div>
                   </div>
@@ -401,18 +401,18 @@ export default function LessonViewer({ lessonId, onBack }: LessonViewerProps) {
             })}
           </div>
 
-          <div className="flex items-center justify-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             {!quizResult.passed && (
               <button
                 onClick={handleRetakeQuiz}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-sm font-medium transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 bg-white text-slate-700 hover:text-slate-900 hover:border-slate-400 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
                 <RotateCcw className="w-4 h-4" /> Retake Quiz
               </button>
             )}
             <button
               onClick={onBack}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[oklch(0.5_0.2_25)] hover:bg-[oklch(0.55_0.22_25)] text-white text-sm font-semibold transition-all shadow-lg shadow-[oklch(0.5_0.2_25_/_25%)]"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               {quizResult.passed ? (
                 <><Trophy className="w-4 h-4" /> Back to Lessons</>

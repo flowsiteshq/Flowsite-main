@@ -970,48 +970,49 @@ Most successful businesses use both — ads for immediate leads while SEO builds
 const CATEGORIES: Category[] = ["All", "Sales Rebuttals", "Phone Scripts", "SEO", "Web Dev", "CRM", "Automation", "Analytics", "Hosting", "Copywriting", "Social Media"];
 
 const CATEGORY_COLORS: Record<Category, string> = {
-  "Sales Rebuttals": "bg-red-900/60 text-red-300 hover:bg-red-800/60",
-  "Phone Scripts": "bg-teal-900/60 text-teal-300 hover:bg-teal-800/60",
-  "All": "bg-slate-800 text-white hover:bg-slate-700",
-  "SEO": "bg-emerald-900/60 text-emerald-300 hover:bg-emerald-800/60",
-  "Web Dev": "bg-blue-900/60 text-blue-300 hover:bg-blue-800/60",
-  "CRM": "bg-orange-900/60 text-orange-300 hover:bg-orange-800/60",
-  "Automation": "bg-violet-900/60 text-violet-300 hover:bg-violet-800/60",
-  "Analytics": "bg-cyan-900/60 text-cyan-300 hover:bg-cyan-800/60",
-  "Hosting": "bg-sky-900/60 text-sky-300 hover:bg-sky-800/60",
-  "Copywriting": "bg-yellow-900/60 text-yellow-300 hover:bg-yellow-800/60",
-  "Social Media": "bg-pink-900/60 text-pink-300 hover:bg-pink-800/60",
+  "Sales Rebuttals": "bg-red-50 text-red-700 hover:bg-red-100",
+  "Phone Scripts": "bg-teal-50 text-teal-700 hover:bg-teal-100",
+  "All": "bg-slate-100 text-slate-600 hover:bg-slate-200",
+  "SEO": "bg-emerald-50 text-emerald-700 hover:bg-emerald-100",
+  "Web Dev": "bg-blue-50 text-blue-700 hover:bg-blue-100",
+  "CRM": "bg-orange-50 text-orange-700 hover:bg-orange-100",
+  "Automation": "bg-violet-50 text-violet-700 hover:bg-violet-100",
+  "Analytics": "bg-cyan-50 text-cyan-700 hover:bg-cyan-100",
+  "Hosting": "bg-sky-50 text-sky-700 hover:bg-sky-100",
+  "Copywriting": "bg-yellow-50 text-yellow-700 hover:bg-yellow-100",
+  "Social Media": "bg-pink-50 text-pink-700 hover:bg-pink-100",
 };
 
 const CATEGORY_BADGE_COLORS: Record<Category, string> = {
-  "Sales Rebuttals": "bg-red-900 text-red-300",
-  "Phone Scripts": "bg-teal-900 text-teal-300",
-  "All": "bg-slate-700 text-slate-200",
-  "SEO": "bg-emerald-900 text-emerald-300",
-  "Web Dev": "bg-blue-900 text-blue-300",
-  "CRM": "bg-orange-900 text-orange-300",
-  "Automation": "bg-violet-900 text-violet-300",
-  "Analytics": "bg-cyan-900 text-cyan-300",
-  "Hosting": "bg-sky-900 text-sky-300",
-  "Copywriting": "bg-yellow-900 text-yellow-300",
-  "Social Media": "bg-pink-900 text-pink-300",
+  "Sales Rebuttals": "bg-red-50 text-red-700",
+  "Phone Scripts": "bg-teal-50 text-teal-700",
+  "All": "bg-slate-100 text-slate-600",
+  "SEO": "bg-emerald-50 text-emerald-700",
+  "Web Dev": "bg-blue-50 text-blue-700",
+  "CRM": "bg-orange-50 text-orange-700",
+  "Automation": "bg-violet-50 text-violet-700",
+  "Analytics": "bg-cyan-50 text-cyan-700",
+  "Hosting": "bg-sky-50 text-sky-700",
+  "Copywriting": "bg-yellow-50 text-yellow-700",
+  "Social Media": "bg-pink-50 text-pink-700",
 };
 
 // ─── Article Card ─────────────────────────────────────────────────────────────
 function ArticleCard({ article, onClick }: { article: Article; onClick: () => void }) {
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className="group relative bg-[oklch(0.13_0.01_260)] rounded-2xl overflow-hidden cursor-pointer border border-white/5 hover:border-white/15 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+      className="group relative text-left bg-white rounded-2xl overflow-hidden cursor-pointer border border-slate-200 hover:border-slate-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden bg-[oklch(0.1_0.01_260)]">
+      <div className="relative h-48 overflow-hidden bg-slate-100">
         <img
           src={article.image}
           alt={article.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.13_0.01_260)] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
         <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full ${CATEGORY_BADGE_COLORS[article.category]}`}>
           {article.category}
         </span>
@@ -1019,23 +1020,23 @@ function ArticleCard({ article, onClick }: { article: Article; onClick: () => vo
 
       {/* Content */}
       <div className="p-5">
-        <h3 className="text-xl font-black text-white leading-tight mb-2 group-hover:text-[oklch(0.65_0.2_25)] transition-colors">
+        <h3 className="text-xl font-black text-slate-900 leading-tight mb-2 group-hover:text-blue-700 transition-colors">
           {article.title}
         </h3>
-        <p className="text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">
+        <p className="text-sm text-slate-500 leading-relaxed mb-4 line-clamp-2">
           {article.subtitle}
         </p>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-white/30 text-xs">
+          <div className="flex items-center gap-1.5 text-slate-500 text-xs">
             <Clock size={12} />
             <span>{article.readTime} min read</span>
           </div>
-          <div className="w-8 h-8 rounded-full bg-[oklch(0.5_0.2_25)] flex items-center justify-center group-hover:bg-[oklch(0.55_0.22_25)] transition-colors">
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center group-hover:bg-blue-700 transition-colors">
             <ArrowRight size={14} className="text-white" />
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -1052,13 +1053,13 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
 
       if (line.startsWith("## ")) {
         elements.push(
-          <h2 key={i} className="text-2xl font-black text-white mt-8 mb-4 first:mt-0">
+          <h2 key={i} className="text-2xl font-black text-slate-900 mt-8 mb-4 first:mt-0">
             {line.slice(3)}
           </h2>
         );
       } else if (line.startsWith("### ")) {
         elements.push(
-          <h3 key={i} className="text-lg font-bold text-white/90 mt-6 mb-3">
+          <h3 key={i} className="text-lg font-bold text-slate-800 mt-6 mb-3">
             {line.slice(4)}
           </h3>
         );
@@ -1075,17 +1076,17 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
           <div key={`table-${i}`} className="overflow-x-auto my-4">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-slate-200">
                   {headers.map((h, hi) => (
-                    <th key={hi} className="text-left py-2 px-3 text-white/60 font-semibold">{h}</th>
+                    <th key={hi} className="text-left py-2 px-3 text-slate-600 font-semibold">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row, ri) => (
-                  <tr key={ri} className="border-b border-white/5 hover:bg-white/3">
+                  <tr key={ri} className="border-b border-slate-200 hover:bg-slate-50">
                     {row.map((cell, ci) => (
-                      <td key={ci} className="py-2.5 px-3 text-white/70" dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }} />
+                      <td key={ci} className="py-2.5 px-3 text-slate-700" dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900">$1</strong>') }} />
                     ))}
                   </tr>
                 ))}
@@ -1103,9 +1104,9 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
         elements.push(
           <ul key={`ul-${i}`} className="my-3 space-y-1.5 pl-4">
             {listItems.map((item, li) => (
-              <li key={li} className="text-white/65 text-sm flex gap-2">
-                <span className="text-[oklch(0.5_0.2_25)] mt-1 flex-shrink-0">•</span>
-                <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>').replace(/`(.*?)`/g, '<code class="bg-white/10 px-1 rounded text-xs text-white/80">$1</code>') }} />
+              <li key={li} className="text-slate-700 text-sm flex gap-2">
+                <span className="text-blue-600 mt-1 flex-shrink-0">•</span>
+                <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900">$1</strong>').replace(/`(.*?)`/g, '<code class="bg-slate-100 px-1 rounded text-xs text-slate-700">$1</code>') }} />
               </li>
             ))}
           </ul>
@@ -1115,10 +1116,10 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
         elements.push(<div key={i} className="h-2" />);
       } else {
         const html = line
-          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-          .replace(/`(.*?)`/g, '<code class="bg-white/10 px-1.5 py-0.5 rounded text-xs text-white/80 font-mono">$1</code>');
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900">$1</strong>')
+          .replace(/`(.*?)`/g, '<code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs text-slate-700 font-mono">$1</code>');
         elements.push(
-          <p key={i} className="text-white/65 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: html }} />
+          <p key={i} className="text-slate-700 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: html }} />
         );
       }
       i++;
@@ -1131,7 +1132,7 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
       {/* Back button */}
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-white/50 hover:text-white text-sm mb-6 transition-colors group"
+        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm mb-6 transition-colors group"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
         Back to Knowledge Center
@@ -1145,12 +1146,12 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
           <span className={`text-xs font-semibold px-2.5 py-1 rounded-full mb-3 inline-block ${CATEGORY_BADGE_COLORS[article.category]}`}>
             {article.category}
           </span>
-          <h1 className="text-3xl font-black text-white leading-tight">{article.title}</h1>
+          <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight">{article.title}</h1>
         </div>
       </div>
 
       {/* Meta */}
-      <div className="flex items-center gap-4 mb-8 text-white/40 text-sm">
+      <div className="flex items-center gap-4 mb-8 text-slate-500 text-sm">
         <div className="flex items-center gap-1.5">
           <Clock size={14} />
           <span>{article.readTime} min read</span>
@@ -1162,7 +1163,7 @@ function ArticleDetail({ article, onBack }: { article: Article; onBack: () => vo
       </div>
 
       {/* Content */}
-      <div className="bg-[oklch(0.13_0.01_260)] rounded-2xl p-8 border border-white/5">
+      <div className="bg-white rounded-2xl p-5 sm:p-8 border border-slate-200">
         {renderContent(article.content)}
       </div>
     </div>
@@ -1255,20 +1256,20 @@ const SALES_DECKS: SalesDeck[] = [
 function SalesDeckCard({ deck }: { deck: SalesDeck }) {
   const Icon = deck.icon;
   return (
-    <div className={`group flex flex-col bg-card border ${deck.borderColor} rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5`}>
+    <div className={`group flex flex-col bg-white text-slate-900 border ${deck.borderColor} rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5`}>
       {/* Header */}
       <div className="p-5 flex-1">
         <div className="flex items-center justify-between mb-4">
-          <div className={`w-9 h-9 rounded-lg bg-muted flex items-center justify-center`}>
+          <div className={`w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center`}>
             <Icon size={18} className={deck.iconColor} />
           </div>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+          <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-500">
             {deck.slideCount} slides
           </span>
         </div>
         <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${deck.iconColor}`}>{deck.industry}</p>
-        <h3 className="text-sm font-semibold text-foreground leading-snug mb-2">{deck.title}</h3>
-        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{deck.description}</p>
+        <h3 className="text-sm font-semibold text-slate-900 leading-snug mb-2">{deck.title}</h3>
+        <p className="text-xs text-slate-500 leading-relaxed line-clamp-3">{deck.description}</p>
       </div>
 
       {/* Footer */}
@@ -1277,7 +1278,7 @@ function SalesDeckCard({ deck }: { deck: SalesDeck }) {
           href={deck.deckUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-2 rounded-lg text-xs font-semibold bg-muted hover:bg-muted/80 text-foreground transition-all duration-150"
+          className="flex items-center justify-center gap-2 w-full py-2 rounded-lg text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 transition-all duration-150"
         >
           <Presentation size={13} />
           Open Deck
@@ -1291,7 +1292,7 @@ function SalesDeckCard({ deck }: { deck: SalesDeck }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 type MainTab = "articles" | "lessons" | "decks";
 
-export default function KnowledgeCenter() {
+export default function KnowledgeCenter({ embedded = false }: { embedded?: boolean } = {}) {
   const [mainTab, setMainTab] = useState<MainTab>("articles");
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category>("All");
@@ -1315,7 +1316,7 @@ export default function KnowledgeCenter() {
 
   if (selectedArticle) {
     return (
-      <div className="p-6 md:p-8">
+      <div className={embedded ? "py-2" : "p-4 sm:p-6 md:p-8"}>
         <ArticleDetail article={selectedArticle} onBack={() => setSelectedArticle(null)} />
       </div>
     );
@@ -1323,57 +1324,60 @@ export default function KnowledgeCenter() {
 
   if (selectedLessonId !== null) {
     return (
-      <div className="p-6 md:p-8">
+      <div className={embedded ? "py-2" : "p-4 sm:p-6 md:p-8"}>
         <LessonViewer lessonId={selectedLessonId} onBack={() => setSelectedLessonId(null)} />
       </div>
     );
   }
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto">
+    <div className={embedded ? "max-w-7xl mx-auto text-slate-900" : "p-4 sm:p-6 md:p-8 max-w-7xl mx-auto text-slate-900"}>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-black text-white mb-2">Knowledge Center</h1>
-        <p className="text-white/50 text-sm">
+        {!embedded && <h1 className="text-3xl font-black text-slate-900 mb-2">Knowledge Center</h1>}
+        <p className="text-slate-500 text-sm">
           Everything your team needs to know about websites, SEO, CRM, and digital marketing — explained in plain English.
         </p>
       </div>
 
       {/* Main tabs */}
-      <div className="flex gap-1 mb-6 bg-[oklch(0.13_0.01_260)] rounded-xl p-1 w-fit">
+      <div role="tablist" aria-label="Knowledge Center sections" className="flex flex-wrap gap-1 mb-6 bg-white border border-slate-200 rounded-xl p-1 w-fit max-w-full">
         <button
+          role="tab" aria-selected={mainTab === "articles"}
           onClick={() => setMainTab("articles")}
-          className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+          className={`flex items-center gap-2 px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
             mainTab === "articles"
-              ? "bg-[oklch(0.5_0.2_25)] text-white shadow"
-              : "text-white/50 hover:text-white"
+              ? "bg-blue-600 text-white shadow"
+              : "text-slate-500 hover:text-slate-900"
           }`}
         >
           <BookOpen size={15} /> Articles
         </button>
         <button
+          role="tab" aria-selected={mainTab === "lessons"}
           onClick={() => setMainTab("lessons")}
-          className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+          className={`flex items-center gap-2 px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
             mainTab === "lessons"
-              ? "bg-[oklch(0.5_0.2_25)] text-white shadow"
-              : "text-white/50 hover:text-white"
+              ? "bg-blue-600 text-white shadow"
+              : "text-slate-500 hover:text-slate-900"
           }`}
         >
           <GraduationCap size={15} /> Lessons & Quizzes
           {lessons && lessons.length > 0 && (
-            <span className="bg-white/20 text-white text-xs px-1.5 py-0.5 rounded-full">{lessons.length}</span>
+            <span className="bg-slate-100 text-slate-700 text-xs px-1.5 py-0.5 rounded-full">{lessons.length}</span>
           )}
         </button>
         <button
+          role="tab" aria-selected={mainTab === "decks"}
           onClick={() => setMainTab("decks")}
-          className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+          className={`flex items-center gap-2 px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
             mainTab === "decks"
-              ? "bg-[oklch(0.5_0.2_25)] text-white shadow"
-              : "text-white/50 hover:text-white"
+              ? "bg-blue-600 text-white shadow"
+              : "text-slate-500 hover:text-slate-900"
           }`}
         >
           <Presentation size={15} /> Sales Decks
-          <span className="bg-white/20 text-white text-xs px-1.5 py-0.5 rounded-full">{SALES_DECKS.length}</span>
+          <span className="bg-slate-100 text-slate-700 text-xs px-1.5 py-0.5 rounded-full">{SALES_DECKS.length}</span>
         </button>
       </div>
 
@@ -1382,12 +1386,12 @@ export default function KnowledgeCenter() {
         <>
           {/* Search */}
           <div className="relative mb-6">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
             <Input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search articles — try 'SEO', 'funnel', 'automation'..."
-              className="pl-11 bg-[oklch(0.13_0.01_260)] border-white/10 text-white placeholder:text-white/30 h-12 rounded-xl focus:border-[oklch(0.5_0.2_25)] text-sm"
+              className="pl-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-500 h-12 rounded-xl focus:border-blue-500 text-sm"
             />
           </div>
 
@@ -1396,10 +1400,11 @@ export default function KnowledgeCenter() {
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
+                aria-pressed={activeCategory === cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                   activeCategory === cat
-                    ? "bg-[oklch(0.5_0.2_25)] text-white shadow-lg shadow-[oklch(0.5_0.2_25_/_30%)]"
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/15"
                     : CATEGORY_COLORS[cat]
                 }`}
               >
@@ -1409,7 +1414,7 @@ export default function KnowledgeCenter() {
           </div>
 
           {search && (
-            <p className="text-white/30 text-xs mb-4">
+            <p className="text-slate-500 text-xs mb-4">
               {filtered.length} article{filtered.length !== 1 ? "s" : ""} found for "{search}"
             </p>
           )}
@@ -1421,7 +1426,7 @@ export default function KnowledgeCenter() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 text-white/30">
+            <div className="text-center py-20 text-slate-500">
               <BookOpen size={40} className="mx-auto mb-3 opacity-30" />
               <p className="text-sm">No articles found. Try a different search term.</p>
             </div>
@@ -1433,7 +1438,7 @@ export default function KnowledgeCenter() {
       {mainTab === "decks" && (
         <div>
           <div className="mb-6">
-            <p className="text-white/50 text-sm">
+            <p className="text-slate-500 text-sm">
               Industry-specific sales presentations ready to share with prospects. Each deck is tailored to the unique needs, pain points, and goals of that business type.
             </p>
           </div>
@@ -1451,14 +1456,14 @@ export default function KnowledgeCenter() {
           {lessonsLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[1,2,3,4,5,6].map(i => (
-                <div key={i} className="h-48 rounded-2xl bg-white/5 animate-pulse" />
+                <div key={i} className="h-48 rounded-2xl bg-slate-100 animate-pulse" />
               ))}
             </div>
           ) : !lessons || lessons.length === 0 ? (
             <div className="text-center py-20">
-              <GraduationCap size={48} className="mx-auto mb-4 text-white/20" />
-              <p className="text-white/50 mb-2">No lessons loaded yet.</p>
-              <p className="text-white/30 text-sm mb-6">Click below to load the lesson library.</p>
+              <GraduationCap size={48} className="mx-auto mb-4 text-slate-400" />
+              <p className="text-slate-500 mb-2">No lessons loaded yet.</p>
+              <p className="text-slate-500 text-sm mb-6">Click below to load the lesson library.</p>
               <Button
                 onClick={async () => {
                   await seedMut.mutateAsync();
@@ -1480,7 +1485,7 @@ export default function KnowledgeCenter() {
                   <button
                     key={lesson.id}
                     onClick={() => setSelectedLessonId(lesson.id)}
-                    className="group text-left bg-[oklch(0.13_0.01_260)] border border-white/10 rounded-2xl overflow-hidden hover:border-[oklch(0.5_0.2_25_/_50%)] hover:shadow-lg hover:shadow-[oklch(0.5_0.2_25_/_10%)] transition-all duration-300"
+                    className="group text-left bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-blue-200 hover:shadow-lg hover:shadow-blue-600/10 transition-all duration-300"
                   >
                     {/* Color bar by category */}
                     <div className={`h-1.5 w-full ${
@@ -1494,8 +1499,8 @@ export default function KnowledgeCenter() {
                     <div className="p-5 space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1">{lesson.category}</p>
-                          <h3 className="font-bold text-white text-base leading-snug group-hover:text-[oklch(0.7_0.15_25)] transition-colors">
+                          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">{lesson.category}</p>
+                          <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-blue-700 transition-colors">
                             {lesson.title}
                           </h3>
                         </div>
@@ -1503,8 +1508,8 @@ export default function KnowledgeCenter() {
                           <Trophy className="w-5 h-5 text-yellow-400 flex-shrink-0" />
                         )}
                       </div>
-                      <p className="text-white/50 text-xs line-clamp-2">{lesson.description}</p>
-                      <div className="flex items-center justify-between text-xs text-white/40">
+                      <p className="text-slate-500 text-xs line-clamp-2">{lesson.description}</p>
+                      <div className="flex items-center justify-between text-xs text-slate-500">
                         <span className="flex items-center gap-1">
                           <Clock size={12} /> {lesson.estimatedMinutes} min
                         </span>
@@ -1520,24 +1525,24 @@ export default function KnowledgeCenter() {
                       {/* Progress bar */}
                       {prog && progressPct > 0 && (
                         <div className="space-y-1">
-                          <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all ${
-                                passed ? "bg-green-500" : "bg-[oklch(0.5_0.2_25)]"
+                                passed ? "bg-green-500" : "bg-blue-600"
                               }`}
                               style={{ width: `${progressPct}%` }}
                             />
                           </div>
-                          <p className="text-xs text-white/30">
+                          <p className="text-xs text-slate-500">
                             {passed ? (
-                              <span className="text-green-400 flex items-center gap-1"><CheckCircle2 size={11} /> Completed — {prog.bestScore}% score</span>
+                              <span className="text-green-700 flex items-center gap-1"><CheckCircle2 size={11} /> Completed — {prog.bestScore}% score</span>
                             ) : (
                               `${progressPct}% read`
                             )}
                           </p>
                         </div>
                       )}
-                      <div className="flex items-center gap-1.5 text-xs font-semibold text-[oklch(0.5_0.2_25)] group-hover:gap-2.5 transition-all">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 group-hover:gap-2.5 transition-all">
                         <Play size={12} className="fill-current" />
                         {passed ? "Review Lesson" : progressPct > 0 ? "Continue" : "Start Lesson"}
                       </div>

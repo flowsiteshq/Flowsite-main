@@ -28,6 +28,7 @@ import AdminSubmissions from "./pages/AdminSubmissions";
 import AdminLogin from "./pages/AdminLogin";
 import AdminPasswordSetup from "./pages/AdminPasswordSetup";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminKnowledgeWorkspace from "./pages/AdminKnowledgeWorkspace";
 import AdminScheduling from "./pages/AdminScheduling";
 import AdminVideoOrders from "./pages/AdminVideoOrders";
 import AdminCueIntegration from "./pages/AdminCueIntegration";
@@ -127,8 +128,8 @@ function Router() {
         <Route path="/flowsites-admin-billing" component={AdminBillingWorkspace} />
         <Route path="/flowsites-admin-leads" component={AdminLeadsWorkspace} />
         <Route path="/flowsites-admin-projects" component={AdminProjectsWorkspace} />
-        {/* One Knowledge Center: use the established CRM workspace from the Admin 3 navigation. */}
-        <Route path="/flowsites-admin-knowledge" component={AdminDashboard} />
+        {/* One training library, inside the same Admin 3 shell as Customers and Billing. */}
+        <Route path="/flowsites-admin-knowledge" component={AdminKnowledgeWorkspace} />
         <Route path="/flowsites-admin-settings" component={AdminSettingsWorkspace} />
         <Route path="/flowsites-admin-legacy-crm" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />
