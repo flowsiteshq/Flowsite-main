@@ -35,7 +35,7 @@ interface FormData {
 // ── Packages ──────────────────────────────────────────────────────────────────
 const PACKAGES = [
   { key: "pay_save" as WebsitePackageKey, Icon: Zap, name: "Pay & Save", tagline: "$499 one-time setup + $49/month", buildPrice: 499, monthlyPrice: 49, initialPrice: 548, commitment: "Month-to-month service", contractualTotal: null, features: ["Same five-page professional website", "Mobile optimization", "Contact forms and basic SEO", "Hosting, SSL, backups, and routine maintenance"], highlighted: false },
-  { key: "launch_now" as WebsitePackageKey, Icon: Rocket, name: "Launch Now", tagline: "$0 setup + $99/month", buildPrice: 0, monthlyPrice: 99, initialPrice: 99, commitment: "12-month minimum commitment", contractualTotal: 1188, features: ["Same five-page professional website", "Mobile optimization", "Contact forms and basic SEO", "Hosting, SSL, backups, and routine maintenance"], highlighted: true },
+  { key: "launch_now" as WebsitePackageKey, Icon: Rocket, name: "Launch Now", tagline: "$0 setup + $99/month", buildPrice: 0, monthlyPrice: 99, initialPrice: 99, commitment: "12 payments of $99 ($1,188 total)", contractualTotal: 1188, features: ["Same five-page professional website", "Mobile optimization", "Contact forms and basic SEO", "Hosting, SSL, backups, and routine maintenance"], highlighted: true },
 ];
 
 const INDUSTRIES = [

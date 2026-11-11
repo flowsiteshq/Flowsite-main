@@ -53,7 +53,7 @@ const packages = [
     monthly: "$99/month",
     total: "$1,188 total over the 12-month minimum",
     badge: "No Upfront Setup Fee",
-    description: "$99 due at signup, followed by $99/month for a 12-month minimum commitment.",
+    description: "$99 due at signup, then 11 additional monthly payments of $99. Twelve payments total $1,188.",
     features: ["Same five-page professional website", "Mobile optimization", "Contact forms", "Basic SEO", "Hosting, SSL, backups, and routine maintenance"],
     popular: true,
   },

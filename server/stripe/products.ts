@@ -74,7 +74,7 @@ export const WEBSITE_PACKAGES: Record<WebsitePackageKey, WebsitePackage> = {
     commitmentMonths: 12,
     badge: "No Upfront Setup Fee",
     contractualTotalCents: 118800,
-    description: "$99 due at signup, then $99/month for a 12-month minimum; $1,188 total contractual payments.",
+    description: "$99 due at signup, then 11 additional monthly payments of $99. Twelve payments total $1,188; 12-month minimum commitment.",
     features: SHARED_FEATURES,
   },
 };

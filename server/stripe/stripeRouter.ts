@@ -228,7 +228,7 @@ export const stripeRouter = router({
             monthly_amount_cents: String(websitePackage.monthlyAmountCents),
             contractual_total_cents: String(websitePackage.contractualTotalCents ?? "month_to_month"),
             commitment_months: String(websitePackage.commitmentMonths ?? 0),
-            cancellation_terms: websitePackage.commitmentMonths ? "12-month minimum commitment; cancellation terms are governed by the service agreement." : "Month-to-month service; cancel according to the service agreement.",
+            cancellation_terms: websitePackage.commitmentMonths ? "12 payments of $99 totaling $1,188; first payment due at signup; cancellation terms are governed by the service agreement." : "Month-to-month service; cancel according to the service agreement.",
           },
           subscription_data: {
             metadata: {
