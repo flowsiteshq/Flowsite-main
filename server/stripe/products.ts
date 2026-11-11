@@ -1,44 +1,77 @@
 /**
  * FlowSites Stripe Products & Prices
  *
- * Each tier has:
- *  - A one-time build fee (Stripe Payment Intent / price_data)
- *  - A recurring monthly hosting fee (Stripe Subscription / price_data)
- *
- * These are created dynamically via price_data so no pre-created
- * Stripe products are required. Update amounts here to keep everything in sync.
+ * Website packages are intentionally separate from the existing recurring
+ * service catalog. Existing customer subscriptions must not be changed.
  */
 
 export type TierKey = "launch" | "growth" | "authority";
+export type WebsitePackageKey = "pay_save" | "launch_now";
 
 export interface Tier {
   name: string;
-  buildAmountCents: number;      // one-time build fee in cents
-  monthlyAmountCents: number;    // recurring monthly fee in cents
-  financeMonthlyBuildCents: number; // 12-month instalment of build fee in cents
+  buildAmountCents: number;
+  monthlyAmountCents: number;
+  financeMonthlyBuildCents: number;
   description: string;
 }
 
+/** Legacy tiers retained for existing links and internal compatibility. */
 export const TIERS: Record<TierKey, Tier> = {
-  launch: {
-    name: "Launch",
-    buildAmountCents: 120000,        // $1,200
-    monthlyAmountCents: 7900,        // $79/mo
-    financeMonthlyBuildCents: 10000, // $100/mo × 12
-    description: "Custom 5-page website with basic CRM integration",
+  launch: { name: "Launch", buildAmountCents: 120000, monthlyAmountCents: 7900, financeMonthlyBuildCents: 10000, description: "Legacy Launch website package" },
+  growth: { name: "Growth", buildAmountCents: 240000, monthlyAmountCents: 12900, financeMonthlyBuildCents: 20000, description: "Legacy Growth website package" },
+  authority: { name: "Authority", buildAmountCents: 390000, monthlyAmountCents: 17900, financeMonthlyBuildCents: 32500, description: "Legacy Authority website package" },
+};
+
+export interface WebsitePackage {
+  key: WebsitePackageKey;
+  name: string;
+  setupAmountCents: number;
+  monthlyAmountCents: number;
+  initialAmountCents: number;
+  commitmentMonths: number | null;
+  badge: string;
+  description: string;
+  features: string[];
+}
+
+const SHARED_FEATURES = [
+  "Professional website with up to 5 pages",
+  "Modern, mobile-responsive design",
+  "Business branding and color customization",
+  "Contact forms and lead capture",
+  "Click-to-call functionality",
+  "Social media integration",
+  "Basic SEO configuration",
+  "Managed website hosting",
+  "SSL certificate",
+  "Routine website maintenance",
+  "Website backups",
+  "Standard email support",
+  "Two consolidated design revision rounds",
+];
+
+export const WEBSITE_PACKAGES: Record<WebsitePackageKey, WebsitePackage> = {
+  pay_save: {
+    key: "pay_save",
+    name: "Pay & Save",
+    setupAmountCents: 49900,
+    monthlyAmountCents: 4900,
+    initialAmountCents: 54800,
+    commitmentMonths: null,
+    badge: "Lower Monthly Cost",
+    description: "$499 setup, then $49/month with no annual commitment.",
+    features: SHARED_FEATURES,
   },
-  growth: {
-    name: "Growth",
-    buildAmountCents: 240000,        // $2,400
-    monthlyAmountCents: 12900,       // $129/mo
-    financeMonthlyBuildCents: 20000, // $200/mo × 12
-    description: "Custom 10-page website with full CRM integration and automation",
-  },
-  authority: {
-    name: "Authority",
-    buildAmountCents: 390000,        // $3,900
-    monthlyAmountCents: 17900,       // $179/mo
-    financeMonthlyBuildCents: 32500, // $325/mo × 12
-    description: "Unlimited pages with complete automation suite and multi-location support",
+  launch_now: {
+    key: "launch_now",
+    name: "Launch Now",
+    setupAmountCents: 0,
+    monthlyAmountCents: 9900,
+    initialAmountCents: 9900,
+    commitmentMonths: 12,
+    badge: "No Upfront Setup Fee",
+    description: "$0 setup, then $99/month with a 12-month service commitment.",
+    features: SHARED_FEATURES,
   },
 };

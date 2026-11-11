@@ -17,7 +17,7 @@ describe("public conversion flow", () => {
     expect(app).toContain('leadCaptureHref({ intent: "Get started" })');
     expect(app).toContain('leadCaptureHref({ intent: "Schedule a strategy call" })');
     expect(app).toContain('path="/ai-services" component={AIServices}');
-    expect(home).toContain('leadCaptureHref({ intent: `Start the ${pkg.name} package`, packageId: pkg.id })');
+    expect(home).toContain('href={`/get-started?package=${pkg.id}`}');
     expect(home).toContain('href="/#packages"');
     expect(aiServices).toContain("leadCaptureHref({ prompt:");
     expect(aiServices).toContain('leadCaptureHref({ intent: "Discuss AI services" })');

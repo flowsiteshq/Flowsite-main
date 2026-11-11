@@ -2,7 +2,7 @@ import { z } from "zod";
 import Stripe from "stripe";
 import { router, publicProcedure } from "../_core/trpc";
 import { ENV } from "../_core/env";
-import { TIERS, TierKey } from "./products";
+import { TIERS, TierKey, WEBSITE_PACKAGES, WebsitePackageKey } from "./products";
 
 const getStripe = () => {
   if (!ENV.stripeSecretKey) throw new Error("STRIPE_SECRET_KEY not configured");
@@ -178,13 +178,71 @@ export const stripeRouter = router({
   createCheckout: publicProcedure
     .input(
       z.object({
-        tier: z.enum(["launch", "growth", "authority"]),
-        paymentType: z.enum(["full", "monthly", "finance"]),
+        tier: z.enum(["launch", "growth", "authority"]).optional(),
+        paymentType: z.enum(["full", "monthly", "finance"]).optional(),
+        websitePackage: z.enum(["pay_save", "launch_now"]).optional(),
         origin: z.string().url(),
       })
     )
     .mutation(async ({ input }) => {
       const stripe = getStripe();
+      if (input.websitePackage) {
+        const websitePackage = WEBSITE_PACKAGES[input.websitePackage as WebsitePackageKey];
+        const successUrl = `${input.origin}/get-started?payment=success&package=${websitePackage.key}`;
+        const cancelUrl = `${input.origin}/get-started?payment=cancel&package=${websitePackage.key}`;
+        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+          {
+            price_data: {
+              currency: "usd",
+              unit_amount: websitePackage.monthlyAmountCents,
+              recurring: { interval: "month" },
+              product_data: {
+                name: `FlowSites ${websitePackage.name} — Website Hosting & Maintenance`,
+                description: websitePackage.description,
+              },
+            },
+            quantity: 1,
+          },
+        ];
+        if (websitePackage.setupAmountCents > 0) {
+          lineItems.unshift({
+            price_data: {
+              currency: "usd",
+              unit_amount: websitePackage.setupAmountCents,
+              product_data: {
+                name: `FlowSites ${websitePackage.name} — Website Setup`,
+                description: "Professional website setup and launch preparation",
+              },
+            },
+            quantity: 1,
+          });
+        }
+        const session = await stripe.checkout.sessions.create({
+          mode: "subscription",
+          allow_promotion_codes: true,
+          line_items: lineItems,
+          metadata: {
+            website_package: websitePackage.key,
+            package_name: websitePackage.name,
+            initial_amount_cents: String(websitePackage.initialAmountCents),
+            monthly_amount_cents: String(websitePackage.monthlyAmountCents),
+            commitment_months: String(websitePackage.commitmentMonths ?? 0),
+          },
+          subscription_data: {
+            metadata: {
+              website_package: websitePackage.key,
+              package_name: websitePackage.name,
+              commitment_months: String(websitePackage.commitmentMonths ?? 0),
+            },
+          },
+          success_url: successUrl,
+          cancel_url: cancelUrl,
+        });
+        return { url: session.url };
+      }
+      if (!input.tier || !input.paymentType) {
+        throw new Error("Select a website package before continuing.");
+      }
       const tierData = TIERS[input.tier as TierKey];
       const successUrl = `${input.origin}/get-started?payment=success&tier=${input.tier}`;
       const cancelUrl = `${input.origin}/get-started?payment=cancel`;

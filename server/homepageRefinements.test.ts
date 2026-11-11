@@ -26,12 +26,11 @@ describe("homepage premium refinements", () => {
     const leadCapture = source("client/src/lib/leadCapture.ts");
     const intake = source("client/src/pages/AIIntake.tsx");
 
-    expect(home).toContain('id: "starter"');
-    expect(home).toContain('id: "growth"');
-    expect(home).toContain('id: "ai-business"');
+    expect(home).toContain('id: "pay_save"');
+    expect(home).toContain('id: "launch_now"');
     expect(home).toContain("min-h-[31rem]");
-    expect(home).toContain("packageId: pkg.id");
-    expect(home).toContain("We confirm scope and any ongoing fees before secure checkout.");
+    expect(home).toContain("/get-started?package=${pkg.id}");
+    expect(home).toContain("Secure checkout shows the full initial charge");
     expect(leadCapture).toContain("packageId?: string");
     expect(leadCapture).toContain('params.set("package", packageId.trim())');
     expect(intake).toContain('const selectedPackage = params.get("package") || ""');

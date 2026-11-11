@@ -17,8 +17,8 @@ import { toast } from "sonner";
 import { useSEO } from "@/hooks/useSEO";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
-type TierKey = "launch" | "growth" | "authority";
-type PaymentPlan = "full" | "finance";
+type WebsitePackageKey = "pay_save" | "launch_now";
+type PaymentPlan = "package";
 
 interface FormData {
   businessName: string;
@@ -28,66 +28,14 @@ interface FormData {
   website: string;
   industry: string;
   goals: string;
-  tier: TierKey | null;
+  tier: WebsitePackageKey | null;
   paymentPlan: PaymentPlan | null;
 }
 
 // ── Packages ──────────────────────────────────────────────────────────────────
 const PACKAGES = [
-  {
-    key: "launch" as TierKey,
-    Icon: Zap,
-    name: "Launch",
-    tagline: "Get online and start converting",
-    buildPrice: 1200,
-    monthlyPrice: 79,
-    financePrice: 100,
-    features: [
-      "Custom 5-page website",
-      "Mobile-responsive design",
-      "Basic CRM integration",
-      "Contact form with lead capture",
-      "SEO foundation",
-      "30-day post-launch support",
-    ],
-    highlighted: false,
-  },
-  {
-    key: "growth" as TierKey,
-    Icon: Rocket,
-    name: "Growth",
-    tagline: "Scale your leads and enrollment",
-    buildPrice: 2400,
-    monthlyPrice: 129,
-    financePrice: 200,
-    features: [
-      "Custom 10-page website",
-      "Advanced funnel design",
-      "Full CRM integration",
-      "Automated follow-up sequences",
-      "Lead tracking dashboard",
-      "90-day optimization support",
-    ],
-    highlighted: true,
-  },
-  {
-    key: "authority" as TierKey,
-    Icon: Crown,
-    name: "Authority",
-    tagline: "Dominate your market",
-    buildPrice: 3900,
-    monthlyPrice: 179,
-    financePrice: 325,
-    features: [
-      "Unlimited pages",
-      "Multi-location support",
-      "Complete automation suite",
-      "Custom CRM workflows",
-      "Priority support & strategy",
-      "Monthly performance reviews",
-    ],
-    highlighted: false,
-  },
+  { key: "pay_save" as WebsitePackageKey, Icon: Zap, name: "Pay & Save", tagline: "Lower monthly cost with a $499 setup", buildPrice: 499, monthlyPrice: 49, initialPrice: 548, commitment: "No annual commitment", features: ["Up to 5-page professional website", "Hosting, SSL, maintenance, and backups", "Lead capture and click-to-call", "Two consolidated design revision rounds"], highlighted: false },
+  { key: "launch_now" as WebsitePackageKey, Icon: Rocket, name: "Launch Now", tagline: "No upfront setup fee", buildPrice: 0, monthlyPrice: 99, initialPrice: 99, commitment: "12-month service commitment", features: ["Everything in Pay & Save", "No upfront setup fee", "Initial payment: $99", "Commitment terms shown before checkout"], highlighted: true },
 ];
 
 const INDUSTRIES = [
@@ -107,7 +55,7 @@ export default function GetStarted() {
   const [form, setForm] = useState<FormData>({
     businessName: "", ownerName: "", email: "", phone: "",
     website: "", industry: "", goals: "",
-    tier: null, paymentPlan: null,
+    tier: (new URLSearchParams(window.location.search).get("package") as WebsitePackageKey | null) || null, paymentPlan: null,
   });
 
   const submitWizard = trpc.wizard.submit.useMutation();
@@ -137,12 +85,11 @@ export default function GetStarted() {
         colorScheme: "TBD",
         timeline: "TBD",
         budget: form.tier || "launch",
-        additionalNotes: `Package: ${form.tier} | Payment: ${form.paymentPlan}`,
+        additionalNotes: `Website package: ${form.tier} | Initial payment: ${selectedPkg?.initialPrice} | Monthly: ${selectedPkg?.monthlyPrice} | ${selectedPkg?.commitment}`,
       });
 
       const result = await createCheckout.mutateAsync({
-        tier: form.tier as "launch" | "growth" | "authority",
-        paymentType: form.paymentPlan === "finance" ? "finance" : "full",
+        websitePackage: form.tier as "pay_save" | "launch_now",
         origin: window.location.origin,
       });
 
@@ -286,149 +233,16 @@ export default function GetStarted() {
             {/* ── Step 2: Choose Package ── */}
             {step === 2 && (
               <motion.div key="step2" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.3 }}>
-                <h1 className="text-3xl font-bold text-[oklch(0.10_0.005_260)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                  Choose your package
-                </h1>
-                <p className="text-[oklch(0.50_0.008_260)] mb-8">All packages include hosting, SSL, and ongoing support.</p>
-
-                <div className="grid grid-cols-1 gap-4">
-                  {PACKAGES.map((pkg) => {
-                    const selected = form.tier === pkg.key;
-                    return (
-                      <button
-                        key={pkg.key}
-                        onClick={() => update("tier", pkg.key)}
-                        className={`w-full text-left rounded-2xl border-2 p-6 transition-all duration-200 ${
-                          selected
-                            ? "border-[oklch(0.52_0.22_25)] bg-[oklch(0.52_0.22_25_/_4%)]"
-                            : pkg.highlighted
-                            ? "border-[oklch(0.52_0.22_25_/_40%)] bg-white hover:border-[oklch(0.52_0.22_25)]"
-                            : "border-[oklch(0.88_0.005_260)] bg-white hover:border-[oklch(0.52_0.22_25_/_50%)]"
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-4">
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${selected ? "bg-[oklch(0.52_0.22_25)] text-white" : "bg-[oklch(0.95_0.003_260)] text-[oklch(0.52_0.22_25)]"}`}>
-                              <pkg.Icon size={18} />
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2 mb-0.5">
-                                <span className="font-bold text-lg text-[oklch(0.10_0.005_260)]" style={{ fontFamily: "var(--font-display)" }}>{pkg.name}</span>
-                                {pkg.highlighted && (
-                                  <span className="text-[10px] font-bold uppercase tracking-wider bg-[oklch(0.52_0.22_25)] text-white px-2 py-0.5 rounded-full">Most Popular</span>
-                                )}
-                              </div>
-                              <p className="text-sm text-[oklch(0.50_0.008_260)] mb-3">{pkg.tagline}</p>
-                              <div className="flex flex-wrap gap-x-4 gap-y-1">
-                                {pkg.features.map((f) => (
-                                  <span key={f} className="flex items-center gap-1 text-xs text-[oklch(0.40_0.006_260)]">
-                                    <Check size={11} className="text-[oklch(0.52_0.22_25)] shrink-0" />
-                                    {f}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-right shrink-0">
-                            <div className="text-2xl font-bold text-[oklch(0.10_0.005_260)]" style={{ fontFamily: "var(--font-display)" }}>
-                              ${pkg.buildPrice.toLocaleString()}
-                            </div>
-                            <div className="text-xs text-[oklch(0.50_0.008_260)]">one-time build</div>
-                            <div className="text-sm font-semibold text-[oklch(0.52_0.22_25)] mt-1">+ ${pkg.monthlyPrice}/mo</div>
-                          </div>
-                        </div>
-                        {selected && (
-                          <div className="mt-4 pt-4 border-t border-[oklch(0.88_0.005_260)] flex items-center gap-2">
-                            <div className="w-4 h-4 rounded-full bg-[oklch(0.52_0.22_25)] flex items-center justify-center">
-                              <Check size={10} className="text-white" />
-                            </div>
-                            <span className="text-sm font-medium text-[oklch(0.52_0.22_25)]">Selected</span>
-                          </div>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
+                <h1 className="text-3xl font-bold text-[oklch(0.10_0.005_260)] mb-2" style={{ fontFamily: "var(--font-display)" }}>Choose your website package</h1>
+                <p className="text-[oklch(0.50_0.008_260)] mb-8">Both options include the same professional website features.</p>
+                <div className="grid grid-cols-1 gap-4">{PACKAGES.map((pkg) => { const selected = form.tier === pkg.key; return <button key={pkg.key} onClick={() => update("tier", pkg.key)} className={`w-full text-left rounded-2xl border-2 p-6 transition-all ${selected ? "border-[oklch(0.52_0.22_25)] bg-[oklch(0.52_0.22_25_/_4%)]" : "border-[oklch(0.88_0.005_260)] bg-white hover:border-[oklch(0.52_0.22_25_/_50%)]"}`}><div className="flex items-start justify-between gap-4"><div className="flex items-start gap-4"><div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${selected ? "bg-[oklch(0.52_0.22_25)] text-white" : "bg-[oklch(0.95_0.003_260)] text-[oklch(0.52_0.22_25)]"}`}><pkg.Icon size={18} /></div><div><div className="flex items-center gap-2"><span className="font-bold text-lg text-[oklch(0.10_0.005_260)]">{pkg.name}</span>{pkg.highlighted && <span className="text-[10px] font-bold uppercase tracking-wider bg-[oklch(0.52_0.22_25)] text-white px-2 py-0.5 rounded-full">Recommended</span>}</div><p className="text-sm text-[oklch(0.50_0.008_260)] mt-1">{pkg.tagline}</p></div></div><div className="text-right shrink-0"><div className="text-2xl font-bold text-[oklch(0.10_0.005_260)]">${pkg.initialPrice}</div><div className="text-xs text-[oklch(0.50_0.008_260)]">initial payment</div><div className="text-sm font-semibold text-[oklch(0.52_0.22_25)] mt-1">${pkg.monthlyPrice}/mo</div></div></div><div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">{pkg.features.map(f => <span key={f} className="flex items-center gap-1 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />{f}</span>)}</div></button>; })}</div>
               </motion.div>
             )}
-
-            {/* ── Step 3: Payment Plan ── */}
+            {/* ── Step 3: Confirm terms ── */}
             {step === 3 && selectedPkg && (
               <motion.div key="step3" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.3 }}>
-                <h1 className="text-3xl font-bold text-[oklch(0.10_0.005_260)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                  How would you like to pay?
-                </h1>
-                <p className="text-[oklch(0.50_0.008_260)] mb-8">Choose the option that works best for your budget.</p>
-
-                {/* Order Summary */}
-                <div className="bg-white rounded-2xl border border-[oklch(0.88_0.005_260)] p-5 mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[oklch(0.52_0.22_25)] flex items-center justify-center text-white">
-                      <selectedPkg.Icon size={16} />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-[oklch(0.10_0.005_260)]">{selectedPkg.name} Package</div>
-                      <div className="text-sm text-[oklch(0.50_0.008_260)]">{selectedPkg.tagline}</div>
-                    </div>
-                    <button onClick={() => setStep(2)} className="ml-auto text-xs text-[oklch(0.52_0.22_25)] hover:underline">Change</button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Pay in Full */}
-                  <button
-                    onClick={() => update("paymentPlan", "full")}
-                    className={`text-left rounded-2xl border-2 p-6 transition-all duration-200 ${
-                      form.paymentPlan === "full"
-                        ? "border-[oklch(0.52_0.22_25)] bg-[oklch(0.52_0.22_25_/_4%)]"
-                        : "border-[oklch(0.88_0.005_260)] bg-white hover:border-[oklch(0.52_0.22_25_/_50%)]"
-                    }`}
-                  >
-                    <div className="text-sm font-semibold text-[oklch(0.50_0.008_260)] uppercase tracking-wider mb-2">Pay in Full</div>
-                    <div className="text-3xl font-bold text-[oklch(0.10_0.005_260)] mb-1" style={{ fontFamily: "var(--font-display)" }}>
-                      ${selectedPkg.buildPrice.toLocaleString()}
-                    </div>
-                    <div className="text-sm text-[oklch(0.50_0.008_260)] mb-4">one-time build fee</div>
-                    <div className="text-sm font-semibold text-[oklch(0.52_0.22_25)] mb-4">+ ${selectedPkg.monthlyPrice}/mo hosting</div>
-                    <ul className="space-y-1.5">
-                      <li className="flex items-center gap-2 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />Best value — no interest</li>
-                      <li className="flex items-center gap-2 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />Work starts immediately</li>
-                      <li className="flex items-center gap-2 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />Priority delivery</li>
-                    </ul>
-                  </button>
-
-                  {/* Finance */}
-                  <button
-                    onClick={() => update("paymentPlan", "finance")}
-                    className={`text-left rounded-2xl border-2 p-6 transition-all duration-200 ${
-                      form.paymentPlan === "finance"
-                        ? "border-[oklch(0.52_0.22_25)] bg-[oklch(0.52_0.22_25_/_4%)]"
-                        : "border-[oklch(0.88_0.005_260)] bg-white hover:border-[oklch(0.52_0.22_25_/_50%)]"
-                    }`}
-                  >
-                    <div className="text-sm font-semibold text-[oklch(0.50_0.008_260)] uppercase tracking-wider mb-2">Finance It</div>
-                    <div className="text-3xl font-bold text-[oklch(0.10_0.005_260)] mb-1" style={{ fontFamily: "var(--font-display)" }}>
-                      ${selectedPkg.financePrice}/mo
-                    </div>
-                    <div className="text-sm text-[oklch(0.50_0.008_260)] mb-4">build fee over 12 months</div>
-                    <div className="text-sm font-semibold text-[oklch(0.52_0.22_25)] mb-4">+ ${selectedPkg.monthlyPrice}/mo hosting</div>
-                    <ul className="space-y-1.5">
-                      <li className="flex items-center gap-2 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />Low monthly commitment</li>
-                      <li className="flex items-center gap-2 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />No upfront lump sum</li>
-                      <li className="flex items-center gap-2 text-xs text-[oklch(0.40_0.006_260)]"><Check size={11} className="text-[oklch(0.52_0.22_25)]" />Cancel anytime after 12 months</li>
-                    </ul>
-                  </button>
-                </div>
-
-                {form.paymentPlan && (
-                  <div className="mt-6 bg-[oklch(0.97_0.002_260)] rounded-xl border border-[oklch(0.88_0.005_260)] p-4 text-sm text-[oklch(0.40_0.006_260)]">
-                    <strong className="text-[oklch(0.20_0.005_260)]">Total due today:</strong>{" "}
-                    {form.paymentPlan === "full"
-                      ? `$${selectedPkg.buildPrice.toLocaleString()} build + $${selectedPkg.monthlyPrice}/mo hosting`
-                      : `$${selectedPkg.financePrice}/mo build + $${selectedPkg.monthlyPrice}/mo hosting = $${selectedPkg.financePrice + selectedPkg.monthlyPrice}/mo total`
-                    }
-                  </div>
-                )}
+                <h1 className="text-3xl font-bold text-[oklch(0.10_0.005_260)] mb-2" style={{ fontFamily: "var(--font-display)" }}>Review your package</h1><p className="text-[oklch(0.50_0.008_260)] mb-8">Confirm the pricing and service terms before secure Stripe checkout.</p>
+                <div className="rounded-2xl border border-[oklch(0.88_0.005_260)] bg-white p-6"><div className="flex items-center justify-between gap-4"><div><div className="font-bold text-xl text-[oklch(0.10_0.005_260)]">{selectedPkg.name}</div><div className="mt-1 text-sm text-[oklch(0.50_0.008_260)]">{selectedPkg.commitment}</div></div><button onClick={() => setStep(2)} className="text-xs text-[oklch(0.52_0.22_25)] hover:underline">Change</button></div><div className="mt-6 grid gap-3 sm:grid-cols-3"><div className="rounded-xl bg-[oklch(0.97_0.002_260)] p-4"><div className="text-xs text-[oklch(0.50_0.008_260)]">Due initially</div><div className="mt-1 text-2xl font-bold">${selectedPkg.initialPrice}</div></div><div className="rounded-xl bg-[oklch(0.97_0.002_260)] p-4"><div className="text-xs text-[oklch(0.50_0.008_260)]">Then monthly</div><div className="mt-1 text-2xl font-bold">${selectedPkg.monthlyPrice}</div></div><div className="rounded-xl bg-[oklch(0.97_0.002_260)] p-4"><div className="text-xs text-[oklch(0.50_0.008_260)]">Billing</div><div className="mt-1 text-sm font-bold">Monthly subscription</div></div></div><label className="mt-6 flex items-start gap-3 rounded-xl border border-[oklch(0.88_0.005_260)] p-4"><input type="checkbox" checked={form.paymentPlan === "package"} onChange={e => update("paymentPlan", e.target.checked ? "package" : "")} className="mt-1" /><span className="text-sm leading-6 text-[oklch(0.35_0.006_260)]">I understand the initial payment, recurring monthly price, included services, and applicable service commitment shown above. Any cancellation and ownership terms will be provided in the written service agreement.</span></label></div>
               </motion.div>
             )}
           </AnimatePresence>

@@ -41,7 +41,7 @@ describe("premium creative direction homepage", () => {
     expect(home).toContain('href="/ai-video-studio" action="Explore AI Video Studio"');
     expect(home).toContain('href="/portfolio"');
     expect(home).toContain('href="/ai-video-studio#video-order"');
-    expect(home).toContain('leadCaptureHref({ intent: `Start the ${pkg.name} package`, packageId: pkg.id })');
+    expect(home).toContain('href={`/get-started?package=${pkg.id}`}');
     expect(home).toContain("trpc.contact.submit.useMutation");
     expect(navbar).toContain('href="/client-billing"');
     expect(navbar).not.toContain('href={getGoogleLoginUrl("/client-portal")}');

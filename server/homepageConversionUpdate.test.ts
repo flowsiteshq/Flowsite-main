@@ -8,15 +8,14 @@ describe("homepage conversion update", () => {
   it("presents transparent productized packages and qualifying turnaround terms", () => {
     const home = source("client/src/pages/Home.tsx");
 
-    expect(home).toContain('name: "Starter"');
-    expect(home).toContain('price: "$499"');
-    expect(home).toContain('name: "Growth"');
-    expect(home).toContain('price: "$799"');
-    expect(home).toContain('name: "AI Business"');
-    expect(home).toContain('price: "$1,499"');
-    expect(home).toContain("Prices shown are one-time setup fees.");
+    expect(home).toContain('name: "Pay & Save"');
+    expect(home).toContain('monthly: "$49/month"');
+    expect(home).toContain('name: "Launch Now"');
+    expect(home).toContain('monthly: "$99/month"');
+    expect(home).toContain("Pay & Save is $548 initially");
+    expect(home).toContain("Launch Now is $99 initially");
     expect(home).toContain("48-hour qualifying delivery");
-    expect(home).toContain("We confirm scope and any ongoing fees before secure checkout.");
+    expect(home).toContain("Secure checkout shows the full initial charge and applicable terms before payment.");
   });
 
   it("submits free website reviews into the established CRM notification path", () => {
