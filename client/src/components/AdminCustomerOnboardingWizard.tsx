@@ -16,7 +16,7 @@ type Service = {
 type Contact = { name: string; email: string; phone: string };
 
 const SERVICE_OPTIONS = [
-  "Website Design", "Website Maintenance", "Website Hosting", "Mobile App Development", "SaaS Development", "CRM Development", "AI Chatbot Integration", "AI Voice Agent", "SEO", "Digital Marketing", "Domain Management", "Technical Support", "Custom Development",
+  "Website package — Pay & Save ($499 setup + $49/month)", "Website package — Launch Now ($0 setup + $99/month, 12-month minimum)", "Website Design", "Website Maintenance", "Website Hosting", "Mobile App Development", "SaaS Development", "CRM Development", "AI Chatbot Integration", "AI Voice Agent", "SEO", "Digital Marketing", "Domain Management", "Technical Support", "Custom Development",
 ];
 
 const emptyService = (): Service => ({ name: "", description: "", oneTimeFeeCents: 0, recurringFeeCents: 0, billingFrequency: "one_time", startDate: "", completionDate: "", scope: "", projectManagerId: null });

@@ -226,13 +226,16 @@ export const stripeRouter = router({
             package_name: websitePackage.name,
             initial_amount_cents: String(websitePackage.initialAmountCents),
             monthly_amount_cents: String(websitePackage.monthlyAmountCents),
+            contractual_total_cents: String(websitePackage.contractualTotalCents ?? "month_to_month"),
             commitment_months: String(websitePackage.commitmentMonths ?? 0),
+            cancellation_terms: websitePackage.commitmentMonths ? "12-month minimum commitment; cancellation terms are governed by the service agreement." : "Month-to-month service; cancel according to the service agreement.",
           },
           subscription_data: {
             metadata: {
               website_package: websitePackage.key,
               package_name: websitePackage.name,
               commitment_months: String(websitePackage.commitmentMonths ?? 0),
+              contractual_total_cents: String(websitePackage.contractualTotalCents ?? "month_to_month"),
             },
           },
           success_url: successUrl,

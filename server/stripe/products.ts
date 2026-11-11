@@ -29,6 +29,7 @@ export interface WebsitePackage {
   setupAmountCents: number;
   monthlyAmountCents: number;
   initialAmountCents: number;
+  contractualTotalCents: number | null;
   commitmentMonths: number | null;
   badge: string;
   description: string;
@@ -60,7 +61,8 @@ export const WEBSITE_PACKAGES: Record<WebsitePackageKey, WebsitePackage> = {
     initialAmountCents: 54800,
     commitmentMonths: null,
     badge: "Lower Monthly Cost",
-    description: "$499 setup, then $49/month with no annual commitment.",
+    contractualTotalCents: null,
+    description: "$548 due at signup ($499 setup plus the first $49 month), then $49/month month to month.",
     features: SHARED_FEATURES,
   },
   launch_now: {
@@ -71,7 +73,8 @@ export const WEBSITE_PACKAGES: Record<WebsitePackageKey, WebsitePackage> = {
     initialAmountCents: 9900,
     commitmentMonths: 12,
     badge: "No Upfront Setup Fee",
-    description: "$0 setup, then $99/month with a 12-month service commitment.",
+    contractualTotalCents: 118800,
+    description: "$99 due at signup, then $99/month for a 12-month minimum; $1,188 total contractual payments.",
     features: SHARED_FEATURES,
   },
 };
