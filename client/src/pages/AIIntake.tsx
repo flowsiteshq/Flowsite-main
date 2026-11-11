@@ -1,16 +1,14 @@
-/**
- * FlowSites — AI Intake Wizard
- * Conversational multi-step intake triggered from the homepage prompt bar.
- * Light, conversational flow that collects project details and submits a CRM lead.
- */
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Check, Loader2, Sparkles, Globe, Building2, Target, DollarSign, Phone, Mail, User } from "lucide-react";
+import {
+  ArrowLeft, ArrowRight, Check, Loader2, Sparkles, Globe, Building2,
+  Target, DollarSign, Phone, Mail, User, ShieldCheck, Clock3, FileCheck2,
+  CircleHelp, ChevronRight,
+} from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
 interface IntakeData {
   initialPrompt: string;
   hasDomain: string;
@@ -26,7 +24,6 @@ interface IntakeData {
   phone: string;
 }
 
-// ── Step definitions ──────────────────────────────────────────────────────────
 const BUSINESS_TYPES = [
   { value: "hair_salon", label: "Hair Salon" },
   { value: "martial_arts", label: "Martial Arts" },
@@ -39,7 +36,6 @@ const BUSINESS_TYPES = [
   { value: "ecommerce", label: "E-Commerce / Online Store" },
   { value: "other", label: "Other" },
 ];
-
 const GOALS = [
   { value: "more_leads", label: "Get more leads" },
   { value: "book_appointments", label: "Book more appointments" },
@@ -48,7 +44,6 @@ const GOALS = [
   { value: "automate_followups", label: "Automate follow-ups" },
   { value: "all_of_above", label: "All of the above" },
 ];
-
 const BUDGETS = [
   { value: "under_1500", label: "Under $1,500" },
   { value: "1500_3000", label: "$1,500 – $3,000" },
@@ -56,7 +51,6 @@ const BUDGETS = [
   { value: "5000_plus", label: "$5,000+" },
   { value: "not_sure", label: "Not sure yet" },
 ];
-
 const TIMELINES = [
   { value: "asap", label: "ASAP" },
   { value: "1_month", label: "Within 1 month" },
@@ -64,75 +58,57 @@ const TIMELINES = [
   { value: "flexible", label: "Flexible" },
 ];
 
-// ── Animation variants ────────────────────────────────────────────────────────
+const steps = [
+  { label: "Starting point", caption: "Domain & website", icon: Globe },
+  { label: "Your business", caption: "Industry & focus", icon: Building2 },
+  { label: "Your goal", caption: "What success means", icon: Target },
+  { label: "Investment", caption: "Budget range", icon: DollarSign },
+  { label: "Timing", caption: "When to launch", icon: Clock3 },
+  { label: "Contact", caption: "How to reach you", icon: User },
+  { label: "Review", caption: "Confirm your details", icon: FileCheck2 },
+];
+
 const slideVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+  enter: (dir: number) => ({ x: dir > 0 ? 32 : -32, opacity: 0 }),
   center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
+  exit: (dir: number) => ({ x: dir > 0 ? -32 : 32, opacity: 0 }),
 };
 
-// ── Main component ────────────────────────────────────────────────────────────
 export default function AIIntake() {
   const [, navigate] = useLocation();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [data, setData] = useState<IntakeData>({
-    initialPrompt: "",
-    hasDomain: "",
-    domainUrl: "",
-    businessType: "",
-    businessTypeOther: "",
-    primaryGoal: "",
-    budget: "",
-    timeline: "",
-    businessName: "",
-    ownerName: "",
-    email: "",
-    phone: "",
+    initialPrompt: "", hasDomain: "", domainUrl: "", businessType: "", businessTypeOther: "",
+    primaryGoal: "", budget: "", timeline: "", businessName: "", ownerName: "", email: "", phone: "",
   });
 
   const submitMutation = trpc.wizard.submit.useMutation({
-    onSuccess: () => {
-      setSubmitted(true);
-    },
-    onError: (err) => {
-      toast.error("Something went wrong. Please try again.");
-    },
+    onSuccess: () => setSubmitted(true),
+    onError: () => toast.error("We couldn't save your details. Please try again."),
   });
 
-  // Keep the originating public CTA with the written request in the lead record.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const prompt = params.get("q") || "";
     const intent = params.get("intent") || "";
     const selectedPackage = params.get("package") || "";
-    const context = [
-      prompt,
-      intent ? `Requested next step: ${intent}` : "",
-      selectedPackage ? `Selected package: ${selectedPackage}` : "",
-    ].filter(Boolean).join("\n");
+    const context = [prompt, intent ? `Requested next step: ${intent}` : "", selectedPackage ? `Selected package: ${selectedPackage}` : ""].filter(Boolean).join("\n");
     if (context) setData(d => ({ ...d, initialPrompt: context }));
   }, []);
 
-  const totalSteps = 7; // 0-indexed: 0=domain, 1=biz type, 2=goal, 3=budget, 4=timeline, 5=contact, 6=done
-
-  const goNext = () => {
-    setDirection(1);
-    setStep(s => Math.min(s + 1, totalSteps - 1));
+  const totalSteps = steps.length;
+  const set = (field: keyof IntakeData, value: string) => setData(d => ({ ...d, [field]: value }));
+  const goNext = () => { setDirection(1); setStep(s => Math.min(s + 1, totalSteps - 1)); };
+  const goBack = () => { setDirection(-1); setStep(s => Math.max(s - 1, 0)); };
+  const choose = (field: keyof IntakeData, value: string, advance = true) => {
+    set(field, value);
+    if (advance) window.setTimeout(goNext, 220);
   };
-
-  const goBack = () => {
-    setDirection(-1);
-    setStep(s => Math.max(s - 1, 0));
-  };
-
-  const set = (field: keyof IntakeData, value: string) =>
-    setData(d => ({ ...d, [field]: value }));
-
   const handleSubmit = () => {
     if (!data.email || !data.phone || !data.businessName) {
-      toast.error("Please fill in all required fields.");
+      toast.error("Please add your business name, email, and phone number.");
       return;
     }
     submitMutation.mutate({
@@ -150,397 +126,65 @@ export default function AIIntake() {
     });
   };
 
-  const progress = ((step + 1) / totalSteps) * 100;
-
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#f6f9ff] flex items-center justify-center px-4">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className="text-center max-w-md"
-        >
-          <div className="w-20 h-20 rounded-full bg-[#6c47ff]/20 border border-[#6c47ff]/40 flex items-center justify-center mx-auto mb-6">
-            <Check className="w-10 h-10 text-[#6c47ff]" />
-          </div>
-          <h2 className="text-3xl font-bold text-slate-900 mb-3">You're all set!</h2>
-          <p className="text-slate-600 mb-8 leading-relaxed">
-            We've received your project details. Our team will reach out to <span className="text-slate-900 font-semibold">{data.email}</span> within 24 hours to discuss your website.
-          </p>
-          <button
-            onClick={() => navigate("/")}
-            className="px-6 py-3 rounded-xl bg-[#6c47ff] text-white font-semibold hover:bg-[#7c57ff] transition-colors"
-          >
-            Back to Home
-          </button>
+      <div className="min-h-screen bg-[#f5f8ff] px-5 py-10 text-slate-950 sm:flex sm:items-center sm:justify-center">
+        <motion.div initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="w-full max-w-lg rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_24px_80px_rgba(15,35,80,0.12)] sm:p-12">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/25"><Check size={30} strokeWidth={3} /></div>
+          <p className="mt-7 text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Request received</p>
+          <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">Your next chapter starts here.</h1>
+          <p className="mt-4 leading-7 text-slate-600">We’ve received your details and will reach out to <strong className="text-slate-900">{data.email}</strong> within 24 hours with the next step for {data.businessName}.</p>
+          <button onClick={() => navigate("/")} className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 text-sm font-bold text-white transition hover:bg-blue-700">Back to FlowSites <ArrowRight size={16} /></button>
         </motion.div>
       </div>
     );
   }
 
+  const progress = ((step + 1) / totalSteps) * 100;
   return (
-    <div className="min-h-screen bg-[#f6f9ff] flex flex-col text-slate-900">
-      {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/90 backdrop-blur">
-        <button onClick={() => navigate("/")} className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm">
-          <ArrowLeft className="w-4 h-4" />
-          Back
-        </button>
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#6c47ff]" />
-          <span className="text-slate-700 text-sm font-semibold">FlowSites AI</span>
-        </div>
-        <div className="text-slate-400 text-sm">{step + 1} / {totalSteps}</div>
-      </div>
+    <div className="min-h-screen bg-[#f6f9ff] text-slate-950">
+      <div className="mx-auto flex min-h-screen max-w-[1480px] flex-col lg:flex-row">
+        <aside className="relative hidden w-[330px] shrink-0 overflow-hidden bg-[#071a3a] px-8 py-9 text-white lg:flex lg:flex-col">
+          <div className="absolute -right-28 -top-24 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+          <div className="relative"><button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm font-semibold text-blue-100 transition hover:text-white"><ArrowLeft size={16} /> FlowSites</button><p className="mt-16 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Website planning studio</p><h1 className="mt-4 text-4xl font-black leading-[0.98] tracking-[-0.05em]">Let’s make your next move obvious.</h1><p className="mt-5 text-sm leading-6 text-blue-100/75">Answer a few focused questions. We’ll use them to shape the right website direction for your business.</p></div>
+          <div className="relative mt-12 space-y-2">{steps.map((item, index) => { const Icon = item.icon; const active = index === step; const complete = index < step; return <div key={item.label} className={`flex items-center gap-3 rounded-2xl px-3 py-3 transition ${active ? "bg-white text-slate-950 shadow-lg" : "text-blue-100/60"}`}><div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${active ? "bg-blue-600 text-white" : complete ? "bg-blue-400/20 text-blue-200" : "bg-white/10"}`}>{complete ? <Check size={16} strokeWidth={3} /> : <Icon size={16} />}</div><div><p className={`text-sm font-bold ${active ? "text-slate-950" : "text-white/80"}`}>{item.label}</p><p className={`text-[11px] ${active ? "text-slate-500" : "text-blue-100/45"}`}>{item.caption}</p></div></div>; })}</div>
+          <div className="relative mt-auto rounded-2xl border border-white/10 bg-white/[0.06] p-4"><div className="flex items-center gap-2 text-xs font-bold text-white"><ShieldCheck size={15} className="text-blue-300" /> No pressure, just a clear plan</div><p className="mt-2 text-xs leading-5 text-blue-100/60">Your information is used to prepare your website recommendation.</p></div>
+        </aside>
 
-      {/* Progress bar */}
-      <div className="h-0.5 bg-slate-200">
-        <motion.div
-          className="h-full bg-gradient-to-r from-[#6c47ff] to-[#a78bfa]"
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        />
-      </div>
-
-      {/* Initial prompt echo */}
-      {data.initialPrompt && step === 0 && (
-        <div className="mx-auto mt-8 px-4 max-w-xl w-full">
-          <div className="flex items-start gap-3 bg-white border border-slate-200 shadow-sm rounded-2xl px-4 py-3">
-            <div className="w-7 h-7 rounded-full bg-[#6c47ff]/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#a78bfa]" />
-            </div>
-            <div>
-              <p className="text-slate-400 text-xs mb-1">You said</p>
-              <p className="text-slate-700 text-sm">"{data.initialPrompt}"</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Step content */}
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-xl">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={step}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              {/* Step 0: Domain */}
-              {step === 0 && (
-                <StepWrapper
-                  icon={<Globe className="w-6 h-6 text-[#6c47ff]" />}
-                  question="Do you already have a domain or website URL?"
-                  subtitle="This helps us understand where you're starting from."
-                >
-                  <div className="flex flex-col gap-3">
-                    {[
-                      { value: "yes", label: "Yes, I have a domain" },
-                      { value: "no", label: "No, I need one" },
-                      { value: "not_sure", label: "Not sure" },
-                    ].map(opt => (
-                      <ChoiceButton
-                        key={opt.value}
-                        selected={data.hasDomain === opt.value}
-                        onClick={() => { set("hasDomain", opt.value); setTimeout(goNext, 300); }}
-                        label={opt.label}
-                      />
-                    ))}
-                    {data.hasDomain === "yes" && (
-                      <motion.input
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        type="text"
-                        placeholder="e.g. mybusiness.com"
-                        value={data.domainUrl}
-                        onChange={e => set("domainUrl", e.target.value)}
-                        className="mt-2 w-full bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#6c47ff]/60 text-sm"
-                      />
-                    )}
-                  </div>
-                </StepWrapper>
-              )}
-
-              {/* Step 1: Business type */}
-              {step === 1 && (
-                <StepWrapper
-                  icon={<Building2 className="w-6 h-6 text-[#6c47ff]" />}
-                  question="What type of business do you have?"
-                  subtitle="We specialize in service businesses of all kinds."
-                >
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {BUSINESS_TYPES.map(opt => (
-                      <ChoiceButton
-                        key={opt.value}
-                        selected={data.businessType === opt.value}
-                        onClick={() => { set("businessType", opt.value); if (opt.value !== "other") setTimeout(goNext, 300); }}
-                        label={opt.label}
-                        compact
-                      />
-                    ))}
-                  </div>
-                  {data.businessType === "other" && (
-                    <motion.input
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      type="text"
-                      placeholder="Describe your business..."
-                      value={data.businessTypeOther}
-                      onChange={e => set("businessTypeOther", e.target.value)}
-                      className="mt-3 w-full bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#6c47ff]/60 text-sm"
-                    />
-                  )}
-                </StepWrapper>
-              )}
-
-              {/* Step 2: Primary goal */}
-              {step === 2 && (
-                <StepWrapper
-                  icon={<Target className="w-6 h-6 text-[#6c47ff]" />}
-                  question="What's your primary goal for your website?"
-                  subtitle="We'll design everything around what matters most to you."
-                >
-                  <div className="flex flex-col gap-3">
-                    {GOALS.map(opt => (
-                      <ChoiceButton
-                        key={opt.value}
-                        selected={data.primaryGoal === opt.value}
-                        onClick={() => { set("primaryGoal", opt.value); setTimeout(goNext, 300); }}
-                        label={opt.label}
-                      />
-                    ))}
-                  </div>
-                </StepWrapper>
-              )}
-
-              {/* Step 3: Budget */}
-              {step === 3 && (
-                <StepWrapper
-                  icon={<DollarSign className="w-6 h-6 text-[#6c47ff]" />}
-                  question="What's your budget range?"
-                  subtitle="No pressure — this just helps us recommend the right package."
-                >
-                  <div className="flex flex-col gap-3">
-                    {BUDGETS.map(opt => (
-                      <ChoiceButton
-                        key={opt.value}
-                        selected={data.budget === opt.value}
-                        onClick={() => { set("budget", opt.value); setTimeout(goNext, 300); }}
-                        label={opt.label}
-                      />
-                    ))}
-                  </div>
-                </StepWrapper>
-              )}
-
-              {/* Step 4: Timeline */}
-              {step === 4 && (
-                <StepWrapper
-                  icon={<ArrowRight className="w-6 h-6 text-[#6c47ff]" />}
-                  question="When do you need your website?"
-                  subtitle="We'll prioritize your project accordingly."
-                >
-                  <div className="flex flex-col gap-3">
-                    {TIMELINES.map(opt => (
-                      <ChoiceButton
-                        key={opt.value}
-                        selected={data.timeline === opt.value}
-                        onClick={() => { set("timeline", opt.value); setTimeout(goNext, 300); }}
-                        label={opt.label}
-                      />
-                    ))}
-                  </div>
-                </StepWrapper>
-              )}
-
-              {/* Step 5: Contact info */}
-              {step === 5 && (
-                <StepWrapper
-                  icon={<User className="w-6 h-6 text-[#6c47ff]" />}
-                  question="Last step — how do we reach you?"
-                  subtitle="We'll send a personalized proposal to your inbox."
-                >
-                  <div className="flex flex-col gap-3">
-                    <div>
-                      <label className="text-slate-500 text-xs mb-1.5 block">Business Name *</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Sunrise Fitness Studio"
-                        value={data.businessName}
-                        onChange={e => set("businessName", e.target.value)}
-                        className="w-full bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#6c47ff]/60 text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-500 text-xs mb-1.5 block">Your Name</label>
-                      <input
-                        type="text"
-                        placeholder="First & Last Name"
-                        value={data.ownerName}
-                        onChange={e => set("ownerName", e.target.value)}
-                        className="w-full bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#6c47ff]/60 text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-500 text-xs mb-1.5 block">Email Address *</label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                        <input
-                          type="email"
-                          placeholder="you@yourbusiness.com"
-                          value={data.email}
-                          onChange={e => set("email", e.target.value)}
-                          className="w-full bg-white border border-slate-200 shadow-sm rounded-xl pl-10 pr-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#6c47ff]/60 text-sm"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-slate-500 text-xs mb-1.5 block">Phone Number *</label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                        <input
-                          type="tel"
-                          placeholder="(555) 000-0000"
-                          value={data.phone}
-                          onChange={e => set("phone", e.target.value)}
-                          className="w-full bg-white border border-slate-200 shadow-sm rounded-xl pl-10 pr-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#6c47ff]/60 text-sm"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </StepWrapper>
-              )}
-
-              {/* Step 6: Review & submit */}
-              {step === 6 && (
-                <StepWrapper
-                  icon={<Sparkles className="w-6 h-6 text-[#6c47ff]" />}
-                  question="Ready to build your website?"
-                  subtitle="Here's a summary of what you told us."
-                >
-                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-4 mb-6 space-y-3 text-sm">
-                    <SummaryRow label="Business" value={data.businessName} />
-                    <SummaryRow label="Type" value={BUSINESS_TYPES.find(b => b.value === data.businessType)?.label || data.businessTypeOther || "—"} />
-                    <SummaryRow label="Goal" value={GOALS.find(g => g.value === data.primaryGoal)?.label || "—"} />
-                    <SummaryRow label="Budget" value={BUDGETS.find(b => b.value === data.budget)?.label || "—"} />
-                    <SummaryRow label="Timeline" value={TIMELINES.find(t => t.value === data.timeline)?.label || "—"} />
-                    <SummaryRow label="Domain" value={data.hasDomain === "yes" ? (data.domainUrl || "Yes") : data.hasDomain === "no" ? "Needs one" : "Not sure"} />
-                    <SummaryRow label="Contact" value={data.email} />
-                  </div>
-                  <button
-                    onClick={handleSubmit}
-                    disabled={submitMutation.isPending}
-                    className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#6c47ff] to-[#8b5cf6] text-white font-semibold text-base hover:from-[#7c57ff] hover:to-[#9c6cf6] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                  >
-                    {submitMutation.isPending ? (
-                      <><Loader2 className="w-5 h-5 animate-spin" /> Submitting...</>
-                    ) : (
-                      <><Sparkles className="w-5 h-5" /> Let's Build It</>
-                    )}
-                  </button>
-                </StepWrapper>
-              )}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation buttons */}
-          <div className="flex items-center justify-between mt-8">
-            {step > 0 ? (
-              <button
-                onClick={goBack}
-                className="flex items-center gap-2 text-slate-400 hover:text-slate-700 transition-colors text-sm"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back
-              </button>
-            ) : <div />}
-
-            {/* Manual next for steps that don't auto-advance */}
-            {(step === 0 && data.hasDomain === "yes") ||
-             (step === 1 && data.businessType === "other") ||
-             step === 5 ? (
-              <button
-                onClick={goNext}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#6c47ff] text-white text-sm font-semibold hover:bg-[#7c57ff] transition-colors"
-              >
-                Continue
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            ) : <div />}
-          </div>
-        </div>
+        <main className="flex min-h-screen flex-1 flex-col">
+          <header className="flex items-center justify-between border-b border-slate-200/80 bg-white/85 px-5 py-4 backdrop-blur sm:px-8 lg:px-12"><button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-slate-950 lg:hidden"><ArrowLeft size={16} /> Back</button><div className="flex items-center gap-2 text-sm font-black tracking-tight text-slate-900 lg:ml-auto"><span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white"><Sparkles size={15} /></span>FlowSites AI</div><div className="text-right lg:ml-8"><p className="text-xs font-bold text-slate-950">Step {step + 1} of {totalSteps}</p><p className="text-[11px] text-slate-400">{steps[step].label}</p></div></header>
+          <div className="h-1 bg-slate-200"><motion.div className="h-full bg-gradient-to-r from-blue-600 to-violet-500" animate={{ width: `${progress}%` }} transition={{ duration: 0.35 }} /></div>
+          <div className="flex flex-1 items-start justify-center px-5 py-10 sm:px-10 sm:py-16 lg:px-16 lg:py-20"><div className="w-full max-w-2xl">
+            {data.initialPrompt && step === 0 && <div className="mb-7 rounded-2xl border border-blue-100 bg-blue-50/70 px-4 py-3 text-sm text-blue-950"><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-blue-600">Your starting point</p><p className="mt-1 whitespace-pre-line leading-6">{data.initialPrompt}</p></div>}
+            <AnimatePresence mode="wait" custom={direction}><motion.div key={step} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
+              {step === 0 && <StepWrapper icon={<Globe />} eyebrow="Starting point" question="Do you already have a domain or website?" subtitle="No wrong answer. This simply tells us where to begin."><div className="grid gap-3">{[{ value: "yes", label: "Yes, I have a domain", detail: "We’ll build from what you already own." }, { value: "no", label: "No, I need one", detail: "We’ll help you choose a strong starting point." }, { value: "not_sure", label: "I’m not sure yet", detail: "We’ll figure it out together." }].map(o => <ChoiceButton key={o.value} label={o.label} detail={o.detail} selected={data.hasDomain === o.value} onClick={() => choose("hasDomain", o.value)} />)}</div>{data.hasDomain === "yes" && <Field label="Your domain or website URL" placeholder="mybusiness.com" value={data.domainUrl} onChange={v => set("domainUrl", v)} />}</StepWrapper>}
+              {step === 1 && <StepWrapper icon={<Building2 />} eyebrow="Your business" question="What kind of business are you building?" subtitle="This helps us tailor the structure, language, and calls to action."><div className="grid gap-3 sm:grid-cols-2">{BUSINESS_TYPES.map(o => <ChoiceButton key={o.value} label={o.label} selected={data.businessType === o.value} onClick={() => choose("businessType", o.value, o.value !== "other")} compact />)}</div>{data.businessType === "other" && <Field label="Tell us a little more" placeholder="Describe your business" value={data.businessTypeOther} onChange={v => set("businessTypeOther", v)} />}</StepWrapper>}
+              {step === 2 && <StepWrapper icon={<Target />} eyebrow="Your goal" question="What should your website do better?" subtitle="We’ll prioritize the experience around the outcome that matters most."><div className="grid gap-3">{GOALS.map(o => <ChoiceButton key={o.value} label={o.label} selected={data.primaryGoal === o.value} onClick={() => choose("primaryGoal", o.value)} />)}</div></StepWrapper>}
+              {step === 3 && <StepWrapper icon={<DollarSign />} eyebrow="Investment" question="What range feels realistic right now?" subtitle="This keeps our recommendation practical and aligned with your plans."><div className="grid gap-3">{BUDGETS.map(o => <ChoiceButton key={o.value} label={o.label} selected={data.budget === o.value} onClick={() => choose("budget", o.value)} />)}</div></StepWrapper>}
+              {step === 4 && <StepWrapper icon={<Clock3 />} eyebrow="Timing" question="When would you like to launch?" subtitle="We’ll use your timeline to set the right next step."><div className="grid gap-3">{TIMELINES.map(o => <ChoiceButton key={o.value} label={o.label} selected={data.timeline === o.value} onClick={() => choose("timeline", o.value)} />)}</div></StepWrapper>}
+              {step === 5 && <StepWrapper icon={<User />} eyebrow="Almost there" question="Where should we send your recommendation?" subtitle="A real person from FlowSites will review your details and follow up. No automated sales sequence."><div className="grid gap-4 sm:grid-cols-2"><Field label="Business name *" placeholder="Sunrise Fitness Studio" value={data.businessName} onChange={v => set("businessName", v)} /><Field label="Your name" placeholder="First & Last Name" value={data.ownerName} onChange={v => set("ownerName", v)} /><Field icon={<Mail size={16} />} label="Email address *" placeholder="you@yourbusiness.com" type="email" value={data.email} onChange={v => set("email", v)} /><Field icon={<Phone size={16} />} label="Phone number *" placeholder="(555) 000-0000" type="tel" value={data.phone} onChange={v => set("phone", v)} /></div><div className="mt-5 flex items-start gap-2 text-xs leading-5 text-slate-500"><ShieldCheck size={15} className="mt-0.5 shrink-0 text-blue-600" />Your details stay with FlowSites and are only used to prepare your website conversation.</div></StepWrapper>}
+              {step === 6 && <StepWrapper icon={<FileCheck2 />} eyebrow="Final review" question="Ready to turn this into a plan?" subtitle="Review your answers, then send them to the FlowSites team."><div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div className="border-b border-slate-100 bg-slate-50 px-5 py-4"><p className="text-sm font-bold text-slate-900">Project snapshot</p><p className="mt-1 text-xs text-slate-500">You can go back and change anything.</p></div><div className="divide-y divide-slate-100 px-5">{[["Business", data.businessName], ["Type", BUSINESS_TYPES.find(b => b.value === data.businessType)?.label || data.businessTypeOther || "—"], ["Primary goal", GOALS.find(g => g.value === data.primaryGoal)?.label || "—"], ["Budget", BUDGETS.find(b => b.value === data.budget)?.label || "—"], ["Timeline", TIMELINES.find(t => t.value === data.timeline)?.label || "—"], ["Domain", data.hasDomain === "yes" ? (data.domainUrl || "Yes") : data.hasDomain === "no" ? "Needs one" : "Not sure"], ["Contact", data.email]].map(([label, value]) => <SummaryRow key={label} label={label} value={value} />)}</div></div><button onClick={handleSubmit} disabled={submitMutation.isPending} className="mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 text-base font-bold text-white shadow-xl shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">{submitMutation.isPending ? <><Loader2 size={20} className="animate-spin" /> Saving your plan...</> : <><Sparkles size={19} /> Send My Website Plan <ArrowRight size={18} /></>}</button><p className="mt-3 text-center text-xs text-slate-400">No payment is collected here. This is a free planning conversation.</p></StepWrapper>}
+            </motion.div></AnimatePresence>
+            <div className="mt-9 flex items-center justify-between">{step > 0 ? <button onClick={goBack} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-slate-950"><ArrowLeft size={16} /> Back</button> : <span />}{(((step === 0 && data.hasDomain === "yes") || (step === 1 && data.businessType === "other") || step === 5)) && <button onClick={goNext} className="inline-flex h-11 items-center gap-2 rounded-xl bg-slate-950 px-5 text-sm font-bold text-white transition hover:bg-blue-700">Continue <ChevronRight size={16} /></button>}</div>
+          </div></div>
+        </main>
       </div>
     </div>
   );
 }
 
-// ── Sub-components ────────────────────────────────────────────────────────────
-function StepWrapper({ icon, question, subtitle, children }: {
-  icon: React.ReactNode;
-  question: string;
-  subtitle: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 rounded-xl bg-[#6c47ff]/15 border border-[#6c47ff]/25 flex items-center justify-center">
-          {icon}
-        </div>
-      </div>
-      <h2 className="text-2xl font-bold text-slate-900 mt-4 mb-2 leading-tight">{question}</h2>
-      <p className="text-slate-500 text-sm mb-7">{subtitle}</p>
-      {children}
-    </div>
-  );
+function StepWrapper({ icon, eyebrow, question, subtitle, children }: { icon: React.ReactNode; eyebrow: string; question: string; subtitle: string; children: React.ReactNode }) {
+  return <div><div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">{icon}</div><p className="mt-7 text-xs font-bold uppercase tracking-[0.18em] text-blue-600">{eyebrow}</p><h2 className="mt-3 max-w-xl text-3xl font-black leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-5xl">{question}</h2><p className="mt-4 max-w-xl text-base leading-7 text-slate-500">{subtitle}</p><div className="mt-8">{children}</div></div>;
 }
 
-function ChoiceButton({ label, selected, onClick, compact = false }: {
-  label: string;
-  selected: boolean;
-  onClick: () => void;
-  compact?: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        background: selected ? "rgba(108,71,255,0.10)" : "#ffffff",
-        border: selected ? "1px solid rgba(108,71,255,0.45)" : "1px solid #e2e8f0",
-        borderLeft: selected ? "3px solid #6c47ff" : "1px solid #e2e8f0",
-        boxShadow: selected ? "0 8px 20px rgba(108,71,255,0.10)" : "0 1px 2px rgba(15,23,42,0.03)",
-        transition: "all 0.18s ease",
-      }}
-      className={`
-        ${compact ? "py-3 px-4 text-sm" : "py-3.5 px-4 text-sm"}
-        w-full rounded-xl text-left font-medium flex items-center justify-between
-        ${selected ? "text-slate-900" : "text-slate-600 hover:text-slate-900"}
-      `}
-    >
-      <span className="tracking-wide">{label}</span>
-      {selected && (
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="w-5 h-5 rounded-full bg-[#6c47ff] flex items-center justify-center flex-shrink-0"
-        >
-          <Check className="w-3 h-3 text-white" />
-        </motion.div>
-      )}
-    </button>
-  );
+function ChoiceButton({ label, detail, selected, onClick, compact = false }: { label: string; detail?: string; selected: boolean; onClick: () => void; compact?: boolean }) {
+  return <button onClick={onClick} aria-pressed={selected} className={`group flex w-full items-center justify-between rounded-2xl border text-left transition-all ${compact ? "min-h-[62px] px-4 py-3" : "min-h-[76px] px-5 py-4"} ${selected ? "border-blue-600 bg-blue-50 shadow-[0_10px_30px_rgba(37,99,235,0.12)]" : "border-slate-200 bg-white shadow-sm hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"}`}><span><span className={`block font-bold ${selected ? "text-blue-950" : "text-slate-800"}`}>{label}</span>{detail && <span className="mt-1 block text-xs leading-5 text-slate-500">{detail}</span>}</span><span className={`ml-4 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition ${selected ? "border-blue-600 bg-blue-600 text-white" : "border-slate-200 text-transparent group-hover:border-blue-300"}`}><Check size={14} strokeWidth={3} /></span></button>;
+}
+
+function Field({ label, placeholder, value, onChange, type = "text", icon }: { label: string; placeholder: string; value: string; onChange: (value: string) => void; type?: string; icon?: React.ReactNode }) {
+  return <label className="block"><span className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500">{label}</span><span className="relative block">{icon && <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">{icon}</span>}<input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} className={`h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 ${icon ? "pl-10" : ""}`} /></span></label>;
 }
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-slate-400">{label}</span>
-      <span className="text-slate-800 font-medium text-right max-w-[60%] truncate">{value || "—"}</span>
-    </div>
-  );
+  return <div className="flex items-center justify-between gap-5 py-4"><span className="text-sm text-slate-500">{label}</span><span className="max-w-[65%] truncate text-right text-sm font-bold text-slate-900">{value || "—"}</span></div>;
 }
