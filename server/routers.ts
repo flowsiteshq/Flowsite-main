@@ -244,20 +244,29 @@ export const appRouter = router({
         const { createWizardSubmission } = await import("./db");
         const submission = await createWizardSubmission(input);
         
-        // Send confirmation email to customer
-        const { sendWizardConfirmationEmail } = await import("./email");
-        await sendWizardConfirmationEmail({
-          email: input.email,
-          businessName: input.businessName,
-          contactName: input.businessName, // Using business name as contact name since we don't collect it separately
-        });
-        
-        // Send notification to owner
-        const { notifyOwner } = await import("./_core/notification");
-        await notifyOwner({
-          title: `New Website Inquiry: ${input.businessName}`,
-          content: `${input.businessName} (${input.businessType}) has submitted the onboarding wizard.\n\nEmail: ${input.email}\nPhone: ${input.phone}\nTimeline: ${input.timeline}\n\nView details in the admin panel.`,
-        });
+        // Notifications are secondary to persistence. A provider outage must not
+        // make the customer retry and create duplicate leads after the record is saved.
+        try {
+          const { sendWizardConfirmationEmail } = await import("./email");
+          const sent = await sendWizardConfirmationEmail({
+            email: input.email,
+            businessName: input.businessName,
+            contactName: input.businessName, // Using business name as contact name since we don't collect it separately
+          });
+          if (!sent) console.warn(`[Wizard] Confirmation email was not sent for submission ${submission.id}`);
+        } catch (error) {
+          console.error(`[Wizard] Confirmation email failed for submission ${submission.id}:`, error);
+        }
+
+        try {
+          const { notifyOwner } = await import("./_core/notification");
+          await notifyOwner({
+            title: `New Website Inquiry: ${input.businessName}`,
+            content: `${input.businessName} (${input.businessType}) has submitted the onboarding wizard.\n\nEmail: ${input.email}\nPhone: ${input.phone}\nTimeline: ${input.timeline}\n\nView details in the admin panel.`,
+          });
+        } catch (error) {
+          console.error(`[Wizard] Owner notification failed for submission ${submission.id}:`, error);
+        }
         
         return { success: true, id: submission.id };
       }),

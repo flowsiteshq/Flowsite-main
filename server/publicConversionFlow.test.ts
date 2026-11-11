@@ -34,4 +34,11 @@ describe("public conversion flow", () => {
     expect(intake).toContain("Requested next step:");
     expect(intake).toContain("Selected package:");
   });
+
+  it("does not fail after persistence when secondary notifications are unavailable", () => {
+    const routers = source("server/routers.ts");
+    expect(routers).toContain("Notifications are secondary to persistence");
+    expect(routers).toContain("Confirmation email failed for submission");
+    expect(routers).toContain("Owner notification failed for submission");
+  });
 });
