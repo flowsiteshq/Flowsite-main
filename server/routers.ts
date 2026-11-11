@@ -32,7 +32,9 @@ import type { TrpcContext } from "./_core/context";
  */
 async function requireAdminAccess(ctx: TrpcContext): Promise<void> {
   // 1. Check admin password session cookie
-  const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+  const token =
+    ctx.req.cookies?.admin_session ||
+    (ctx.req.headers["x-admin-token"] as string | undefined);
   if (token) {
     const { getAdminSession } = await import("./db");
     const session = await getAdminSession(token);
@@ -46,7 +48,11 @@ async function requireAdminAccess(ctx: TrpcContext): Promise<void> {
     const { eq } = await import("drizzle-orm");
     const db = await getDb();
     if (db) {
-      const rows = await db.select().from(emailAuthSessions).where(eq(emailAuthSessions.sessionToken, emailToken)).limit(1);
+      const rows = await db
+        .select()
+        .from(emailAuthSessions)
+        .where(eq(emailAuthSessions.sessionToken, emailToken))
+        .limit(1);
       const sess = rows[0];
       if (sess && sess.isAdmin === 1 && new Date() < sess.expiresAt) return;
     }
@@ -58,10 +64,15 @@ async function requireAdminAccess(ctx: TrpcContext): Promise<void> {
     const { eq } = await import("drizzle-orm");
     const db = await getDb();
     if (db) {
-      const rows = await db.select().from(technicians).where(eq(technicians.openId, ctx.user.openId)).limit(1);
+      const rows = await db
+        .select()
+        .from(technicians)
+        .where(eq(technicians.openId, ctx.user.openId))
+        .limit(1);
       const tech = rows[0];
       const ALLOWED_ROLES = ["admin", "admin_manager", "sales_rep"];
-      if (tech && tech.status === "active" && ALLOWED_ROLES.includes(tech.role)) return;
+      if (tech && tech.status === "active" && ALLOWED_ROLES.includes(tech.role))
+        return;
     }
   }
   throw new Error("Unauthorized");
@@ -72,7 +83,9 @@ async function requireAdminAccess(ctx: TrpcContext): Promise<void> {
  * Use this for destructive or sensitive operations (billing, team management, partner commissions).
  */
 async function requireStrictAdminAccess(ctx: TrpcContext): Promise<void> {
-  const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+  const token =
+    ctx.req.cookies?.admin_session ||
+    (ctx.req.headers["x-admin-token"] as string | undefined);
   if (token) {
     const { getAdminSession } = await import("./db");
     const session = await getAdminSession(token);
@@ -86,7 +99,11 @@ async function requireStrictAdminAccess(ctx: TrpcContext): Promise<void> {
     const { eq } = await import("drizzle-orm");
     const db = await getDb();
     if (db) {
-      const rows = await db.select().from(emailAuthSessions).where(eq(emailAuthSessions.sessionToken, emailToken)).limit(1);
+      const rows = await db
+        .select()
+        .from(emailAuthSessions)
+        .where(eq(emailAuthSessions.sessionToken, emailToken))
+        .limit(1);
       const sess = rows[0];
       if (sess && sess.isAdmin === 1 && new Date() < sess.expiresAt) return;
     }
@@ -97,7 +114,11 @@ async function requireStrictAdminAccess(ctx: TrpcContext): Promise<void> {
     const { eq } = await import("drizzle-orm");
     const db = await getDb();
     if (db) {
-      const rows = await db.select().from(technicians).where(eq(technicians.openId, ctx.user.openId)).limit(1);
+      const rows = await db
+        .select()
+        .from(technicians)
+        .where(eq(technicians.openId, ctx.user.openId))
+        .limit(1);
       const tech = rows[0];
       if (tech && tech.status === "active" && tech.role === "admin") return;
     }
@@ -106,7 +127,7 @@ async function requireStrictAdminAccess(ctx: TrpcContext): Promise<void> {
 }
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
+  // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   stripe: stripeRouter,
   analytics: analyticsRouter,
@@ -142,28 +163,36 @@ export const appRouter = router({
 
     /** Auto-save an analysis result and return the shareId */
     saveResult: publicProcedure
-      .input(z.object({
-        url: z.string(),
-        performance: z.number(),
-        seo: z.number(),
-        accessibility: z.number(),
-        bestPractices: z.number(),
-        mobileScore: z.number(),
-        loadTime: z.number(),
-        issues: z.array(z.object({
-          title: z.string(),
-          description: z.string(),
-          severity: z.enum(["critical", "warning", "info"]),
-        })).optional(),
-        recommendations: z.array(z.string()).optional(),
-      }))
+      .input(
+        z.object({
+          url: z.string(),
+          performance: z.number(),
+          seo: z.number(),
+          accessibility: z.number(),
+          bestPractices: z.number(),
+          mobileScore: z.number(),
+          loadTime: z.number(),
+          issues: z
+            .array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+                severity: z.enum(["critical", "warning", "info"]),
+              })
+            )
+            .optional(),
+          recommendations: z.array(z.string()).optional(),
+        })
+      )
       .mutation(async ({ input }) => {
         const { getDb } = await import("./db");
         const { analyzerResults } = await import("../drizzle/schema");
         const db = await getDb();
         if (!db) throw new Error("DB unavailable");
         // Generate a random 12-char alphanumeric share ID
-        const shareId = Math.random().toString(36).slice(2, 8) + Math.random().toString(36).slice(2, 8);
+        const shareId =
+          Math.random().toString(36).slice(2, 8) +
+          Math.random().toString(36).slice(2, 8);
         await db.insert(analyzerResults).values({
           shareId,
           url: input.url,
@@ -174,7 +203,9 @@ export const appRouter = router({
           mobileScore: input.mobileScore,
           loadTime: input.loadTime,
           issuesJson: input.issues ? JSON.stringify(input.issues) : null,
-          recommendationsJson: input.recommendations ? JSON.stringify(input.recommendations) : null,
+          recommendationsJson: input.recommendations
+            ? JSON.stringify(input.recommendations)
+            : null,
         });
         return { shareId };
       }),
@@ -188,62 +219,72 @@ export const appRouter = router({
         const { eq } = await import("drizzle-orm");
         const db = await getDb();
         if (!db) throw new Error("DB unavailable");
-        const rows = await db.select().from(analyzerResults).where(eq(analyzerResults.shareId, input.shareId)).limit(1);
+        const rows = await db
+          .select()
+          .from(analyzerResults)
+          .where(eq(analyzerResults.shareId, input.shareId))
+          .limit(1);
         if (!rows.length) throw new Error("Result not found");
         const row = rows[0];
         return {
           ...row,
           issues: row.issuesJson ? JSON.parse(row.issuesJson) : [],
-          recommendations: row.recommendationsJson ? JSON.parse(row.recommendationsJson) : [],
+          recommendations: row.recommendationsJson
+            ? JSON.parse(row.recommendationsJson)
+            : [],
         };
       }),
 
     /** Admin: list all analyzer leads */
-    adminList: publicProcedure
-      .query(async ({ ctx }) => {
-        await requireAdminAccess(ctx);
-        const { getDb } = await import("./db");
-        const { analyzerResults } = await import("../drizzle/schema");
-        const { desc } = await import("drizzle-orm");
-        const db = await getDb();
-        if (!db) throw new Error("DB unavailable");
-        return await db.select().from(analyzerResults).orderBy(desc(analyzerResults.createdAt)).limit(500);
-      }),
+    adminList: publicProcedure.query(async ({ ctx }) => {
+      await requireAdminAccess(ctx);
+      const { getDb } = await import("./db");
+      const { analyzerResults } = await import("../drizzle/schema");
+      const { desc } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) throw new Error("DB unavailable");
+      return await db
+        .select()
+        .from(analyzerResults)
+        .orderBy(desc(analyzerResults.createdAt))
+        .limit(500);
+    }),
   }),
 
   wizard: router({
-    getSubmissions: publicProcedure
-      .query(async ({ ctx }) => {
-        // Only allow admin users to view submissions
-        if (!ctx.user || ctx.user.role !== 'admin') {
-          throw new Error('Unauthorized');
-        }
-        const { getAllWizardSubmissions } = await import("./db");
-        return await getAllWizardSubmissions();
-      }),
+    getSubmissions: publicProcedure.query(async ({ ctx }) => {
+      // Only allow admin users to view submissions
+      if (!ctx.user || ctx.user.role !== "admin") {
+        throw new Error("Unauthorized");
+      }
+      const { getAllWizardSubmissions } = await import("./db");
+      return await getAllWizardSubmissions();
+    }),
     submit: publicProcedure
-      .input(z.object({
-        businessName: z.string(),
-        businessType: z.string(),
-        businessTypeOther: z.string().optional(),
-        website: z.string().optional(),
-        phone: z.string(),
-        email: z.string().email(),
-        colorScheme: z.string(),
-        customColors: z.string().optional(),
-        designStyle: z.string().optional(),
-        referenceWebsites: z.string().optional(),
-        primaryGoal: z.string(),
-        currentChallenges: z.string().optional(),
-        timeline: z.string(),
-        budget: z.string().optional(),
-        additionalNotes: z.string().optional(),
-      }))
+      .input(
+        z.object({
+          businessName: z.string(),
+          businessType: z.string(),
+          businessTypeOther: z.string().optional(),
+          website: z.string().optional(),
+          phone: z.string(),
+          email: z.string().email(),
+          colorScheme: z.string(),
+          customColors: z.string().optional(),
+          designStyle: z.string().optional(),
+          referenceWebsites: z.string().optional(),
+          primaryGoal: z.string(),
+          currentChallenges: z.string().optional(),
+          timeline: z.string(),
+          budget: z.string().optional(),
+          additionalNotes: z.string().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         // Store wizard submission in database
         const { createWizardSubmission } = await import("./db");
         const submission = await createWizardSubmission(input);
-        
+
         // Notifications are secondary to persistence. A provider outage must not
         // make the customer retry and create duplicate leads after the record is saved.
         try {
@@ -253,9 +294,15 @@ export const appRouter = router({
             businessName: input.businessName,
             contactName: input.businessName, // Using business name as contact name since we don't collect it separately
           });
-          if (!sent) console.warn(`[Wizard] Confirmation email was not sent for submission ${submission.id}`);
+          if (!sent)
+            console.warn(
+              `[Wizard] Confirmation email was not sent for submission ${submission.id}`
+            );
         } catch (error) {
-          console.error(`[Wizard] Confirmation email failed for submission ${submission.id}:`, error);
+          console.error(
+            `[Wizard] Confirmation email failed for submission ${submission.id}:`,
+            error
+          );
         }
 
         try {
@@ -265,26 +312,38 @@ export const appRouter = router({
             content: `${input.businessName} (${input.businessType}) has submitted the onboarding wizard.\n\nEmail: ${input.email}\nPhone: ${input.phone}\nTimeline: ${input.timeline}\n\nView details in the admin panel.`,
           });
         } catch (error) {
-          console.error(`[Wizard] Owner notification failed for submission ${submission.id}:`, error);
+          console.error(
+            `[Wizard] Owner notification failed for submission ${submission.id}:`,
+            error
+          );
         }
-        
+
         return { success: true, id: submission.id };
       }),
-    
+
     // Update submission status
     updateStatus: protectedProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["new", "contacted", "in_progress", "proposal_sent", "won", "lost"]),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum([
+            "new",
+            "contacted",
+            "in_progress",
+            "proposal_sent",
+            "won",
+            "lost",
+          ]),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         const { getDb } = await import("./db");
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
-        
+
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        
+
         // Update status and timestamp
         await db
           .update(wizardSubmissions)
@@ -293,7 +352,7 @@ export const appRouter = router({
             statusUpdatedAt: new Date(),
           })
           .where(eq(wizardSubmissions.id, input.id));
-        
+
         return { success: true };
       }),
   }),
@@ -304,7 +363,10 @@ export const appRouter = router({
       .input(z.object({ password: z.string() }))
       .mutation(async ({ input, ctx }) => {
         const { ENV } = await import("./_core/env");
-        if (!ENV.adminSecretPassword || input.password !== ENV.adminSecretPassword) {
+        if (
+          !ENV.adminSecretPassword ||
+          input.password !== ENV.adminSecretPassword
+        ) {
           throw new Error("Invalid password");
         }
         // Generate a secure random session token
@@ -327,7 +389,8 @@ export const appRouter = router({
     // Verify current admin session — also accepts active technicians via Manus OAuth
     verify: publicProcedure.query(async ({ ctx }) => {
       // 1. Check admin password session cookie first
-      const token = ctx.req.cookies?.admin_session ||
+      const token =
+        ctx.req.cookies?.admin_session ||
         (ctx.req.headers["x-admin-token"] as string | undefined);
       if (token) {
         const { getAdminSession } = await import("./db");
@@ -342,7 +405,11 @@ export const appRouter = router({
         const { eq } = await import("drizzle-orm");
         const db = await getDb();
         if (db) {
-          const rows = await db.select().from(emailAuthSessions).where(eq(emailAuthSessions.sessionToken, emailToken)).limit(1);
+          const rows = await db
+            .select()
+            .from(emailAuthSessions)
+            .where(eq(emailAuthSessions.sessionToken, emailToken))
+            .limit(1);
           const sess = rows[0];
           if (sess && sess.isAdmin === 1 && new Date() < sess.expiresAt) {
             return { authenticated: true, techRole: "admin" as const };
@@ -356,7 +423,11 @@ export const appRouter = router({
         const { eq } = await import("drizzle-orm");
         const db = await getDb();
         if (db) {
-          const rows = await db.select().from(technicians).where(eq(technicians.openId, ctx.user.openId)).limit(1);
+          const rows = await db
+            .select()
+            .from(technicians)
+            .where(eq(technicians.openId, ctx.user.openId))
+            .limit(1);
           const tech = rows[0];
           if (tech && tech.status === "active") {
             return { authenticated: true, techRole: tech.role as string };
@@ -368,7 +439,8 @@ export const appRouter = router({
 
     // Logout — clear admin session
     logout: publicProcedure.mutation(async ({ ctx }) => {
-      const token = ctx.req.cookies?.admin_session ||
+      const token =
+        ctx.req.cookies?.admin_session ||
         (ctx.req.headers["x-admin-token"] as string | undefined);
       if (token) {
         const { deleteAdminSession } = await import("./db");
@@ -396,7 +468,9 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
-        await db.delete(wizardSubmissions).where(eq(wizardSubmissions.id, input.id));
+        await db
+          .delete(wizardSubmissions)
+          .where(eq(wizardSubmissions.id, input.id));
         return { success: true };
       }),
 
@@ -410,16 +484,27 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { inArray } = await import("drizzle-orm");
-        await db.delete(wizardSubmissions).where(inArray(wizardSubmissions.id, input.ids));
+        await db
+          .delete(wizardSubmissions)
+          .where(inArray(wizardSubmissions.id, input.ids));
         return { success: true, deleted: input.ids.length };
       }),
 
     // Update lead status — requires admin session OR technician admin role
     updateLeadStatus: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["new", "contacted", "in_progress", "proposal_sent", "won", "lost"]),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum([
+            "new",
+            "contacted",
+            "in_progress",
+            "proposal_sent",
+            "won",
+            "lost",
+          ]),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -427,21 +512,48 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
-        await db.update(wizardSubmissions).set({ status: input.status, statusUpdatedAt: new Date() }).where(eq(wizardSubmissions.id, input.id));
+        await db
+          .update(wizardSubmissions)
+          .set({ status: input.status, statusUpdatedAt: new Date() })
+          .where(eq(wizardSubmissions.id, input.id));
         return { success: true };
       }),
 
     // Update lead details (notes, source, followUpDate, assignedTechnicianId, assignedPartnerId, nicheTag)
     updateLead: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        adminNotes: z.string().optional(),
-        source: z.enum(["website", "cold_call", "referral", "social", "partner", "other"]).nullable().optional(),
-        followUpDate: z.string().nullable().optional(), // YYYY-MM-DD
-        assignedTechnicianId: z.number().nullable().optional(),
-        assignedPartnerId: z.number().nullable().optional(),
-        nicheTag: z.enum(["martial_arts", "restaurant", "fitness", "self_defense", "health_wellness", "salon", "hospitality", "other"]).nullable().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          adminNotes: z.string().optional(),
+          source: z
+            .enum([
+              "website",
+              "cold_call",
+              "referral",
+              "social",
+              "partner",
+              "other",
+            ])
+            .nullable()
+            .optional(),
+          followUpDate: z.string().nullable().optional(), // YYYY-MM-DD
+          assignedTechnicianId: z.number().nullable().optional(),
+          assignedPartnerId: z.number().nullable().optional(),
+          nicheTag: z
+            .enum([
+              "martial_arts",
+              "restaurant",
+              "fitness",
+              "self_defense",
+              "health_wellness",
+              "salon",
+              "hospitality",
+              "other",
+            ])
+            .nullable()
+            .optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -450,24 +562,40 @@ export const appRouter = router({
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         const updateData: Record<string, unknown> = {};
-        if (input.adminNotes !== undefined) updateData.adminNotes = input.adminNotes;
+        if (input.adminNotes !== undefined)
+          updateData.adminNotes = input.adminNotes;
         if (input.source !== undefined) updateData.source = input.source;
-        if (input.followUpDate !== undefined) updateData.followUpDate = input.followUpDate;
-        if (input.assignedTechnicianId !== undefined) updateData.assignedTechnicianId = input.assignedTechnicianId;
-        if (input.assignedPartnerId !== undefined) updateData.assignedPartnerId = input.assignedPartnerId;
+        if (input.followUpDate !== undefined)
+          updateData.followUpDate = input.followUpDate;
+        if (input.assignedTechnicianId !== undefined)
+          updateData.assignedTechnicianId = input.assignedTechnicianId;
+        if (input.assignedPartnerId !== undefined)
+          updateData.assignedPartnerId = input.assignedPartnerId;
         if (input.nicheTag !== undefined) updateData.nicheTag = input.nicheTag;
         if (Object.keys(updateData).length > 0) {
-          await db.update(wizardSubmissions).set(updateData).where(eq(wizardSubmissions.id, input.id));
+          await db
+            .update(wizardSubmissions)
+            .set(updateData)
+            .where(eq(wizardSubmissions.id, input.id));
         }
         return { success: true };
       }),
 
     // Bulk update lead status
     bulkUpdateLeadStatus: publicProcedure
-      .input(z.object({
-        ids: z.array(z.number()).min(1),
-        status: z.enum(["new", "contacted", "in_progress", "proposal_sent", "won", "lost"]),
-      }))
+      .input(
+        z.object({
+          ids: z.array(z.number()).min(1),
+          status: z.enum([
+            "new",
+            "contacted",
+            "in_progress",
+            "proposal_sent",
+            "won",
+            "lost",
+          ]),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -475,7 +603,8 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { inArray } = await import("drizzle-orm");
-        await db.update(wizardSubmissions)
+        await db
+          .update(wizardSubmissions)
           .set({ status: input.status, statusUpdatedAt: new Date() })
           .where(inArray(wizardSubmissions.id, input.ids));
         return { success: true, updated: input.ids.length };
@@ -483,19 +612,41 @@ export const appRouter = router({
 
     // Manually add a new lead — requires admin session OR technician admin role
     addLead: publicProcedure
-      .input(z.object({
-        businessName: z.string().min(1),
-        businessType: z.string().default("other"),
-        email: z.string().email(),
-        phone: z.string().optional(),
-        website: z.string().optional(),
-        primaryGoal: z.string().optional(),
-        source: z.enum(["website", "cold_call", "referral", "social", "partner", "other"]).default("cold_call"),
-        adminNotes: z.string().optional(),
-        colorScheme: z.string().default("professional"),
-        timeline: z.string().default("flexible"),
-        nicheTag: z.enum(["martial_arts", "restaurant", "fitness", "self_defense", "health_wellness", "salon", "hospitality", "other"]).optional(),
-      }))
+      .input(
+        z.object({
+          businessName: z.string().min(1),
+          businessType: z.string().default("other"),
+          email: z.string().email(),
+          phone: z.string().optional(),
+          website: z.string().optional(),
+          primaryGoal: z.string().optional(),
+          source: z
+            .enum([
+              "website",
+              "cold_call",
+              "referral",
+              "social",
+              "partner",
+              "other",
+            ])
+            .default("cold_call"),
+          adminNotes: z.string().optional(),
+          colorScheme: z.string().default("professional"),
+          timeline: z.string().default("flexible"),
+          nicheTag: z
+            .enum([
+              "martial_arts",
+              "restaurant",
+              "fitness",
+              "self_defense",
+              "health_wellness",
+              "salon",
+              "hospitality",
+              "other",
+            ])
+            .optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -523,10 +674,12 @@ export const appRouter = router({
 
     // ─── Lead Notes ─────────────────────────────────────────────────────────
     addLeadNote: publicProcedure
-      .input(z.object({
-        leadId: z.number(),
-        content: z.string().min(1).max(2000),
-      }))
+      .input(
+        z.object({
+          leadId: z.number(),
+          content: z.string().min(1).max(2000),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -539,7 +692,11 @@ export const appRouter = router({
         let authorOpenId: string | undefined;
         if (ctx.user) {
           authorOpenId = ctx.user.openId;
-          const [tech] = await db.select().from(technicians).where(eq(technicians.openId, ctx.user.openId)).limit(1);
+          const [tech] = await db
+            .select()
+            .from(technicians)
+            .where(eq(technicians.openId, ctx.user.openId))
+            .limit(1);
           authorName = tech?.name ?? ctx.user.name ?? "Admin";
         }
         const [result] = await db.insert(leadNotes).values({
@@ -561,7 +718,9 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { leadNotes } = await import("../drizzle/schema");
         const { eq, desc } = await import("drizzle-orm");
-        const notes = await db.select().from(leadNotes)
+        const notes = await db
+          .select()
+          .from(leadNotes)
           .where(eq(leadNotes.leadId, input.leadId))
           .orderBy(desc(leadNotes.createdAt));
         return notes;
@@ -590,7 +749,11 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { wizardSubmissions } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
-        const [lead] = await db.select().from(wizardSubmissions).where(eq(wizardSubmissions.id, input.id)).limit(1);
+        const [lead] = await db
+          .select()
+          .from(wizardSubmissions)
+          .where(eq(wizardSubmissions.id, input.id))
+          .limit(1);
         if (!lead) throw new Error("Lead not found");
         // Return prefill data for the create client form
         return {
@@ -611,43 +774,24 @@ export const appRouter = router({
     getAvailableSlots: publicProcedure
       .input(z.object({ date: z.string() })) // "YYYY-MM-DD"
       .query(async ({ input }) => {
-        const { getAllAvailability, getBlockedDates, getBookingsForDate } = await import("./db");
-        const dateObj = new Date(input.date + "T12:00:00Z");
-        const dayOfWeek = dateObj.getUTCDay();
+        const { getBlockedDates, getBookingsForDate } = await import("./db");
+        const { getPolicySlots, isAllowedBookingDate } = await import(
+          "./schedulingRules"
+        );
 
         // Check if date is blocked
         const blocked = await getBlockedDates(input.date, input.date);
-        if (blocked.length > 0) return { slots: [], blocked: true };
-
-        // Get availability rules for this day
-        const rules = (await getAllAvailability()).filter(
-          (r) => r.dayOfWeek === dayOfWeek && r.isActive === 1
-        );
-        if (rules.length === 0) return { slots: [], blocked: false };
+        if (blocked.length > 0 || !isAllowedBookingDate(input.date))
+          return { slots: [], blocked: true };
 
         // Get already-booked slots
         const existingBookings = await getBookingsForDate(input.date);
-        const bookedTimes = new Set(existingBookings.map((b) => b.startTime));
+        const bookedTimes = new Set(existingBookings.map(b => b.startTime));
 
-        // Generate time slots
-        const slots: { startTime: string; endTime: string; available: boolean }[] = [];
-        for (const rule of rules) {
-          const [sh, sm] = rule.startTime.split(":").map(Number);
-          const [eh, em] = rule.endTime.split(":").map(Number);
-          let current = sh * 60 + sm;
-          const end = eh * 60 + em;
-          while (current + rule.slotDurationMins <= end) {
-            const startH = String(Math.floor(current / 60)).padStart(2, "0");
-            const startM = String(current % 60).padStart(2, "0");
-            const endMin = current + rule.slotDurationMins;
-            const endH = String(Math.floor(endMin / 60)).padStart(2, "0");
-            const endMStr = String(endMin % 60).padStart(2, "0");
-            const startTime = `${startH}:${startM}`;
-            const endTime = `${endH}:${endMStr}`;
-            slots.push({ startTime, endTime, available: !bookedTimes.has(startTime) });
-            current += rule.slotDurationMins;
-          }
-        }
+        const slots = getPolicySlots().map(slot => ({
+          ...slot,
+          available: !bookedTimes.has(slot.startTime),
+        }));
         return { slots, blocked: false };
       }),
 
@@ -655,42 +799,38 @@ export const appRouter = router({
     getMonthAvailability: publicProcedure
       .input(z.object({ year: z.number(), month: z.number() })) // month 1-12
       .query(async ({ input }) => {
-        const { getAllAvailability, getBlockedDates, getBookingsInRange } = await import("./db");
+        const { getBlockedDates, getBookingsInRange } = await import("./db");
+        const { getPolicySlots, isAllowedBookingDate } = await import(
+          "./schedulingRules"
+        );
         const pad = (n: number) => String(n).padStart(2, "0");
         const fromDate = `${input.year}-${pad(input.month)}-01`;
         const lastDay = new Date(input.year, input.month, 0).getDate();
         const toDate = `${input.year}-${pad(input.month)}-${pad(lastDay)}`;
 
-        const rules = await getAllAvailability();
         const blocked = await getBlockedDates(fromDate, toDate);
         const bookings = await getBookingsInRange(fromDate, toDate);
-        const blockedSet = new Set(blocked.map((b) => b.blockedDate));
+        const blockedSet = new Set(blocked.map(b => b.blockedDate));
 
         // Count booked slots per date
         const bookedCountByDate: Record<string, number> = {};
         for (const b of bookings) {
-          bookedCountByDate[b.bookingDate] = (bookedCountByDate[b.bookingDate] ?? 0) + 1;
+          bookedCountByDate[b.bookingDate] =
+            (bookedCountByDate[b.bookingDate] ?? 0) + 1;
         }
 
-        const result: Record<string, "available" | "partial" | "full" | "unavailable"> = {};
+        const result: Record<
+          string,
+          "available" | "partial" | "full" | "unavailable"
+        > = {};
         for (let d = 1; d <= lastDay; d++) {
           const dateStr = `${input.year}-${pad(input.month)}-${pad(d)}`;
-          const dateObj = new Date(dateStr + "T12:00:00Z");
-          const dow = dateObj.getUTCDay();
-          const dayRules = rules.filter((r) => r.dayOfWeek === dow && r.isActive === 1);
-
-          if (blockedSet.has(dateStr) || dayRules.length === 0) {
+          if (blockedSet.has(dateStr) || !isAllowedBookingDate(dateStr)) {
             result[dateStr] = "unavailable";
             continue;
           }
 
-          // Count total slots
-          let totalSlots = 0;
-          for (const rule of dayRules) {
-            const [sh, sm] = rule.startTime.split(":").map(Number);
-            const [eh, em] = rule.endTime.split(":").map(Number);
-            totalSlots += Math.floor(((eh * 60 + em) - (sh * 60 + sm)) / rule.slotDurationMins);
-          }
+          const totalSlots = getPolicySlots().length;
           const booked = bookedCountByDate[dateStr] ?? 0;
           if (booked === 0) result[dateStr] = "available";
           else if (booked >= totalSlots) result[dateStr] = "full";
@@ -701,48 +841,89 @@ export const appRouter = router({
 
     // ─── Public: Create a booking ─────────────────────────────────────────────
     createBooking: publicProcedure
-      .input(z.object({
-        guestName: z.string().min(1),
-        guestEmail: z.string().email(),
-        guestPhone: z.string().optional(),
-        businessName: z.string().optional(),
-        notes: z.string().optional(),
-        bookingDate: z.string(),  // "YYYY-MM-DD"
-        startTime: z.string(),    // "HH:MM"
-        endTime: z.string(),      // "HH:MM"
-        timezone: z.string().default("America/New_York"),
-        /** Questionnaire answers: array of { questionId, answerText } */
-        answers: z.array(z.object({
-          questionId: z.number(),
-          answerText: z.string().nullable(),
-        })).optional(),
-      }))
+      .input(
+        z.object({
+          guestName: z.string().min(1),
+          guestEmail: z.string().email(),
+          guestPhone: z.string().optional(),
+          businessName: z.string().optional(),
+          notes: z.string().optional(),
+          bookingDate: z.string(), // "YYYY-MM-DD"
+          startTime: z.string(), // "HH:MM"
+          endTime: z.string(), // "HH:MM"
+          timezone: z.string().default("America/New_York"),
+          /** Questionnaire answers: array of { questionId, answerText } */
+          answers: z
+            .array(
+              z.object({
+                questionId: z.number(),
+                answerText: z.string().nullable(),
+              })
+            )
+            .optional(),
+        })
+      )
       .mutation(async ({ input }) => {
-        const { getBookingsForDate, createBooking, saveBookingAnswers } = await import("./db");
+        const { getBookingsForDate, createBooking, saveBookingAnswers } =
+          await import("./db");
+        const { getBlockedDates } = await import("./db");
+        const { isAllowedBookingDate, isAllowedBookingTime } = await import(
+          "./schedulingRules"
+        );
+
+        if (
+          !isAllowedBookingDate(input.bookingDate) ||
+          !isAllowedBookingTime(input.startTime, input.endTime)
+        ) {
+          throw new Error(
+            "Please choose a Monday–Friday time between 8:00 AM and 3:00 PM Central Time. Holidays are unavailable."
+          );
+        }
+        const blocked = await getBlockedDates(
+          input.bookingDate,
+          input.bookingDate
+        );
+        if (blocked.length > 0)
+          throw new Error(
+            "This date is blocked. Please choose another available date."
+          );
+
         // Double-check slot is still available
         const existing = await getBookingsForDate(input.bookingDate);
-        const conflict = existing.find((b) => b.startTime === input.startTime);
-        if (conflict) throw new Error("This time slot is no longer available. Please choose another.");
+        const conflict = existing.find(b => b.startTime === input.startTime);
+        if (conflict)
+          throw new Error(
+            "This time slot is no longer available. Please choose another."
+          );
 
         // Generate confirmation code
         const crypto = await import("crypto");
         const code = crypto.randomBytes(4).toString("hex").toUpperCase();
 
         const { answers, ...bookingData } = input;
-        const id = await createBooking({ ...bookingData, confirmationCode: code, status: "confirmed" });
+        const id = await createBooking({
+          ...bookingData,
+          confirmationCode: code,
+          status: "confirmed",
+        });
 
         // Save questionnaire answers
         if (answers && answers.length > 0) {
           await saveBookingAnswers(
-            answers.map((a) => ({ bookingId: id, questionId: a.questionId, answerText: a.answerText }))
+            answers.map(a => ({
+              bookingId: id,
+              questionId: a.questionId,
+              answerText: a.answerText,
+            }))
           );
         }
 
         // Notify owner
         const { notifyOwner } = await import("./_core/notification");
-        const answersText = answers && answers.length > 0
-          ? `\n\nQuestionnaire Answers:\n${answers.map((a) => `Q${a.questionId}: ${a.answerText ?? "(no answer)"}`).join("\n")}`
-          : "";
+        const answersText =
+          answers && answers.length > 0
+            ? `\n\nQuestionnaire Answers:\n${answers.map(a => `Q${a.questionId}: ${a.answerText ?? "(no answer)"}`).join("\n")}`
+            : "";
         await notifyOwner({
           title: `New Discovery Call Booked: ${input.guestName}`,
           content: `${input.guestName} (${input.businessName ?? ""}) booked a call for ${input.bookingDate} at ${input.startTime}.\nEmail: ${input.guestEmail}\nPhone: ${input.guestPhone ?? "N/A"}\nConfirmation: ${code}${answersText}`,
@@ -757,26 +938,39 @@ export const appRouter = router({
           startTime: input.startTime,
           endTime: input.endTime,
           confirmationCode: code,
-        }).catch((err) => console.error("[Booking] Failed to send confirmation email:", err));
+        }).catch(err =>
+          console.error("[Booking] Failed to send confirmation email:", err)
+        );
 
         return { success: true, id, confirmationCode: code };
       }),
 
     // ─── Public: Cancel a booking by confirmation code ───────────────────────
     cancelBooking: publicProcedure
-      .input(z.object({ confirmationCode: z.string(), reason: z.string().optional() }))
+      .input(
+        z.object({
+          confirmationCode: z.string(),
+          reason: z.string().optional(),
+        })
+      )
       .mutation(async ({ input }) => {
-        const { getBookingByConfirmationCode, updateBookingStatus } = await import("./db");
-        const booking = await getBookingByConfirmationCode(input.confirmationCode);
+        const { getBookingByConfirmationCode, updateBookingStatus } =
+          await import("./db");
+        const booking = await getBookingByConfirmationCode(
+          input.confirmationCode
+        );
         if (!booking) throw new Error("Booking not found");
-        if (booking.status !== "confirmed") throw new Error("Booking is already cancelled or completed");
+        if (booking.status !== "confirmed")
+          throw new Error("Booking is already cancelled or completed");
         await updateBookingStatus(booking.id, "cancelled", input.reason);
         return { success: true };
       }),
 
     // ─── Admin: Get all bookings ──────────────────────────────────────────────
     adminGetBookings: publicProcedure.query(async ({ ctx }) => {
-      const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+      const token =
+        ctx.req.cookies?.admin_session ||
+        (ctx.req.headers["x-admin-token"] as string | undefined);
       if (!token) throw new Error("Unauthorized");
       const { getAdminSession, getAllBookings } = await import("./db");
       const session = await getAdminSession(token);
@@ -786,13 +980,17 @@ export const appRouter = router({
 
     // ─── Admin: Update booking status ────────────────────────────────────────
     adminUpdateBookingStatus: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["confirmed", "cancelled", "completed", "no_show"]),
-        cancelReason: z.string().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum(["confirmed", "cancelled", "completed", "no_show"]),
+          cancelReason: z.string().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, updateBookingStatus } = await import("./db");
         const session = await getAdminSession(token);
@@ -803,7 +1001,9 @@ export const appRouter = router({
 
     // ─── Admin: Manage availability ───────────────────────────────────────────
     adminGetAvailability: publicProcedure.query(async ({ ctx }) => {
-      const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+      const token =
+        ctx.req.cookies?.admin_session ||
+        (ctx.req.headers["x-admin-token"] as string | undefined);
       if (!token) throw new Error("Unauthorized");
       const { getAdminSession, getAllAvailability } = await import("./db");
       const session = await getAdminSession(token);
@@ -812,18 +1012,24 @@ export const appRouter = router({
     }),
 
     adminUpsertAvailability: publicProcedure
-      .input(z.object({
-        id: z.number().optional(),
-        dayOfWeek: z.number().min(0).max(6),
-        startTime: z.string(),
-        endTime: z.string(),
-        slotDurationMins: z.number().default(30),
-        isActive: z.number().default(1),
-      }))
+      .input(
+        z.object({
+          id: z.number().optional(),
+          dayOfWeek: z.number().min(0).max(6),
+          startTime: z.string(),
+          endTime: z.string(),
+          slotDurationMins: z.number().default(30),
+          isActive: z.number().default(1),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
-        const { getAdminSession, upsertAvailabilitySlot } = await import("./db");
+        const { getAdminSession, upsertAvailabilitySlot } = await import(
+          "./db"
+        );
         const session = await getAdminSession(token);
         if (!session) throw new Error("Unauthorized");
         const id = await upsertAvailabilitySlot(input);
@@ -833,9 +1039,13 @@ export const appRouter = router({
     adminDeleteAvailability: publicProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
-        const { getAdminSession, deleteAvailabilitySlot } = await import("./db");
+        const { getAdminSession, deleteAvailabilitySlot } = await import(
+          "./db"
+        );
         const session = await getAdminSession(token);
         if (!session) throw new Error("Unauthorized");
         await deleteAvailabilitySlot(input.id);
@@ -844,7 +1054,9 @@ export const appRouter = router({
 
     // ─── Admin: Blocked dates ─────────────────────────────────────────────────
     adminGetBlockedDates: publicProcedure.query(async ({ ctx }) => {
-      const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+      const token =
+        ctx.req.cookies?.admin_session ||
+        (ctx.req.headers["x-admin-token"] as string | undefined);
       if (!token) throw new Error("Unauthorized");
       const { getAdminSession, getAllBlockedDates } = await import("./db");
       const session = await getAdminSession(token);
@@ -853,9 +1065,13 @@ export const appRouter = router({
     }),
 
     adminAddBlockedDate: publicProcedure
-      .input(z.object({ blockedDate: z.string(), reason: z.string().optional() }))
+      .input(
+        z.object({ blockedDate: z.string(), reason: z.string().optional() })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, addBlockedDate } = await import("./db");
         const session = await getAdminSession(token);
@@ -867,7 +1083,9 @@ export const appRouter = router({
     adminRemoveBlockedDate: publicProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, removeBlockedDate } = await import("./db");
         const session = await getAdminSession(token);
@@ -886,7 +1104,9 @@ export const appRouter = router({
 
     // ─── Admin: Get all questions (including inactive) ──────────────────────────
     adminGetQuestions: publicProcedure.query(async ({ ctx }) => {
-      const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+      const token =
+        ctx.req.cookies?.admin_session ||
+        (ctx.req.headers["x-admin-token"] as string | undefined);
       if (!token) throw new Error("Unauthorized");
       const { getAdminSession, getAllQuestions } = await import("./db");
       const session = await getAdminSession(token);
@@ -896,17 +1116,27 @@ export const appRouter = router({
 
     // ─── Admin: Create a new question ─────────────────────────────────────────────
     adminCreateQuestion: publicProcedure
-      .input(z.object({
-        questionText: z.string().min(1),
-        fieldType: z.enum(["text", "textarea", "select", "radio", "checkbox"]),
-        options: z.string().optional(), // JSON array string
-        isRequired: z.number().default(0),
-        isActive: z.number().default(1),
-        sortOrder: z.number().default(0),
-        placeholder: z.string().optional(),
-      }))
+      .input(
+        z.object({
+          questionText: z.string().min(1),
+          fieldType: z.enum([
+            "text",
+            "textarea",
+            "select",
+            "radio",
+            "checkbox",
+          ]),
+          options: z.string().optional(), // JSON array string
+          isRequired: z.number().default(0),
+          isActive: z.number().default(1),
+          sortOrder: z.number().default(0),
+          placeholder: z.string().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, createQuestion } = await import("./db");
         const session = await getAdminSession(token);
@@ -917,18 +1147,24 @@ export const appRouter = router({
 
     // ─── Admin: Update a question ───────────────────────────────────────────────
     adminUpdateQuestion: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        questionText: z.string().min(1).optional(),
-        fieldType: z.enum(["text", "textarea", "select", "radio", "checkbox"]).optional(),
-        options: z.string().nullable().optional(),
-        isRequired: z.number().optional(),
-        isActive: z.number().optional(),
-        sortOrder: z.number().optional(),
-        placeholder: z.string().nullable().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          questionText: z.string().min(1).optional(),
+          fieldType: z
+            .enum(["text", "textarea", "select", "radio", "checkbox"])
+            .optional(),
+          options: z.string().nullable().optional(),
+          isRequired: z.number().optional(),
+          isActive: z.number().optional(),
+          sortOrder: z.number().optional(),
+          placeholder: z.string().nullable().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, updateQuestion } = await import("./db");
         const session = await getAdminSession(token);
@@ -942,7 +1178,9 @@ export const appRouter = router({
     adminDeleteQuestion: publicProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, deleteQuestion } = await import("./db");
         const session = await getAdminSession(token);
@@ -955,12 +1193,16 @@ export const appRouter = router({
     adminReorderQuestions: publicProcedure
       .input(z.array(z.object({ id: z.number(), sortOrder: z.number() })))
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, updateQuestion } = await import("./db");
         const session = await getAdminSession(token);
         if (!session) throw new Error("Unauthorized");
-        await Promise.all(input.map((q) => updateQuestion(q.id, { sortOrder: q.sortOrder })));
+        await Promise.all(
+          input.map(q => updateQuestion(q.id, { sortOrder: q.sortOrder }))
+        );
         return { success: true };
       }),
 
@@ -968,7 +1210,9 @@ export const appRouter = router({
     adminGetBookingAnswers: publicProcedure
       .input(z.object({ bookingId: z.number() }))
       .query(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, getAnswersForBooking } = await import("./db");
         const session = await getAdminSession(token);
@@ -979,21 +1223,23 @@ export const appRouter = router({
   budgetQuote: router({
     // ─── Public: Save a completed budget wizard quote ─────────────────────────
     save: publicProcedure
-      .input(z.object({
-        prospectName: z.string().optional(),
-        prospectEmail: z.string().email().optional(),
-        prospectPhone: z.string().optional(),
-        industry: z.string(),
-        basePackage: z.string(),
-        coreAddons: z.array(z.string()),
-        autoAddons: z.array(z.string()),
-        industryAddons: z.array(z.string()),
-        subscriptionTier: z.string(),
-        monthlyPrice: z.number(),
-        paymentPlan: z.string(),
-        buildCostMin: z.number(),
-        buildCostMax: z.number(),
-      }))
+      .input(
+        z.object({
+          prospectName: z.string().optional(),
+          prospectEmail: z.string().email().optional(),
+          prospectPhone: z.string().optional(),
+          industry: z.string(),
+          basePackage: z.string(),
+          coreAddons: z.array(z.string()),
+          autoAddons: z.array(z.string()),
+          industryAddons: z.array(z.string()),
+          subscriptionTier: z.string(),
+          monthlyPrice: z.number(),
+          paymentPlan: z.string(),
+          buildCostMin: z.number(),
+          buildCostMax: z.number(),
+        })
+      )
       .mutation(async ({ input }) => {
         const { getDb } = await import("./db");
         const { budgetQuotes } = await import("../drizzle/schema");
@@ -1019,16 +1265,19 @@ export const appRouter = router({
 
         // Send owner notification
         const { notifyOwner } = await import("./_core/notification");
-        const buildRange = input.buildCostMin === input.buildCostMax
-          ? `$${input.buildCostMin.toLocaleString()}`
-          : `$${input.buildCostMin.toLocaleString()} – $${input.buildCostMax.toLocaleString()}`;
+        const buildRange =
+          input.buildCostMin === input.buildCostMax
+            ? `$${input.buildCostMin.toLocaleString()}`
+            : `$${input.buildCostMin.toLocaleString()} – $${input.buildCostMax.toLocaleString()}`;
         const prospectLine = input.prospectName
           ? `Name: ${input.prospectName}\nEmail: ${input.prospectEmail ?? "N/A"}\nPhone: ${input.prospectPhone ?? "N/A"}\n\n`
           : "";
         await notifyOwner({
           title: `New Budget Quote: ${input.industry} — ${buildRange}`,
           content: `${prospectLine}Industry: ${input.industry}\nPackage: ${input.basePackage}\nBuild Cost: ${buildRange}\nMonthly Plan: ${input.subscriptionTier} ($${input.monthlyPrice}/mo)\nPayment Plan: ${input.paymentPlan}\n\nAdd-ons selected: ${[...input.coreAddons, ...input.autoAddons, ...input.industryAddons].length}\n\nView in admin: https://flow-sites.com/admin`,
-        }).catch((err) => console.error("[BudgetQuote] Notify owner failed:", err));
+        }).catch(err =>
+          console.error("[BudgetQuote] Notify owner failed:", err)
+        );
 
         // Send email via Resend if prospect email provided
         if (input.prospectEmail) {
@@ -1043,7 +1292,7 @@ export const appRouter = router({
             subscriptionTier: input.subscriptionTier,
             monthlyPrice: input.monthlyPrice,
             paymentPlan: input.paymentPlan,
-          }).catch((err) => console.error("[BudgetQuote] Email failed:", err));
+          }).catch(err => console.error("[BudgetQuote] Email failed:", err));
         }
 
         return { success: true };
@@ -1051,7 +1300,9 @@ export const appRouter = router({
 
     // ─── Admin: Get all budget quotes ─────────────────────────────────────────
     adminList: publicProcedure.query(async ({ ctx }) => {
-      const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+      const token =
+        ctx.req.cookies?.admin_session ||
+        (ctx.req.headers["x-admin-token"] as string | undefined);
       if (!token) throw new Error("Unauthorized");
       const { getAdminSession, getDb } = await import("./db");
       const session = await getAdminSession(token);
@@ -1060,18 +1311,25 @@ export const appRouter = router({
       if (!db) throw new Error("Database not available");
       const { budgetQuotes } = await import("../drizzle/schema");
       const { desc } = await import("drizzle-orm");
-      return await db.select().from(budgetQuotes).orderBy(desc(budgetQuotes.createdAt));
+      return await db
+        .select()
+        .from(budgetQuotes)
+        .orderBy(desc(budgetQuotes.createdAt));
     }),
 
     // ─── Admin: Update quote status ───────────────────────────────────────────
     adminUpdateStatus: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["new", "contacted", "proposal_sent", "won", "lost"]),
-        adminNotes: z.string().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum(["new", "contacted", "proposal_sent", "won", "lost"]),
+          adminNotes: z.string().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, getDb } = await import("./db");
         const session = await getAdminSession(token);
@@ -1080,7 +1338,8 @@ export const appRouter = router({
         if (!db) throw new Error("Database not available");
         const { budgetQuotes } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
-        await db.update(budgetQuotes)
+        await db
+          .update(budgetQuotes)
           .set({ status: input.status, adminNotes: input.adminNotes })
           .where(eq(budgetQuotes.id, input.id));
         return { success: true };
@@ -1088,26 +1347,32 @@ export const appRouter = router({
 
     // ─── Admin: Convert a budget quote into a client account ─────────────────
     convertToClient: publicProcedure
-      .input(z.object({
-        quoteId: z.number(),
-        clientName: z.string(),
-        clientEmail: z.string().email(),
-        clientPhone: z.string().optional(),
-        businessName: z.string(),
-        websiteUrl: z.string().optional(),
-        monthlyPriceCents: z.number(),
-        billingStartDate: z.string().optional(),
-        adminNotes: z.string().optional(),
-      }))
+      .input(
+        z.object({
+          quoteId: z.number(),
+          clientName: z.string(),
+          clientEmail: z.string().email(),
+          clientPhone: z.string().optional(),
+          businessName: z.string(),
+          websiteUrl: z.string().optional(),
+          monthlyPriceCents: z.number(),
+          billingStartDate: z.string().optional(),
+          adminNotes: z.string().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
-        const token = ctx.req.cookies?.admin_session || (ctx.req.headers["x-admin-token"] as string | undefined);
+        const token =
+          ctx.req.cookies?.admin_session ||
+          (ctx.req.headers["x-admin-token"] as string | undefined);
         if (!token) throw new Error("Unauthorized");
         const { getAdminSession, getDb } = await import("./db");
         const session = await getAdminSession(token);
         if (!session) throw new Error("Unauthorized");
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        const { budgetQuotes, clientAccounts } = await import("../drizzle/schema");
+        const { budgetQuotes, clientAccounts } = await import(
+          "../drizzle/schema"
+        );
         const { eq } = await import("drizzle-orm");
         const crypto = await import("crypto");
         // Create client account
@@ -1126,13 +1391,16 @@ export const appRouter = router({
         });
         const newAccountId = (result as any).insertId as number;
         // Mark the quote as won
-        await db.update(budgetQuotes)
-          .set({ status: "won", adminNotes: `Converted to client account #${newAccountId}${input.adminNotes ? ` — ${input.adminNotes}` : ""}` })
+        await db
+          .update(budgetQuotes)
+          .set({
+            status: "won",
+            adminNotes: `Converted to client account #${newAccountId}${input.adminNotes ? ` — ${input.adminNotes}` : ""}`,
+          })
           .where(eq(budgetQuotes.id, input.quoteId));
         return { success: true, clientAccountId: newAccountId };
       }),
   }),
-
 
   // ─── Admin: Client Project Management ────────────────────────────────────────
   adminProjects: router({
@@ -1143,22 +1411,27 @@ export const appRouter = router({
       if (!db) throw new Error("Database not available");
       const { clientProjects } = await import("../drizzle/schema");
       const { desc } = await import("drizzle-orm");
-      return await db.select().from(clientProjects).orderBy(desc(clientProjects.createdAt));
+      return await db
+        .select()
+        .from(clientProjects)
+        .orderBy(desc(clientProjects.createdAt));
     }),
 
     create: publicProcedure
-      .input(z.object({
-        clientName: z.string(),
-        clientEmail: z.string().email(),
-        clientPhone: z.string().optional(),
-        businessName: z.string(),
-        websiteDomain: z.string().optional(),
-        packageName: z.string().optional(),
-        monthlyPrice: z.number().optional(),
-        estimatedLaunchDate: z.string().optional(),
-        clientMessage: z.string().optional(),
-        setupFee: z.number().optional(),
-      }))
+      .input(
+        z.object({
+          clientName: z.string(),
+          clientEmail: z.string().email(),
+          clientPhone: z.string().optional(),
+          businessName: z.string(),
+          websiteDomain: z.string().optional(),
+          packageName: z.string().optional(),
+          monthlyPrice: z.number().optional(),
+          estimatedLaunchDate: z.string().optional(),
+          clientMessage: z.string().optional(),
+          setupFee: z.number().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -1214,18 +1487,31 @@ export const appRouter = router({
       }),
 
     update: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["onboarding", "design", "development", "review", "revisions", "launch", "maintenance", "paused"]).optional(),
-        currentStage: z.number().min(0).max(7).optional(),
-        stageProgress: z.number().min(0).max(100).optional(),
-        previewUrl: z.string().optional(),
-        websiteDomain: z.string().optional(),
-        clientMessage: z.string().optional(),
-        adminNotes: z.string().optional(),
-        estimatedLaunchDate: z.string().optional(),
-        githubRepos: z.string().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z
+            .enum([
+              "onboarding",
+              "design",
+              "development",
+              "review",
+              "revisions",
+              "launch",
+              "maintenance",
+              "paused",
+            ])
+            .optional(),
+          currentStage: z.number().min(0).max(7).optional(),
+          stageProgress: z.number().min(0).max(100).optional(),
+          previewUrl: z.string().optional(),
+          websiteDomain: z.string().optional(),
+          clientMessage: z.string().optional(),
+          adminNotes: z.string().optional(),
+          estimatedLaunchDate: z.string().optional(),
+          githubRepos: z.string().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -1234,7 +1520,10 @@ export const appRouter = router({
         const { clientProjects } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         const { id, ...updates } = input;
-        await db.update(clientProjects).set(updates).where(eq(clientProjects.id, id));
+        await db
+          .update(clientProjects)
+          .set(updates)
+          .where(eq(clientProjects.id, id));
         return { success: true };
       }),
 
@@ -1255,7 +1544,8 @@ export const appRouter = router({
           .where(eq(clientProjects.id, input.projectId))
           .limit(1);
         if (!project) throw new Error("Project not found");
-        if (!project.clientPhone) throw new Error("No phone number on file for this client");
+        if (!project.clientPhone)
+          throw new Error("No phone number on file for this client");
 
         const { sendProjectWelcomeSms } = await import("./sms");
         const portalUrl = `https://flow-sites.com/client-portal?token=${project.accessToken}`;
@@ -1267,7 +1557,10 @@ export const appRouter = router({
           portalUrl,
         });
 
-        if (!sent) throw new Error("SMS could not be sent. Check Twilio credentials in Settings.");
+        if (!sent)
+          throw new Error(
+            "SMS could not be sent. Check Twilio credentials in Settings."
+          );
         return { success: true };
       }),
 
@@ -1277,27 +1570,37 @@ export const appRouter = router({
       const { getDb } = await import("./db");
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      const { clientAccounts, clientProjects } = await import("../drizzle/schema");
+      const { clientAccounts, clientProjects } = await import(
+        "../drizzle/schema"
+      );
       const { eq } = await import("drizzle-orm");
       const crypto = await import("crypto");
 
       // Fetch all customers that don't already have a linked project
       const accounts = await db.select().from(clientAccounts);
       const existingProjects = await db.select().from(clientProjects);
-      const existingEmails = new Set(existingProjects.map((p) => p.clientEmail.toLowerCase()));
+      const existingEmails = new Set(
+        existingProjects.map(p => p.clientEmail.toLowerCase())
+      );
 
       const toCreate = accounts.filter(
-        (a) => !existingEmails.has(a.clientEmail.toLowerCase())
+        a => !existingEmails.has(a.clientEmail.toLowerCase())
       );
 
       if (toCreate.length === 0) {
-        return { created: 0, skipped: accounts.length, message: "All customers already have projects." };
+        return {
+          created: 0,
+          skipped: accounts.length,
+          message: "All customers already have projects.",
+        };
       }
 
       let created = 0;
       for (const account of toCreate) {
         const accessToken = crypto.randomBytes(32).toString("hex");
-        const monthlyPrice = account.monthlyPriceCents ? Math.round(account.monthlyPriceCents / 100) : undefined;
+        const monthlyPrice = account.monthlyPriceCents
+          ? Math.round(account.monthlyPriceCents / 100)
+          : undefined;
         await db.insert(clientProjects).values({
           clientName: account.clientName,
           clientEmail: account.clientEmail,
@@ -1339,24 +1642,40 @@ export const appRouter = router({
       const { getDb } = await import("./db");
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      const { changeRequests, clientProjects } = await import("../drizzle/schema");
+      const { changeRequests, clientProjects } = await import(
+        "../drizzle/schema"
+      );
       const { desc, eq } = await import("drizzle-orm");
-      const requests = await db.select().from(changeRequests).orderBy(desc(changeRequests.createdAt));
+      const requests = await db
+        .select()
+        .from(changeRequests)
+        .orderBy(desc(changeRequests.createdAt));
       // Attach project info
       const projects = await db.select().from(clientProjects);
-      return requests.map((r) => ({
+      return requests.map(r => ({
         ...r,
-        project: projects.find((p) => p.id === r.projectId) ?? null,
+        project: projects.find(p => p.id === r.projectId) ?? null,
       }));
     }),
 
     updateChangeRequest: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["pending", "in_review", "approved", "in_progress", "completed", "declined"]).optional(),
-        adminResponse: z.string().optional(),
-        estimatedHours: z.number().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z
+            .enum([
+              "pending",
+              "in_review",
+              "approved",
+              "in_progress",
+              "completed",
+              "declined",
+            ])
+            .optional(),
+          adminResponse: z.string().optional(),
+          estimatedHours: z.number().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -1365,7 +1684,10 @@ export const appRouter = router({
         const { changeRequests } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         const { id, ...updates } = input;
-        await db.update(changeRequests).set(updates).where(eq(changeRequests.id, id));
+        await db
+          .update(changeRequests)
+          .set(updates)
+          .where(eq(changeRequests.id, id));
         return { success: true };
       }),
 
@@ -1375,23 +1697,40 @@ export const appRouter = router({
       const { getDb } = await import("./db");
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      const { featureUpgradeRequests, clientProjects } = await import("../drizzle/schema");
+      const { featureUpgradeRequests, clientProjects } = await import(
+        "../drizzle/schema"
+      );
       const { desc } = await import("drizzle-orm");
-      const requests = await db.select().from(featureUpgradeRequests).orderBy(desc(featureUpgradeRequests.createdAt));
+      const requests = await db
+        .select()
+        .from(featureUpgradeRequests)
+        .orderBy(desc(featureUpgradeRequests.createdAt));
       const projects = await db.select().from(clientProjects);
-      return requests.map((r) => ({
+      return requests.map(r => ({
         ...r,
-        businessName: projects.find((p) => p.id === r.projectId)?.businessName ?? null,
+        businessName:
+          projects.find(p => p.id === r.projectId)?.businessName ?? null,
       }));
     }),
 
     updateUpgradeRequest: publicProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["pending", "quoted", "approved", "in_progress", "completed", "declined"]).optional(),
-        adminResponse: z.string().optional(),
-        agreedPrice: z.number().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          status: z
+            .enum([
+              "pending",
+              "quoted",
+              "approved",
+              "in_progress",
+              "completed",
+              "declined",
+            ])
+            .optional(),
+          adminResponse: z.string().optional(),
+          agreedPrice: z.number().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         await requireAdminAccess(ctx);
         const { getDb } = await import("./db");
@@ -1400,22 +1739,29 @@ export const appRouter = router({
         const { featureUpgradeRequests } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         const { id, ...updates } = input;
-        await db.update(featureUpgradeRequests).set(updates).where(eq(featureUpgradeRequests.id, id));
+        await db
+          .update(featureUpgradeRequests)
+          .set(updates)
+          .where(eq(featureUpgradeRequests.id, id));
         return { success: true };
       }),
   }),
   contact: router({
     /** Public contact form submission — saves lead and sends SMS notification via 800.com */
     submit: publicProcedure
-      .input(z.object({
-        name: z.string().min(1).max(100),
-        businessName: z.string().min(1).max(200),
-        email: z.string().email().optional().or(z.literal("")),
-        phone: z.string().min(7).max(20).optional().or(z.literal("")),
-        lookingFor: z.string().min(1),
-      }).refine((input) => Boolean(input.email || input.phone), {
-        message: "An email address or phone number is required",
-      }))
+      .input(
+        z
+          .object({
+            name: z.string().min(1).max(100),
+            businessName: z.string().min(1).max(200),
+            email: z.string().email().optional().or(z.literal("")),
+            phone: z.string().min(7).max(20).optional().or(z.literal("")),
+            lookingFor: z.string().min(1),
+          })
+          .refine(input => Boolean(input.email || input.phone), {
+            message: "An email address or phone number is required",
+          })
+      )
       .mutation(async ({ input }) => {
         // Save to database as a wizard submission / lead
         const { createWizardSubmission } = await import("./db");
@@ -1426,7 +1772,8 @@ export const appRouter = router({
           phone: input.phone || "Not provided",
           // The CRM schema requires an email. This non-routable value preserves a
           // phone-only lead without implying that an email address was supplied.
-          email: input.email || `phone-only-${Date.now()}@lead.flowsites.invalid`,
+          email:
+            input.email || `phone-only-${Date.now()}@lead.flowsites.invalid`,
           colorScheme: "not_specified",
           primaryGoal: input.lookingFor,
           timeline: "flexible",
@@ -1457,20 +1804,24 @@ export const appRouter = router({
   }),
   leads: router({
     captureExitIntent: publicProcedure
-      .input(z.object({
-        name: z.string().min(1),
-        email: z.string().email(),
-        phone: z.string().optional().default(""),
-        website: z.string().optional().default(""),
-        analysisScores: z.object({
-          performance: z.number(),
-          seo: z.number(),
-          accessibility: z.number(),
-          bestPractices: z.number(),
-          loadTime: z.number(),
-          mobileScore: z.number(),
-        }).optional(),
-      }))
+      .input(
+        z.object({
+          name: z.string().min(1),
+          email: z.string().email(),
+          phone: z.string().optional().default(""),
+          website: z.string().optional().default(""),
+          analysisScores: z
+            .object({
+              performance: z.number(),
+              seo: z.number(),
+              accessibility: z.number(),
+              bestPractices: z.number(),
+              loadTime: z.number(),
+              mobileScore: z.number(),
+            })
+            .optional(),
+        })
+      )
       .mutation(async ({ input }) => {
         const { createWizardSubmission } = await import("./db");
         const scores = input.analysisScores;
@@ -1491,7 +1842,7 @@ export const appRouter = router({
         const { notifyOwner } = await import("./_core/notification");
         await notifyOwner({
           title: `Exit-Intent Lead: ${input.name}`,
-          content: `${input.name} requested a free website analysis.\n\nEmail: ${input.email}\nPhone: ${input.phone || 'N/A'}\nWebsite: ${input.website || 'N/A'}\n\n${additionalNotes}`,
+          content: `${input.name} requested a free website analysis.\n\nEmail: ${input.email}\nPhone: ${input.phone || "N/A"}\nWebsite: ${input.website || "N/A"}\n\n${additionalNotes}`,
         });
         return { success: true, id: submission.id };
       }),
@@ -1529,7 +1880,7 @@ export const appRouter = router({
         const { notifyOwner } = await import("./_core/notification");
         await notifyOwner({
           title: `✅ New Opt-In: ${input.businessName}`,
-          content: `${input.name} from ${input.businessName} opted in via the email blast.\n\nEmail: ${input.email}\nPhone: ${input.phone}\nWebsite: ${input.website ?? 'N/A'}`,
+          content: `${input.name} from ${input.businessName} opted in via the email blast.\n\nEmail: ${input.email}\nPhone: ${input.phone}\nWebsite: ${input.website ?? "N/A"}`,
         });
         return { success: true };
       }),
@@ -1541,7 +1892,10 @@ export const appRouter = router({
       const { desc } = await import("drizzle-orm");
       const db = await getDb();
       if (!db) throw new Error("DB unavailable");
-      return db.select().from(marketingOptins).orderBy(desc(marketingOptins.createdAt));
+      return db
+        .select()
+        .from(marketingOptins)
+        .orderBy(desc(marketingOptins.createdAt));
     }),
   }),
 });
