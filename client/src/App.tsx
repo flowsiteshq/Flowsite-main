@@ -92,20 +92,43 @@ function Router() {
         <Route path="/case-study/mydojo" component={CaseStudyMyDojo} />
         <Route path="/case-study/yaeger" component={CaseStudyYaeger} />
         <Route path="/case-study/zolamind" component={CaseStudyZolamind} />
-        <Route path="/case-study/policypilot" component={CaseStudyPolicyPilot} />
+        <Route
+          path="/case-study/policypilot"
+          component={CaseStudyPolicyPilot}
+        />
         <Route path="/case-study/dojoflow" component={CaseStudyDojoFlow} />
         <Route path="/case-study/bluetide" component={CaseStudyBlueTide} />
         <Route path="/case-study/donbar" component={CaseStudyDonBar} />
         <Route path="/case-study/graphenex" component={CaseStudyGrapheneX} />
         <Route path="/case-study/hachki" component={CaseStudyHachKi} />
-        <Route path="/case-study/greenbahamas" component={CaseStudyGreenBahamas} />
-        <Route path="/get-started">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Get started" })); return null; }}</Route>
+        <Route
+          path="/case-study/greenbahamas"
+          component={CaseStudyGreenBahamas}
+        />
+        <Route path="/get-started">
+          {() => {
+            if (typeof window !== "undefined")
+              window.location.replace(
+                leadCaptureHref({ intent: "Get started" })
+              );
+            return null;
+          }}
+        </Route>
         <Route path="/ai-intake" component={AIIntake} />
         <Route path="/ai-services" component={AIServices} />
         <Route path="/ai-video-studio" component={AIVideoStudio} />
         <Route path="/free-website" component={FreeWebsite} />
-        <Route path="/schedule">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Schedule a strategy call" })); return null; }}</Route>
-        <Route path="/budget-wizard">{() => { if (typeof window !== "undefined") window.location.replace(leadCaptureHref({ intent: "Build a website budget" })); return null; }}</Route>
+        <Route path="/schedule" component={BookCall} />
+        <Route path="/book-call" component={BookCall} />
+        <Route path="/budget-wizard">
+          {() => {
+            if (typeof window !== "undefined")
+              window.location.replace(
+                leadCaptureHref({ intent: "Build a website budget" })
+              );
+            return null;
+          }}
+        </Route>
         <Route path="/portal" component={ClientPortal} />
         <Route path="/portal/:tab" component={ClientPortal} />
         <Route path="/client-portal" component={ClientPortal} />
@@ -119,24 +142,63 @@ function Router() {
         <Route path="/invoice/:shareToken" component={PublicInvoice} />
         <Route path="/admin/submissions" component={AdminSubmissions} />
         <Route path="/admin-login" component={AdminLogin} />
-        <Route path="/flowsites-admin-password-setup" component={AdminPasswordSetup} />
+        <Route
+          path="/flowsites-admin-password-setup"
+          component={AdminPasswordSetup}
+        />
         <Route path="/flowsites-admin-secret" component={AdminLogin} />
-        <Route path="/flowsites-admin-dashboard" component={AdminCommandOverview} />
-        <Route path="/flowsites-admin-overview" component={AdminCommandOverview} />
-        <Route path="/flowsites-admin-customers/:accountId" component={AdminCustomerDetailWorkspace} />
-        <Route path="/flowsites-admin-customers" component={AdminCustomersWorkspace} />
-        <Route path="/flowsites-admin-billing" component={AdminBillingWorkspace} />
+        <Route
+          path="/flowsites-admin-dashboard"
+          component={AdminCommandOverview}
+        />
+        <Route
+          path="/flowsites-admin-overview"
+          component={AdminCommandOverview}
+        />
+        <Route
+          path="/flowsites-admin-customers/:accountId"
+          component={AdminCustomerDetailWorkspace}
+        />
+        <Route
+          path="/flowsites-admin-customers"
+          component={AdminCustomersWorkspace}
+        />
+        <Route
+          path="/flowsites-admin-billing"
+          component={AdminBillingWorkspace}
+        />
         <Route path="/flowsites-admin-leads" component={AdminLeadsWorkspace} />
-        <Route path="/flowsites-admin-projects" component={AdminProjectsWorkspace} />
+        <Route
+          path="/flowsites-admin-projects"
+          component={AdminProjectsWorkspace}
+        />
         {/* One training library, inside the same Admin 3 shell as Customers and Billing. */}
-        <Route path="/flowsites-admin-knowledge" component={AdminKnowledgeWorkspace} />
-        <Route path="/flowsites-admin-settings" component={AdminSettingsWorkspace} />
+        <Route
+          path="/flowsites-admin-knowledge"
+          component={AdminKnowledgeWorkspace}
+        />
+        <Route
+          path="/flowsites-admin-settings"
+          component={AdminSettingsWorkspace}
+        />
         <Route path="/flowsites-admin-legacy-crm" component={AdminDashboard} />
         <Route path="/flowsites-admin-scheduling" component={AdminScheduling} />
-        <Route path="/flowsites-admin-video-orders" component={AdminVideoOrders} />
-        <Route path="/flowsites-admin-integrations" component={AdminCueIntegration} />
-        <Route path="/flowsites-admin-cue-telephone" component={AdminCueTelephone} />
-        <Route path="/flowsites-admin-free-website" component={AdminFreeWebsiteRequests} />
+        <Route
+          path="/flowsites-admin-video-orders"
+          component={AdminVideoOrders}
+        />
+        <Route
+          path="/flowsites-admin-integrations"
+          component={AdminCueIntegration}
+        />
+        <Route
+          path="/flowsites-admin-cue-telephone"
+          component={AdminCueTelephone}
+        />
+        <Route
+          path="/flowsites-admin-free-website"
+          component={AdminFreeWebsiteRequests}
+        />
         <Route path="/industries/martial-arts" component={MartialArtsPage} />
         <Route path="/industries/gyms-fitness" component={GymsFitnessPage} />
         <Route path="/industries/roofing" component={RoofingPage} />
@@ -145,10 +207,16 @@ function Router() {
         <Route path="/industries/rv-parks" component={RVParksPage} />
         <Route path="/industries/restaurants" component={RestaurantsPage} />
         <Route path="/industries/salons" component={SalonsPage} />
-        <Route path="/industries/health-wellness" component={HealthWellnessPage} />
+        <Route
+          path="/industries/health-wellness"
+          component={HealthWellnessPage}
+        />
         <Route path="/industries/real-estate" component={RealEstatePage} />
         <Route path="/industries/insurance" component={InsurancePage} />
-        <Route path="/industries/service-business" component={ServiceBusinessPage} />
+        <Route
+          path="/industries/service-business"
+          component={ServiceBusinessPage}
+        />
         <Route path="/industries/ecommerce" component={EcommercePage} />
         <Route path="/interested" component={Interested} />
         <Route path="/contact" component={Contact} />
