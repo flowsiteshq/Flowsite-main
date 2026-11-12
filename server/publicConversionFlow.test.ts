@@ -57,7 +57,9 @@ describe("public conversion flow", () => {
     expect(scheduler).toContain('params.get("email")');
     expect(scheduler).toContain("Review\n                        and edit anything before confirming.");
     expect(scheduler).toContain('websitePackage: selectedPackage');
-    expect(scheduler).toContain("Prepay for my package");
+    expect(scheduler).toContain("Selected package");
+    expect(scheduler).toContain("Prepay for ${WEBSITE_PACKAGES[selectedPackage].name}");
+    expect(scheduler).toContain("No website package was selected yet.");
     expect(scheduler).toContain('dueToday: "$548 due today"');
     expect(scheduler).toContain('dueToday: "$99 due today"');
   });

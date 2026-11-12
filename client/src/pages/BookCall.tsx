@@ -485,20 +485,23 @@ export default function BookCall() {
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><CreditCard size={18} /></span>
                   <div>
                     <p className="font-bold text-slate-900">Ready to move forward?</p>
-                    <p className="mt-1 text-sm leading-5 text-slate-600">Prepay for your website package securely now, or choose a package to review its terms first.</p>
+                    <p className="mt-1 text-sm leading-5 text-slate-600">Review the package you selected and prepay securely when you’re ready.</p>
                   </div>
                 </div>
-                <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                  {(Object.entries(WEBSITE_PACKAGES) as [WebsitePackage, typeof WEBSITE_PACKAGES[WebsitePackage]][]).map(([packageId, pkg]) => (
-                    <button key={packageId} type="button" onClick={() => setSelectedPackage(packageId)} className={`rounded-xl border p-3 text-left transition ${selectedPackage === packageId ? "border-blue-500 bg-blue-50 ring-2 ring-blue-100" : "border-slate-200 bg-white hover:border-blue-300"}`}>
-                      <span className="block text-sm font-bold text-slate-900">{pkg.name}</span>
-                      <span className="mt-1 block text-xs font-semibold text-blue-700">{pkg.dueToday} · {pkg.recurring}</span>
-                      <span className="mt-1 block text-[11px] text-slate-500">{pkg.terms}</span>
-                    </button>
-                  ))}
-                </div>
+                {selectedPackage ? (
+                  <div className="mt-4 rounded-xl border border-blue-500 bg-blue-50 p-4 ring-2 ring-blue-100">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">Selected package</p>
+                    <p className="mt-1 text-lg font-bold text-slate-900">{WEBSITE_PACKAGES[selectedPackage].name}</p>
+                    <p className="mt-1 text-xs font-semibold text-blue-700">{WEBSITE_PACKAGES[selectedPackage].dueToday} · {WEBSITE_PACKAGES[selectedPackage].recurring}</p>
+                    <p className="mt-1 text-[11px] text-slate-600">{WEBSITE_PACKAGES[selectedPackage].terms}</p>
+                  </div>
+                ) : (
+                  <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                    No website package was selected yet. Return to the pricing section to choose one before prepaying.
+                  </div>
+                )}
                 <Button type="button" onClick={startPackageCheckout} disabled={createPackageCheckout.isPending} className="mt-4 w-full rounded-xl bg-blue-600 font-semibold text-white hover:bg-blue-700">
-                  {createPackageCheckout.isPending ? "Opening secure checkout..." : "Prepay for my package"}
+                  {createPackageCheckout.isPending ? "Opening secure checkout..." : selectedPackage ? `Prepay for ${WEBSITE_PACKAGES[selectedPackage].name}` : "Choose a package first"}
                   <CreditCard size={15} className="ml-2" />
                 </Button>
                 {formError && <p className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{formError}</p>}
