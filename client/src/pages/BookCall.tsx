@@ -92,12 +92,15 @@ export default function BookCall() {
   const [step, setStep] = useState<Step>("calendar");
   const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
 
-  const [form, setForm] = useState({
-    guestName: "",
-    guestEmail: "",
-    guestPhone: "",
-    businessName: "",
-    notes: "",
+  const [form, setForm] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      guestName: params.get("name") ?? "",
+      guestEmail: params.get("email") ?? "",
+      guestPhone: params.get("phone") ?? "",
+      businessName: params.get("business") ?? "",
+      notes: params.get("notes") ?? "",
+    };
   });
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -627,7 +630,8 @@ export default function BookCall() {
                         Your Details
                       </h3>
                       <p className="text-slate-500 text-sm mb-6">
-                        We'll send a confirmation to your email.
+                        We brought these details over from your intake. Review
+                        and edit anything before confirming.
                       </p>
 
                       <form onSubmit={handleFormSubmit} className="space-y-4">

@@ -189,7 +189,16 @@ export default function AIIntake() {
             <strong className="text-slate-900">{data.businessName}</strong>.
           </p>
           <button
-            onClick={() => navigate("/book-call")}
+            onClick={() => {
+              const params = new URLSearchParams({
+                name: data.ownerName,
+                email: data.email,
+                phone: data.phone,
+                business: data.businessName,
+                notes: data.initialPrompt,
+              });
+              navigate(`/book-call?${params.toString()}`);
+            }}
             className="mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
           >
             Schedule your call <ArrowRight size={16} />
