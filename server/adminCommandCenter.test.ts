@@ -94,4 +94,18 @@ describe("Admin 3.0 command center", () => {
     expect(page).toContain('hidden overflow-x-auto sm:block');
     expect(page).toContain('Search business, contact, email, phone');
   });
+
+  it("surfaces today's confirmed Central Time calls on the overview", () => {
+    const router = read("server/routers/adminCommandCenterRouter.ts");
+    const page = read("client/src/pages/AdminCommandCenterPages.tsx");
+
+    expect(router).toContain("todaysScheduledCalls");
+    expect(router).toContain('eq(bookings.status, "confirmed")');
+    expect(router).toContain('timeZone: "America/Chicago"');
+    expect(page).toContain("Today&apos;s scheduled calls");
+    expect(page).toContain("No confirmed calls scheduled today.");
+    expect(page).toContain("formatCentralTime");
+    expect(page).toContain("guestEmail");
+    expect(page).toContain("guestPhone");
+  });
 });

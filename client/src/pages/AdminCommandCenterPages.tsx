@@ -91,6 +91,37 @@ function formatDate(value: Date | string | null | undefined) {
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(value));
 }
 
+function formatCentralTime(value: string) {
+  const [hours, minutes] = value.split(":").map(Number);
+  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return value;
+  const date = new Date(Date.UTC(1970, 0, 1, hours, minutes));
+  return new Intl.DateTimeFormat("en-US", { timeZone: "America/Chicago", hour: "numeric", minute: "2-digit" }).format(date);
+}
+
+type ScheduledCall = {
+  id: number;
+  guestName: string;
+  guestEmail: string;
+  guestPhone: string | null;
+  businessName: string | null;
+  bookingDate: string;
+  startTime: string;
+  endTime: string;
+  timezone: string;
+  status: "confirmed" | "cancelled" | "completed" | "no_show";
+  confirmationCode: string;
+};
+
+function TodaysScheduledCalls({ calls, isLoading }: { calls: ScheduledCall[]; isLoading: boolean }) {
+  return <section className="mt-6 overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-[0_10px_26px_rgba(31,58,94,0.045)]">
+    <div className="flex flex-col gap-2 border-b border-blue-50 bg-gradient-to-r from-blue-50/80 to-white px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-start gap-3"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-100 text-[#1269e8]"><CalendarDays size={19} /></span><div><h2 className="font-bold text-[#14213f]">Today&apos;s scheduled calls</h2><p className="mt-1 text-sm text-slate-500">Confirmed customer appointments in Central Time.</p></div></div>
+      <span className="inline-flex w-fit rounded-full bg-white px-3 py-1.5 text-xs font-bold text-blue-700 ring-1 ring-inset ring-blue-100">{isLoading ? "Loading…" : `${calls.length} ${calls.length === 1 ? "call" : "calls"}`}</span>
+    </div>
+    {isLoading ? <div className="px-5 py-6 text-sm text-slate-500">Loading today&apos;s schedule…</div> : calls.length === 0 ? <div className="px-5 py-8 text-center"><p className="font-semibold text-[#17223b]">No confirmed calls scheduled today.</p><p className="mt-1 text-sm text-slate-500">New appointments will appear here after a customer confirms a time.</p></div> : <div className="divide-y divide-slate-100">{calls.map(call => <div key={call.id} className="flex flex-col gap-4 px-5 py-4 lg:flex-row lg:items-center lg:justify-between"><div className="flex min-w-0 items-start gap-4"><div className="min-w-[92px]"><p className="text-lg font-bold tracking-[-0.03em] text-[#14213f]">{formatCentralTime(call.startTime)}</p><p className="text-xs text-slate-500">until {formatCentralTime(call.endTime)} CT</p></div><div className="min-w-0 border-l border-slate-200 pl-4"><p className="truncate font-bold text-[#17223b]">{call.guestName}</p><p className="truncate text-sm text-slate-600">{call.businessName || "Business not provided"}</p><div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500"><a href={`mailto:${call.guestEmail}`} className="hover:text-[#1269e8] hover:underline">{call.guestEmail}</a>{call.guestPhone && <a href={`tel:${call.guestPhone}`} className="hover:text-[#1269e8] hover:underline">{call.guestPhone}</a>}</div></div></div><div className="flex items-center gap-3 lg:pl-4"><StatusPill value={call.status} /><span className="text-xs font-medium text-slate-400">#{call.confirmationCode}</span></div></div>)}</div>}
+  </section>;
+}
+
 function MetricCard({ label, value, detail, href, emphasis = false }: { label: string; value: string; detail: string; href: string; emphasis?: boolean }) {
   return <Link href={href} className={`block rounded-2xl border bg-white p-5 transition hover:border-blue-300 hover:bg-blue-50/20 focus:outline-none focus:ring-4 focus:ring-blue-100 ${emphasis ? "border-amber-200" : "border-slate-200"}`}>
     <p className="text-sm font-semibold text-slate-500">{label}</p>
@@ -249,6 +280,7 @@ export function AdminCommandOverview() {
   const overview = trpc.adminCommandCenter.getOverview.useQuery(undefined, { retry: false });
   const reconciliation = trpc.adminCommandCenter.financialReconciliation.useQuery(undefined, { retry: false });
   const metrics = overview.data?.metrics;
+  const scheduledCalls = (overview.data?.todaysScheduledCalls ?? []) as ScheduledCall[];
   return <AdminCommandShell activeHref="/flowsites-admin-dashboard" title="Overview" subtitle="Your business at a glance.">
     {overview.isError ? <ErrorBlock text={overview.error.message} onRetry={() => overview.refetch()} /> : <>
       <section className="grid grid-cols-2 gap-4 xl:grid-cols-4">
@@ -257,6 +289,7 @@ export function AdminCommandOverview() {
         <MetricCard href="/flowsites-admin-billing" emphasis label="Outstanding balance" value={overview.isLoading ? "—" : formatCents(metrics?.verifiedOutstandingInvoiceCents ?? 0)} detail={overview.isLoading ? "—" : `Stripe-linked open invoices only. Unreconciled local invoices: ${formatCents(metrics?.unreconciledOpenInvoiceCents ?? 0)}.`} />
         <MetricCard href="/flowsites-admin-billing?status=overdue" label="Overdue accounts" value={overview.isLoading ? "—" : String(metrics?.overdueAccounts ?? 0)} detail="Unique active-CRM customers with a local invoice marked overdue." />
       </section>
+      <TodaysScheduledCalls calls={scheduledCalls} isLoading={overview.isLoading} />
       <div className="mt-6"><CustomerDirectoryTable compact /></div>
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="font-bold text-[#14213f]">Financial reconciliation review</h2><p className="mt-1 text-sm text-slate-500">Local record checks only. Provider-side Stripe truth is intentionally not inferred.</p></div><Link href="/flowsites-admin-billing" className="text-sm font-bold text-[#1269e8] hover:underline">Open Billing</Link></div>

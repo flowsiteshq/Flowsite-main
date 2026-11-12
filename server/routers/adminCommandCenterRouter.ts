@@ -4,6 +4,7 @@ import {
   clientAccounts,
   clientInvoices,
   clientProjects,
+  bookings,
   wizardSubmissions,
 } from "../../drizzle/schema";
 import { getDb } from "../db";
@@ -44,6 +45,17 @@ function normalizedQuery(query: string | undefined) {
   return trimmed.slice(0, 80);
 }
 
+function currentCentralDate() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Chicago",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const get = (type: string) => parts.find(part => part.type === type)?.value ?? "";
+  return `${get("year")}-${get("month")}-${get("day")}`;
+}
+
 function encodeOffset(offset: number) {
   return Buffer.from(JSON.stringify({ offset })).toString("base64url");
 }
@@ -68,7 +80,25 @@ export const adminCommandCenterRouter = router({
     await assertStrictAdminAccess(ctx);
     const db = await getDb();
     if (!db) throw new Error("Database unavailable");
-    const today = new Date().toISOString().slice(0, 10);
+    const today = currentCentralDate();
+
+    const todaysScheduledCalls = await db
+      .select({
+        id: bookings.id,
+        guestName: bookings.guestName,
+        guestEmail: bookings.guestEmail,
+        guestPhone: bookings.guestPhone,
+        businessName: bookings.businessName,
+        bookingDate: bookings.bookingDate,
+        startTime: bookings.startTime,
+        endTime: bookings.endTime,
+        timezone: bookings.timezone,
+        status: bookings.status,
+        confirmationCode: bookings.confirmationCode,
+      })
+      .from(bookings)
+      .where(and(eq(bookings.bookingDate, today), eq(bookings.status, "confirmed")))
+      .orderBy(asc(bookings.startTime));
 
     const [accountSummary] = await db
       .select({
@@ -108,6 +138,8 @@ export const adminCommandCenterRouter = router({
 
     return {
       asOf: new Date().toISOString(),
+      today,
+      todaysScheduledCalls,
       metrics: {
         activeCustomers,
         configuredMonthlyRevenueCents: toNumber(accountSummary?.configuredMonthlyRevenueCents),
