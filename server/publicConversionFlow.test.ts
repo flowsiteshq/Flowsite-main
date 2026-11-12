@@ -15,7 +15,8 @@ describe("public conversion flow", () => {
     const industries = source("client/src/components/IndustryLanding.tsx");
 
     expect(app).toContain('path="/get-started"');
-    expect(app).toContain('leadCaptureHref({ intent: "Get started" })');
+    expect(app).toContain('leadCaptureHref({');
+    expect(app).toContain("packageId: packageId ?? undefined");
     expect(app).toContain('<Route path="/schedule" component={BookCall} />');
     expect(app).toContain('<Route path="/book-call" component={BookCall} />');
     expect(app).toContain('path="/ai-services" component={AIServices}');

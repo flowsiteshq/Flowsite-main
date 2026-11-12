@@ -107,10 +107,17 @@ function Router() {
         />
         <Route path="/get-started">
           {() => {
-            if (typeof window !== "undefined")
-              window.location.replace(
-                leadCaptureHref({ intent: "Get started" })
+            if (typeof window !== "undefined") {
+              const packageId = new URLSearchParams(window.location.search).get(
+                "package"
               );
+              window.location.replace(
+                leadCaptureHref({
+                  intent: "Get started",
+                  packageId: packageId ?? undefined,
+                })
+              );
+            }
             return null;
           }}
         </Route>
