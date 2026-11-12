@@ -9,6 +9,10 @@ const getStripe = () => {
   return new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" });
 };
 
+// Stripe Managed Payments requires an eligible tax code on every inline product.
+// This is the tax code already accepted by the connected FlowSites Stripe account.
+const FLOW_SITES_TAX_CODE = "txcd_10701200";
+
 const SUB_TIER_PRICES: Record<string, number> = {
   essential: 99,
   growth: 149,
@@ -196,10 +200,11 @@ export const stripeRouter = router({
               currency: "usd",
               unit_amount: websitePackage.monthlyAmountCents,
               recurring: { interval: "month" },
-              product_data: {
-                name: `FlowSites ${websitePackage.name} — Website Hosting & Maintenance`,
-                description: websitePackage.description,
-              },
+                product_data: {
+                  name: `FlowSites ${websitePackage.name} — Website Hosting & Maintenance`,
+                  description: websitePackage.description,
+                  tax_code: FLOW_SITES_TAX_CODE,
+                },
             },
             quantity: 1,
           },
@@ -212,6 +217,7 @@ export const stripeRouter = router({
               product_data: {
                 name: `FlowSites ${websitePackage.name} — Website Setup`,
                 description: "Professional website setup and launch preparation",
+                tax_code: FLOW_SITES_TAX_CODE,
               },
             },
             quantity: 1,
