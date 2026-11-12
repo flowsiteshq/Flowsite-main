@@ -1,8 +1,12 @@
 import crypto from "crypto";
+import { eq } from "drizzle-orm";
 import type { Express, Request, Response } from "express";
+import { technicians } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { sdk } from "./_core/sdk";
 import {
   getAdminSession,
+  getDb,
   getGoogleCalendarConnection,
   saveGoogleCalendarConnection,
   updateBookingCalendar,
@@ -33,8 +37,8 @@ function decrypt(value: string) {
   return Buffer.concat([decipher.update(Buffer.from(dataPart, "base64url")), decipher.final()]).toString("utf8");
 }
 
-function stateFor(origin: string, token: string) {
-  const payload = Buffer.from(JSON.stringify({ origin, token, nonce: crypto.randomUUID() })).toString("base64url");
+function stateFor(origin: string) {
+  const payload = Buffer.from(JSON.stringify({ origin, nonce: crypto.randomUUID() })).toString("base64url");
   const signature = crypto.createHmac("sha256", secretKey()).update(payload).digest("base64url");
   return `${payload}.${signature}`;
 }
@@ -44,7 +48,33 @@ function parseState(value: string) {
   if (!payload || !signature) throw new Error("Invalid OAuth state");
   const expected = crypto.createHmac("sha256", secretKey()).update(payload).digest("base64url");
   if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) throw new Error("Invalid OAuth state");
-  return JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { origin: string; token: string };
+  return JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { origin: string };
+}
+
+async function isAuthorizedAdmin(req: Request) {
+  const adminToken = req.cookies?.admin_session as string | undefined;
+  if (adminToken && await getAdminSession(adminToken)) return true;
+
+  const emailSessionToken = req.cookies?.email_session_id as string | undefined;
+  if (emailSessionToken) {
+    const db = await getDb();
+    if (db) {
+      const { emailAuthSessions } = await import("../drizzle/schema");
+      const [session] = await db.select().from(emailAuthSessions).where(eq(emailAuthSessions.sessionToken, emailSessionToken)).limit(1);
+      if (session?.isAdmin === 1 && new Date() < session.expiresAt) return true;
+    }
+  }
+
+  try {
+    const user = await sdk.authenticateRequest(req);
+    if (user.role === "admin") return true;
+    const db = await getDb();
+    if (!db) return false;
+    const [technician] = await db.select({ role: technicians.role, status: technicians.status }).from(technicians).where(eq(technicians.openId, user.openId)).limit(1);
+    return technician?.status === "active" && technician.role === "admin";
+  } catch {
+    return false;
+  }
 }
 
 function redirectUri(origin: string) {
@@ -77,11 +107,10 @@ async function googleRequest(path: string, init: RequestInit = {}) {
 
 export function registerGoogleCalendarRoutes(app: Express) {
   app.get("/api/admin/google-calendar/connect", async (req: Request, res: Response) => {
-    const adminToken = req.cookies?.admin_session as string | undefined;
-    if (!adminToken || !(await getAdminSession(adminToken))) return res.status(401).send("Unauthorized");
+    if (!(await isAuthorizedAdmin(req))) return res.status(401).send("Unauthorized");
     if (!ENV.googleClientId || !ENV.googleClientSecret) return res.status(503).send("Google OAuth is not configured");
     const origin = typeof req.query.origin === "string" ? req.query.origin : `${req.protocol}://${req.get("host")}`;
-    const params = new URLSearchParams({ client_id: ENV.googleClientId, redirect_uri: redirectUri(origin), response_type: "code", access_type: "offline", prompt: "consent", scope: CALENDAR_SCOPE, state: stateFor(origin, adminToken) });
+    const params = new URLSearchParams({ client_id: ENV.googleClientId, redirect_uri: redirectUri(origin), response_type: "code", access_type: "offline", prompt: "consent", scope: CALENDAR_SCOPE, state: stateFor(origin) });
     return res.redirect(`${GOOGLE_AUTH_URL}?${params.toString()}`);
   });
 
@@ -89,8 +118,8 @@ export function registerGoogleCalendarRoutes(app: Express) {
     const code = typeof req.query.code === "string" ? req.query.code : "";
     const oauthState = typeof req.query.state === "string" ? req.query.state : "";
     try {
-      const { origin, token } = parseState(oauthState);
-      if (!(await getAdminSession(token))) return res.status(401).send("Unauthorized");
+      const { origin } = parseState(oauthState);
+      if (!(await isAuthorizedAdmin(req))) return res.status(401).send("Unauthorized");
       if (!code) return res.redirect(`${origin}/flowsites-admin-settings?googleCalendar=error`);
       const tokenResponse = await fetch(GOOGLE_TOKEN_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams({ code, client_id: ENV.googleClientId, client_secret: ENV.googleClientSecret, redirect_uri: redirectUri(origin), grant_type: "authorization_code" }) });
       if (!tokenResponse.ok) throw new Error("Google authorization failed");
