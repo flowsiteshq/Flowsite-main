@@ -43,6 +43,9 @@ export function getSessionCookieOptions(
     httpOnly: true,
     path: "/",
     sameSite: "none",
-    secure: isSecureRequest(req),
+    // Railway terminates TLS before forwarding to Express. In production the
+    // public app is HTTPS even when the proxy omits x-forwarded-proto; without
+    // Secure, browsers reject SameSite=None cookies and OAuth appears to loop.
+    secure: process.env.NODE_ENV === "production" || isSecureRequest(req),
   };
 }
