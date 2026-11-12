@@ -9,10 +9,6 @@ const getStripe = () => {
   return new Stripe(ENV.stripeSecretKey, { apiVersion: "2026-02-25.clover" });
 };
 
-// Stripe Managed Payments requires an eligible tax code on every inline product.
-// This is the tax code already accepted by the connected FlowSites Stripe account.
-const FLOW_SITES_TAX_CODE = "txcd_10701200";
-
 const SUB_TIER_PRICES: Record<string, number> = {
   essential: 99,
   growth: 149,
@@ -203,7 +199,6 @@ export const stripeRouter = router({
                 product_data: {
                   name: `FlowSites ${websitePackage.name} — Website Hosting & Maintenance`,
                   description: websitePackage.description,
-                  tax_code: FLOW_SITES_TAX_CODE,
                 },
             },
             quantity: 1,
@@ -217,15 +212,18 @@ export const stripeRouter = router({
               product_data: {
                 name: `FlowSites ${websitePackage.name} — Website Setup`,
                 description: "Professional website setup and launch preparation",
-                tax_code: FLOW_SITES_TAX_CODE,
               },
             },
             quantity: 1,
           });
         }
-        const session = await stripe.checkout.sessions.create({
+        const session = await stripe.checkout.sessions.create(({
           mode: "subscription",
           allow_promotion_codes: true,
+          // These inline website products do not carry a Managed Payments-eligible
+          // tax code. Explicitly disable Managed Payments instead of allowing Stripe
+          // to reject the session before the customer reaches checkout.
+          managed_payments: { enabled: false },
           line_items: lineItems,
           metadata: {
             website_package: websitePackage.key,
@@ -246,7 +244,9 @@ export const stripeRouter = router({
           },
           success_url: successUrl,
           cancel_url: cancelUrl,
-        });
+        } as Stripe.Checkout.SessionCreateParams & {
+          managed_payments: { enabled: boolean };
+        }));
         return { url: session.url };
       }
       if (!input.tier || !input.paymentType) {

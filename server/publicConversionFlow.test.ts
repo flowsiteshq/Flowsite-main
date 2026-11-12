@@ -75,9 +75,9 @@ describe("public conversion flow", () => {
     );
   });
 
-  it("supplies an eligible tax code for inline website package products", () => {
+  it("disables Managed Payments for inline website package products", () => {
     const stripeRouter = source("server/stripe/stripeRouter.ts");
-    expect(stripeRouter).toContain('const FLOW_SITES_TAX_CODE = "txcd_10701200"');
-    expect(stripeRouter.match(/tax_code: FLOW_SITES_TAX_CODE/g)).toHaveLength(2);
+    expect(stripeRouter).toContain("managed_payments: { enabled: false }");
+    expect(stripeRouter).not.toContain("FLOW_SITES_TAX_CODE");
   });
 });
