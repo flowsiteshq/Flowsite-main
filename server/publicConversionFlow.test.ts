@@ -20,7 +20,7 @@ describe("public conversion flow", () => {
     expect(app).toContain('<Route path="/schedule" component={BookCall} />');
     expect(app).toContain('<Route path="/book-call" component={BookCall} />');
     expect(app).toContain('path="/ai-services" component={AIServices}');
-    expect(home).toContain("href={`/get-started?package=${pkg.id}`}");
+    expect(home).toContain('leadCaptureHref({ intent: "Get started", packageId: pkg.id })');
     expect(home).toContain('href="/#packages"');
     expect(aiServices).toContain("leadCaptureHref({ prompt:");
     expect(aiServices).toContain(
