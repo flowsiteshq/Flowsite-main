@@ -16,6 +16,7 @@ import {
   ArrowRight,
   Sparkles,
   ClipboardList,
+  CreditCard,
 } from "lucide-react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
@@ -72,6 +73,28 @@ type Step =
   | "review"
   | "confirmed";
 
+type WebsitePackage = "pay_save" | "launch_now";
+
+const WEBSITE_PACKAGES: Record<WebsitePackage, {
+  name: string;
+  dueToday: string;
+  recurring: string;
+  terms: string;
+}> = {
+  pay_save: {
+    name: "Pay & Save",
+    dueToday: "$548 due today",
+    recurring: "$49/month",
+    terms: "Month-to-month service",
+  },
+  launch_now: {
+    name: "Launch Now",
+    dueToday: "$99 due today",
+    recurring: "$99/month",
+    terms: "12-month minimum · $1,188 total",
+  },
+};
+
 export default function BookCall() {
   useSEO({
     title: "Schedule a Call | FlowSites",
@@ -91,6 +114,10 @@ export default function BookCall() {
   } | null>(null);
   const [step, setStep] = useState<Step>("calendar");
   const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<WebsitePackage | null>(() => {
+    const packageId = new URLSearchParams(window.location.search).get("package");
+    return packageId === "pay_save" || packageId === "launch_now" ? packageId : null;
+  });
 
   const [form, setForm] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -136,6 +163,25 @@ export default function BookCall() {
       setFormError(err.message);
     },
   });
+
+  const createPackageCheckout = trpc.stripe.createCheckout.useMutation({
+    onSuccess: data => {
+      if (data.url) window.location.assign(data.url);
+    },
+    onError: error => setFormError(error.message),
+  });
+
+  const startPackageCheckout = () => {
+    if (!selectedPackage) {
+      setFormError("Choose a website package before continuing to secure checkout.");
+      return;
+    }
+    setFormError(null);
+    createPackageCheckout.mutate({
+      websitePackage: selectedPackage,
+      origin: window.location.origin,
+    });
+  };
 
   const calendarDays = useMemo(() => {
     const firstDay = new Date(viewYear, viewMonth - 1, 1).getDay();
@@ -432,6 +478,30 @@ export default function BookCall() {
                 A confirmation email has been sent. We'll follow up with a
                 meeting link before your call.
               </p>
+              <div className="mb-6 rounded-2xl border border-blue-100 bg-white p-5 text-left shadow-sm">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><CreditCard size={18} /></span>
+                  <div>
+                    <p className="font-bold text-slate-900">Ready to move forward?</p>
+                    <p className="mt-1 text-sm leading-5 text-slate-600">Prepay for your website package securely now, or choose a package to review its terms first.</p>
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                  {(Object.entries(WEBSITE_PACKAGES) as [WebsitePackage, typeof WEBSITE_PACKAGES[WebsitePackage]][]).map(([packageId, pkg]) => (
+                    <button key={packageId} type="button" onClick={() => setSelectedPackage(packageId)} className={`rounded-xl border p-3 text-left transition ${selectedPackage === packageId ? "border-blue-500 bg-blue-50 ring-2 ring-blue-100" : "border-slate-200 bg-white hover:border-blue-300"}`}>
+                      <span className="block text-sm font-bold text-slate-900">{pkg.name}</span>
+                      <span className="mt-1 block text-xs font-semibold text-blue-700">{pkg.dueToday} · {pkg.recurring}</span>
+                      <span className="mt-1 block text-[11px] text-slate-500">{pkg.terms}</span>
+                    </button>
+                  ))}
+                </div>
+                <Button type="button" onClick={startPackageCheckout} disabled={createPackageCheckout.isPending} className="mt-4 w-full rounded-xl bg-blue-600 font-semibold text-white hover:bg-blue-700">
+                  {createPackageCheckout.isPending ? "Opening secure checkout..." : "Prepay for my package"}
+                  <CreditCard size={15} className="ml-2" />
+                </Button>
+                {formError && <p className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{formError}</p>}
+                <p className="mt-3 text-center text-[11px] leading-4 text-slate-500">You will review the full charge, recurring amount, and applicable terms on Stripe before paying.</p>
+              </div>
               <Link href="/">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl">
                   Back to Homepage

@@ -51,10 +51,15 @@ describe("public conversion flow", () => {
     expect(intake).toContain("name: data.ownerName");
     expect(intake).toContain("email: data.email");
     expect(intake).toContain("business: data.businessName");
+    expect(intake).toContain('params.set("package", selectedPackage)');
     expect(intake).toContain("navigate(`/book-call?${params.toString()}`)");
     expect(scheduler).toContain('params.get("name")');
     expect(scheduler).toContain('params.get("email")');
     expect(scheduler).toContain("Review\n                        and edit anything before confirming.");
+    expect(scheduler).toContain('websitePackage: selectedPackage');
+    expect(scheduler).toContain("Prepay for my package");
+    expect(scheduler).toContain('dueToday: "$548 due today"');
+    expect(scheduler).toContain('dueToday: "$99 due today"');
   });
 
   it("does not fail after persistence when secondary notifications are unavailable", () => {
