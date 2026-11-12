@@ -106,6 +106,37 @@ export function isAllowedBookingTime(startTime: string, endTime: string) {
   );
 }
 
+/** Return the current date and minute-of-day in Central Time. */
+function nowInCentral() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: CENTRAL_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date());
+  const get = (type: string) =>
+    parts.find(part => part.type === type)?.value ?? "0";
+  return {
+    date: `${get("year")}-${get("month")}-${get("day")}`,
+    minutes: Number(get("hour")) * 60 + Number(get("minute")),
+  };
+}
+
+/** Slots are displayed and validated in Central Time and must not be stale. */
+export function isFutureBookingSlot(
+  date: string,
+  startTime: string,
+  now = nowInCentral()
+) {
+  const [hours, minutes] = startTime.split(":").map(Number);
+  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return false;
+  const slotMinutes = hours * 60 + minutes;
+  return date > now.date || (date === now.date && slotMinutes > now.minutes);
+}
+
 export function getPolicySlots() {
   const slots: { startTime: string; endTime: string }[] = [];
   for (

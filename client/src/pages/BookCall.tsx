@@ -64,7 +64,13 @@ function formatDateShort(dateStr: string) {
   });
 }
 
-type Step = "calendar" | "slots" | "form" | "questionnaire" | "confirmed";
+type Step =
+  | "calendar"
+  | "slots"
+  | "form"
+  | "questionnaire"
+  | "review"
+  | "confirmed";
 
 export default function BookCall() {
   useSEO({
@@ -185,7 +191,7 @@ export default function BookCall() {
     if (activeQuestions.length > 0) {
       setStep("questionnaire");
     } else {
-      submitBooking();
+      setStep("review");
     }
   };
 
@@ -202,7 +208,7 @@ export default function BookCall() {
         }
       }
     }
-    submitBooking();
+    setStep("review");
   };
 
   const submitBooking = () => {
@@ -928,6 +934,89 @@ export default function BookCall() {
                           <ArrowRight size={16} className="ml-2" />
                         </Button>
                       </div>
+                    </motion.div>
+                  )}
+
+                  {/* STEP: Appointment confirmation review */}
+                  {step === "review" && (
+                    <motion.div
+                      key="review"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <button
+                        onClick={() =>
+                          setStep(
+                            activeQuestions.length > 0
+                              ? "questionnaire"
+                              : "form"
+                          )
+                        }
+                        className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 text-sm mb-5 transition-colors"
+                      >
+                        <ChevronLeft size={14} /> Back to details
+                      </button>
+                      <div className="flex items-center gap-2 mb-1">
+                        <CheckCircle2 size={18} className="text-blue-600" />
+                        <h3 className="text-slate-900 font-semibold text-lg">
+                          Confirm your appointment
+                        </h3>
+                      </div>
+                      <p className="text-slate-500 text-sm mb-6">
+                        Review your information and appointment time before we
+                        reserve the call.
+                      </p>
+
+                      <div className="rounded-2xl border border-slate-200 bg-slate-50 divide-y divide-slate-200 mb-6">
+                        <div className="p-4">
+                          <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">
+                            Appointment
+                          </p>
+                          <p className="font-semibold text-slate-900">
+                            {selectedDate ? formatDate(selectedDate) : ""}
+                          </p>
+                          <p className="text-sm text-slate-600 mt-1">
+                            {selectedSlot
+                              ? `${formatTime(selectedSlot.startTime)} – ${formatTime(selectedSlot.endTime)} CT`
+                              : ""}
+                          </p>
+                        </div>
+                        <div className="p-4">
+                          <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">
+                            Contact information
+                          </p>
+                          <p className="font-medium text-slate-900">
+                            {form.guestName}
+                          </p>
+                          <p className="text-sm text-slate-600">
+                            {form.guestEmail}
+                            {form.guestPhone ? ` · ${form.guestPhone}` : ""}
+                          </p>
+                          {form.businessName && (
+                            <p className="text-sm text-slate-600 mt-1">
+                              {form.businessName}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {formError && (
+                        <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 mb-4">
+                          {formError}
+                        </p>
+                      )}
+                      <Button
+                        onClick={submitBooking}
+                        disabled={createBooking.isPending}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-12 rounded-xl text-base transition-all shadow-lg shadow-blue-600/20"
+                      >
+                        {createBooking.isPending
+                          ? "Reserving your time..."
+                          : "Confirm appointment"}
+                        <ArrowRight size={16} className="ml-2" />
+                      </Button>
                     </motion.div>
                   )}
                 </AnimatePresence>

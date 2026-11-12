@@ -775,9 +775,8 @@ export const appRouter = router({
       .input(z.object({ date: z.string() })) // "YYYY-MM-DD"
       .query(async ({ input }) => {
         const { getBlockedDates, getBookingsForDate } = await import("./db");
-        const { getPolicySlots, isAllowedBookingDate } = await import(
-          "./schedulingRules"
-        );
+        const { getPolicySlots, isAllowedBookingDate, isFutureBookingSlot } =
+          await import("./schedulingRules");
 
         // Check if date is blocked
         const blocked = await getBlockedDates(input.date, input.date);
@@ -790,7 +789,9 @@ export const appRouter = router({
 
         const slots = getPolicySlots().map(slot => ({
           ...slot,
-          available: !bookedTimes.has(slot.startTime),
+          available:
+            !bookedTimes.has(slot.startTime) &&
+            isFutureBookingSlot(input.date, slot.startTime),
         }));
         return { slots, blocked: false };
       }),
@@ -800,9 +801,8 @@ export const appRouter = router({
       .input(z.object({ year: z.number(), month: z.number() })) // month 1-12
       .query(async ({ input }) => {
         const { getBlockedDates, getBookingsInRange } = await import("./db");
-        const { getPolicySlots, isAllowedBookingDate } = await import(
-          "./schedulingRules"
-        );
+        const { getPolicySlots, isAllowedBookingDate, isFutureBookingSlot } =
+          await import("./schedulingRules");
         const pad = (n: number) => String(n).padStart(2, "0");
         const fromDate = `${input.year}-${pad(input.month)}-01`;
         const lastDay = new Date(input.year, input.month, 0).getDate();
@@ -830,9 +830,12 @@ export const appRouter = router({
             continue;
           }
 
-          const totalSlots = getPolicySlots().length;
+          const totalSlots = getPolicySlots().filter(slot =>
+            isFutureBookingSlot(dateStr, slot.startTime)
+          ).length;
           const booked = bookedCountByDate[dateStr] ?? 0;
-          if (booked === 0) result[dateStr] = "available";
+          if (totalSlots === 0) result[dateStr] = "unavailable";
+          else if (booked === 0) result[dateStr] = "available";
           else if (booked >= totalSlots) result[dateStr] = "full";
           else result[dateStr] = "partial";
         }
@@ -867,13 +870,16 @@ export const appRouter = router({
         const { getBookingsForDate, createBooking, saveBookingAnswers } =
           await import("./db");
         const { getBlockedDates } = await import("./db");
-        const { isAllowedBookingDate, isAllowedBookingTime } = await import(
-          "./schedulingRules"
-        );
+        const {
+          isAllowedBookingDate,
+          isAllowedBookingTime,
+          isFutureBookingSlot,
+        } = await import("./schedulingRules");
 
         if (
           !isAllowedBookingDate(input.bookingDate) ||
-          !isAllowedBookingTime(input.startTime, input.endTime)
+          !isAllowedBookingTime(input.startTime, input.endTime) ||
+          !isFutureBookingSlot(input.bookingDate, input.startTime)
         ) {
           throw new Error(
             "Please choose a Monday–Friday time between 8:00 AM and 3:00 PM Central Time. Holidays are unavailable."

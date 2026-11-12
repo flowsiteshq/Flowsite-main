@@ -4,6 +4,7 @@ import {
   getSchedulingPolicy,
   isAllowedBookingDate,
   isAllowedBookingTime,
+  isFutureBookingSlot,
 } from "./schedulingRules";
 
 describe("public scheduling policy", () => {
@@ -39,5 +40,13 @@ describe("public scheduling policy", () => {
     expect(isAllowedBookingDate("2026-11-07")).toBe(false); // Saturday
     expect(isAllowedBookingDate("2026-11-26")).toBe(false); // Thanksgiving
     expect(isAllowedBookingDate("2026-12-25")).toBe(false); // Christmas
+  });
+
+  it("does not offer slots that have already passed in Central Time", () => {
+    const now = { date: "2026-11-12", minutes: 10 * 60 + 15 };
+    expect(isFutureBookingSlot("2026-11-12", "10:00", now)).toBe(false);
+    expect(isFutureBookingSlot("2026-11-12", "10:30", now)).toBe(true);
+    expect(isFutureBookingSlot("2026-11-11", "14:30", now)).toBe(false);
+    expect(isFutureBookingSlot("2026-11-13", "08:00", now)).toBe(true);
   });
 });
