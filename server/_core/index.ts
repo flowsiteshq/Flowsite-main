@@ -13,6 +13,7 @@ import { stripeWebhookHandler } from "../stripe/webhookHandler";
 import { invoicePdfHandler } from "../invoicePdfRoute";
 import { eightHundredWebhookHandler, eightHundredWebhookVerify } from "../800comWebhook";
 import { createGoogleAuthRouter } from "../googleAuth";
+import { registerGoogleCalendarRoutes } from "../googleCalendar";
 import { registerCueIntegrationRoutes } from "../cueIntegrationApi";
 import { elevenLabsPostCallWebhookHandler, registerElevenLabsIntegrationToolRoutes } from "../elevenLabsIntegrationApi";
 
@@ -105,6 +106,7 @@ async function startServer() {
   registerOAuthRoutes(app);
   // Google OAuth for team member login
   app.use("/api", createGoogleAuthRouter());
+  registerGoogleCalendarRoutes(app);
 
   // Cue AI assistant: isolated, read-only lead access via a dedicated service key.
   registerCueIntegrationRoutes(app);

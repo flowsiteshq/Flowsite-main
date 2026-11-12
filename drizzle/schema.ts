@@ -266,6 +266,9 @@ export const bookings = mysqlTable("bookings", {
   timezone: varchar("timezone", { length: 64 }).default("America/New_York").notNull(),
   // Status
   status: mysqlEnum("status", ["confirmed", "cancelled", "completed", "no_show"]).default("confirmed").notNull(),
+  calendarEventId: varchar("calendarEventId", { length: 255 }),
+  meetUrl: varchar("meetUrl", { length: 500 }),
+  calendarSyncStatus: mysqlEnum("calendarSyncStatus", ["not_configured", "pending", "synced", "failed"]).default("not_configured").notNull(),
   cancelledAt: timestamp("cancelledAt"),
   cancelReason: text("cancelReason"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -274,6 +277,20 @@ export const bookings = mysqlTable("bookings", {
 
 export type Booking = typeof bookings.$inferSelect;
 export type InsertBooking = typeof bookings.$inferInsert;
+
+/** Single staff-owned Google Calendar connection used for customer appointments. */
+export const googleCalendarConnections = mysqlTable("google_calendar_connections", {
+  id: int("id").autoincrement().primaryKey(),
+  accountEmail: varchar("accountEmail", { length: 320 }).notNull().unique(),
+  calendarId: varchar("calendarId", { length: 320 }).notNull().default("primary"),
+  encryptedRefreshToken: text("encryptedRefreshToken").notNull(),
+  scopes: text("scopes").notNull(),
+  connectedAt: timestamp("connectedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type GoogleCalendarConnection = typeof googleCalendarConnections.$inferSelect;
+export type InsertGoogleCalendarConnection = typeof googleCalendarConnections.$inferInsert;
 
 /**
  * Questionnaire questions — admin-configurable questions shown before booking

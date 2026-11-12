@@ -76,6 +76,13 @@ function decodeOffset(cursor: string | undefined) {
  * MRR is marked as locally configured rather than represented as provider truth.
  */
 export const adminCommandCenterRouter = router({
+  getGoogleCalendarConnection: publicProcedure.query(async ({ ctx }) => {
+    await assertStrictAdminAccess(ctx);
+    const { getGoogleCalendarConnection } = await import("../db");
+    const connection = await getGoogleCalendarConnection();
+    return connection ? { connected: true, accountEmail: connection.accountEmail, connectedAt: connection.connectedAt } : { connected: false, accountEmail: null, connectedAt: null };
+  }),
+
   getOverview: publicProcedure.query(async ({ ctx }) => {
     await assertStrictAdminAccess(ctx);
     const db = await getDb();
@@ -95,6 +102,7 @@ export const adminCommandCenterRouter = router({
         timezone: bookings.timezone,
         status: bookings.status,
         confirmationCode: bookings.confirmationCode,
+        meetUrl: bookings.meetUrl,
       })
       .from(bookings)
       .where(and(eq(bookings.bookingDate, today), eq(bookings.status, "confirmed")))

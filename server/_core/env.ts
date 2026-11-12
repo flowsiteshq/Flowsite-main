@@ -26,4 +26,5 @@ export const ENV = {
   elevenLabsApiKey: process.env.ELEVENLABS_API_KEY ?? "",
   googleClientId: process.env.GOOGLE_CLIENT_ID ?? "",
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+  googleCalendarAccountEmail: process.env.GOOGLE_CALENDAR_ACCOUNT_EMAIL ?? "hello@flow-sites.com",
 };

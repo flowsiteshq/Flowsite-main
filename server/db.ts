@@ -4,7 +4,7 @@ import mysql from "mysql2";
 import {
   InsertUser, users, wizardSubmissions, InsertWizardSubmission, adminSessions,
   availability, InsertAvailability, blockedDates, InsertBlockedDate,
-  bookings, InsertBooking,
+  bookings, InsertBooking, googleCalendarConnections, InsertGoogleCalendarConnection,
   questionnaireQuestions, InsertQuestionnaireQuestion,
   bookingAnswers, InsertBookingAnswer,
 } from "../drizzle/schema";
@@ -243,6 +243,27 @@ export async function createBooking(data: Omit<InsertBooking, 'id' | 'createdAt'
   if (!db) throw new Error("Database not available");
   const result = await db.insert(bookings).values(data);
   return Number(result[0].insertId);
+}
+
+export async function getGoogleCalendarConnection() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const rows = await db.select().from(googleCalendarConnections).limit(1);
+  return rows[0] ?? null;
+}
+
+export async function saveGoogleCalendarConnection(data: Omit<InsertGoogleCalendarConnection, "id" | "connectedAt" | "updatedAt">) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(googleCalendarConnections).values(data).onDuplicateKeyUpdate({
+    set: { calendarId: data.calendarId, encryptedRefreshToken: data.encryptedRefreshToken, scopes: data.scopes },
+  });
+}
+
+export async function updateBookingCalendar(id: number, data: { calendarEventId?: string | null; meetUrl?: string | null; calendarSyncStatus: "not_configured" | "pending" | "synced" | "failed" }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(bookings).set(data).where(eq(bookings.id, id));
 }
 
 export async function getBookingByConfirmationCode(code: string) {

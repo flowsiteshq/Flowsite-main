@@ -254,6 +254,7 @@ function buildBookingConfirmationHtml(data: {
   startTime: string;
   endTime: string;
   confirmationCode: string;
+  meetUrl?: string | null;
 }): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -331,8 +332,7 @@ function buildBookingConfirmationHtml(data: {
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center">
-                    <p style="margin:0 0 16px;font-size:13px;color:rgba(255,255,255,0.4);">Our team will reach out shortly with a meeting link.</p>
-                    <a href="https://flow-sites.com/portfolio" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#c0392b,#922b21);color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">View Our Portfolio &rarr;</a>
+                    ${data.meetUrl ? `<p style="margin:0 0 16px;font-size:13px;color:rgba(255,255,255,0.7);">Join your call using the Google Meet link below.</p><a href="${data.meetUrl}" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#1269e8,#0b52b8);color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Join Google Meet &rarr;</a>` : `<p style="margin:0 0 16px;font-size:13px;color:rgba(255,255,255,0.4);">Our team will follow up with a meeting link before your call.</p>`}
                   </td>
                 </tr>
               </table>
@@ -363,6 +363,7 @@ export async function sendBookingConfirmationEmail(booking: {
   startTime: string;   // HH:MM
   endTime: string;     // HH:MM
   confirmationCode: string;
+  meetUrl?: string | null;
 }): Promise<boolean> {
   const html = buildBookingConfirmationHtml({
     guestName: booking.guestName,
@@ -370,6 +371,7 @@ export async function sendBookingConfirmationEmail(booking: {
     startTime: formatTime(booking.startTime),
     endTime: formatTime(booking.endTime),
     confirmationCode: booking.confirmationCode,
+    meetUrl: booking.meetUrl,
   });
 
   return sendEmail({

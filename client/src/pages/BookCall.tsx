@@ -114,6 +114,7 @@ export default function BookCall() {
   } | null>(null);
   const [step, setStep] = useState<Step>("calendar");
   const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
+  const [meetUrl, setMeetUrl] = useState<string | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<WebsitePackage | null>(() => {
     const packageId = new URLSearchParams(window.location.search).get("package");
     return packageId === "pay_save" || packageId === "launch_now" ? packageId : null;
@@ -157,6 +158,7 @@ export default function BookCall() {
   const createBooking = trpc.scheduling.createBooking.useMutation({
     onSuccess: data => {
       setConfirmationCode(data.confirmationCode);
+      setMeetUrl(data.meetUrl ?? null);
       setStep("confirmed");
     },
     onError: err => {
@@ -469,7 +471,7 @@ export default function BookCall() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Video size={13} className="text-blue-600" />
-                    Google Meet / Zoom link will be emailed to you
+                    {meetUrl ? <a href={meetUrl} target="_blank" rel="noreferrer" className="font-semibold text-blue-700 underline underline-offset-2">Join Google Meet</a> : "Meeting link will be emailed to you"}
                   </div>
                 </div>
               </div>

@@ -924,6 +924,18 @@ export const appRouter = router({
           );
         }
 
+        const { createGoogleCalendarEvent } = await import("./googleCalendar");
+        const calendarEvent = await createGoogleCalendarEvent({
+          id,
+          guestName: input.guestName,
+          guestEmail: input.guestEmail,
+          businessName: input.businessName,
+          bookingDate: input.bookingDate,
+          startTime: input.startTime,
+          endTime: input.endTime,
+          confirmationCode: code,
+        });
+
         // Notify owner as a secondary side effect. A missing or unavailable
         // notification service must never turn a saved booking into a failed
         // customer experience.
@@ -953,11 +965,12 @@ export const appRouter = router({
           startTime: input.startTime,
           endTime: input.endTime,
           confirmationCode: code,
+          meetUrl: calendarEvent?.meetUrl,
         }).catch(err =>
           console.error("[Booking] Failed to send confirmation email:", err)
         );
 
-        return { success: true, id, confirmationCode: code };
+        return { success: true, id, confirmationCode: code, meetUrl: calendarEvent?.meetUrl ?? null };
       }),
 
     // ─── Public: Cancel a booking by confirmation code ───────────────────────
