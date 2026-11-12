@@ -924,16 +924,25 @@ export const appRouter = router({
           );
         }
 
-        // Notify owner
-        const { notifyOwner } = await import("./_core/notification");
-        const answersText =
-          answers && answers.length > 0
-            ? `\n\nQuestionnaire Answers:\n${answers.map(a => `Q${a.questionId}: ${a.answerText ?? "(no answer)"}`).join("\n")}`
-            : "";
-        await notifyOwner({
-          title: `New Discovery Call Booked: ${input.guestName}`,
-          content: `${input.guestName} (${input.businessName ?? ""}) booked a call for ${input.bookingDate} at ${input.startTime}.\nEmail: ${input.guestEmail}\nPhone: ${input.guestPhone ?? "N/A"}\nConfirmation: ${code}${answersText}`,
-        });
+        // Notify owner as a secondary side effect. A missing or unavailable
+        // notification service must never turn a saved booking into a failed
+        // customer experience.
+        try {
+          const { notifyOwner } = await import("./_core/notification");
+          const answersText =
+            answers && answers.length > 0
+              ? `\n\nQuestionnaire Answers:\n${answers.map(a => `Q${a.questionId}: ${a.answerText ?? "(no answer)"}`).join("\n")}`
+              : "";
+          await notifyOwner({
+            title: `New Discovery Call Booked: ${input.guestName}`,
+            content: `${input.guestName} (${input.businessName ?? ""}) booked a call for ${input.bookingDate} at ${input.startTime}.\nEmail: ${input.guestEmail}\nPhone: ${input.guestPhone ?? "N/A"}\nConfirmation: ${code}${answersText}`,
+          });
+        } catch (error) {
+          console.warn(
+            "[Booking] Owner notification unavailable; booking remains confirmed:",
+            error
+          );
+        }
 
         // Send confirmation email to guest (non-blocking)
         const { sendBookingConfirmationEmail } = await import("./email");

@@ -62,5 +62,8 @@ describe("public conversion flow", () => {
     expect(routers).toContain("Notifications are secondary to persistence");
     expect(routers).toContain("Confirmation email failed for submission");
     expect(routers).toContain("Owner notification failed for submission");
+    expect(routers).toContain(
+      "Owner notification unavailable; booking remains confirmed"
+    );
   });
 });
