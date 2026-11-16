@@ -36,6 +36,30 @@ describe("public conversion flow", () => {
     );
   });
 
+  it("keeps the shared header routes and accessible responsive menu contract", () => {
+    const navbar = source("client/src/components/Navbar.tsx");
+    expect(navbar).toContain('href="/"');
+    expect(navbar).toContain('href: "/services", label: "Website Design"');
+    expect(navbar).toContain(
+      'href: "/ai-services", label: "AI Business Automation"'
+    );
+    expect(navbar).toContain(
+      'href: "/ai-video-studio", label: "AI Video Studio"'
+    );
+    expect(navbar).toContain('href: "/#packages", label: "Pricing"');
+    expect(navbar).toContain('href: "/portfolio", label: "Our Work"');
+    expect(navbar).toContain('href: "/contact", label: "Contact"');
+    expect(navbar).toContain('href="/client-billing"');
+    expect(navbar).toContain("Log in");
+    expect(navbar).toContain('href="/free-website"');
+    expect(navbar).toContain("Get a Free Website");
+    expect(navbar).toContain('aria-haspopup="menu"');
+    expect(navbar).toContain("aria-expanded={isServicesOpen}");
+    expect(navbar).toContain('event.key === "Escape"');
+    expect(navbar).toContain('aria-controls="mobile-navigation"');
+    expect(navbar).not.toContain("PHONE_DISPLAY");
+  });
+
   it("keeps origin intent with the AI intake lead submission", () => {
     const intake = source("client/src/pages/AIIntake.tsx");
     expect(intake).toContain('const intent = params.get("intent") || ""');
