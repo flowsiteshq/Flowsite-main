@@ -1,4 +1,4 @@
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -10,7 +10,6 @@ type Project = {
   caseStudy: string;
   imageAlt: string;
   fit?: "contain" | "cover";
-  featured?: boolean;
 };
 
 const projects: Project[] = [
@@ -18,10 +17,9 @@ const projects: Project[] = [
     name: "MyDojo Martial Arts",
     domain: "mydojoma.com",
     description: "A bold, conversion-focused website for a martial arts academy with programs, schedules, and trial enrollment.",
-    image: "/portfolio/mydojo-live.png",
+    image: "/manus-storage/mydojo-clean_73756e46.png",
     caseStudy: "/case-study/mydojo",
-    imageAlt: "MyDojo Martial Arts website screenshot",
-    featured: true,
+    imageAlt: "Unobstructed MyDojo Martial Arts homepage captured from mydojoma.com",
   },
   {
     name: "DojoFlow",
@@ -29,7 +27,7 @@ const projects: Project[] = [
     description: "A focused SaaS platform experience for managing martial arts studios, members, classes, and billing.",
     image: "/dojoflow-dashboard-landscape.webp",
     caseStudy: "/case-study/dojoflow",
-    imageAlt: "DojoFlow dashboard showing attendance, members, and upcoming classes",
+    imageAlt: "DojoFlow application dashboard showing attendance, members, and upcoming classes",
     fit: "contain",
   },
   {
@@ -52,9 +50,17 @@ const projects: Project[] = [
     name: "Green Bahamas Life",
     domain: "greenbahamas.life",
     description: "A mission-driven digital presence for a sustainability initiative connecting community, investment, and impact.",
-    image: "/portfolio/greenbahamas-live.png",
+    image: "/manus-storage/greenbahamas-clean_aa8f54da.png",
     caseStudy: "/case-study/greenbahamas",
-    imageAlt: "Green Bahamas Life website screenshot",
+    imageAlt: "Green Bahamas Life homepage captured from greenbahamas.life at normal brightness",
+  },
+  {
+    name: "Creative Cyber Management",
+    domain: "creativecybermanagement.com",
+    description: "A professional digital presence for a cybersecurity and technology management company, built to make complex services clear.",
+    image: "/manus-storage/creativecyber-clean_44a4cf65.png",
+    caseStudy: "https://creativecybermanagement.com/",
+    imageAlt: "Creative Cyber Management website captured from creativecybermanagement.com",
   },
 ];
 
@@ -73,11 +79,25 @@ function BrowserFrame({ project }: { project: Project }) {
         <img
           src={project.image}
           alt={project.imageAlt}
-          className={`h-full w-full ${project.fit === "contain" ? "object-contain p-0" : "object-cover"}`}
+          className={`h-full w-full ${project.fit === "contain" ? "object-contain" : "object-cover"}`}
           loading="lazy"
         />
       </div>
     </div>
+  );
+}
+
+function ProjectLink({ project }: { project: Project }) {
+  const isExternal = project.caseStudy.startsWith("http");
+  const className = "mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition-colors hover:text-blue-800";
+  return isExternal ? (
+    <a href={project.caseStudy} target="_blank" rel="noreferrer" className={className}>
+      Visit website <ArrowRight size={16} aria-hidden="true" />
+    </a>
+  ) : (
+    <Link href={project.caseStudy} className={className}>
+      View project <ArrowRight size={16} aria-hidden="true" />
+    </Link>
   );
 }
 
@@ -103,52 +123,22 @@ export default function Portfolio() {
       </section>
 
       <main className="container py-10 sm:py-16">
-        <div className="space-y-14 md:space-y-16">
-          {projects.filter((project) => project.featured).map((project) => (
+        <div className="grid gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-16">
+          {projects.map((project) => (
             <article key={project.name} className="group min-w-0">
               <BrowserFrame project={project} />
               <div className="px-1 pt-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-2xl font-black tracking-[-0.045em] text-[#071b3a] sm:text-3xl">
-                      {project.name}
-                    </h2>
-                    <p className="mt-2 max-w-xl text-[0.98rem] leading-7 text-slate-600">
-                      {project.description}
-                    </p>
+                    <h2 className="text-2xl font-black tracking-[-0.045em] text-[#071b3a] sm:text-3xl">{project.name}</h2>
+                    <p className="mt-2 max-w-xl text-[0.98rem] leading-7 text-slate-600">{project.description}</p>
                   </div>
                   <ExternalLink className="mt-1 hidden shrink-0 text-blue-600 sm:block" size={18} aria-hidden="true" />
                 </div>
-                <Link
-                  href={project.caseStudy}
-                  className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition-colors hover:text-blue-800"
-                >
-                  View project
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                </Link>
+                <ProjectLink project={project} />
               </div>
             </article>
           ))}
-          <div className="grid gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-16">
-            {projects.filter((project) => !project.featured).map((project) => (
-              <article key={project.name} className="group min-w-0">
-                <BrowserFrame project={project} />
-                <div className="px-1 pt-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h2 className="text-2xl font-black tracking-[-0.045em] text-[#071b3a] sm:text-3xl">{project.name}</h2>
-                      <p className="mt-2 max-w-xl text-[0.98rem] leading-7 text-slate-600">{project.description}</p>
-                    </div>
-                    <ExternalLink className="mt-1 hidden shrink-0 text-blue-600 sm:block" size={18} aria-hidden="true" />
-                  </div>
-                  <Link href={project.caseStudy} className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition-colors hover:text-blue-800">
-                    View project
-                    <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
         </div>
       </main>
 
