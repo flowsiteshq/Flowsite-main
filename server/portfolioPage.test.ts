@@ -30,11 +30,14 @@ describe("portfolio page", () => {
     ]) {
       expect(page).not.toContain(`name: "${name}"`);
     }
-    expect(page).toContain("Additional project cards remain unpublished");
+    expect(page).not.toContain("Additional project cards remain unpublished");
   });
 
-  it("ends with one plans CTA and no legacy filter or stat UI", () => {
+  it("uses one lead feature, two supporting cards, and one plans CTA", () => {
     const page = source("client/src/pages/Portfolio.tsx");
+    expect(page).toContain("grid items-center lg:grid-cols-[0.82fr_1.18fr]");
+    expect(page).toContain("aspect-video w-full");
+    expect(page).toContain("dojoflow-dashboard-landscape.webp");
     expect(page).toContain("Let&apos;s build your website");
     expect(page).toContain('href="/#packages"');
     expect(page).toContain("View Website Plans");
