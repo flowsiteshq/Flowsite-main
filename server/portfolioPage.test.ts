@@ -46,12 +46,12 @@ describe("portfolio page", () => {
     const page = source("client/src/pages/Portfolio.tsx");
     expect(page).toContain("grid gap-x-8 gap-y-14 md:grid-cols-2");
     expect(page).toContain("aspect-[16/9]");
-    expect(page).toContain("mydojo-clean_73756e46.png");
+    expect(page).toContain("/portfolio/mydojo-clean.webp");
     expect(page).toContain("dojoflow-dashboard-landscape.webp");
     expect(page).toContain("zolamind-live.png");
     expect(page).toContain("donbar-live.png");
-    expect(page).toContain("greenbahamas-clean_aa8f54da.png");
-    expect(page).toContain("creativecyber-clean_44a4cf65.png");
+    expect(page).toContain("/portfolio/greenbahamas-clean.webp");
+    expect(page).toContain("/portfolio/creativecyber-clean.webp");
     expect(page).not.toContain("featured: true");
     expect(page).toContain("Let’s build your website");
     expect(page).toContain('href="/get-started"');
